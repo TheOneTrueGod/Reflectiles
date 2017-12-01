@@ -38,6 +38,18 @@ class UnitSlime extends UnitBasic {
     //this.addPhysicsLines(sprite);
     return sprite;
   }
+
+  doMovement(boardState) {
+    if (this.hasStatusEffect(FreezeStatusEffect)) {
+      return;
+    }
+    this.movementCredits += this.movementSpeed;
+    if (this.movementCredits < 1) {
+      this.doHorizontalMovement(boardState);
+    } else {
+      this.moveForward(boardState);
+    }
+  }
 }
 
 UnitSlime.loadFromServerData = function(serverData) {

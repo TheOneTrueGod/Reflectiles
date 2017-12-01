@@ -237,6 +237,7 @@ class UnitBasic extends Unit {
   }
 
   runTick(boardState) {
+    super.runTick(boardState);
     if (this.moveTarget === null) {
       return;
     }

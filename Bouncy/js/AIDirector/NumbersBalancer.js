@@ -33,6 +33,7 @@ class NumbersBalancer {
     var speedVal = 1;
     if (unit.constructor.name == "UnitBossHealer") { speedVal = 0.333333333; }
     if (unit.constructor.name == "UnitBossSlime") { speedVal = 0.333333333; }
+    if (unit.constructor.name == "UnitSlime") { speedVal = 0.5; }
     if (unit.constructor.name == "UnitFast") { speedVal = 2; }
     return speedVal;
   }
@@ -153,6 +154,8 @@ class NumbersBalancer {
         return 4;
       case this.UNIT_ABILITIES.UNIT_BOSS_HEALER_AMOUNT:
         return 50 * playerMult;
+      case this.UNIT_ABILITIES.BOSS_SLIME_SPLIT_THRESHOLD:
+        return 50 + 50 * playerMult;
     }
     throw new Exception("Failure");
   }
@@ -173,6 +176,7 @@ NumbersBalancer.prototype.UNIT_ABILITIES = {
   UNIT_BOSS_HEALER_RANGE: 'UNIT_BOSS_HEALER_RANGE',
   UNIT_BOSS_HEALER_NUM_TARGETS: 'UNIT_BOSS_HEALER_NUM_TARGETS',
   UNIT_BOSS_HEALER_AMOUNT: 'UNIT_BOSS_HEALER_AMOUNT',
+  BOSS_SLIME_SPLIT_THRESHOLD: 'BOSS_SLIME_SPLIT_THRESHOLD',
 }
 
 NumbersBalancer.prototype.DIFFICULTIES = {

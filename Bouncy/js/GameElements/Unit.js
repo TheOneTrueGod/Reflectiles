@@ -39,11 +39,11 @@ class Unit {
 
     this.createCollisionBox();
   }
-  
+
   getTraitValue(trait) {
     return this.traits[trait] ? this.traits[trait] : 0;
   }
-  
+
   getUnitSize() {
     return {x: Unit.UNIT_SIZE, y: Unit.UNIT_SIZE};
   }
@@ -69,7 +69,7 @@ class Unit {
   isAlive() {
     return this.health.current > 0;
   }
-  
+
   heal(amount) {
     this.setHealth(
       Math.min(this.health.max, this.health.current + amount)
@@ -94,7 +94,7 @@ class Unit {
       this.createHealthBarSprite(this.gameSprite);
     }
   }
-  
+
   getHealth() {
     return this.health;
   }
@@ -131,7 +131,7 @@ class Unit {
         this.removeStatusEffect(shieldEffect.getEffectType());
       }
     }
-    
+
     let resiliantValue = this.getTraitValue(Unit.UNIT_TRAITS.RESILIANT);
     if (resiliantValue) {
       damageToDeal = Math.min(damageToDeal, resiliantValue);
@@ -264,6 +264,7 @@ class Unit {
 
     sprite.width = Unit.UNIT_SIZE;
     sprite.height = Unit.UNIT_SIZE;
+
     return sprite;
   }
 
@@ -284,17 +285,18 @@ class Unit {
     var y = this.moveTarget ? this.moveTarget.y : this.y;
     return {x: x + this.physicsWidth / 2, y: y + this.physicsWidth / 2};
   }
-  
+
   getTopLeftCoord() {
     return {x: 0, y: 0};
   }
-  
+
   getBottomRightCoord() {
     return {x: 0, y: 0};
   }
 
   addToStage(stage) {
     this.gameSprite = this.createSprite();
+    this.spriteScale = {x: this.gameSprite.scale.x, y: this.gameSprite.scale.y};
     for (var effect in this.statusEffects) {
       this.addEffectSprite(effect);
     }
@@ -308,7 +310,7 @@ class Unit {
       stage.addChild(this.gameSprite);
     }
   }
-  
+
   addToBackOfStage() {
     return false;
   }
@@ -339,7 +341,7 @@ class Unit {
 
   addStatusEffect(effect) {
     if (
-      effect instanceof FreezeStatusEffect && 
+      effect instanceof FreezeStatusEffect &&
       this.getTraitValue(Unit.UNIT_TRAITS.FROST_IMMUNE) === true
     ) {
       return;
@@ -386,6 +388,21 @@ class Unit {
   triggerHit(boardState, unit, intersection, projectile) {}
 
   runTick(boardState) {
+    if (this.moveTarget && this.spawnEffectStart) {
+      this.spawnEffectTime.current += 1;
+      var pct = this.spawnEffectTime.current / this.spawnEffectTime.max;
+      if (pct > 1) {
+        pct = 1;
+      }
+      this.playSpawnEffectAtPct(boardState, pct);
+
+      if (pct == 1) {
+        this.moveTarget = null;
+        this.spawnEffectStart = null;
+        this.spawnEffectTime = null;
+      }
+    }
+
     this.gameSprite.x = this.x;
     this.gameSprite.y = this.y;
   }
@@ -407,7 +424,7 @@ class Unit {
       this.statusEffects[key].onUnitDeleting(boardState, this);
     }
   }
-  
+
   otherUnitEntering(boardState, unit) {
     return true;
   }
@@ -415,9 +432,25 @@ class Unit {
   isBoss() {
     return false;
   }
-  
+
   getShatterSprite() {
     return this.createSprite();
+  }
+
+  playSpawnEffect(boardState, castPoint, time) {
+    this.spawnEffectStart = {x: castPoint.x, y: castPoint.y};
+    this.spawnEffectTime = {current: 0, max: time};
+    this.moveTarget = {x: this.x, y: this.y};
+    this.playSpawnEffectAtPct(boardState, 0);
+  }
+
+  playSpawnEffectAtPct(boardState, pct) {
+    if (!this.creatorAbility || this.creatorAbility.ZONE_TYPE !== ZoneAbilityDef.ZoneTypes.BLOCKER_BARRIER) {
+      this.gameSprite.scale.x = lerp(0, this.spriteScale.x, pct);
+    }
+    this.gameSprite.scale.y = lerp(0, this.spriteScale.y, pct);
+    this.x = lerp(this.spawnEffectStart.x, this.moveTarget.x, pct);
+    this.y = lerp(this.spawnEffectStart.y, this.moveTarget.y, pct);
   }
 }
 

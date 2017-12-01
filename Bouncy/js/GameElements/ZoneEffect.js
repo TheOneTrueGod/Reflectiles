@@ -46,38 +46,7 @@ class ZoneEffect extends Unit {
 
   addStatusEffect(effect) { /* Zones are immune */ }
 
-  playSpawnEffect(boardState, castPoint, time) {
-    this.spawnEffectStart = {x: castPoint.x, y: castPoint.y};
-    this.spawnEffectTime = {current: 0, max: time};
-    this.moveTarget = {x: this.x, y: this.y};
-    this.playSpawnEffectAtPct(boardState, 0);
-  }
-
-  playSpawnEffectAtPct(boardState, pct) {
-    if (!this.creatorAbility || this.creatorAbility.ZONE_TYPE !== ZoneAbilityDef.ZoneTypes.BLOCKER_BARRIER) {
-      this.gameSprite.scale.x = lerp(0, this.spriteScale.x, pct);
-    }
-    this.gameSprite.scale.y = lerp(0, this.spriteScale.y, pct);
-    this.x = lerp(this.spawnEffectStart.x, this.moveTarget.x, pct);
-    this.y = lerp(this.spawnEffectStart.y, this.moveTarget.y, pct);
-  }
-
   runTick(boardState) {
-    if (this.moveTarget && this.spawnEffectStart) {
-      this.spawnEffectTime.current += 1;
-      var pct = this.spawnEffectTime.current / this.spawnEffectTime.max;
-      if (pct > 1) {
-        pct = 1;
-      }
-      this.playSpawnEffectAtPct(boardState, pct);
-
-      if (pct == 1) {
-        this.moveTarget = null;
-        this.spawnEffectStart = null;
-        this.spawnEffectTime = null;
-      }
-    }
-
     this.gameSprite.x = this.x;
     this.gameSprite.y = this.y;
   }
@@ -229,7 +198,7 @@ class ZoneEffect extends Unit {
         -left + 2, -top + 2,
         left + right - 4, top + bottom - 4
       );
-      
+
       sprite.lineStyle(1, color);
       sprite.drawRect(
         -left + 8, -top + 8,
@@ -247,7 +216,7 @@ class ZoneEffect extends Unit {
 
     return sprite;
   }
-  
+
   addToBackOfStage() {
     return true;
   }
