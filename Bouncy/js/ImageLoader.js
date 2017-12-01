@@ -13,6 +13,8 @@ class ImageLoader {
         .add("enemy_knight",  "../Bouncy/assets/enemies/enemy_knight.png")
         .add("enemy_blocker",  "../Bouncy/assets/enemies/enemy_blocker.png")
         .add("enemy_blocker_active",  "../Bouncy/assets/enemies/enemy_blocker_active.png")
+        .add("enemy_slime",  "../Bouncy/assets/enemies/enemy_slime.png")
+        .add("enemy_boss_slime",  "../Bouncy/assets/enemies/enemy_boss_slime.png")
         .add("zone_shield",  "../Bouncy/assets/sprites/zone_shield.png")
         .add("zone_blocker_barrier",  "../Bouncy/assets/enemies/zone_blocker_barrier.png")
         .add("enemy_protector",  "../Bouncy/assets/enemies/enemy_protector.png")

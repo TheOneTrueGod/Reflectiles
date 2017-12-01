@@ -87,17 +87,18 @@ class Tester extends MainGame {
     this.boardState.reset();
     this.boardState.resetStage();
     let units = [
-      [null, UnitKnight, UnitShooter, UnitKnight],
-      [null, UnitBasicSquare, null, UnitBasicSquare],
-      [UnitBlocker, null, UnitBasicSquare, null, UnitBlocker],
+      [null, null, null, null],
+      [null, null, null, null],
+      [UnitSlime, UnitSlime, UnitSlime, UnitSlime, UnitSlime],
     ];
-    /*var newUnit = new UnitBossHealer(
+    var newUnit = new UnitBossSlime(
       Unit.UNIT_SIZE * (2.5),
       Unit.UNIT_SIZE * (1.5),
       0
     );
 
-    this.boardState.addUnit(newUnit);*/
+    this.boardState.addUnit(newUnit);
+
     for (var i = 0; i < units.length; i++) {
       for (var j = 0; j < units[i].length; j++) {
         let unitType = units[i][j];

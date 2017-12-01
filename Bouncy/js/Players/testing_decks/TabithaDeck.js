@@ -10,11 +10,11 @@ function TabithaDeck() {
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
       projectile_type: ProjectileShape.ProjectileTypes.PASSTHROUGH,
-      num_hits: 3,
+      num_hits: 7,
       icon: "../Bouncy/assets/icons/icon_plain_drill.png",
       hit_effects: [{
         effect: ProjectileShape.HitEffects.DAMAGE,
-        base_damage: 300
+        base_damage: 200
       }],
     },
     {

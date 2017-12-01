@@ -179,7 +179,7 @@ class UnitBasic extends Unit {
   canUseAbilities() {
     return !this.hasStatusEffect(FreezeStatusEffect);
   }
-  
+
   moveForward(boardState) {
     while (this.movementCredits >= 1) {
       var currPos = this.getCurrentPosition();
@@ -197,6 +197,30 @@ class UnitBasic extends Unit {
         this.movementCredits = Math.min(Math.max(0, 1 - this.movementSpeed), this.movementCredits);
       }
     }
+  }
+
+  doHorizontalMovement(boardState) {
+    var currPos = this.getCurrentPosition();
+    let directions = [-1, 1];
+    let pctMoved = boardState.sectors.getGridCoord(this).x / boardState.getMaxColumn();
+    if (boardState.getRandom() >= pctMoved) {
+      directions = [1, -1];
+    }
+
+    for (let dx of directions) {
+      let targetPos = {x: currPos.x + dx * Unit.UNIT_SIZE, y: currPos.y};
+      let canEnter =
+        boardState.sectors.canUnitEnter(boardState, this, targetPos) &&
+        boardState.unitEntering(this, targetPos);
+
+      if (canEnter) {
+        boardState.sectors.removeUnit(this);
+        this.setMoveTarget(targetPos.x, targetPos.y);
+        boardState.sectors.addUnit(this);
+        return true;
+      }
+    }
+    return false;
   }
 
   doMovement(boardState) {

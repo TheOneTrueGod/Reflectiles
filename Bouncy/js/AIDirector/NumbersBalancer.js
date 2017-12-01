@@ -23,6 +23,7 @@ class NumbersBalancer {
   getUnitDamage(unit) {
     var damage = 1;
     if (unit.constructor.name == "UnitBossHealer") { damage = 30; }
+    if (unit.constructor.name == "UnitBossSlime") { damage = 30; }
     if (unit.constructor.name == "UnitBomber") { damage = 10; }
     ///if (unit.constructor.name == "UnitFast") { damage = 2; }
     return damage;
@@ -31,6 +32,7 @@ class NumbersBalancer {
   getUnitSpeed(unit) {
     var speedVal = 1;
     if (unit.constructor.name == "UnitBossHealer") { speedVal = 0.333333333; }
+    if (unit.constructor.name == "UnitBossSlime") { speedVal = 0.333333333; }
     if (unit.constructor.name == "UnitFast") { speedVal = 2; }
     return speedVal;
   }
@@ -78,6 +80,9 @@ class NumbersBalancer {
         healthVal = 200;
         break;
       case "UnitBossHealer":
+        healthVal = 5000;
+        break;
+      case "UnitBossSlime":
         healthVal = 5000;
         break;
     }
@@ -141,7 +146,7 @@ class NumbersBalancer {
       case this.UNIT_ABILITIES.BOMBER_EXPLOSION_DAMAGE:
         return 5;
       case this.UNIT_ABILITIES.BOMBER_DURATION:
-        return 4;
+        return 5;
       case this.UNIT_ABILITIES.UNIT_BOSS_HEALER_RANGE:
         return 100;
       case this.UNIT_ABILITIES.UNIT_BOSS_HEALER_NUM_TARGETS:

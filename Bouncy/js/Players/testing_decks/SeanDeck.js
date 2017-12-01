@@ -28,7 +28,7 @@ function SeanDeck() {
       },
       {
         effect: ProjectileShape.HitEffects.POISON,
-        damage: 50,
+        damage: 100,
         duration: 2
       }],
       "charge":{"initial_charge":-1, "max_charge":4, "charge_type":"TURNS"}
@@ -159,7 +159,7 @@ function SeanDeck() {
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
       projectile_type: ProjectileShape.ProjectileTypes.HIT,
-      hit_effects:[{damage: 75, duration: 3, effect:ProjectileShape.HitEffects.POISON, aoe_type:"BOX","aoe_size":{"x":[-2,2],"y":[-1,1]}}],
+      hit_effects:[{damage: 100, duration: 3, effect:ProjectileShape.HitEffects.POISON, aoe_type:"BOX","aoe_size":{"x":[-2,2],"y":[-1,1]}}],
       icon: "../Bouncy/assets/icons/poison-gas.png",
       "charge":{"initial_charge":-1, "max_charge":3, "charge_type":"TURNS"}
     }

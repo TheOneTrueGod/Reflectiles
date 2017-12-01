@@ -4,17 +4,17 @@ class UnitBossHealer extends UnitBasic {
     this.traits[Unit.UNIT_TRAITS.FROST_IMMUNE] = true;
     this.traits[Unit.UNIT_TRAITS.RESILIANT] = 500;
   }
-  
+
   getUnitSize() {
     return {x: Unit.UNIT_SIZE * 3, y: Unit.UNIT_SIZE * 3};
   }
-  
+
   getSize() {
     return {
       left: 1, right: 1, top: 1, bottom: 1
     };
   }
-  
+
   createCollisionBox() {
     var t = -this.physicsHeight / 2;
     var b = this.physicsHeight / 2;
@@ -45,12 +45,12 @@ class UnitBossHealer extends UnitBasic {
     sprite.height = this.physicsHeight;
     return sprite;
   }
-  
+
   canHealTarget(targetUnit) {
     if (targetUnit.hasStatusEffect(PoisonStatusEffect)) {
       return false;
     }
-    
+
     return targetUnit instanceof UnitBasic && targetUnit.id != this.id;
   }
 
@@ -79,11 +79,11 @@ class UnitBossHealer extends UnitBasic {
         }
       }
     }
-    
+
     var numTargets = NumbersBalancer.getUnitAbilityNumber(
       NumbersBalancer.UNIT_ABILITIES.UNIT_BOSS_HEALER_NUM_TARGETS
     );
-    
+
     for (var i = 0; i < numTargets; i++) {
       if (validTargets.length == 0) {
         continue;
@@ -101,37 +101,13 @@ class UnitBossHealer extends UnitBasic {
       );
     }
   }
-  
-  doHorizontalMovement(boardState) {
-    var currPos = this.getCurrentPosition();
-    let directions = [-1, 1];
-    let pctMoved = boardState.sectors.getGridCoord(this).x / boardState.getMaxColumn();
-    if (boardState.getRandom() >= pctMoved) {
-      directions = [1, -1];
-    }
-    
-    for (let dx of directions) {
-      let targetPos = {x: currPos.x + dx * Unit.UNIT_SIZE, y: currPos.y};
-      let canEnter =
-        boardState.sectors.canUnitEnter(boardState, this, targetPos) &&
-        boardState.unitEntering(this, targetPos);
 
-      if (canEnter) {
-        boardState.sectors.removeUnit(this);
-        this.setMoveTarget(targetPos.x, targetPos.y);
-        boardState.sectors.addUnit(this);
-        return true;
-      }
-    }
-    return false;
-  }
-  
   doMovement(boardState) {
     if (this.hasStatusEffect(FreezeStatusEffect)) {
       return;
     }
     this.movementCredits += this.movementSpeed;
-    if (this.movementCredits < 1) { 
+    if (this.movementCredits < 1) {
       this.doHorizontalMovement(boardState);
     } else {
       this.moveForward(boardState);
@@ -145,15 +121,15 @@ class UnitBossHealer extends UnitBasic {
       )
     );
   }
-  
+
   getTopLeftOffset() {
     return {x: -1, y: -1};
   }
-  
+
   getBottomRightOffset() {
     return {x: 1, y: 1};
   }
-  
+
   isBoss() {
     return true;
   }

@@ -22,7 +22,7 @@ function ChipDeck() {
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
       projectile_type: ProjectileShape.ProjectileTypes.PASSTHROUGH,
-      num_hits: 5,
+      num_hits: 4,
       icon: "../Bouncy/assets/icons/icon_plain_drill.png",
       hit_effects: [{
         effect: ProjectileShape.HitEffects.DAMAGE,

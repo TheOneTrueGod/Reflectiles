@@ -68,7 +68,7 @@ function ClarenceDeck() {
           projectile_type: "HIT",
           destroy_on_wall: [BorderWallLine.TOP],
           speed: 8,
-          hit_effects:[{effect: ProjectileShape.HitEffects.DAMAGE, base_damage: 200}],
+          hit_effects:[{effect: ProjectileShape.HitEffects.DAMAGE, base_damage: 150}],
           //charge: {initial_charge: -1, max_charge: 1, charge_type: AbilityDef.CHARGE_TYPES.TURNS},
         }
       }],
