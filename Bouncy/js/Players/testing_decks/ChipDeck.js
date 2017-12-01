@@ -22,7 +22,7 @@ function ChipDeck() {
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
       projectile_type: ProjectileShape.ProjectileTypes.PASSTHROUGH,
-      num_hits: 3,
+      num_hits: 5,
       icon: "../Bouncy/assets/icons/icon_plain_drill.png",
       hit_effects: [{
         effect: ProjectileShape.HitEffects.DAMAGE,
@@ -54,7 +54,7 @@ function ChipDeck() {
       projectile_interaction: {"hits_enemy_projectiles":true, "destroy":true},
       duration: 6,
       zone_size: {"left":1,"right":1,"top":0,"bottom":0,"y_range": 0},
-      max_range: {"left": 2, "right": 2, "top": 1, "bottom": 0},
+      max_range: {"left": 5, "right": 5, "top": 1, "bottom": 1},
       unit_enter_effect: {},
       icon: "../Bouncy/assets/icons/icon_plain_shield.png",
       charge: {"initial_charge":-1,"max_charge":3,"charge_type":"TURNS"},

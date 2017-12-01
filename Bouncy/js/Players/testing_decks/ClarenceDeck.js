@@ -54,7 +54,7 @@ function ClarenceDeck() {
         '<br>Limited range.',
       card_text_description: '[[unit_abilities[0].abil_def.hit_effects[0].base_damage]] / turn',
       zone_tooltip_name: 'Gun Turret',
-      zone_tooltip_description: 'Shoots a bullet every turn for ' + 
+      zone_tooltip_description: 'Shoots a bullet every turn for ' +
         '[[unit_abilities[0].abil_def.hit_effects[0].base_damage]] damage.<br>' +
         'If an enemy moves into the turret, the turret is destroyed.',
       ability_type: AbilityDef.AbilityTypes.CREATE_UNIT,
@@ -84,7 +84,7 @@ function ClarenceDeck() {
         '<br>Limited range.',
       card_text_description: '[[unit_abilities[0].abil_def.hit_effects[0].base_damage]] / 2 turn',
       zone_tooltip_name: 'Cannon Turret',
-      zone_tooltip_description: 'Shoots a bullet every turn that explodes, dealing ' + 
+      zone_tooltip_description: 'Shoots a bullet every turn that explodes, dealing ' +
         '[[unit_abilities[0].abil_def.hit_effects[0].base_damage]] damage in a 3x3 box.<br>' +
         'If an enemy moves into the turret, the turret is destroyed.',
       ability_type: AbilityDef.AbilityTypes.CREATE_UNIT,
@@ -128,9 +128,8 @@ function ClarenceDeck() {
         'They last for [[duration]] turns.<br>Limited range.',
       card_text_description: '[[unit_abilities[0].abil_def.hit_effects[0].base_damage]]',
       zone_tooltip_name: 'Landmine',
-      zone_tooltip_description: 'After enemy ends their movement on a landmine, it explodes dealing  ' + 
-        '[[unit_abilities[0].abil_def.hit_effects[0].base_damage]] damage in a 3x3 box.<br>' +
-        'If an enemy moves into the turret, the turret is destroyed.',
+      zone_tooltip_description: 'After enemy ends their movement on a landmine, it explodes dealing  ' +
+        '[[unit_abilities[0].abil_def.hit_effects[0].base_damage]] damage in a 3x3 box.<br>',
       ability_type: AbilityDef.AbilityTypes.CREATE_UNIT,
       area_type: SummonUnitAbilityDef.AREA_TYPES.LINE,
       unit_count: 5,
@@ -153,7 +152,7 @@ function ClarenceDeck() {
       description: 'Throws a molotov that explodes into a fireball.<br>' +
         'It explodes dealing [[timeout_effects[0].abil_def.hit_effects[0].base_damage]] damage.<br>' +
         'The fire lingers for [[timeout_effects[1].abil_def.duration]] turns, dealing ' +
-        '[[timeout_effects[1].abil_def.phase_effects[0].abil_def.hit_effects[0].base_damage]] ' + 
+        '[[timeout_effects[1].abil_def.phase_effects[0].abil_def.hit_effects[0].base_damage]] ' +
         'damage per turn',
       card_text_description: '[[timeout_effects[0].abil_def.hit_effects[0].base_damage]]',
       charge: {initial_charge: -1, max_charge: 2, charge_type: AbilityDef.CHARGE_TYPES.TURNS},
@@ -183,9 +182,8 @@ function ClarenceDeck() {
             ability_type: AbilityDef.AbilityTypes.ZONE,
             zone_type: ZoneAbilityDef.ZoneTypes.MOLOTOV,
             zone_tooltip_name: 'Flames',
-            zone_tooltip_description: 'After enemy movement, deals  ' + 
-              '[[phase_effects[0].abil_def.hit_effects[0].base_damage]] damage.<br>' +
-              'If an enemy moves into the turret, the turret is destroyed.',
+            zone_tooltip_description: 'After enemy movement, deals  ' +
+              '[[phase_effects[0].abil_def.hit_effects[0].base_damage]] damage.<br>',
             duration: 3,
             unit_interaction: { prevent_unit_entry: false },
             phase_effects: [{
