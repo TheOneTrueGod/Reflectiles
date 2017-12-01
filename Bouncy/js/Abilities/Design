@@ -1,0 +1,68 @@
+[CORE] Ability Types.  Ability types determine what shapes they can take.
+  - Projectile.  Creates something that moves, and interacts with the world.
+  - Laser.  Instant firing.  Affects everything instantly.
+  - Construct.  Creates something in a square in the world
+  - Shield.  Creates a shield that will interact with enemy attacks when they would hit in the shield's vicinity.
+
+Projectile: {
+  [CORE] Shape.  Determines what shape the projectile takes.
+      - Single shot.  Shoots one bullet.
+      - Tri-shot.  Shoots three bullets at the same time.
+      - Triple shot.  Shoots three bullets, one after the other.
+      - Swarm.  Shoots a series of bullets that start moving backwards and accelerate forwards
+  [CORE] Contact Effect: {
+    None,
+    Bounce,
+    Pierce,
+    Explodes
+  }
+  Hit Effect {
+    damage,
+    poison (hits again at end of round, may last multiple rounds),
+    Creation of secondary projectile,
+  }
+  Accuracy (constant or degrading across multiple bullets)
+  Damage
+}
+
+
+EXAMPLES;
+Piercing shot (deals its damage to each unit it passes through, up to X units)
+Penetrating shot (has a total amount of damage.  If it kills the first unit, it continues)
+Exploding shot (AoE damage)
+Scatter shot (When it hits something, several smaller projectiles fall out of it backwards)
+(When it hits something, it releases a smattering of smaller shots moving in the same direction as it that pierce through the initial target)
+
+Grenade (throw it)
+
+Team Oriented Ideas
+Player-based perks.
+  "extra damage to enemies closer to you."
+  "extra damage to enemies farther away"
+  "extra damage to enemies on the left / right"
+Spells that buff other players
+  - Zones that increase the amount of damage your shots deal.
+  - Zones that split balls when they pass through them.
+  - Zone.  If you pass through it,
+  - Polymorph.  Turn enemies into much smaller squares that are easier to
+Spells that create Shield Blockers
+Spells that have a super wide spread to chip away at stuff close to the bottom
+Force the enemies backwards
+Powerup / buffing spells always go first
+Status effect zones -- if enemies move into them, they can't fire, or lose some health
+Freeze one lane
+Blocks that stop a lane from progressing until it gets broken
+A spell that creates a portal through a column of blocks
+Enemies that have a preferred player.  They take less damage from all other players
+
+Block ideas;
+Enemies that spin every turn
+Enemies that deal extra damage
+A larger enemy that is invulnerable, but has one weak point that you have to kill
+An enemy that if you kill the enemies around it, it moves faster
+Enemies that shoot every turn
+Enemies with energy shields -- temporary health that recovers every turn
+Smoke -- Players can't see inside of it.  Smoke disperses when an ability passes through it.
+
+Spell ideas;
+Doom spell -- hit a block.  In 3 turns it explodes

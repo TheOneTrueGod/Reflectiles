@@ -1,0 +1,599 @@
+.pageBorder {
+  width: 790px;
+  height: 710px;
+}
+
+.turnControls {
+  float: left;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  padding: 2px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.overlay {
+  // ... positioning
+  z-index: 4100;
+}
+
+.overlay:before {
+  content : '';
+  position : absolute;
+  top : 0px;
+  width : 100%;
+  height : 3px;
+  background : #0f0;
+  opacity : .2;
+  animation: vline 5s linear infinite;
+}
+
+.overlay:after {
+  // ... positioning
+  box-shadow: 0 2px 6px rgba(25,25,25,0.2),
+              inset 0 1px rgba(50,50,50,0.1),
+              inset 0 3px rgba(50,50,50,0.05),
+              inset 0 3px 8px rgba(64,64,64,0.05),
+              inset 0 -5px 10px rgba(25,25,25,0.1);
+}
+
+@keyframes vline {
+  0%   { top: 0px; opacity: 0.2; }
+  50% { top: 100%; opacity: 0.2; }
+  51% { opacity: 0; }
+  100% { top: 100%; opacity: 0; }
+}
+
+#missionProgramDisplay {
+  display: inline-block;
+  border: 1px solid black;
+  width: 100%;
+  height: 150px;
+  position: relative;
+  background: white;
+}
+
+.missionProgramDisplayLockOverlay {
+  width: 100%;
+  height: 100%;
+  background: gray;
+  opacity: 0.5;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1000000;
+}
+
+.missionProgramDisplayLockOverlay {
+  display: none;
+}
+
+.turnPlaying .missionProgramDisplayLockOverlay,
+.gameOver .missionProgramDisplayLockOverlay {
+  display: block;
+}
+
+#missionControlsActionBox {
+  width: 100%;
+  height: 440px;
+}
+
+#missionActionCanvas {
+  width: 100%;
+  height: 100%;
+}
+
+#missionActionDisplay {
+  float: left;
+  width: 600px;
+  height: 440px;
+  background: black;
+  display: inline-block;
+  position: relative;
+}
+
+#missionControlsDisplay {
+  float: right;
+  border: 1px solid black;
+  box-sizing: border-box;
+  width: 166px;
+  height: 100%;
+  position: relative;
+}
+
+.unitDetailsContainer {
+  position: absolute;
+  bottom: 75px;
+  width: 148px;
+  height: 200px;
+  margin: 8px;
+  margin-bottom: 0px;
+  border: 1px solid gray;
+  background: black;
+}
+
+.endTurnContainer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 8px;
+}
+
+#missionEndTurnButton:active {
+  background: #2ecc71;
+}
+
+#missionEndTurnButton {
+  font-size: 20px;
+  height: 60px;
+  width: 100%;
+  background: #27ae60;
+  border: 1px solid green;
+  display: none;
+}
+
+#gameContainer[host="true"] #missionEndTurnButton {
+  display: inherit;
+}
+
+.abilityContainer {
+  display: inline-block;
+  padding: 8px 2px;
+}
+
+.abilityCard {
+  height: 130px;
+  width: 100px;
+  border: 4px solid black;
+  border-radius: 4px;
+  position: relative;
+  box-sizing: content-box;
+}
+
+.abilityCard.selected {
+  border: 4px solid red;
+  position: relative;
+  top: -10px;
+}
+
+.abilityCard.disabled:after {
+  position: absolute;
+  content:"";
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  opacity:0.5;
+  background-color: gray;
+}
+
+.abilityCard {
+  background-color: tan;
+  /*background-image: -webkit-gradient(linear, 0 100%, 100% 0, color-stop(.25, rgba(255, 255, 255, .2)), color-stop(.25, transparent), color-stop(.5, transparent), color-stop(.5, rgba(255, 255, 255, .2)), color-stop(.75, rgba(255, 255, 255, .2)), color-stop(.75, transparent), to(transparent));
+  background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%, transparent 75%, transparent);
+  background-image: -moz-linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%, transparent 75%, transparent);
+  background-image: -ms-linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%, transparent 75%, transparent);
+  background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%, transparent 75%, transparent);
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%, transparent 75%, transparent);
+*/
+  -webkit-background-size: 50px 50px;
+  -moz-background-size: 50px 50px;
+  background-size: 50px 50px;
+}
+
+.cardContactBounce { background-color: #ac0; }
+.cardContactHit { background-color: #c16; }
+.cardContactAOE { background-color: #c11; }
+.cardContactPen { background-color: #22D; }
+.cardContactPierce { background-color: #BBB; }
+
+
+.abilityCardIcon,
+.abilityCardIconDesc,
+.abilityCardTextDesc {
+  background: black;
+  border: 1px solid white;
+  position: absolute;
+}
+
+.abilityCardIcon img {
+  width: 100%;
+  height: 100%;
+}
+
+.abilityCardIcon {
+  width: 50px;
+  height: 50px;
+  box-sizing: border-box;
+
+  top: 8px;
+  left: 25px;
+}
+
+.cooldownIcon {
+  background-image: url('../assets/icons/clock.png');
+  background-size: 100%;
+  height: 20px;
+  text-align: center;
+  width: 20px;
+  position: absolute;
+  top: 2px;
+  right: 2px;
+}
+
+.cooldownIcon .cooldownText {
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+  color: #DDD;
+  font-size: 14px;
+  position: relative;
+  top: -1px;
+}
+
+.abilityCardIconDesc {
+  left: 8px;
+  right: 8px;
+  top: 68px;
+  height: 20px;
+  color: white;
+}
+
+.abilityCardTextDesc {
+  bottom: 8px;
+  right: 8px;
+  left: 8px;
+  height: 20px;
+}
+
+.textDescText {
+  width: 100%;
+  height: 100%;
+  color: white;
+  text-align: center;
+  font-size: 14px;
+  cursor: default;
+}
+
+.textDescText.longDesc {
+  font-size: 8px;
+  position: relative;
+  top: 3px;
+}
+
+.iconMockShot {
+  background: white;
+  border-radius: 5px;
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  margin-top: -5px;
+  margin-left: -6px;
+}
+
+.chargeDisplay {
+  width: 50px;
+  height: 50px;
+  margin-left: 25px;
+  margin-top: 35px;
+
+  background-image: url('../assets/icons/clock_large.png');
+  background-size: 100%;
+  border: 2px solid white;
+  color: black;
+
+  position: absolute;
+  box-sizing: border-box;
+  z-index: 10;
+  display: none;
+}
+
+.disabled .chargeDisplay {
+  display: inherit;
+}
+
+.chargeNumber {
+  text-align: center;
+  margin-top: 0px;
+  font-size: 30px;
+}
+
+.chargeTypeTurns {
+  border-radius: 100%;
+}
+
+.timeline, .healthbar_container {
+  display: inline-block;
+  background: black;
+  flex-grow: 1;
+  padding: 2px;
+  height: 25px;
+}
+
+.timeline {
+  border-bottom: 1px solid white;
+}
+
+.healthbar_container {
+  border-top: 1px solid white;
+  position: relative;
+}
+
+.healthbar_progress, .timeline_progress {
+  height: 100%;
+  width: 0%;
+  background: red;
+}
+
+.healthbar_text {
+  text-align: center;
+  color: red;
+  font-size: 14px;
+  position: absolute;
+  cursor: default;
+  top: 0;
+  left: 0;
+  display: inline-block;
+  width: 100%;
+}
+
+.healthbar_container:hover .healthbar_text {
+  color: white;
+}
+
+.timeline_progress {
+  background: gray;
+}
+
+.playIcon, .pauseIcon, .resetTurnIcon, .stepIcon {
+  display: none;
+  width: 100%;
+  height: 100%;
+  padding: 4px;
+}
+
+.playButton.play .playIcon,
+.playButton.pause .pauseIcon,
+.resetTurnIcon,
+.stepIcon
+ {
+  display: block;
+}
+
+.playerStatusContainer {
+  margin: 0 4px;
+  cursor: default;
+}
+
+.playerStatusContainer .playerStatus {
+  border: 1px solid black;
+  border-radius: 6px;
+  margin-top: 4px;
+  padding: 0 4px;
+  overflow: hidden;
+}
+
+.statusIndicator {
+  background: red;
+  border-radius: 10px;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 4px;
+}
+
+.statusIndicator.ready {
+  background: green;
+}
+
+.playerName {
+  display: inline-block;
+  width: 132px;
+}
+
+#warningMessageBox {
+  position: absolute;
+  width: 50%;
+  height: 60px;
+  margin-left: 25%;
+  background: white;
+  border: 5px solid red;
+  margin-top: 203px;
+  text-align: center;
+  font-size: 30px;
+  padding-top: 2px;
+}
+
+#playerSetupBoard {
+  width: 766px;
+  height: 600px;
+  position: relative;
+}
+
+.playerSetupSection {
+  width: 25%;
+  height: 100%;
+  display: inline;
+  float: left;
+  display: inline-block;
+  padding: 8px;
+}
+
+.gameSetupPlayers {
+  width: 100%;
+  height: 30%;
+  position: absolute;
+  bottom: 0;
+}
+
+.gameSetupLevelSelect {
+  height: 70%;
+  width: 100%;
+  padding: 10px;
+  position: relative;
+  background: #EEEEEE;
+}
+
+.playerSection {
+  height: 100%;
+  width: 100%;
+  background: rgba(100, 255, 100, 0.4);
+}
+
+.playerSetupInner {
+  width: 100%;
+  height: 100%;
+  background: #EEEEEE;
+}
+
+.playerNameDisplay {
+  text-align: center;
+  padding-top: 10px;
+  margin-bottom: 10px
+}
+
+.quitButton,
+.startButton,
+.joinGameButton,
+.abilityDeckName {
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.centerText {
+  text-align: center;
+}
+
+.levelSelect.world {
+  width: 20%;
+  float: left;
+  margin-top: 140px;
+}
+
+.levelSelect .level {
+  border: 1px solid black;
+  cursor: default;
+
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.difficultySelect .button {
+  cursor: default;
+}
+
+.isHost .levelSelect .level,
+.isHost .difficultySelect .button {
+  cursor: pointer;
+}
+
+.levelSelect.world1 .level {
+  background: #E7846D;
+}
+.levelSelect.world2 .level {
+  background: #5A59A1;
+}
+.levelSelect.world3 .level {
+  background: #7D4D9A;
+}
+.levelSelect.world4 .level {
+  background: #95CF61;
+}
+.levelSelect.world5 .level {
+  background: #E7CA6D;
+}
+
+.levelSelect .level.selected {
+  border: 4px dashed black;
+}
+
+.levelSelect .boss:after {
+  content: "Boss";
+}
+
+.levelSelect.world1 .boss:after {
+  content: "";
+}
+
+.levelSelect.world1 .boss {
+  background-image: url('../assets/enemies/enemy_boss_healer.png');
+  background-size: 100%;
+}
+
+.levelSelect .levelContainer {
+  display: inline-block;
+  margin: 0 20%;
+}
+
+.levelSelect .level.boss {
+  width: 80px;
+  height: 80px;
+}
+
+.levelSelect .level.disabled {
+  background: lightgray;
+  cursor: default;
+}
+
+.button {
+  border-radius: 4px;
+  padding: 4px 20px;
+  cursor: pointer;
+  display: inline-block;
+  border-radius: 4px;
+  background: #FFFFFF;
+  border: 1px solid #000;
+}
+
+.button.small {
+  padding: 2px 16px;
+}
+
+.button.red {
+  background: #FF7777;
+}
+
+.button.green, .button.selected {
+  background: #88ff88;
+}
+
+.joinGameButton {
+  position: relative;
+  top: 70px;
+}
+
+.replacedText {
+  color: yellow;
+}
+
+.abilityCardTextDesc .replacedText {
+  color: white;
+}
+
+.cardTooltipName {
+  border-bottom: 1px solid white;
+}
+
+.cardTooltipDescription {
+  text-align: left;
+}
+
+.noselect {
+  cursor: default;
+}
+
+.button,
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+}

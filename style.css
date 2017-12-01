@@ -1,0 +1,71 @@
+body {
+  background: rgba(125, 125, 125, .15);
+}
+
+.pageBorder {
+  width: 720px;
+  padding: 12px;
+  margin: auto;
+  background: white;
+  height: 720px;
+}
+
+.pageBorder h2 {
+  text-align: center;
+}
+
+.titleArea {
+  position: relative;
+}
+
+.loadingScreen {
+  margin: auto;
+  margin-top: 200px;
+  background: red;
+  color: white;
+  -webkit-text-stroke: 2px black;
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+  border: 4px solid black;
+}
+
+.username {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.titleTableRow, .tableRow {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.titleTableRow, .tableRow:nth-child(odd) {
+  background: #EDC;
+}
+.titleTableRow, .tableRow.game_over.players_won:nth-child(odd) {
+  background: #66BB66;
+}
+.titleTableRow, .tableRow.game_over:nth-child(odd) {
+  background: #BB6666;
+}
+
+.titleTableRow, .tableRow:nth-child(even) {
+  background: #FFF;
+}
+.titleTableRow, .tableRow.game_over.players_won:nth-child(even) {
+  background: #88FF88;
+}
+.titleTableRow, .tableRow.game_over:nth-child(even) {
+  background: #ff8888;
+}
+
+.titleTableRow, .tableRow:nth-child(-n+4) {
+  background: #ffffff;
+}
+
+.titleTableRow > div {
+  border: 1px solid black;
+  background: rgba(86, 61, 124, .15);
+}

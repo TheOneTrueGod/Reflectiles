@@ -1,0 +1,24 @@
+<script type="text/javascript" src="../vendor/pixi/pixi.js"></script>
+
+<!-- Utils are free floating functions.  They go first. -->
+<script src="/client/utils.js"></script>
+<script src="/client/ServerCalls.js"></script>
+<script src="/client/GameInitializer.js"></script>
+
+<!-- Order of these doesn't matter.  They're all classes -->
+<script src="/CardsNMagic/js/GameElements/Unit.js"></script>
+<script src="/CardsNMagic/js/BoardState.js"></script>
+<script src="/CardsNMagic/js/PlayerCommands/PlayerCommand.js"></script>
+<script src="/CardsNMagic/js/PlayerInput.js"></script>
+<script src="/CardsNMagic/js/UIListeners.js"></script>
+<script src="/CardsNMagic/js/TurnControls.js"></script>
+<script src="/CardsNMagic/js/AIDirector/AIDirector.js"></script>
+
+<!-- Extends the above -->
+<script src="/CardsNMagic/js/GameElements/UnitBit.js"></script>
+<script src="/CardsNMagic/js/GameElements/UnitCore.js"></script>
+<script src="/CardsNMagic/js/PlayerCommands/PlayerCommandMoveUnit.js"></script>
+<script src="/CardsNMagic/js/PlayerCommands/PlayerCommandUseAbility.js"></script>
+
+<!-- MUST GO LAST -->
+<script src="/CardsNMagic/js/main.js"></script>

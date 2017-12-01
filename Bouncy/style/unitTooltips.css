@@ -1,0 +1,69 @@
+.unitTooltip {
+  padding: 4px;
+  font-size: 12px;
+  background: black;
+  color: white;
+  text-align: center;
+}
+
+.unitTooltip .unitDescription,
+.unitTooltip .statusEffectContainer,
+.unitTooltip .traitContainer {
+  text-align: left;
+  font-size: 10px;
+}
+
+.unitTooltip .statusEffectLine {
+  background: white;
+  margin: 2px 0px;
+}
+
+.healthBarContainer {
+  text-align: left;
+  line-height: 1.4em;
+  font-size: 10px;
+}
+
+.unitHealth {
+  position: relative;
+  text-align:center;
+  display: inline-block;
+}
+
+.oneBar .unitHealth {
+  width: 100%;
+}
+
+.twoBar .unitHealth {
+  width: 49%;
+}
+
+.threeBar .unitHealth {
+  width: 32%;
+}
+
+.twoBar .unitHealth:not(:last-child),
+.threeBar .unitHealth:not(:last-child) {
+  margin-right: 2%;
+}
+
+.unitHealth .healthNumber {
+  position: relative;
+  border: 1px solid gray;
+}
+
+.unitHealth .healthBar {
+  height: 100%;
+  position: absolute;
+  background: red;
+  top: 0;
+  left: 0;
+}
+
+.healthBar.armour {
+  background: darkgray;
+}
+
+.healthBar.shield {
+  background: #c119b9;
+}

@@ -1,0 +1,9 @@
+.form-login {
+  margin: 0 auto;
+  max-width: 350px;
+  padding: 15px;
+}
+
+.signInButton {
+  margin-top: 12px;
+}
