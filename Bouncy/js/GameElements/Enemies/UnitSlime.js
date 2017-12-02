@@ -39,16 +39,20 @@ class UnitSlime extends UnitBasic {
     return sprite;
   }
 
-  doMovement(boardState) {
-    if (this.hasStatusEffect(FreezeStatusEffect)) {
-      return;
-    }
-    this.movementCredits += this.movementSpeed;
-    if (this.movementCredits < 1) {
-      this.doHorizontalMovement(boardState);
-    } else {
-      this.moveForward(boardState);
-    }
+  playMovement(pct) {
+    UnitMovementEffects.playJumpingEffect(this, pct);
+  }
+
+  preventsUnitEntry(unit) {
+    return (unit instanceof UnitSlime);
+  }
+
+  addToBackOfStage() {
+    return true;
+  }
+
+  playSpawnEffectAtPct(boardState, pct) {
+    UnitMovementEffects.playJumpingSpawnEffect(boardState, this, pct);
   }
 }
 

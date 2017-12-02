@@ -32,7 +32,7 @@ class UnitBossSlime extends UnitBasic {
   findSpawnPointForUnit(boardState, newUnit) {
     let spawnPos;
     for (let dist = 2; dist < 15; dist++) {
-      for (let delta = 0; delta < dist; delta > 0 ? delta *= -1 : delta ++) {
+      for (let delta = 0; delta < dist; delta > 0 ? delta *= -1 : delta = (delta * -1) + 1) {
         // down
         spawnPos = this.canSpawnAt(boardState, newUnit, delta, dist);
         if (spawnPos !== false) { return spawnPos; }
@@ -52,6 +52,9 @@ class UnitBossSlime extends UnitBasic {
 
   canSpawnAt(boardState, newUnit, dx, dy) {
     let target = {x: this.x + dx * Unit.UNIT_SIZE, y: this.y + dy * Unit.UNIT_SIZE};
+    if (target.y > boardState.getUnitThreshold() - Unit.UNIT_SIZE * 2) {
+      return false;
+    }
     if (boardState.sectors.canUnitEnter(
       boardState,
       newUnit,
@@ -97,7 +100,7 @@ class UnitBossSlime extends UnitBasic {
     sprite.width = this.physicsWidth;
     sprite.height = this.physicsHeight;
 
-    this.addPhysicsLines(sprite);
+    //this.addPhysicsLines(sprite);
     return sprite;
   }
 

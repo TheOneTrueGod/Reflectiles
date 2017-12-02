@@ -236,6 +236,13 @@ class UnitBasic extends Unit {
     return 2;
   }
 
+  getMoveTime() { return 20; }
+
+  playMovement(pct) {
+    this.x = lerp(this.startMovementPos.x, this.moveTarget.x, pct);
+    this.y = lerp(this.startMovementPos.y, this.moveTarget.y, pct);
+  }
+
   runTick(boardState) {
     super.runTick(boardState);
     if (this.moveTarget === null) {
@@ -243,14 +250,13 @@ class UnitBasic extends Unit {
     }
     var moveSpeed = this.getMoveSpeed();
     var targ = Victor(this.moveTarget.x - this.x, this.moveTarget.y - this.y);
-    if (targ.length() <= moveSpeed) {
+    let movePct = boardState.tick / this.getMoveTime();
+    if (movePct >= 1 && !this.spawnEffectTime) {
       this.x = this.moveTarget.x;
       this.y = this.moveTarget.y;
       this.moveTarget = null;
-    } else {
-      targ.normalize().multiplyScalar(moveSpeed);
-      this.x += targ.x;
-      this.y += targ.y;
+    } else if (this.startMovementPos && this.moveTarget) {
+      this.playMovement(movePct);
     }
 
     this.gameSprite.x = this.x;

@@ -1,24 +1,15 @@
 /*
  * TODO;
  * Add google ads to the sides
- * Bomber should have a timer, after which he explodes.  This means that he can deal lots of damage from the top of the screen.
- * Make projectiles that can pass through the border walls based on gravity
- * The rain ability feels kinda shitty.  Make it bounce off the left and right walls.
  * Test out shrinking the enemies.
  * Invulnerable enemies that deal no damage as a wall
  * New enemy type -- infected.  When it dies, it explodes into a bunch of smaller minions.
- * New enemy -- Healer.  Heals other units.
- * New enemy -- protection pylons.  Creates a shield zone between the two that reflects bullets.
  * Enemy Tooltips
  * Have the knight throw up his shield to the left and right if the front is full.
- * Test out letting players move.
- * Add first boss -- He alternates between summoning a wave of goons, and attacking.
  * Fix the projectile bug on the shield ability
- * Highlight first player
  * Add a back button
  * Background of a person in a square
  * Make freeze spread across all shields.  They take double damage
- * Clarence Deck updates
  */
 class MainGame {
   constructor() {

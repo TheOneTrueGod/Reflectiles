@@ -74,8 +74,10 @@ class ZoneAbilityDef extends AbilityDef {
         this.index,
         playerID
       );
+      newUnit.visible = false;
       boardState.addUnit(newUnit);
       newUnit.playSpawnEffect(boardState, castPoint, 20);
+      newUnit.visible = true;
     }
   }
 
@@ -104,11 +106,11 @@ class ZoneAbilityDef extends AbilityDef {
 
     return lineGraphic;
   }
-  
+
   endOfPhase(boardState, phase, zone) {
     idx(this.rawDef, 'phase_effects', []).forEach((phaseEffect) => {
       if (
-        phaseEffect.effect === "ABILITY" && 
+        phaseEffect.effect === "ABILITY" &&
         phaseEffect.phase === phase &&
         phaseEffect.initializedAbilDef
       ) {

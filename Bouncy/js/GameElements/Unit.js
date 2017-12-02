@@ -207,6 +207,7 @@ class Unit {
 
   setMoveTarget(x, y) {
     this.memoizedCollisionBox = null;
+    this.startMovementPos = {x: this.x, y: this.y};
     this.moveTarget = {'x': x, 'y': y};
   }
 
@@ -442,6 +443,9 @@ class Unit {
     this.spawnEffectTime = {current: 0, max: time};
     this.moveTarget = {x: this.x, y: this.y};
     this.playSpawnEffectAtPct(boardState, 0);
+
+    this.gameSprite.x = this.x;
+    this.gameSprite.y = this.y;
   }
 
   playSpawnEffectAtPct(boardState, pct) {

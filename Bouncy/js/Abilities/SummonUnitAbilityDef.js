@@ -187,15 +187,16 @@ class SummonUnitAbilityDef extends AbilityDef {
         );
         break;
     }
-
+    newUnit.visible = false;
     boardState.addUnit(newUnit);
     newUnit.playSpawnEffect(boardState, castPoint, 20);
+    newUnit.visible = true;
   }
 
   hasFinishedDoingEffect(tickOn) {
     return tickOn > 0;
   }
-  
+
   addDefaultIcon($icon) {
     var $image = $("<img src='../Bouncy/assets/icons/icon_plain_shield.png'/>");
     $icon.append($image);
@@ -243,7 +244,7 @@ class SummonUnitAbilityDef extends AbilityDef {
 
     return lineGraphic;
   }
-  
+
   endOfPhase(boardState, phase, zone) {}
 }
 

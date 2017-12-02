@@ -32,8 +32,7 @@ class NumbersBalancer {
   getUnitSpeed(unit) {
     var speedVal = 1;
     if (unit.constructor.name == "UnitBossHealer") { speedVal = 0.333333333; }
-    if (unit.constructor.name == "UnitBossSlime") { speedVal = 0.333333333; }
-    if (unit.constructor.name == "UnitSlime") { speedVal = 0.5; }
+    if (unit.constructor.name == "UnitBossSlime") { speedVal = 0.25; }
     if (unit.constructor.name == "UnitFast") { speedVal = 2; }
     return speedVal;
   }
@@ -84,7 +83,7 @@ class NumbersBalancer {
         healthVal = 5000;
         break;
       case "UnitBossSlime":
-        healthVal = 5000;
+        healthVal = 8000;
         break;
     }
     return Math.floor(healthVal * healthMultiplier);
@@ -135,7 +134,7 @@ class NumbersBalancer {
     if (this.num_players == 4) { playerMult *= 4; }
     switch (ability) {
       case this.UNIT_ABILITIES.PROTECTOR_SHIELD:
-        return 100 * playerMult;
+        return 50 + 50 * playerMult;
       case this.UNIT_ABILITIES.PROTECTOR_SHIELD_NUM_TARGETS:
         return 2;
       case this.UNIT_ABILITIES.PROTECTOR_SHIELD_RANGE:
@@ -155,7 +154,7 @@ class NumbersBalancer {
       case this.UNIT_ABILITIES.UNIT_BOSS_HEALER_AMOUNT:
         return 50 * playerMult;
       case this.UNIT_ABILITIES.BOSS_SLIME_SPLIT_THRESHOLD:
-        return 50 + 50 * playerMult;
+        return 200 * playerMult;
     }
     throw new Exception("Failure");
   }

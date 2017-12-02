@@ -26,7 +26,7 @@ class LevelDefs {
       return true;
     }
     if (world == 2) {
-      return stage != 'boss';
+      return stage != 2 && stage != 3;
     }
     return false;
   }
@@ -72,13 +72,13 @@ class LevelDef {
         throw new Error("wave type (" + wave.type + ") not handled");
     }
   }
-  
+
   doGoto(boardState, wave) {
     let conditionMet = false;
     switch (wave.until.condition) {
       case WAVE_CONDITION.BOSS_HEALTH:
         conditionMet = true;
-        let bossUnits = boardState.getAllUnitsByCondition((u) => { 
+        let bossUnits = boardState.getAllUnitsByCondition((u) => {
           return u.isBoss();
         });
         if (bossUnits.length) {
@@ -98,7 +98,7 @@ class LevelDef {
       boardState.addWavesSpawned(wave.offset);
     } else {
       boardState.addWavesSpawned(1);
-      
+
     }
   }
 

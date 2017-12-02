@@ -46,11 +46,6 @@ class ZoneEffect extends Unit {
 
   addStatusEffect(effect) { /* Zones are immune */ }
 
-  runTick(boardState) {
-    this.gameSprite.x = this.x;
-    this.gameSprite.y = this.y;
-  }
-
   hitsEnemyProjectiles() {
     var projectileInteraction = this.creatorAbility.getOptionalParam(
       "projectile_interaction", null);

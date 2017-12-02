@@ -517,12 +517,18 @@
   content: "Boss";
 }
 
-.levelSelect.world1 .boss:after {
+.levelSelect.world1 .boss:after,
+.levelSelect.world2 .boss:after {
   content: "";
 }
 
 .levelSelect.world1 .boss {
   background-image: url('../assets/enemies/enemy_boss_healer.png');
+  background-size: 100%;
+}
+
+.levelSelect.world2 .boss {
+  background-image: url('../assets/enemies/enemy_boss_slime.png');
   background-size: 100%;
 }
 
