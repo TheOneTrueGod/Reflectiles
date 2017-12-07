@@ -25,7 +25,7 @@ class NumbersBalancer {
     if (unit.constructor.name == "UnitBossHealer") { damage = 30; }
     if (unit.constructor.name == "UnitBossSlime") { damage = 30; }
     if (unit.constructor.name == "UnitBomber") { damage = 10; }
-    ///if (unit.constructor.name == "UnitFast") { damage = 2; }
+    // if (unit.constructor.name == "UnitFast") { damage = 2; }
     return damage;
   }
 
