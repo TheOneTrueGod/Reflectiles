@@ -31,7 +31,7 @@ class Turret extends ZoneEffect {
   dealDamage(boardState, amount) {
     return;
   }
-  
+
   reduceCooldown() {
     var abilList = this.creatorAbility.getOptionalParam('unit_abilities', {});
     for (var i = 0; i < abilList.length; i++) {
@@ -39,7 +39,7 @@ class Turret extends ZoneEffect {
       this.abilitiesLastUse[abil.index] -= 1;
     }
   }
-  
+
   doShootAction(boardState) {
     var abilList = this.creatorAbility.getOptionalParam('unit_abilities', {});
     for (var i = 0; i < abilList.length; i++) {
@@ -76,14 +76,9 @@ class Turret extends ZoneEffect {
     return this.size;
   }
 
-  triggerHit(boardState, unit, intersection, projectile) {
-    var projectileInteraction = this.creatorAbility.getOptionalParam(
-      "projectile_interaction", null);
-
-    if (projectileInteraction.destroy) {
-      this.decreaseTime(boardState, this.timeLeft.current);
-      this.createHealthBarSprite(this.gameSprite);
-      projectile.readyToDel = true;
+  hitByProjectile(boardState, unit, intersection, projectile) {
+    if (!this.creatorAbility.getOptionalParam('invulnerable', false)) {
+      this.decreaseTime(boardState, Math.floor(this.timeLeft.max / 2));
     }
   }
 

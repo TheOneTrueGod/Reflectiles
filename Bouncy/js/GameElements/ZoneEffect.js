@@ -49,35 +49,58 @@ class ZoneEffect extends Unit {
   hitsEnemyProjectiles() {
     var projectileInteraction = this.creatorAbility.getOptionalParam(
       "projectile_interaction", null);
-    return idx(projectileInteraction, "hits_enemy_projectiles", false);
+    return idx(projectileInteraction, "enemy_projectiles", false) !== false;
   }
 
   hitsPlayerProjectiles() {
     var projectileInteraction = this.creatorAbility.getOptionalParam(
       "projectile_interaction", null);
-    return idx(projectileInteraction, "hits_player_projectiles", false);
+    return idx(projectileInteraction, "player_projectiles", false) !== false;
+  }
+
+  getInteractionForProjectile(projectile) {
+    var projectileInteraction = this.creatorAbility.getOptionalParam(
+      "projectile_interaction", null);
+    if (!projectileInteraction) { return null; }
+
+    if (projectile instanceof EnemyProjectile) {
+      return idx(projectileInteraction, "enemy_projectiles", null);
+    } else if (projectile instanceof Projectile) {
+      return idx(projectileInteraction, "player_projectiles", null);
+    }
+    return {};
   }
 
   canProjectileHit(projectile) {
     if (this.readyToDelete()) {
       return false;
     }
-    if (projectile instanceof EnemyProjectile) {
-      if (!this.hitsEnemyProjectiles()) { return false; }
-    } else if (projectile instanceof Projectile) {
-      if (!this.hitsPlayerProjectiles()) { return false; }
-    }
+    let interaction = this.getInteractionForProjectile(projectile);
+    if (interaction === null) { return false; }
     return true;
   }
 
   triggerHit(boardState, unit, intersection, projectile) {
-    var projectileInteraction = this.creatorAbility.getOptionalParam(
-      "projectile_interaction", null);
+    let interaction = this.getInteractionForProjectile(projectile);
+    if (interaction == null) {
+      return;
+    }
 
-    if (projectileInteraction.destroy) {
-      this.decreaseTime(boardState, 1);
+    if (interaction.destroy) {
       this.createHealthBarSprite(this.gameSprite);
       projectile.readyToDel = true;
+    }
+
+    if (interaction.buff) {
+
+    }
+
+    this.hitByProjectile(boardState, unit, intersection, projectile);
+  }
+
+  hitByProjectile(boardState, unit, intersection, projectile) {
+    if (!this.creatorAbility.getOptionalParam('invulnerable', false)) {
+      this.decreaseTime(boardState, 1);
     }
   }
 
@@ -92,7 +115,7 @@ class ZoneEffect extends Unit {
       var t = -((this.size.top + 0.5) * this.physicsHeight);
       var b = ((this.size.bottom + 0.5) * this.physicsHeight);
 
-      var lineType = UnitLine;
+      var lineType = AbilityTriggeringLine;
       if (projectileInteraction.force_bounce) {
         lineType = BouncingLine;
       }

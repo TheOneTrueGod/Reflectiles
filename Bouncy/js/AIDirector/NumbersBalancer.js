@@ -32,22 +32,42 @@ class NumbersBalancer {
   getUnitSpeed(unit) {
     var speedVal = 1;
     if (unit.constructor.name == "UnitBossHealer") { speedVal = 0.333333333; }
-    if (unit.constructor.name == "UnitBossSlime") { speedVal = 0.25; }
+    if (unit.constructor.name == "UnitBossSlime") { speedVal = 0.333333; }
     if (unit.constructor.name == "UnitFast") { speedVal = 2; }
     return speedVal;
   }
 
-  getUnitHealth(unit) {
-    var healthMultiplier = 1;
-    if (this.num_players == 1) { healthMultiplier *= 1; }
-    if (this.num_players == 2) { healthMultiplier *= 2; }
-    if (this.num_players == 3) { healthMultiplier *= 3.5; }
-    if (this.num_players == 4) { healthMultiplier *= 5; }
+  getDifficultyMultiplier() {
+    switch (this.difficulty) {
+      case this.DIFFICULTIES.EASY:
+        return 0.75;
+      case this.DIFFICULTIES.MEDIUM:
+        return 1;
+      case this.DIFFICULTIES.HARD:
+        return 1.25;
+      case this.DIFFICULTIES.NIGHTMARE:
+        return 1.5;
+    }
+    throw new Error("Unknown difficulty");
+  }
 
-    if (this.difficulty == this.DIFFICULTIES.EASY) { healthMultiplier *= 0.75; }
-    if (this.difficulty == this.DIFFICULTIES.MEDIUM) { healthMultiplier *= 1; }
-    if (this.difficulty == this.DIFFICULTIES.HARD) { healthMultiplier *= 1.25; }
-    if (this.difficulty == this.DIFFICULTIES.NIGHTMARE) { healthMultiplier *= 1.5; }
+  getPlayerCountMultiplier() {
+    switch (this.num_players) {
+      case 1:
+        return 1;
+      case 2:
+        return 2;
+      case 3:
+        return 3;
+      case 4:
+        return 4;
+    }
+    throw new Error("Unknown player count Multiplier");
+  }
+
+  getUnitHealth(unit) {
+    var healthMultiplier =
+      this.getDifficultyMultiplier() * this.getPlayerCountMultiplier();
 
     var healthVal = 100;
     switch (unit.constructor.name) {
@@ -71,7 +91,7 @@ class NumbersBalancer {
         healthVal = 200;
         break;
       case "UnitKnight":
-        healthVal = (300 + 100 * this.num_players) / healthMultiplier;
+        healthVal = 100;
         break;
       case "UnitProtector":
         healthVal = 200;
@@ -82,36 +102,33 @@ class NumbersBalancer {
       case "UnitBossHealer":
         healthVal = 5000;
         break;
+      case "UnitSlime":
+        healthVal = 80;
+        break;
       case "UnitBossSlime":
-        healthVal = 8000;
+        healthVal = 5000;
         break;
     }
     return Math.floor(healthVal * healthMultiplier);
   }
 
   getUnitArmour(unit) {
-    var multiplier = 1;
-    if (this.num_players == 1) { multiplier *= 1; }
-    if (this.num_players == 2) { multiplier *= 2; }
-    if (this.num_players == 3) { multiplier *= 3; }
-    if (this.num_players == 4) { multiplier *= 4; }
+    var multiplier =
+      this.getDifficultyMultiplier() * this.getPlayerCountMultiplier();
 
     var value = 0;
 
     switch (unit.constructor.name) {
       case "UnitKnight":
-        value = 100;
+        value = 200;
     }
 
     return value * multiplier;
   }
 
   getUnitShield(unit) {
-    var multiplier = 1;
-    if (this.num_players == 1) { multiplier *= 1; }
-    if (this.num_players == 2) { multiplier *= 2; }
-    if (this.num_players == 3) { multiplier *= 3; }
-    if (this.num_players == 4) { multiplier *= 4; }
+    var multiplier =
+      this.getDifficultyMultiplier() * this.getPlayerCountMultiplier();
 
     let value = 0;
 
@@ -128,10 +145,8 @@ class NumbersBalancer {
   }
 
   getUnitAbilityNumber(ability) {
-    var playerMult = 1;
-    if (this.num_players == 2) { playerMult *= 2; }
-    if (this.num_players == 3) { playerMult *= 3; }
-    if (this.num_players == 4) { playerMult *= 4; }
+    var playerMult =
+      this.getDifficultyMultiplier() * this.getPlayerCountMultiplier();
     switch (ability) {
       case this.UNIT_ABILITIES.PROTECTOR_SHIELD:
         return 50 + 50 * playerMult;
@@ -154,7 +169,7 @@ class NumbersBalancer {
       case this.UNIT_ABILITIES.UNIT_BOSS_HEALER_AMOUNT:
         return 50 * playerMult;
       case this.UNIT_ABILITIES.BOSS_SLIME_SPLIT_THRESHOLD:
-        return 200 * playerMult;
+        return 50 * playerMult;
     }
     throw new Exception("Failure");
   }

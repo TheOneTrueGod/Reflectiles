@@ -3,26 +3,30 @@ class Tester extends MainGame {
     this.unitType = UnitBomber;
     this.loadImages(this.testAbility.bind(this));
     UnitBasic.createAbilityDefs();
+
+    this.unitsToSpawn =
+    [
+      [UnitSlime, UnitSlime, UnitSlime, UnitSlime, UnitSlime],
+      [UnitSlime, UnitSlime, UnitBasicSquare, UnitSlime, UnitSlime],
+      [UnitSlime, UnitSlime, UnitSlime, UnitSlime, UnitSlime],
+      [UnitSlime, UnitSlime, UnitSlime, UnitSlime, UnitSlime],
+    ];
   }
 
   testAbility() {
     var ClarenceAbils = ClarenceDeck();
     var TJAbils = TJDeck();
     var ChipAbils = ChipDeck();
+    var TestAbils = TestDeck();
     // SET COMMANDS HERE
     this.abilitiesToUse = [
-      [ChipAbils[1].index, {x: 250, y: -250}],
-      [TJAbils[2].index, {x: 0, y: -250}],
-      [TJAbils[4].index, {x: 0, y: -250}],
-      [TJAbils[3].index, {x: 0, y: -250}],
-      [TJAbils[1].index, {x: 0, y: -250}],
-      [TJAbils[0].index, {x: 0, y: -250}],
-      /*[ClarenceAbils[4].index, {x: 0, y: -250}],
-      [TJAbils[4].index, {x: 0, y: -250}],
-      [TJAbils[0].index, {x: 0, y: -250}],*/
+      [ClarenceAbils[4].index, {x: 0, y: -250}],
+      /*[TestAbils[0].index, {x: 0, y: -250}],
+      [TestAbils[1].index, {x: 0, y: -250}],
+      [TestAbils[0].index, {x: 0, y: -250}],*/
     ];
-
     // END SET COMMANDS HERE
+
     UIListeners.showGameBoard();
     var width = Unit.UNIT_SIZE * 5; var height = Unit.UNIT_SIZE * 9;
     let boardSize = {width: width, height: height};
@@ -86,18 +90,7 @@ class Tester extends MainGame {
   abilityTestReset() {
     this.boardState.reset();
     this.boardState.resetStage();
-    let units = [
-      [null, null, null, null],
-      [null, null, null, null],
-      [UnitSlime, UnitSlime, UnitSlime, UnitSlime, UnitSlime],
-    ];
-    var newUnit = new UnitBossSlime(
-      Unit.UNIT_SIZE * (2.5),
-      Unit.UNIT_SIZE * (1.5),
-      0
-    );
-
-    this.boardState.addUnit(newUnit);
+    let units = this.unitsToSpawn;
 
     for (var i = 0; i < units.length; i++) {
       for (var j = 0; j < units[i].length; j++) {

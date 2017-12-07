@@ -3,7 +3,7 @@ class ProjectileAccuracy {
     if (!accuracyJSON) {
       this.minRadius = 0;
       this.maxRadius = 0;
-      
+
       this.minDist = 0;
       this.maxDist = 10000;
       return;
@@ -13,32 +13,32 @@ class ProjectileAccuracy {
     this.minDist = idx(accuracyJSON, 'min_dist', 50);
     this.maxDist = idx(accuracyJSON, 'max_dist', 400);
   }
-  
+
   isAccuracyDefined() {
     return this.minRadius != 0 && this.maxRadius != 0;
   }
-  
+
   getCircleRadius(aimDistance) {
     return lerp(
-      this.minRadius, 
-      this.maxRadius, 
+      this.minRadius,
+      this.maxRadius,
       Math.max(Math.min((aimDistance - this.minDist) / (this.maxDist - this.minDist), 1), 0)
     );
   }
-  
+
   getRandomTarget(boardState, castPoint, targetPoint) {
     if (!this.isAccuracyDefined()) {
       return targetPoint;
     }
-    
+
     let dist = Math.pow(distSqr(castPoint, targetPoint), 0.5);
     let r = this.getCircleRadius(dist);
-    
+
     r = Math.pow(boardState.getRandom() * Math.pow(r, 2), 0.5);
     let angle = boardState.getRandom() * Math.PI * 2;
-    
+
     return {
-      x: targetPoint.x + r * Math.cos(angle), 
+      x: targetPoint.x + r * Math.cos(angle),
       y: targetPoint.y + r * Math.sin(angle),
     };
   }
@@ -69,7 +69,7 @@ class ProjectileAbilityDef extends AbilityDef {
       }
     }
   }
-  
+
   getAccuracy() {
     return this.accuracy;
   }
@@ -94,7 +94,7 @@ class ProjectileAbilityDef extends AbilityDef {
   hasFinishedDoingEffect(tickOn) {
     return this.shape.hasFinishedDoingEffect(tickOn);
   }
-  
+
   addDefaultIcon($icon) {
     this.shape.appendIconHTML($icon);
   }
@@ -115,7 +115,7 @@ class ProjectileAbilityDef extends AbilityDef {
         dist = Math.min(dist, maxDist);
         circleSize = this.accuracy.getCircleRadius(dist);
       }
-      
+
       let circleCenter = {
         x: startPos.x + Math.cos(angle) * dist,
         y: startPos.y + Math.sin(angle) * dist
@@ -146,4 +146,5 @@ ProjectileAbilityDef.Shapes = {
   RAIN: 'RAIN',
   BULLET_EXPLOSION: 'BULLET_EXPLOSION',
   WAVE: 'WAVE',
+  DOUBLE_WAVE: 'DOUBLE_WAVE',
 };

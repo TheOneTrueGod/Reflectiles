@@ -66,35 +66,23 @@ function TJDeck() {
       icon: "../Bouncy/assets/icons/icon_plain_rain.png",
       charge: {"initial_charge":-1, "max_charge": 5, "charge_type":"TURNS"},
     }, {
-      name: 'Splurt',
-      description: 'Deals [[hit_effects[0].base_damage]] AoE damage.  ' +
-      'Then splits into [[hit_effects[1].num_bullets]] bullets that each deal [[hit_effects[1].hit_effects[0].base_damage]] damage.',
-      card_text_description: '[[hit_effects[0].base_damage]] + [[hit_effects[1].num_bullets]] X [[hit_effects[1].hit_effects[0].base_damage]]',
+      name: 'The Double Wave',
+      description: 'Sprays [[num_bullets]] in two waves.<br>' +
+        'Each bullet deals [[hit_effects[0].base_damage]] damage.',
+      card_text_description: '[[num_bullets]] X [[hit_effects[0].base_damage]]',
+      style: (new AbilitySheetSpriteAbilityStyleBuilder)
+        .setSheet('bullet_sheet').setCoordNums(274, 68, 295, 79).setRotation(0).build(),
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
-      shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
+      shape: ProjectileAbilityDef.Shapes.DOUBLE_WAVE,
       projectile_type: ProjectileShape.ProjectileTypes.HIT,
-      destroy_on_wall: true,
-      hit_effects:[
-        {
-          effect: ProjectileShape.HitEffects.DAMAGE,
-          base_damage: 60,
-          aoe_type: ProjectileShape.AOE_TYPES.BOX,
-          aoe_size:{x: [-1, 1], y:[-1, 0]},
-        },
-        {
-          effect: ProjectileShape.HitEffects.BULLET_SPLIT,
-          projectile_type: ProjectileShape.ProjectileTypes.HIT,
-          hit_effects: [{
-            effect:ProjectileShape.HitEffects.DAMAGE,
-            base_damage: 50,
-            aoe_type: ProjectileShape.AOE_TYPES.BOX,
-            aoe_size:{x: [-1, 1], y:[-1, 0]},
-          }],
-          num_bullets: 6
-        }
-       ],
-       icon: "../Bouncy/assets/icons/icon_plain_splurt.png",
-       charge: {"initial_charge":-1, "max_charge": 5, "charge_type":"TURNS"}
+      num_bullets: 36,
+      return_num_bullets: 0,
+      icon:"../Bouncy/assets/icons/icon_plain_wave.png",
+      hit_effects: [{
+        effect: ProjectileShape.HitEffects.DAMAGE,
+        base_damage: 75
+      }],
+      //charge: {"initial_charge":-1, "max_charge": 5, "charge_type":"TURNS"},
     }
   ];
   for (var i = 0; i < abilities.length; i++) {

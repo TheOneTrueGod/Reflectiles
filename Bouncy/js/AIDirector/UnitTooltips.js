@@ -32,7 +32,7 @@ class UnitTooltips {
         UnitTooltips.getStatusEffectTooltip('Armour')
       );
     }
-    
+
     for (var key in unit.statusEffects) {
       let statusEffect = UnitTooltips.getStatusEffectTooltip(unit.statusEffects[key]);
       if (statusEffect) {
@@ -47,14 +47,14 @@ class UnitTooltips {
         traitContainer.append(traitTooltip);
       }
     }
-    
+
     if (traitContainer.children().length > 0) {
       tooltipContainer.append(
         $('<hr/>').addClass('statusEffectLine')
       );
       tooltipContainer.append(traitContainer);
     }
-    
+
     if (statusEffectContainer.children().length > 0) {
       tooltipContainer.append(
         $('<hr/>').addClass('statusEffectLine')
@@ -77,7 +77,7 @@ class UnitTooltips {
     );
 
     if (
-      zone.creatorAbility.getOptionalParam('zone_type') !== 
+      zone.creatorAbility.getOptionalParam('zone_type') !==
       ZoneAbilityDef.ZoneTypes.BLOCKER_BARRIER
     ) {
       tooltipContainer.append(UnitTooltips.getHealthBars(zone));
@@ -159,7 +159,7 @@ class UnitTooltips {
       let healthDisplayValue = unit.health.current;
       if (numHealthBars == 0 && unit.health.max == 0 && unit instanceof ZoneEffect) {
         healthDisplayPct = unit.timeLeft.current / unit.timeLeft.max * 100;
-        healthDisplayValue = unit.timeLeft.current;  
+        healthDisplayValue = unit.timeLeft.current;
       }
       numHealthBars += 1;
       healthContainer.append(
@@ -197,7 +197,7 @@ class UnitTooltips {
       case ZoneAbilityDef.ZoneTypes.BLOCKER_BARRIER:
         return "Barrier";
     }
-    
+
     let name = zone.creatorAbility.getOptionalParam('zone_tooltip_name', null);
     if (name) {
       return name;
@@ -248,6 +248,10 @@ class UnitTooltips {
         return 'Blocker';
       case 'UnitBossHealer':
         return 'Healer';
+      case 'UnitSlime':
+        return 'Slime';
+      case 'UnitBossSlime':
+        return 'Giant Slime';
     }
     console.warn('no unit name for [' + unit.constructor.name + ']');
     return '<' + unit.constructor.name + '>';
@@ -258,43 +262,39 @@ class UnitTooltips {
       case 'UnitBasicSquare':
       case 'UnitBasicDiamond':
         return null;
-        break;
       case 'UnitFast':
         return 'Moves 2 spaces every turn';
-        break;
       case 'UnitShover':
       case 'UnitHeavy':
         return null;
-        break;
       case 'UnitBomber':
         return 'A unit carrying a bomb.  It will explode in ' + unit.timeLeft + ' turn' + (unit.timeLeft > 1 ? 's' : '') + ', dealing ' +
           NumbersBalancer.getUnitAbilityNumber(NumbersBalancer.UNIT_ABILITIES.BOMBER_EXPLOSION_DAMAGE) + ' damage.';
-        break;
       case 'UnitKnight':
         return 'Every turn, the knight creates three shields in front of itself.' +
           '  Each shield has ' + NumbersBalancer.getUnitAbilityNumber(NumbersBalancer.UNIT_ABILITIES.KNIGHT_SHIELD) + ' health.';
-        break;
       case 'UnitProtector':
         let numTargets = NumbersBalancer.getUnitAbilityNumber(NumbersBalancer.UNIT_ABILITIES.PROTECTOR_SHIELD_NUM_TARGETS);
         let shieldVal = NumbersBalancer.getUnitAbilityNumber(NumbersBalancer.UNIT_ABILITIES.PROTECTOR_SHIELD);
         return 'Every turn, the protector shields ' + numTargets + ' nearby units.' +
           '  Each shield has ' + shieldVal + ' health.';
-        break;
       case 'UnitShooter':
         let damage = NumbersBalancer.getUnitAbilityNumber(NumbersBalancer.UNIT_ABILITIES.SHOOTER_DAMAGE);
         return 'Shoots every turn dealing ' + damage + ' damage.';
-        break;
       case 'UnitBossHealer':
         let healAmount = NumbersBalancer.getUnitAbilityNumber(
           NumbersBalancer.UNIT_ABILITIES.UNIT_BOSS_HEALER_AMOUNT);
         let healTargets = NumbersBalancer.getUnitAbilityNumber(
           NumbersBalancer.UNIT_ABILITIES.UNIT_BOSS_HEALER_NUM_TARGETS);
         return 'Every turn, this unit heals up to ' + healTargets + ' units for ' + healAmount + ' health.';
-        break;
       case 'UnitBlocker':
         return 'If there are two blockers in the same row, they create an indestructable barrier between them.';
-        break;
-
+      case 'UnitSlime':
+        return null;
+      case 'UnitBossSlime':
+        let splitThreshold = NumbersBalancer.getUnitAbilityNumber(
+          NumbersBalancer.UNIT_ABILITIES.BOSS_SLIME_SPLIT_THRESHOLD);
+        return 'Whenever this slime takes ' + splitThreshold + ' damage, it releases a smaller slime nearby.'
     }
     console.warn('no description for [' + unit.constructor.name + ']');
     return '<no description>';
@@ -310,7 +310,7 @@ class UnitTooltips {
     }
     let colour = UnitTooltips.getEffectColour(statusEffect);
     return $('<div>' +'<span style="color:' + colour + '">' + name + '</span> - ' + effect + '</div>');
-  }  
+  }
 
   static getEffectColour(statusEffect) {
     if (statusEffect == "Armour") {
@@ -363,7 +363,7 @@ class UnitTooltips {
     }
     console.warn('no status effect description for [' + statusEffect.constructor.name + ']');
   }
-  
+
   static getTraitTooltip(trait, value) {
     var name = UnitTooltips.getTraitName(trait, value);
     var effect = UnitTooltips.getTraitDescription(trait, value);
@@ -374,7 +374,7 @@ class UnitTooltips {
     let colour = UnitTooltips.getTraitColour(trait);
     return $('<div>' +'<span style="color:' + colour + '">' + name + '</span> - ' + effect + '</div>');
   }
-  
+
   static getTraitColour(trait) {
     switch (trait) {
       case Unit.UNIT_TRAITS.FROST_IMMUNE:
@@ -385,7 +385,7 @@ class UnitTooltips {
         return '#FFFFFF';
     }
   }
-  
+
   static getTraitName(trait, value) {
     switch (trait) {
       case Unit.UNIT_TRAITS.FROST_IMMUNE:
@@ -396,7 +396,7 @@ class UnitTooltips {
         return '[[NAME]]';
     }
   }
-  
+
   static getTraitDescription(trait, value) {
     switch (trait) {
       case Unit.UNIT_TRAITS.FROST_IMMUNE:

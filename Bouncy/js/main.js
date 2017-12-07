@@ -1,5 +1,6 @@
 /*
  * TODO;
+ * Needs more player interaction
  * Add google ads to the sides
  * Test out shrinking the enemies.
  * Invulnerable enemies that deal no damage as a wall

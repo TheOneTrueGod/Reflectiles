@@ -53,11 +53,6 @@ class LevelDefsWorld2 {
           {'type': WAVE_TYPES.GOTO, 'offset': -1, 'until': {'condition': WAVE_CONDITION.BOSS_HEALTH, 'health_percent': 0.3}},
           {'type': WAVE_TYPES.UNIT_LIST, 'units':[{'unit': UnitSlime, 'count': 6}]},
           {'type': WAVE_TYPES.GOTO, 'offset': -1, 'until': {'condition': WAVE_CONDITION.BOSS_HEALTH, 'health_percent': 0}},
-          {'type': WAVE_TYPES.FORMATION, units: [
-            [    null,    null, null, UnitShooter, UnitShooter, null, null, null,    null],
-            [UnitBlocker, null, null,     null,        null,    null, null, null, UnitBlocker],
-          ]},
-          {'type': WAVE_TYPES.UNIT_LIST, 'units':[{'unit': UnitShooter, 'count': 2}, {'unit': UnitBomber, 'count': 2}]},
         ]
       })
     }

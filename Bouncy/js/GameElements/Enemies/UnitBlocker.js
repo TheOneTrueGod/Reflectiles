@@ -5,7 +5,7 @@ class UnitBlocker extends UnitBasic {
       idleSprite: null,
       activeSprite: null,
     }
-    
+
     this.linkedWith = null;
     this.facing = 1;
     this.createCollisionBox();
@@ -16,9 +16,9 @@ class UnitBlocker extends UnitBasic {
     var b = this.physicsHeight / 2;
     var r = this.physicsWidth / 2;
     var l = -this.physicsWidth / 2;
-    
+
     this.collisionBox = [];
-    
+
     if (!this.linkedWith) {
       l *= 3 / 4;
       r *= 3 / 4;
@@ -50,7 +50,7 @@ class UnitBlocker extends UnitBasic {
     this.sprites.idleSprite = new PIXI.Sprite(
       PIXI.loader.resources['enemy_blocker'].texture
     );
-    
+
     this.sprites.activeSprite = new PIXI.Sprite(
       PIXI.loader.resources['enemy_blocker_active'].texture
     );
@@ -80,7 +80,7 @@ class UnitBlocker extends UnitBasic {
     }, null);
     hitEffect.doHitEffect(boardState, unit, intersection, projectile);
   }
-  
+
   startOfPhase(boardState, phase) {
     super.startOfPhase(boardState, phase);
     if (!this.canUseAbilities()) { return; }
@@ -105,41 +105,41 @@ class UnitBlocker extends UnitBasic {
           if (blockSpawn) {
             continue;
           }*/
-          
+
           let playerUnits = boardState.getPlayerUnitsAtPosition(targetPoint);
           for (var j = 0; j < playerUnits.length; j++) {
             playerUnits[j].knockback();
           }
           UnitBlocker.abilityDef.doActionOnTick(
-            'enemy', 
-            0, 
-            boardState, 
+            'enemy',
+            0,
+            boardState,
             boardState.sectors.getPositionFromGrid(targetPoint),
-            //{x: this.x, y: this.y}, 
+            //{x: this.x, y: this.y},
             boardState.sectors.getPositionFromGrid(targetPoint)
           );
         }
       }
     }
   }
-  
+
   formLinks(boardState) {
     if (this.linkedWith) {
       return;
     }
-    let allBlockers = boardState.getAllUnitsByCondition((unit) => { 
-      return unit instanceof UnitBlocker && unit.canUseAbilities && unit !== this && unit.linkedWith == null; 
+    let allBlockers = boardState.getAllUnitsByCondition((unit) => {
+      return unit instanceof UnitBlocker && unit.canUseAbilities && unit !== this && unit.linkedWith == null;
     });
     let closestBlocker = null;
     for (var blocker of allBlockers) {
       if (blocker.y == this.y && (
-        !closestBlocker || 
+        !closestBlocker ||
         Math.abs(closestBlocker.x - this.x) > Math.abs(blocker.x - this.x)
       )) {
         closestBlocker = blocker;
       }
     }
-    
+
     if (closestBlocker) {
       this.linkWith(closestBlocker);
       closestBlocker.linkWith(this);
@@ -147,7 +147,7 @@ class UnitBlocker extends UnitBasic {
       this.breakLink(boardState);
     }
   }
-  
+
   updateSpriteFacing() {
     if (this.facing == 1) {
       this.sprites.activeSprite.scale.x = Math.abs(this.sprites.activeSprite.scale.x);
@@ -155,7 +155,7 @@ class UnitBlocker extends UnitBasic {
       this.sprites.activeSprite.scale.x = -Math.abs(this.sprites.activeSprite.scale.x);
     }
   }
-  
+
   linkWith(blocker) {
     this.setSpriteVisible(this.sprites.activeSprite);
     this.linkedWith = blocker.id;
@@ -163,7 +163,7 @@ class UnitBlocker extends UnitBasic {
     this.updateSpriteFacing();
     this.createCollisionBox();
   }
-  
+
   breakLink(boardState) {
     this.setSpriteVisible(this.sprites.idleSprite);
     if (this.linkedWith) {
@@ -173,19 +173,19 @@ class UnitBlocker extends UnitBasic {
       this.createCollisionBox();
     }
   }
-  
+
   setSpriteVisible(sprite) {
     for (var key in this.sprites) {
       this.sprites[key].visible = false;
     }
     sprite.visible = true;
   }
-  
+
   serializeData() {
     let serialized = super.serializeData();
     serialized.linked_with = this.linkedWith;
     serialized.facing = this.facing;
-    
+
     return serialized;
   }
 
@@ -195,10 +195,10 @@ class UnitBlocker extends UnitBasic {
     this.facing = data.facing;
     this.createCollisionBox();
   }
-  
+
   getShatterSprite() {
-    return this.sprites.idleSprite.visible ? 
-      this.sprites.idleSprite : 
+    return this.sprites.idleSprite.visible ?
+      this.sprites.idleSprite :
       this.sprites.activeSprite;
   }
 }
@@ -223,9 +223,10 @@ UnitBlocker.createAbilityDef = function() {
     "unit_interaction": {
       'prevent_unit_entry': true,
     },
-    "projectile_interaction": {
-      'hits_player_projectiles': true
-    }
+    projectile_interaction: {
+      player_projectiles: {destroy: true},
+    },
+    invulnerable: true,
   });
 };
 

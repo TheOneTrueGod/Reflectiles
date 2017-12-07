@@ -1,4 +1,10 @@
 class UnitBossSlime extends UnitBasic {
+  constructor(x, y, owner, id) {
+    super(x, y, owner, id);
+    this.traits[Unit.UNIT_TRAITS.FROST_IMMUNE] = true;
+    this.traits[Unit.UNIT_TRAITS.RESILIANT] = 500;
+  }
+  
   getUnitSize() {
     return {x: Unit.UNIT_SIZE * 3, y: Unit.UNIT_SIZE * 3};
   }
@@ -34,8 +40,8 @@ class UnitBossSlime extends UnitBasic {
     for (let dist = 2; dist < 15; dist++) {
       for (let delta = 0; delta < dist; delta > 0 ? delta *= -1 : delta = (delta * -1) + 1) {
         // down
-        spawnPos = this.canSpawnAt(boardState, newUnit, delta, dist);
-        if (spawnPos !== false) { return spawnPos; }
+        //spawnPos = this.canSpawnAt(boardState, newUnit, delta, dist);
+        //if (spawnPos !== false) { return spawnPos; }
         // right
         spawnPos = this.canSpawnAt(boardState, newUnit, dist, delta);
         if (spawnPos !== false) { return spawnPos; }

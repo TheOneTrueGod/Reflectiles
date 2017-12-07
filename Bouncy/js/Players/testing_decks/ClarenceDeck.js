@@ -60,7 +60,7 @@ function ClarenceDeck() {
       ability_type: AbilityDef.AbilityTypes.CREATE_UNIT,
       duration: 10,
       turret_image: 3,
-      projectile_interaction: {"hits_enemy_projectiles":true, "destroy":true},
+      projectile_interaction: {enemy_projectiles: {destroy: true}},
       unit_abilities: [{
         abil_def: {
           ability_type: AbilityDef.AbilityTypes.PROJECTILE,
@@ -90,7 +90,7 @@ function ClarenceDeck() {
       ability_type: AbilityDef.AbilityTypes.CREATE_UNIT,
       duration: 10,
       turret_image: 4,
-      projectile_interaction: {"hits_enemy_projectiles":true, "destroy":true},
+      projectile_interaction: {enemy_projectiles: {destroy: true}},
       unit_abilities: [{
         abil_def: {
           ability_type: AbilityDef.AbilityTypes.PROJECTILE,

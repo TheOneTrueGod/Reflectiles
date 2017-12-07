@@ -77,7 +77,7 @@ class UnitKnight extends UnitBasic {
           if (blockSpawn) {
             continue;
           }
-          
+
           let playerUnits = boardState.getPlayerUnitsAtPosition(targetPoint);
           for (var j = 0; j < playerUnits.length; j++) {
             playerUnits[j].knockback();
@@ -113,7 +113,7 @@ UnitKnight.createAbilityDef = function() {
       'prevent_unit_entry': true,
     },
     "projectile_interaction": {
-      'hits_player_projectiles': true
+      'player_projectiles': {}
     }
   });
 };
