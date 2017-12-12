@@ -1,11 +1,15 @@
 class LevelDefsWorld1 {
   static getStageDef(stage) {
+    let _ = null;
+    let A = UnitBasicSquare;
+    let B = UnitBasicDiamond;
+    let C = UnitShover;
+    let D = UnitHeavy;
+    let S = UnitShooter;
+    let K = UnitKnight;
+    let O = UnitBomber;
     if (stage == 1) {
       // Nothing hard here at all.  Bunch of basic units, with one knight in the middle
-      let _ = null;
-      let A = UnitBasicSquare;
-      let B = UnitBasicDiamond;
-      let S = UnitShooter;
       return new LevelDef({
         'initialSpawn':[
           [_, _, _, _, A, A, A, A, A, A, A, _, _, _, _],
@@ -23,24 +27,31 @@ class LevelDefsWorld1 {
     } else if (stage == 2) {
       // Introduction to advanced units.  Throw a few of 'em in there, scattered around
       return new LevelDef({
+        'initialSpawn':[
+          [A, A, A, A, A, A, A, A, A, A, A, A, A, A, A],
+          [_, _, S, _, _, _, _, _, _, _, _, _, S, _, _],
+          [_, K, A, K, _, _, _, _, _, _, _, K, A, K, _],
+          [A, A, A, A, A, A, A, A, A, A, A, A, A, A, A],
+          [A, A, A, A, A, A, A, A, A, A, A, A, A, A, A],
+        ],
         'waves':[
-          {'type': WAVE_TYPES.UNIT_LIST, 'units':[{'unit': UnitBasicSquare, 'count': 6}, {'unit': UnitBasicDiamond, 'count': 2}]},
-          {'type': WAVE_TYPES.BASIC_WAVE, 'count': 8},
-          {'type': WAVE_TYPES.BASIC_WAVE, 'count': 8},
-          {'type': WAVE_TYPES.ADVANCED_WAVE, 'count': 10, 'advanced': [null, null]},
-          {'type': WAVE_TYPES.ADVANCED_WAVE, 'count': 10, 'advanced': [null, null]},
           {'type': WAVE_TYPES.BASIC_WAVE, 'count': 12},
           {'type': WAVE_TYPES.BASIC_WAVE, 'count': 12},
-          {'type': WAVE_TYPES.ADVANCED_WAVE, 'count': 15, 'advanced': [UnitShooter, UnitKnight, UnitShooter, UnitKnight]},
+          {'type': WAVE_TYPES.ADVANCED_WAVE, 'count': 10, 'advanced': [null, null]},
+          {'type': WAVE_TYPES.ADVANCED_WAVE, 'count': 10, 'advanced': [null, null]},
         ]
       })
     } else if (stage == 3) {
       // Introduction to a formation.  6 waves, and then a "boss" wave of a formation
       return new LevelDef({
+        'initialSpawn':[
+          [A, A, A, A, A, A, A, A, A, A, A, A, A, A, A],
+          [_, B, _, B, _, _, _, _, _, _, _, B, _, B, _],
+          [_, K, A, K, _, _, _, _, _, _, _, K, A, K, _],
+          [_, C, _, C, _, C, _, C, _, C, _, C, _, C, _],
+          [A, A, A, A, A, A, A, A, A, A, A, A, A, A, A],
+        ],
         'waves':[
-          {'type': WAVE_TYPES.BASIC_WAVE, 'count': 8},
-          {'type': WAVE_TYPES.BASIC_WAVE, 'count': 8},
-          {'type': WAVE_TYPES.ADVANCED_WAVE, 'count': 10, 'advanced': [null, null]},
           {'type': WAVE_TYPES.BASIC_WAVE, 'count': 8},
           {'type': WAVE_TYPES.BASIC_WAVE, 'count': 8},
           {'type': WAVE_TYPES.ADVANCED_WAVE, 'count': 10, 'advanced': [null, null]},
@@ -58,13 +69,6 @@ class LevelDefsWorld1 {
           {'type': WAVE_TYPES.BASIC_WAVE, 'count': 8},
           {'type': WAVE_TYPES.ADVANCED_WAVE, 'count': 8, 'advanced': [UnitBomber, UnitBomber]},
           {'type': WAVE_TYPES.BASIC_WAVE, 'count': 8},
-          {'type': WAVE_TYPES.FORMATION, units: [
-            [UnitHeavy, UnitShooter, UnitShooter, UnitHeavy],
-            [UnitHeavy, UnitKnight, UnitKnight, UnitHeavy]
-          ]},
-          {'type': WAVE_TYPES.BASIC_WAVE, 'count': 10},
-          {'type': WAVE_TYPES.ADVANCED_WAVE, 'count': 10, 'advanced': [UnitBomber, UnitBomber]},
-          {'type': WAVE_TYPES.BASIC_WAVE, 'count': 10},
           {'type': WAVE_TYPES.FORMATION, units: [
             [UnitHeavy, UnitShooter, UnitShooter, UnitHeavy],
             [UnitHeavy, UnitKnight, UnitKnight, UnitHeavy]

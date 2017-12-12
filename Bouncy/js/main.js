@@ -141,9 +141,10 @@ class MainGame {
     UIListeners.updateTeamHealth(this.boardState.teamHealth[0], this.boardState.teamHealth[1]);
 
     if (lastBoardState) {
-      if (this.boardState.checkForDesync(lastBoardState)) {
+      let desyncReason = this.boardState.checkForDesync(lastBoardState);
+      if (desyncReason) {
         console.log(this.boardState.turn, lastBoardState.turn);
-        alert("Desync");
+        alert("Desync.  Reason: " + desyncReason);
         console.log("--------my board state--------", lastBoardState);
         console.log("--------server board state--------", this.boardState);
       }

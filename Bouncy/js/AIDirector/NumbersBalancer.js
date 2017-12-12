@@ -101,8 +101,9 @@ class NumbersBalancer {
         shieldVal = 100;
         break;
       case "UnitBlocker":
-        healthVal = 200;
-        shieldVal = 200;
+        healthVal = 100;
+        shieldVal = 100;
+        armorVal = 100;
         break;
       case "UnitBossHealer":
         healthVal = 5000;

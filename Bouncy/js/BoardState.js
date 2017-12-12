@@ -194,20 +194,20 @@ class BoardState {
     this.UNIT_ID_INDEX += 1;
     return this.UNIT_ID_INDEX - 1;
   }
-  
+
   isEnemyUnit(unit) {
     if (unit instanceof UnitCore) {
       return false;
     }
-    
+
     if (unit instanceof Turret) {
       return false;
     }
-    
+
     if ((unit instanceof ZoneEffect) && unit.owningPlayerID !== 'enemy') {
       return false;
     }
-    
+
     return true;
   }
 
@@ -570,7 +570,7 @@ class BoardState {
   getUnitThreshold() {
     return this.boardSize.height - Unit.UNIT_SIZE * 1.4;
   }
-  
+
   getMaxColumn() {
     return this.sectors.columns - 1;
   }
@@ -584,7 +584,7 @@ class BoardState {
     if (this.teamHealth[0] <= 0) { // Players Lost
       return true;
     }
-    
+
     if (
       this.enemyUnitCount <= 0 &&
       this.wavesSpawned >= aiDirector.getWavesToSpawn()
@@ -612,7 +612,7 @@ class BoardState {
   getWavesSpawned() {
     return this.wavesSpawned;
   }
-  
+
   addWavesSpawned(waves) {
     this.wavesSpawned += waves;
   }
@@ -628,33 +628,33 @@ class BoardState {
   }
 
   checkForDesync(otherBoardState) {
+    if (otherBoardState.randomSeed !== this.randomSeed) {
+      console.warn("Desync due to random seed mismatch.  Server: [" + this.randomSeed + "] Client: [" + otherBoardState.randomSeed + "]");
+      return "Random Seed Mismatch";
+    }
+
     if (otherBoardState.units.length != this.units.length) {
       console.warn("Desync due to different unit count.  Server: [" + this.units.length + "] Client: [" + otherBoardState.units.length + "]");
-      return true;
+      return "Different Unit Count";
     }
     for (var i = 0; i < this.units.length; i++) {
       var myUnit = this.units[i];
       var serverUnit = otherBoardState.units[i];
       if (serverUnit.constructor.name !== myUnit.constructor.name) {
         console.warn("Desync due to different unit type.  Index: [" + i + "] Server: [" + serverUnit.constructor.name + "] Client: [" + myUnit.constructor.name + "]");
-        return true;
+        return "Different Unit Type";
       }
 
       if (serverUnit.health.current !== myUnit.health.current) {
         console.warn("Desync due to different unit health.  Index: [" + i + "] Server: [" + serverUnit.health.current + "] Client: [" + myUnit.health.current + "]");
-        return true;
-      }
-
-      if (serverUnit.health.current !== myUnit.health.current) {
-        console.warn("Desync due to different unit health.  Index: [" + i + "] Server: [" + serverUnit.health.current + "] Client: [" + myUnit.health.current + "]");
-        return true;
+        return "Different Unit Health";
       }
 
       if (serverUnit.x !== myUnit.x || serverUnit.y !== myUnit.y) {
         console.warn("Desync due to different unit position.  Index: [" + i +
           "] Server: [" + serverUnit.x + ", " + serverUnit.y +
           "] Client: ["  + myUnit.x + ", " + myUnit.y + "]");
-        return true;
+        return "Different Unit Position";
       }
     }
     return false;

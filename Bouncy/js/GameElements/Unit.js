@@ -169,6 +169,10 @@ class Unit {
     return Math.min(maxDamageDealt, amount);
   }
 
+  delete() {
+    this.readyToDel = true;
+  }
+
   readyToDelete() {
     return this.readyToDel;
   }

@@ -76,7 +76,6 @@ EffectFactory.createDamageEffect = function(boardState, intersection) {
       var centerPoint = intersection.line.getCenterPoint();
       var angle = Math.PI / 4 * (i - (bullets / 2 - 0.5)) / (bullets / 2 - 0.5);
       var normal = intersection.line.getNormal();
-      //console.log(normal);
       boardState.addProjectile(new CircleEffect(
         centerPoint, 1, 0xffffff, normal.multiplyScalar(2).addAngle(angle)
       ));

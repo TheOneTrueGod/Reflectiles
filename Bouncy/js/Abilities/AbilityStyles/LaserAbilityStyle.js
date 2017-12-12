@@ -18,7 +18,6 @@ class SpriteAbilityStyle extends AbilityStyle {
     if (this.trail === null) { return; }
     if (!projectile.trail_data) {
       projectile.trail_data = [];
-      console.log(projectile.lastCollisionPoint);
     }
   }
 

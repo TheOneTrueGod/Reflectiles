@@ -123,6 +123,30 @@ class UnitBlocker extends UnitBasic {
     }
   }
 
+  onDelete(boardState) {
+    super.onDelete(boardState);
+    if (this.linkedWith) {
+      let linkedWith = boardState.findUnit(this.linkedWith);
+      let thisCoord = boardState.sectors.getGridCoord(this);
+      let linkCoord = boardState.sectors.getGridCoord(linkedWith);
+      let direction = thisCoord.x < linkCoord.x ? 1 : -1;
+      for (var x = thisCoord.x; direction == 1 ? x < linkCoord.x : x > linkCoord.x; x += direction) {
+        let targetPoint = {x: x, y: thisCoord.y};
+        let unitsAtPosition = boardState.sectors.getUnitsAtGridSquare(targetPoint.x, targetPoint.y);
+        for (let intersectUnitId of unitsAtPosition) {
+          let unit = boardState.findUnit(intersectUnitId);
+          if (
+            unit instanceof ZoneEffect &&
+            unit.creatorAbility.ZONE_TYPE == ZoneAbilityDef.ZoneTypes.BLOCKER_BARRIER
+          ) {
+            unit.delete();
+          }
+        }
+      }
+      linkedWith.breakLink(boardState);
+    }
+  }
+
   formLinks(boardState) {
     if (this.linkedWith) {
       return;

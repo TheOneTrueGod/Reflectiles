@@ -26,7 +26,7 @@ class LevelDefs {
       return true;
     }
     if (world == 2) {
-      return stage != 2 && stage != 3;
+      return stage != 3;
     }
     return false;
   }

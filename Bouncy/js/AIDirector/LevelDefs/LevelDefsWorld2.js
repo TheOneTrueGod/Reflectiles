@@ -20,6 +20,20 @@ class LevelDefsWorld2 {
           {'type': WAVE_TYPES.GOTO, 'offset': -1, 'until': {'condition': WAVE_CONDITION.BOSS_HEALTH, 'health_percent': 0}},
         ]
       })
+    } else if (stage == 2) {
+        // Hard level.  15 waves,
+        return new LevelDef({
+          'waveCount': 2,
+          'waves':[
+            {'type': WAVE_TYPES.FORMATION, units: [
+              [UnitBlocker, null, UnitBlocker, null, UnitBlocker, null, UnitBlocker],
+              [null, UnitBlocker, null, UnitBlocker, null, UnitBlocker, null, UnitBlocker],
+              [null, null, UnitBlocker, null, UnitBlocker, null, UnitBlocker, null, UnitBlocker],
+            ]},
+            {'type': WAVE_TYPES.UNIT_LIST, 'units':[]},
+            {'type': WAVE_TYPES.GOTO, 'offset': -1, 'until': {'condition': WAVE_CONDITION.BOSS_HEALTH, 'health_percent': 0}},
+          ]
+        })
     } else if (stage == 'boss') {
       // hard level that culminates in a boss,
       return new LevelDef({
