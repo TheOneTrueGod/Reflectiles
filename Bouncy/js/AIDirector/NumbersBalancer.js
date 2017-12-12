@@ -65,11 +65,13 @@ class NumbersBalancer {
     throw new Error("Unknown player count Multiplier");
   }
 
-  getUnitHealth(unit) {
+  getUnitHealthStats(unit, stat) {
     var healthMultiplier =
       this.getDifficultyMultiplier() * this.getPlayerCountMultiplier();
 
-    var healthVal = 100;
+    let healthVal = 100;
+    let armorVal = 0;
+    let shieldVal = 0;
     switch (unit.constructor.name) {
       case "UnitBasicSquare":
       case "UnitBasicDiamond":
@@ -92,12 +94,15 @@ class NumbersBalancer {
         break;
       case "UnitKnight":
         healthVal = 100;
+        armorVal = 200;
         break;
       case "UnitProtector":
         healthVal = 200;
+        shieldVal = 100;
         break;
       case "UnitBlocker":
         healthVal = 200;
+        shieldVal = 200;
         break;
       case "UnitBossHealer":
         healthVal = 5000;
@@ -109,39 +114,23 @@ class NumbersBalancer {
         healthVal = 5000;
         break;
     }
-    return Math.floor(healthVal * healthMultiplier);
+    return {
+      health: Math.floor(healthVal * healthMultiplier),
+      armor: Math.floor(armorVal * healthMultiplier),
+      shield: Math.floor(shieldVal * healthMultiplier)
+    };
+  }
+
+  getUnitHealth(unit) {
+    return this.getUnitHealthStats(unit).health;
   }
 
   getUnitArmour(unit) {
-    var multiplier =
-      this.getDifficultyMultiplier() * this.getPlayerCountMultiplier();
-
-    var value = 0;
-
-    switch (unit.constructor.name) {
-      case "UnitKnight":
-        value = 200;
-    }
-
-    return value * multiplier;
+    return this.getUnitHealthStats(unit).armor;
   }
 
   getUnitShield(unit) {
-    var multiplier =
-      this.getDifficultyMultiplier() * this.getPlayerCountMultiplier();
-
-    let value = 0;
-
-    switch (unit.constructor.name) {
-      case "UnitProtector":
-        value = 100;
-        break;
-      case "UnitBlocker":
-        value = 200;
-        break;
-    }
-
-    return value * multiplier;
+    return this.getUnitHealthStats(unit).shield;
   }
 
   getUnitAbilityNumber(ability) {
@@ -155,7 +144,7 @@ class NumbersBalancer {
       case this.UNIT_ABILITIES.PROTECTOR_SHIELD_RANGE:
         return 2;
       case this.UNIT_ABILITIES.KNIGHT_SHIELD:
-        return 100 * playerMult;
+        return 50 * playerMult;
       case this.UNIT_ABILITIES.SHOOTER_DAMAGE:
         return 1;
       case this.UNIT_ABILITIES.BOMBER_EXPLOSION_DAMAGE:

@@ -2,16 +2,22 @@ class LevelDefsWorld1 {
   static getStageDef(stage) {
     if (stage == 1) {
       // Nothing hard here at all.  Bunch of basic units, with one knight in the middle
+      let _ = null;
+      let A = UnitBasicSquare;
+      let B = UnitBasicDiamond;
+      let S = UnitShooter;
       return new LevelDef({
+        'initialSpawn':[
+          [_, _, _, _, A, A, A, A, A, A, A, _, _, _, _],
+          [_, _, _, A, B, B, A, _, A, B, B, A, _, _, _],
+          [_, _, A, B, B, A, _, _, _, A, B, B, A, _, _],
+          [_, A, B, B, A, _, _, _, _, _, A, B, B, A, _],
+          [A, A, A, A, _, _, _, _, _, _, _, A, A, A, A],
+        ],
         'waves':[
-          {'type': WAVE_TYPES.UNIT_LIST, 'units':[{'unit': UnitBasicSquare, 'count': 6}, {'unit': UnitBasicDiamond, 'count': 2}]},
-          {'type': WAVE_TYPES.UNIT_LIST, 'units':[{'unit': UnitBasicSquare, 'count': 6}, {'unit': UnitBasicDiamond, 'count': 2}]},
-          {'type': WAVE_TYPES.UNIT_LIST, 'units':[{'unit': UnitBasicSquare, 'count': 6}, {'unit': UnitBasicDiamond, 'count': 2}]},
-          {'type': WAVE_TYPES.UNIT_LIST, 'units':[{'unit': UnitKnight, 'count': 1}, {'unit': UnitShover, 'count': 6}, {'unit': UnitBasicSquare, 'count': 2}]},
-          {'type': WAVE_TYPES.UNIT_LIST, 'units':[{'unit': UnitBasicSquare, 'count': 6}, {'unit': UnitBasicDiamond, 'count': 2}]},
-          {'type': WAVE_TYPES.UNIT_LIST, 'units':[{'unit': UnitBasicSquare, 'count': 6}, {'unit': UnitBasicDiamond, 'count': 2}]},
-          {'type': WAVE_TYPES.UNIT_LIST, 'units':[{'unit': UnitBasicSquare, 'count': 6}, {'unit': UnitBasicDiamond, 'count': 2}]},
-          {'type': WAVE_TYPES.UNIT_LIST, 'units':[{'unit': UnitShover, 'count': 10}]},
+          {'type': WAVE_TYPES.FORMATION, units: [
+            [_, _, _, _, _, _, S, _, S, _, _, _, _, _, _]
+          ]},
         ]
       })
     } else if (stage == 2) {

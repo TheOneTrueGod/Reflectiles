@@ -38,10 +38,12 @@ class LevelDef {
       this.totalWaves = 20;
       this.waves = null;
       this.hudWaves = this.totalWaves;
+      this.initialSpawn = null;
     } else {
       this.totalWaves = levelData.waves.length;
       this.waves = levelData.waves;
       this.hudWaves = levelData.waveCount ? levelData.waveCount : this.totalWaves;
+      this.initialSpawn = levelData.initialSpawn;
     }
   }
 

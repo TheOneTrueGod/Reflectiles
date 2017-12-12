@@ -52,7 +52,7 @@ class UnitListSpawnFormation extends SpawnFormation {
     this.isValidSpawn = null;
     this.validSpawnSpots = [];
   }
-  
+
   isValidSpawnSpot(spawnPosition) {
     if (this.isValidSpawn !== null) { return this.isValidSpawn; }
     var y = 0;
@@ -68,7 +68,7 @@ class UnitListSpawnFormation extends SpawnFormation {
     this.isValidSpawn = this.validSpawnSpots.length >= this.unitsToSpawn;
     return this.isValidSpawn;
   }
-  
+
   spawn(spawnPosition) {
     this.unitList.forEach((unitData) => {
       for (var i = 0; i < unitData.count; i++) {
@@ -107,7 +107,7 @@ class BasicUnitWaveSpawnFormation extends SpawnFormation {
         - 1
         ;
     }
-    
+
     this.validSpawnSpots = [];
     this.isValidSpawn = null;
   }
@@ -158,7 +158,7 @@ class AdvancedUnitWaveSpawnFormation extends BasicUnitWaveSpawnFormation {
     super(boardState, totalWaves, unitsToSpawn);
     this.advancedUnitsToSpawn = advancedToSpawn;
   }
-  
+
   getAdvancedUnitSpawnWeights(unitsLeft) {
     let unitList = [
       {weight: 1, value: UnitShooter},
@@ -166,11 +166,11 @@ class AdvancedUnitWaveSpawnFormation extends BasicUnitWaveSpawnFormation {
       {weight: 1, value: UnitKnight},
       {weight: 1, value: UnitProtector},
     ];
-    
+
     if (unitsLeft > 1) {
       unitList.push({weight: 1, value: UnitBlocker});
     }
-    
+
     return unitList;
   }
 
@@ -226,21 +226,21 @@ class UnitFormationSpawnFormation extends SpawnFormation {
       this.spawnWidth = Math.max(this.spawnWidth, unitRow.length);
     });
   }
-  
+
   isValidSpawnSpot(spawnPosition) {
     return SpawnFormationUtils.isBoxClearForSpawn(
-      this.boardState, 
+      this.boardState,
       {x: spawnPosition.x, y: 0},
       {x: spawnPosition.x + this.spawnWidth, y: this.spawnHeight},
     );
   }
-  
+
   spawn(spawnPosition) {
     for (var y = 0; y < this.unitList.length; y++) {
       for (var x = 0; x < this.unitList[y].length; x++) {
         if (this.unitList[y][x] !== null) {
           this.spawnUnitAtCoord(
-            this.unitList[y][x], 
+            this.unitList[y][x],
             {x: spawnPosition.x + x, y: spawnPosition.y + y}
           );
         }
@@ -263,7 +263,7 @@ class KnightAndShooterSpawnFormation extends SpawnFormation {
       return false;
     }
     return SpawnFormationUtils.isBoxClearForSpawn(
-      this.boardState, 
+      this.boardState,
       {x: spawnPosition.x - this.spawnWidth, y: 0},
       {x: spawnPosition.x + this.spawnWidth, y: 1},
     );
@@ -299,11 +299,11 @@ class SpawnFormationUtils {
   static isBoxClearForSpawn(boardState, topLeft, bottomRight) {
     if (
       topLeft.x > bottomRight.x || topLeft.y > bottomRight.y ||
-      topLeft.x < 0 || bottomRight.x >= boardState.sectors.columns
+      topLeft.x < 0 || bottomRight.x > boardState.sectors.columns
     ) {
       return false;
     }
-    
+
     for (var x = topLeft.x; x < bottomRight.x; x++) {
       for (var y = topLeft.y; y < bottomRight.y; y++) {
         var spot = Victor(x, y);

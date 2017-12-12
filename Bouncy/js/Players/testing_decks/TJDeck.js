@@ -77,10 +77,11 @@ function TJDeck() {
       projectile_type: ProjectileShape.ProjectileTypes.HIT,
       num_bullets: 36,
       return_num_bullets: 0,
+      destroy_on_wall: true,
       icon:"../Bouncy/assets/icons/icon_plain_wave.png",
       hit_effects: [{
         effect: ProjectileShape.HitEffects.DAMAGE,
-        base_damage: 75
+        base_damage: 50
       }],
       //charge: {"initial_charge":-1, "max_charge": 5, "charge_type":"TURNS"},
     }

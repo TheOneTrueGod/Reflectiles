@@ -127,19 +127,34 @@ class AIDirector {
     const HORIZONTAL_SQUARES = boardState.sectors.columns;
     const squareSize = boardState.boardSize.width / HORIZONTAL_SQUARES;
     const squareHeight = Unit.UNIT_SIZE;
+    let levelDef = this.getLevelDef();
+    if (levelDef && levelDef.initialSpawn) {
+      for (let y = 0; y < levelDef.initialSpawn.length; y++) {
+        for (let x = 0; x < levelDef.initialSpawn[y].length; x++) {
+          var unitClass = levelDef.initialSpawn[y][x];
+          if (!unitClass) { continue; }
+          var newUnit = new unitClass(
+            x * squareSize + squareSize / 2,
+            y * squareHeight + squareHeight / 2,
+            0
+          );
+          boardState.addUnit(newUnit);
+        }
+      }
+    } else {
+      for (var y = INITIAL_ROWS - 1; y >= 0; y--) {
+        for (var x = 0; x < HORIZONTAL_SQUARES; x++) {
+          var shouldSpawn = boardState.getRandom() <= 0.3;
+          if (!shouldSpawn) { continue; }
 
-    for (var y = INITIAL_ROWS - 1; y >= 0; y--) {
-      for (var x = 0; x < HORIZONTAL_SQUARES; x++) {
-        var shouldSpawn = boardState.getRandom() <= 0.3;
-        if (!shouldSpawn) { continue; }
-
-        var unitClass = UnitBasicSquare;
-        var newUnit = new unitClass(
-          x * squareSize + squareSize / 2,
-          y * squareHeight + squareHeight / 2,
-          0
-        );
-        boardState.addUnit(newUnit);
+          var unitClass = UnitBasicSquare;
+          var newUnit = new unitClass(
+            x * squareSize + squareSize / 2,
+            y * squareHeight + squareHeight / 2,
+            0
+          );
+          boardState.addUnit(newUnit);
+        }
       }
     }
   }
