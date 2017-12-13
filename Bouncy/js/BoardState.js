@@ -22,6 +22,8 @@ class BoardState {
     this.boardStateAtStartOfTurn = null;
     this.lastSpawnTurn = 0;
 
+    this.gameStats = new GameStats();
+
     var columns = Math.floor(this.boardSize.width / Unit.UNIT_SIZE);
     var rows = Math.floor(this.boardSize.height / Unit.UNIT_SIZE);
     this.sectors = new UnitSectors(rows, columns, this.boardSize.width, this.boardSize.height);
@@ -75,6 +77,7 @@ class BoardState {
 
   deserialize(boardState) {
     if (!boardState) { return; }
+    if (boardState.game_stats) { this.gameStats.load(boardState.game_stats); }
     if (boardState.turn) { this.turn = boardState.turn; }
     if (boardState.tick) { this.tick = boardState.tick; }
     if (boardState.unit_id_index) { this.UNIT_ID_INDEX = boardState.unit_id_index; }
@@ -168,7 +171,8 @@ class BoardState {
       'waves_spawned': this.wavesSpawned,
       'player_data': this.serializePlayerData(),
       'units_to_spawn': this.unitsToSpawn.serializeData(),
-      'last_spawn_turn': this.lastSpawnTurn
+      'last_spawn_turn': this.lastSpawnTurn,
+      'game_stats': this.gameStats.serialize(),
     };
   }
 

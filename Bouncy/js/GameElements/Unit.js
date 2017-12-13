@@ -114,7 +114,8 @@ class Unit {
     return toRet;
   }
 
-  dealDamage(boardState, amount) {
+  dealDamage(boardState, amount, source) {
+    let damageDealt = 0;
     var damageMult = 1;
     for (var key in this.statusEffects) {
       damageMult *= this.statusEffects[key].getDamageMultiplier()
@@ -122,27 +123,31 @@ class Unit {
     var maxDamageDealt = this.health.current;
     var damageToDeal = Math.max(amount * damageMult, 0);
 
+    let resiliantValue = this.getTraitValue(Unit.UNIT_TRAITS.RESILIANT);
+    if (resiliantValue) {
+      damageToDeal = Math.min(damageToDeal, resiliantValue);
+    }
+
     if (this.hasStatusEffect(ShieldStatusEffect)) {
       var shieldEffect = this.statusEffects[ShieldStatusEffect.getEffectType()];
       maxDamageDealt += shieldEffect.health.current;
-      damageToDeal -= shieldEffect.dealDamage(Math.floor(Math.max(damageToDeal, 0)));
+      let shieldDamage = shieldEffect.dealDamage(Math.floor(Math.max(damageToDeal, 0)));
+      damageDealt += shieldDamage;
+      damageToDeal -= shieldDamage;
 
       if (shieldEffect.readyToDelete()) {
         this.removeStatusEffect(shieldEffect.getEffectType());
       }
     }
 
-    let resiliantValue = this.getTraitValue(Unit.UNIT_TRAITS.RESILIANT);
-    if (resiliantValue) {
-      damageToDeal = Math.min(damageToDeal, resiliantValue);
-    }
-
     if (this.shield.current > 0) {
       maxDamageDealt += this.shield.current;
       if (this.shield.current >= damageToDeal) {
         this.shield.current -= damageToDeal;
+        damageDealt += damageToDeal;
         damageToDeal = 0;
       } else {
+        damageDealt += this.shield.current;
         damageToDeal -= this.shield.current;
         this.shield.current = 0;
       }
@@ -151,19 +156,29 @@ class Unit {
     if (this.armour.current > 0) {
       maxDamageDealt += this.armour.current;
       if (this.armour.current >= damageToDeal) {
+        damageDealt += damageToDeal;
         this.armour.current -= damageToDeal;
         damageToDeal = 0;
       } else {
+        damageDealt += this.armour.current;
         damageToDeal -= this.armour.current;
         this.armour.current = 0;
       }
     }
 
     maxDamageDealt = maxDamageDealt / Math.max(damageMult, 0.00001)
-
+    damageDealt += Math.min(this.health.current, Math.floor(damageToDeal));
     this.setHealth(this.health.current - Math.floor(Math.max(damageToDeal, 0)));
     if (amount > 0) {
       boardState.resetNoActionKillSwitch();
+    }
+    if (source instanceof Projectile || source instanceof StatusEffect) {
+      boardState.gameStats.addPlayerDamage(source.playerID, damageDealt);
+    } else if (source instanceof ZoneEffect && source.owningPlayerID) {
+      boardState.gameStats.addPlayerDamage(source.owningPlayerID, damageDealt);
+    } else {
+      boardState.gameStats.addPlayerDamage('unknown', damageDealt);
+      console.warn("Unknown source: ", source);
     }
 
     return Math.min(maxDamageDealt, amount);

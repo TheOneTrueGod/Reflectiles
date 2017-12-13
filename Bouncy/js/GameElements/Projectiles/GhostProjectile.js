@@ -1,6 +1,6 @@
 class GhostProjectile extends Projectile {
-  constructor(startPoint, targetPoint, angle, abilityDef) {
-    super(startPoint, targetPoint, angle, abilityDef, {});
+  constructor(playerID, startPoint, targetPoint, angle, abilityDef) {
+    super(playerID, startPoint, targetPoint, angle, abilityDef, {});
     this.hitEnemy = false;
     this.ghost_time = abilityDef.getOptionalParam('duration', 10);
     this.start_ghost_time = this.ghost_time;

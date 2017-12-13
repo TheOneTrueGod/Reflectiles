@@ -1,6 +1,6 @@
 class PassthroughProjectile extends Projectile {
-  constructor(startPoint, targetPoint, angle, abilityDef, hitsLeft, projectileOptions) {
-    super(startPoint, targetPoint, angle, abilityDef, projectileOptions);
+  constructor(playerID, startPoint, targetPoint, angle, abilityDef, hitsLeft, projectileOptions) {
+    super(playerID, startPoint, targetPoint, angle, abilityDef, projectileOptions);
     this.hitsLeft = hitsLeft ? hitsLeft : 5;
   }
 

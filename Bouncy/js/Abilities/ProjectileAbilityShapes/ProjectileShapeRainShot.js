@@ -79,6 +79,7 @@ class ProjectileShapeRainShot extends ProjectileShape {
         var speed = 4;
         boardState.addProjectile(
           Projectile.createProjectile(
+            playerID, 
             this.projectileType,
             castPoint,
             null,

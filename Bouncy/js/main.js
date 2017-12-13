@@ -265,7 +265,7 @@ class MainGame {
 
     if (this.boardState.isGameOver(AIDirector)) {
       $('#missionEndTurnButton').prop("disabled", true);
-      UIListeners.showGameOverScreen(this.boardState.didPlayersWin(AIDirector));
+      UIListeners.showGameOverScreen(this.boardState.didPlayersWin(AIDirector), this.boardState.gameStats);
     }
   }
 
@@ -444,7 +444,7 @@ class MainGame {
     if (!this.boardState.isGameOver(AIDirector)) {
       $('#missionEndTurnButton').prop("disabled", false);
     } else {
-      UIListeners.showGameOverScreen(this.boardState.didPlayersWin(AIDirector));
+      UIListeners.showGameOverScreen(this.boardState.didPlayersWin(AIDirector), this.boardState.gameStats);
     }
 
     this.boardState.incrementTurn(this.players);

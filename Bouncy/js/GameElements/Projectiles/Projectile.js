@@ -1,6 +1,7 @@
 const MAX_WALLS_HIT = 3;
 class Projectile {
-  constructor(startPoint, targetPoint, angle, abilityDef, projectileOptions) {
+  constructor(playerID, startPoint, targetPoint, angle, abilityDef, projectileOptions) {
+    this.playerID = playerID;
     this.x = startPoint.x;
     this.y = startPoint.y;
     this.angle = angle;
@@ -231,26 +232,26 @@ class Projectile {
 }
 
 Projectile.createProjectile = function(
-  projectileType, startPoint, targetPoint, angle, abilityDef, projectileOptions
+  playerID, projectileType, startPoint, targetPoint, angle, abilityDef, projectileOptions
 ) {
   switch (projectileType) {
     case ProjectileShape.ProjectileTypes.BOUNCE:
-      return new BouncingProjectile(startPoint, targetPoint, angle, abilityDef);
+      return new BouncingProjectile(playerID, startPoint, targetPoint, angle, abilityDef);
     case ProjectileShape.ProjectileTypes.HIT:
-      return new SingleHitProjectile(startPoint, targetPoint, angle, abilityDef, projectileOptions);
+      return new SingleHitProjectile(playerID, startPoint, targetPoint, angle, abilityDef, projectileOptions);
     case ProjectileShape.ProjectileTypes.PENETRATE:
-      return new PenetrateProjectile(startPoint, targetPoint, angle, abilityDef, projectileOptions);
+      return new PenetrateProjectile(playerID, startPoint, targetPoint, angle, abilityDef, projectileOptions);
     case ProjectileShape.ProjectileTypes.PASSTHROUGH:
-      return new PassthroughProjectile(startPoint, targetPoint, angle,
+      return new PassthroughProjectile(playerID, startPoint, targetPoint, angle,
         abilityDef, abilityDef.getOptionalParam("num_hits", 5), projectileOptions);
     case ProjectileShape.ProjectileTypes.TIMEOUT:
-      return new TimeoutProjectile(startPoint, targetPoint, angle, abilityDef, projectileOptions);
+      return new TimeoutProjectile(playerID, startPoint, targetPoint, angle, abilityDef, projectileOptions);
     case ProjectileShape.ProjectileTypes.FROZEN_ORB:
-      return new FrozenOrbProjectile(startPoint, targetPoint, angle, abilityDef, projectileOptions);
+      return new FrozenOrbProjectile(playerID, startPoint, targetPoint, angle, abilityDef, projectileOptions);
     case ProjectileShape.ProjectileTypes.GHOST:
-      return new GhostProjectile(startPoint, targetPoint, angle, abilityDef);
+      return new GhostProjectile(playerID, startPoint, targetPoint, angle, abilityDef);
     case ProjectileShape.ProjectileTypes.GRENADE:
-      return new GrenadeProjectile(startPoint, targetPoint, angle, abilityDef);
+      return new GrenadeProjectile(playerID, startPoint, targetPoint, angle, abilityDef);
   }
   throw new Error("projectileType [" + projectileType + "] not handled");
 };

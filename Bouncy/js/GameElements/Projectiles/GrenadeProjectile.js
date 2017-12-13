@@ -1,6 +1,6 @@
 class GrenadeProjectile extends Projectile {
-  constructor(startPoint, targetPoint, angle, abilityDef) {
-    super(startPoint, targetPoint, angle, abilityDef, {});
+  constructor(playerID, startPoint, targetPoint, angle, abilityDef) {
+    super(playerID, startPoint, targetPoint, angle, abilityDef, {});
     this.hitEnemy = false;
     this.ghost_time = abilityDef.getOptionalParam('duration', 10);
     this.start_ghost_time = this.ghost_time;
@@ -19,7 +19,7 @@ class GrenadeProjectile extends Projectile {
       new ProjectileTrailEffect(this, 1, lerp(0.8, 0.25, this.getZPct()))
     );
   }
-  
+
   getZPct() {
     return Math.sin(this.duration / this.maxDuration * Math.PI);
   }

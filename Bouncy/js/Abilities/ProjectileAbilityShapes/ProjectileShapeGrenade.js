@@ -23,6 +23,7 @@ class ProjectileShapeGrenade extends ProjectileShape {
       );
       boardState.addProjectile(
         Projectile.createProjectile(
+          playerID, 
           this.projectileType,
           castPoint,
           targetPoint,

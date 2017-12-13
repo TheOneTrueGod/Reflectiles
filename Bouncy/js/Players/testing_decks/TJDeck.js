@@ -64,7 +64,7 @@ function TJDeck() {
       ],
       num_bullets: 50,
       icon: "../Bouncy/assets/icons/icon_plain_rain.png",
-      charge: {"initial_charge":-1, "max_charge": 5, "charge_type":"TURNS"},
+      charge: {"initial_charge":-1, "max_charge": 4, "charge_type":"TURNS"},
     }, {
       name: 'The Double Wave',
       description: 'Sprays [[num_bullets]] in two waves.<br>' +
@@ -83,7 +83,7 @@ function TJDeck() {
         effect: ProjectileShape.HitEffects.DAMAGE,
         base_damage: 50
       }],
-      //charge: {"initial_charge":-1, "max_charge": 5, "charge_type":"TURNS"},
+      charge: {"initial_charge":-1, "max_charge": 6, "charge_type":"TURNS"},
     }
   ];
   for (var i = 0; i < abilities.length; i++) {

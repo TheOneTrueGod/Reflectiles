@@ -391,9 +391,13 @@
 }
 
 #warningMessageBox {
+  height: 60px;
+}
+
+#warningMessageBox,
+#gameOverBox {
   position: absolute;
   width: 50%;
-  height: 60px;
   margin-left: 25%;
   background: white;
   border: 5px solid red;
@@ -403,10 +407,39 @@
   padding-top: 2px;
 }
 
+#gameOverBox {
+  margin-top: 50px;
+  margin-left: 15%;
+  width: 70%;
+}
+
+#gameOverBox .statHeader,
+#gameOverBox .statHeaderDamage,
+#gameOverBox .playerName,
+#gameOverBox .playerDamage {
+  font-size: 20px;
+  width: 60%;
+  display: inline-block;
+}
+
+#gameOverBox .statHeaderDamage,
+#gameOverBox .playerDamage {
+  width: 40%;
+}
+
 #playerSetupBoard {
   width: 766px;
   height: 600px;
   position: relative;
+}
+
+.statRow {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+#stats {
+  padding-bottom: 10px;
 }
 
 .playerSetupSection {

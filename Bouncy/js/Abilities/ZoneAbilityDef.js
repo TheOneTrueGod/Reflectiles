@@ -120,6 +120,7 @@ class ZoneAbilityDef extends AbilityDef {
           boardState,
           {x: zone.x, y: zone.y},
           {x: zone.x, y: zone.y},
+          zone,
         )
       }
     });

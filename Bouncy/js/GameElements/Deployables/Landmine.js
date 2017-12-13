@@ -35,7 +35,7 @@ class Landmine extends ZoneEffect {
     for (var i = 0; i < abilList.length; i++) {
       let abil = abilList[i].initializedAbilDef;
 
-      abil.doActionOnTick(this.owningPlayerID, 0, boardState, this, this);
+      abil.doActionOnTick(this.owningPlayerID, 0, boardState, this, this, this);
     }
   }
 

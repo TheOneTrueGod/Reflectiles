@@ -98,11 +98,13 @@ class ProjectileShapeDoubleWave extends ProjectileShape {
 
         boardState.addProjectile(
           Projectile.createProjectile(
+            playerID, 
             this.projectileType,
             castPoint,
             null,
             angle,
             this.abilityDef,
+            playerID,
             {}
           ).addUnitHitCallback(this.unitHitCallback.bind(this))
         );

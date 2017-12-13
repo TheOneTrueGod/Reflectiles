@@ -120,15 +120,58 @@ class UIListeners {
 
   }
 
-  showGameOverScreen(playersWon) {
+  showGameOverScreen(playersWon, gameStats) {
+    console.log("Game Stats!");
+    console.log(gameStats);
     $('#gameContainer').addClass("gameOver");
     if (playersWon) {
-      $('#warningMessageBox').text("A winner is you!");
+      $('#gameOverBox #title').text("A winner is you!");
     } else {
-      $('#warningMessageBox').text("Game Over");
+      $('#gameOverBox').text("Game Over");
     }
 
-    $('#warningMessageBox').show();
+    $('#gameOverBox #stats').empty().append(
+      $('<div/>', {class: 'row statRow'}).append(
+        $('<div/>', {class: 'statHeader', text: 'Player'})
+      ).append(
+        $('<div/>', {class: 'statHeaderDamage', text: 'Damage'})
+      )
+    );
+
+    for (let player of MainGame.players) {
+      let damage = gameStats.playerDamage[player.user_id] ?
+        gameStats.playerDamage[player.user_id] :
+        0;
+      $('#gameOverBox #stats').append(
+        $('<div/>', {class: 'row statRow'}).append(
+          $('<div/>', {class: 'statHeader', text: player.user_name})
+        ).append(
+          $('<div/>', {class: 'statHeaderDamage', text: damage})
+        )
+      );
+    }
+
+    if ('unknown' in gameStats.playerDamage) {
+      $('#gameOverBox #stats').append(
+        $('<div/>', {class: 'row statRow'}).append(
+          $('<div/>', {class: 'statHeader', text: 'Unknown'})
+        ).append(
+          $('<div/>', {class: 'statHeaderDamage', text: gameStats.playerDamage['unknown']})
+        )
+      );
+    }
+
+    if ('enemy' in gameStats.playerDamage) {
+      $('#gameOverBox #stats').append(
+        $('<div/>', {class: 'row statRow'}).append(
+          $('<div/>', {class: 'statHeader', text: 'Enemy'})
+        ).append(
+          $('<div/>', {class: 'statHeaderDamage', text: gameStats.playerDamage['enemy']})
+        )
+      );
+    }
+
+    $('#gameOverBox').show();
   }
 
   updateGameProgress(progressPct) {
@@ -146,7 +189,7 @@ class UIListeners {
     $('.levelSelect .level[data-level="' + level + '"]').addClass("selected");
     $('.difficultySelect .button.selected').removeClass('selected');
     $('.difficultySelect .button[data-difficulty="' + difficulty + '"]').addClass("selected");
-    
+
     $('.levelSelect .level').each((index, item) => {
       let level = $(item).data('level');
       if (LevelDefs.isLevelAvailable(level)) {
@@ -270,13 +313,13 @@ class UIListeners {
       $section.find(".quitButton").on("click", this.quitClick.bind(this, playerID));
       $section.find(".joinGameButton").on("click", this.joinGameClick.bind(this, playerID));
     }
-    
+
     $('.isHost .difficultySelect .button').on('click', (event) => {
       let $target = $(event.target);
       if ($target.hasClass('disabled')) {
         return;
       }
-      
+
       $('.difficultySelect .button.selected').removeClass('selected');
       $target.addClass('selected');
       var difficulty = $target.data('difficulty');
@@ -295,14 +338,14 @@ class UIListeners {
         return;
       }
       var level = $target.data('level');
-      
+
       if (!LevelDefs.isLevelAvailable(level)) {
         return;
       }
-      
+
       $('.levelSelect .level.selected').removeClass('selected');
       $target.addClass('selected');
-      
+
       ServerCalls.UpdatePreGameState(
         null,
         ServerCalls.SLOT_ACTIONS.SET_LEVEL,

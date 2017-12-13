@@ -118,6 +118,7 @@ class ProjectileShapeSprayShot extends ProjectileShape {
         var speed = lerp(6, 7, i / this.num_bullets);
         boardState.addProjectile(
           Projectile.createProjectile(
+            playerID, 
             this.projectileType,
             castPoint,
             targetPoint,

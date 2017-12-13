@@ -97,6 +97,7 @@ class ProjectileShapeWave extends ProjectileShape {
 
       boardState.addProjectile(
         Projectile.createProjectile(
+          playerID, 
           this.projectileType,
           castPoint,
           null,

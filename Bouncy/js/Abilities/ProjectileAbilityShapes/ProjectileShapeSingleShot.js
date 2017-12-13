@@ -36,13 +36,14 @@ class ProjectileShapeSingleShot extends ProjectileShape {
     if (tick == this.ACTIVATE_ON_TICK) {
       let randomTarget = this.abilityDef.getAccuracy().getRandomTarget(
         boardState, castPoint, targetPoint);
-        
+
       var angle = Math.atan2(
         randomTarget.y - castPoint.y, randomTarget.x - castPoint.x
       );
-      
+
       boardState.addProjectile(
         Projectile.createProjectile(
+          playerID, 
           this.projectileType,
           castPoint,
           randomTarget,

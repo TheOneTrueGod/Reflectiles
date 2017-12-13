@@ -1,6 +1,6 @@
 class EnemyProjectile extends Projectile {
   constructor(startPoint, targetPoint, angle, projectileOptions) {
-    super(startPoint, targetPoint, angle, null, projectileOptions);
+    super('enemy', startPoint, targetPoint, angle, null, projectileOptions);
     this.FRIENDLY_FIRE = idx(projectileOptions, 'friendly_fire', false);
     this.DAMAGE = idx(projectileOptions, 'damage_to_players', 1);
     this.abilityStyle = new AbilitySheetAbilityStyle({
@@ -9,7 +9,7 @@ class EnemyProjectile extends Projectile {
       scale: 3,
     });
   }
-  
+
   getStyle() {
     return this.abilityStyle;
   }

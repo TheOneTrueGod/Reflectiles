@@ -1,6 +1,6 @@
 class PenetrateProjectile extends Projectile {
-  constructor(startPoint, targetPoint, angle, abilityDef, projectileOptions) {
-    super(startPoint, targetPoint, angle, abilityDef, projectileOptions);
+  constructor(playerID, startPoint, targetPoint, angle, abilityDef, projectileOptions) {
+    super(playerID, startPoint, targetPoint, angle, abilityDef, projectileOptions);
     this.damageDealt = 0;
   }
 

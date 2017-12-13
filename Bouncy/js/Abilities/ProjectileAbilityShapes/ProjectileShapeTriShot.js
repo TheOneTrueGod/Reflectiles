@@ -94,6 +94,7 @@ class ProjectileShapeTriShot extends ProjectileShape {
         ) + this.calculateSpread(castPoint, targetPoint) * i / this.bullets_per_side;
         boardState.addProjectile(
           Projectile.createProjectile(
+            playerID, 
             this.projectileType,
             castPoint,
             null,

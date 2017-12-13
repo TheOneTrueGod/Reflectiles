@@ -1,6 +1,6 @@
 class BouncingProjectile extends Projectile {
-  constructor(startPoint, targetPoint, angle, abilityDef) {
-    super(startPoint, targetPoint, angle, abilityDef, {});
+  constructor(playerID, startPoint, targetPoint, angle, abilityDef) {
+    super(playerID, startPoint, targetPoint, angle, abilityDef, {});
     this.max_bounces = abilityDef.getOptionalParam('max_bounces', -1);
   }
 

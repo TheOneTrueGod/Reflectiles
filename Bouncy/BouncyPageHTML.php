@@ -54,6 +54,10 @@
         <div id="missionControlsActionBox">
           <div id="missionActionDisplay">
             <div id="warningMessageBox" class="noselect" style="display: none;"></div>
+            <div id="gameOverBox" class="noselect" style="display: none;">
+              <div id="title"></div>
+              <div id="stats"></div>
+            </div>
             <div class="overlay"></div>
           </div>
           <div id="missionControlsDisplay">
