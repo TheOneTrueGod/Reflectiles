@@ -2,7 +2,6 @@
  * TODO;
  * Needs more player interaction
  * Add google ads to the sides
- * Test out shrinking the enemies.
  * Invulnerable enemies that deal no damage as a wall
  * New enemy type -- infected.  When it dies, it explodes into a bunch of smaller minions.
  * Have the knight throw up his shield to the left and right if the front is full.

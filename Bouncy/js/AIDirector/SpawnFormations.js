@@ -37,7 +37,8 @@ class SpawnFormation {
   }
 
   getSpawnDelay() {
-    return 2;
+    console.log(this);
+    return 1;
   }
 }
 
@@ -246,6 +247,10 @@ class UnitFormationSpawnFormation extends SpawnFormation {
         }
       }
     }
+  }
+
+  getSpawnDelay() {
+    return 1;
   }
 }
 
