@@ -46,7 +46,7 @@ class LevelDefsWorld1 {
       return new LevelDef({
         'initialSpawn':[
           [A, A, A, A, A, A, A, A, A, A, A, A, A, A, A],
-          [_, B, _, B, _, _, _, _, _, _, _, B, _, B, _],
+          [_, O, _, O, _, _, _, _, _, _, _, O, _, O, _],
           [_, K, A, K, _, _, _, _, _, _, _, K, A, K, _],
           [_, C, _, C, _, C, _, C, _, C, _, C, _, C, _],
           [A, A, A, A, A, A, A, A, A, A, A, A, A, A, A],

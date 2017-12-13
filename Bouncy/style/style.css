@@ -450,23 +450,52 @@
 }
 
 .large.tooltip-inner {
-  max-width: 300px;
+  max-width: 360px;
+  width: 360px;
   position: relative;
+}
+
+.statTooltip {
+  font-size: 12px;
+}
+
+.statTooltipTitle {
+  font-size: 12px;
 }
 
 .statTooltipAbilityName {
   margin: 4px;
-  max-width: 150px;
+  max-width: 140px;
+  width: 140px;
   text-align: left;
-  margin-right: 80px;
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: hidden;
 }
 
-.statTooltipDamage {
+.statTooltipDamage, .statTooltipDamagePerUse, .statTooltipAbilityUses {
   width: 80px;
   margin: 4px;
+  padding: 0px 10px;
   text-align: right;
   position: absolute;
+  right: 84px;
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: hidden;
+}
+
+.statTooltipDamagePerUse {
   right: 4px;
+  width: 80px;
+}
+
+.statTooltipAbilityUses {
+  right: 164px;
+  width: 40px;
+  padding: 0px;
 }
 
 #playerSetupBoard {

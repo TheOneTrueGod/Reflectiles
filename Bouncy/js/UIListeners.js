@@ -148,8 +148,21 @@ class UIListeners {
         let deckName = player.abilityDeck.name;
         let damageSum = 0;
         let tooltip = $("<div/>");
+        tooltip.append(
+          $("<div/>", {class: "row statTooltip statTooltipTitle"})
+          .append(
+            $("<div/>", {class: "statTooltipAbilityName"}).text('Name')
+          ).append(
+            $("<div/>", {class: "statTooltipAbilityUses"}).text('Uses')
+          ).append(
+            $("<div/>", {class: "statTooltipDamage"}).text('Damage')
+          ).append(
+            $("<div/>", {class: "statTooltipDamagePerUse"}).text('Dmg/Use')
+          )
+        );
         for (let abilityIndex in gameStats.playerDamage[player.user_id]) {
-          let damage = gameStats.playerDamage[player.user_id][abilityIndex];
+          let damage = gameStats.playerDamage[player.user_id][abilityIndex].damage;
+          let numUses = gameStats.playerDamage[player.user_id][abilityIndex].uses;
           damageSum += damage;
           let abilDef = AbilityDef.abilityDefList[abilityIndex];
           let abilName = null;
@@ -157,15 +170,20 @@ class UIListeners {
             abilName = abilDef.rawDef.name;
           }
 
+          let damagePerUse = Math.floor(damage / (numUses ? numUses : 1));
+
           tooltip.append(
             $("<div/>", {class: "row statTooltip"})
             .append(
               $("<div/>", {class: "statTooltipAbilityName"}).text(abilName ? abilName : '-')
-            )
-            .append(
+            ).append(
+              $("<div/>", {class: "statTooltipAbilityUses"}).text(numUses ? numUses : '0')
+            ).append(
               $("<div/>", {class: "statTooltipDamage"}).text(damage)
+            ).append(
+              $("<div/>", {class: "statTooltipDamagePerUse"}).text(damagePerUse)
             )
-          )
+          );
         }
         let statRow = this.createStatRow(name, deckName, damageSum);
         statRow.attr("data-toggle", "tooltip");

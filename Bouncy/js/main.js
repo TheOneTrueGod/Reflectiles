@@ -316,6 +316,13 @@ class MainGame {
     if (!currPhase) {
       $('#gameContainer').addClass("turnPlaying");
       this.removeAllPlayerCommands();
+      for (let pid in this.playerCommands) {
+        for (let command of this.playerCommands[pid]) {
+          if (command instanceof PlayerCommandUseAbility) {
+            this.boardState.gameStats.addAbilityUseCount(pid, command.abilityID);
+          }
+        }
+      }
     }
 
     this.playingOutTurn = true;

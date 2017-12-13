@@ -3,15 +3,23 @@ class GameStats {
     this.playerDamage = {};
   }
 
-  addPlayerDamage(player, ability, amount) {
+  doNullPlayerCheck(player, ability) {
     if (this.playerDamage[player] === undefined) {
       this.playerDamage[player] = {};
     }
     if (this.playerDamage[player][ability] === undefined) {
-      this.playerDamage[player][ability] = 0;
+      this.playerDamage[player][ability] = {damage: 0, uses: 0};
     }
+  }
 
-    this.playerDamage[player][ability] += amount;
+  addPlayerDamage(player, ability, amount) {
+    this.doNullPlayerCheck(player, ability);
+    this.playerDamage[player][ability].damage += amount;
+  }
+
+  addAbilityUseCount(player, ability) {
+    this.doNullPlayerCheck(player, ability);
+    this.playerDamage[player][ability].uses += 1;
   }
 
   serialize() {
