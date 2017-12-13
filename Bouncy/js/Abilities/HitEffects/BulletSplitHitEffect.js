@@ -4,7 +4,11 @@ class BulletSplitHitEffect extends HitEffect {
     this.projectileShape = projectileShape;
     this.styleDef = null;
     if (hitEffectDef.style) {
-      this.styleDef = new StyleAbilityDef(hitEffectDef.style);
+      if (!hitEffectDef.styleDef) {
+        hitEffectDef.styleDef = AbilityStyle.loadFromJSON(hitEffectDef.style);
+      }
+      this.styleDef = hitEffectDef.styleDef;
+      this.abilityDef = abilityDef;
     }
   }
 
@@ -24,12 +28,12 @@ class BulletSplitHitEffect extends HitEffect {
 
       boardState.addProjectile(
         Projectile.createProjectile(
-          projectile.playerID, 
+          projectile.playerID,
           idx(this.hitEffectDef, 'projectile_type', ProjectileShape.ProjectileTypes.HIT),
           castPoint,
           null,
           projectileAngle,
-          this.styleDef,
+          this.abilityDef,
           {
             hit_effects: this.hitEffectDef['hit_effects'],
             gravity: {x: 0, y: -0.1},
@@ -39,6 +43,7 @@ class BulletSplitHitEffect extends HitEffect {
             destroy_on_wall: true,
           }
         ).addUnitHitCallback(this.projectileShape.unitHitCallback.bind(this.projectileShape))
+        .setStyle(this.styleDef)
       );
     }
   }

@@ -6,6 +6,7 @@ class PoisonHitEffect extends HitEffect {
         idx(this.hitEffectDef, 'damage', 0),
         null,
         projectile.playerID,
+        projectile.abilityDef.index,
       )
     );
   }

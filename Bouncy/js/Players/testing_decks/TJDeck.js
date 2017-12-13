@@ -66,7 +66,7 @@ function TJDeck() {
       icon: "../Bouncy/assets/icons/icon_plain_rain.png",
       charge: {"initial_charge":-1, "max_charge": 4, "charge_type":"TURNS"},
     }, {
-      name: 'The Double Wave',
+      name: 'Double Wave',
       description: 'Sprays [[num_bullets]] in two waves.<br>' +
         'Each bullet deals [[hit_effects[0].base_damage]] damage.',
       card_text_description: '[[num_bullets]] X [[hit_effects[0].base_damage]]',

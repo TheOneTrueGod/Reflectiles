@@ -3,12 +3,15 @@ class GameStats {
     this.playerDamage = {};
   }
 
-  addPlayerDamage(player, amount) {
+  addPlayerDamage(player, ability, amount) {
     if (this.playerDamage[player] === undefined) {
-      this.playerDamage[player] = 0;
+      this.playerDamage[player] = {};
+    }
+    if (this.playerDamage[player][ability] === undefined) {
+      this.playerDamage[player][ability] = 0;
     }
 
-    this.playerDamage[player] += amount;
+    this.playerDamage[player][ability] += amount;
   }
 
   serialize() {

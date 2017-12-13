@@ -5,7 +5,6 @@
  * Test out shrinking the enemies.
  * Invulnerable enemies that deal no damage as a wall
  * New enemy type -- infected.  When it dies, it explodes into a bunch of smaller minions.
- * Enemy Tooltips
  * Have the knight throw up his shield to the left and right if the front is full.
  * Fix the projectile bug on the shield ability
  * Add a back button

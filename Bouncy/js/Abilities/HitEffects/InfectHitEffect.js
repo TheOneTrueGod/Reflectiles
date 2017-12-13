@@ -10,7 +10,8 @@ class InfectHitEffect extends HitEffect {
     unit.addStatusEffect(
       new InfectStatusEffect(
         idx(this.hitEffectDef, 'duration', 1),
-        this.hitEffectDef.initializedAbilDef.index // ability def index
+        this.hitEffectDef.initializedAbilDef.index, // ability def index
+        projectile.playerID,
       )
     );
   }

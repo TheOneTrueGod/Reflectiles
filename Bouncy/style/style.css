@@ -408,23 +408,65 @@
 }
 
 #gameOverBox {
-  margin-top: 50px;
-  margin-left: 15%;
-  width: 70%;
+  margin-top: 5%;
+  margin-left: 5%;
+  width: 90%;
 }
 
-#gameOverBox .statHeader,
-#gameOverBox .statHeaderDamage,
-#gameOverBox .playerName,
-#gameOverBox .playerDamage {
+#gameOverBox .statHeaderName,
+#gameOverBox .statHeaderDeck,
+#gameOverBox .statHeaderAbility,
+#gameOverBox .statHeaderDamage {
   font-size: 20px;
-  width: 60%;
   display: inline-block;
 }
 
+#gameOverBox .playerName,
+#gameOverBox .playerDeck,
+#gameOverBox .playerAbility,
+#gameOverBox .playerDamage {
+  font-size: 14px;
+  display: inline-block;
+}
+
+#gameOverBox .statHeaderName,
+#gameOverBox .playerName {
+  width: 30%;
+}
+
+#gameOverBox .statHeaderDeck,
+#gameOverBox .playerDeck {
+  width: 40%;
+}
+
 #gameOverBox .statHeaderDamage,
 #gameOverBox .playerDamage {
-  width: 40%;
+  width: 30%;
+}
+
+.statTooltip {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.large.tooltip-inner {
+  max-width: 300px;
+  position: relative;
+}
+
+.statTooltipAbilityName {
+  margin: 4px;
+  max-width: 150px;
+  text-align: left;
+  margin-right: 80px;
+}
+
+.statTooltipDamage {
+  width: 80px;
+  margin: 4px;
+  text-align: right;
+  position: absolute;
+  right: 4px;
 }
 
 #playerSetupBoard {
@@ -433,9 +475,13 @@
   position: relative;
 }
 
-.statRow {
-  padding-left: 15px;
-  padding-right: 15px;
+#gameOverBox .statRow {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+#gameOverBox .statRow:nth-child(even) {
+  background: #DDD;
 }
 
 #stats {

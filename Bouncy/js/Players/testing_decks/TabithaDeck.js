@@ -16,6 +16,7 @@ function TabithaDeck() {
         effect: ProjectileShape.HitEffects.DAMAGE,
         base_damage: 200
       }],
+      charge:{initial_charge: -1, max_charge: 3, charge_type: AbilityDef.CHARGE_TYPES.TURNS}
     },
     {
       name: 'Fireworks',
@@ -142,7 +143,8 @@ function TabithaDeck() {
       hit_effects: [{
         effect: ProjectileShape.HitEffects.DAMAGE,
         base_damage: 40
-      }]
+      }],
+      charge:{initial_charge: -1, max_charge: 4, charge_type: AbilityDef.CHARGE_TYPES.TURNS}
     }
   ];
 

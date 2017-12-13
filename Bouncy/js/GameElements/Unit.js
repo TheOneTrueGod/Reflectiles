@@ -172,12 +172,26 @@ class Unit {
     if (amount > 0) {
       boardState.resetNoActionKillSwitch();
     }
-    if (source instanceof Projectile || source instanceof StatusEffect) {
-      boardState.gameStats.addPlayerDamage(source.playerID, damageDealt);
+    let abilID = null;
+    let playerID = null;
+    if (source instanceof Projectile) {
+      abilID = AbilityDef.findAbsoluteParent(source.abilityDef.index);
+      playerID = source.playerID;
+    } else if (source instanceof StatusEffect) {
+      abilID = AbilityDef.findAbsoluteParent(source.abilityID);
+      playerID = source.playerID;
     } else if (source instanceof ZoneEffect && source.owningPlayerID) {
-      boardState.gameStats.addPlayerDamage(source.owningPlayerID, damageDealt);
+      abilID = AbilityDef.findAbsoluteParent(source.creatorAbility.index);
+      playerID = source.owningPlayerID;
+    }
+
+    if (!abilID) {
+      console.warn("Unknown ability ID: " + abilID);
+    }
+    if (playerID) {
+      boardState.gameStats.addPlayerDamage(playerID, abilID, damageDealt);
     } else {
-      boardState.gameStats.addPlayerDamage('unknown', damageDealt);
+      boardState.gameStats.addPlayerDamage('unknown', "?", damageDealt);
       console.warn("Unknown source: ", source);
     }
 

@@ -1,9 +1,10 @@
 class PoisonStatusEffect extends StatusEffect {
-  constructor(duration, damage, effect, playerID) {
+  constructor(duration, damage, effect, playerID, abilityID) {
     super(duration);
     this.damage = damage;
     this.effect = effect;
     this.playerID = playerID;
+    this.abilityID = abilityID;
   }
 
   turnStart(boardState, unit) {
@@ -27,7 +28,8 @@ class PoisonStatusEffect extends StatusEffect {
       'duration': this.duration,
       'damage': this.damage,
       'effect': this.effect,
-      'player_id': this.playerID
+      'player_id': this.playerID,
+      'ability_id': this.abilityID,
     };
   }
 }
@@ -38,6 +40,7 @@ PoisonStatusEffect.loadFromServerData = function(server_data) {
     server_data.damage,
     server_data.effect,
     server_data.player_id,
+    server_data.ability_id,
   );
 }
 

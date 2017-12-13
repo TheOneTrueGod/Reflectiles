@@ -51,6 +51,7 @@ class AbilityDef {
       ) {
         var newAbil = AbilityDef.createFromJSON(nestedList[i].abil_def);
         nestedList[i].initializedAbilDef = newAbil;
+        newAbil.parentAbilIndex = this.index;
         if (newAbil.abilityStyle === AbilityStyle.FALLBACK_STYLE) {
           newAbil.abilityStyle = this.abilityStyle;
         }
@@ -233,7 +234,7 @@ class AbilityDef {
   clone() {
     return AbilityDef.createFromJSON(this.rawJSON);
   }
-  
+
   createAbilityCard() {
     var cardClass = "tempFirstAbil";
 
@@ -253,22 +254,22 @@ class AbilityDef {
     }
 
     $card.append(this.getTextDescription());
-    
+
     $card.append(this.getCooldownIcon());
 
     return $card;
   }
-  
+
   addDefaultIcon($icon) {
-    
+
   }
-  
+
   getCooldownIcon() {
     let cooldownTime = 0;
     if (this.maxCharge) {
       cooldownTime = this.maxCharge;
     }
-    
+
     if (cooldownTime) {
       let $cooldownIcon = $("<div>", {"class": "cooldownIcon"});
       let $cooldownText = $("<div>", {"class": "cooldownText"});
@@ -277,7 +278,7 @@ class AbilityDef {
       return $cooldownIcon;
     }
   }
-  
+
   getTextDescription() {
     var $textDesc = $("<div>", {"class": "abilityCardTextDesc"});
 
@@ -303,6 +304,7 @@ class AbilityDef {
     return $textDesc;
   }
 }
+
 AbilityDef.CHARGE_TYPES = {
   TURNS: 'TURNS'
 };
@@ -322,6 +324,14 @@ AbilityDef.AbilityTypes = {
 AbilityDef.SPECIAL_EFFECTS = {
   TURRET_AIM: 'TURRET_AIM',
   TURRET_FIRE: 'TURRET_FIRE',
+}
+
+AbilityDef.findAbsoluteParent = function(abilityIndex) {
+  let ability = AbilityDef.abilityDefList[abilityIndex];
+  if (ability.parentAbilIndex) {
+    return AbilityDef.findAbsoluteParent(ability.parentAbilIndex);
+  }
+  return abilityIndex;
 }
 
 AbilityDef.createFromJSON = function(defJSON) {

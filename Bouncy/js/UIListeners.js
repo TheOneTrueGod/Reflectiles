@@ -121,8 +121,6 @@ class UIListeners {
   }
 
   showGameOverScreen(playersWon, gameStats) {
-    console.log("Game Stats!");
-    console.log(gameStats);
     $('#gameContainer').addClass("gameOver");
     if (playersWon) {
       $('#gameOverBox #title').text("A winner is you!");
@@ -132,46 +130,79 @@ class UIListeners {
 
     $('#gameOverBox #stats').empty().append(
       $('<div/>', {class: 'row statRow'}).append(
-        $('<div/>', {class: 'statHeader', text: 'Player'})
+        $('<div/>', {class: 'statHeaderName', text: 'Player'})
+      ).append(
+        $('<div/>', {class: 'statHeaderDeck', text: 'Deck'})
       ).append(
         $('<div/>', {class: 'statHeaderDamage', text: 'Damage'})
       )
     );
 
     for (let player of MainGame.players) {
-      let damage = gameStats.playerDamage[player.user_id] ?
-        gameStats.playerDamage[player.user_id] :
-        0;
-      $('#gameOverBox #stats').append(
-        $('<div/>', {class: 'row statRow'}).append(
-          $('<div/>', {class: 'statHeader', text: player.user_name})
-        ).append(
-          $('<div/>', {class: 'statHeaderDamage', text: damage})
-        )
-      );
+      if (!gameStats.playerDamage[player.user_id]) {
+        $('#gameOverBox #stats').append(
+          this.createStatRow(player.user_name, player.abilityDeck.name, '0')
+        );
+      } else {
+        let name = player.user_name;
+        let deckName = player.abilityDeck.name;
+        let damageSum = 0;
+        let tooltip = $("<div/>");
+        for (let abilityIndex in gameStats.playerDamage[player.user_id]) {
+          let damage = gameStats.playerDamage[player.user_id][abilityIndex];
+          damageSum += damage;
+          let abilDef = AbilityDef.abilityDefList[abilityIndex];
+          let abilName = null;
+          if (abilDef) {
+            abilName = abilDef.rawDef.name;
+          }
+
+          tooltip.append(
+            $("<div/>", {class: "row statTooltip"})
+            .append(
+              $("<div/>", {class: "statTooltipAbilityName"}).text(abilName ? abilName : '-')
+            )
+            .append(
+              $("<div/>", {class: "statTooltipDamage"}).text(damage)
+            )
+          )
+        }
+        let statRow = this.createStatRow(name, deckName, damageSum);
+        statRow.attr("data-toggle", "tooltip");
+        statRow.attr("title", tooltip.html());
+        statRow.tooltip({
+          constraints: [{'to':'scrollParent','pin':true}],
+          template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+          placement: 'bottom',
+          html: true
+        });
+        $('#gameOverBox #stats').append(statRow);
+      }
     }
 
     if ('unknown' in gameStats.playerDamage) {
       $('#gameOverBox #stats').append(
-        $('<div/>', {class: 'row statRow'}).append(
-          $('<div/>', {class: 'statHeader', text: 'Unknown'})
-        ).append(
-          $('<div/>', {class: 'statHeaderDamage', text: gameStats.playerDamage['unknown']})
-        )
+        this.createStatRow('Unknown', null, gameStats.playerDamage['unknown'])
       );
     }
 
     if ('enemy' in gameStats.playerDamage) {
       $('#gameOverBox #stats').append(
-        $('<div/>', {class: 'row statRow'}).append(
-          $('<div/>', {class: 'statHeader', text: 'Enemy'})
-        ).append(
-          $('<div/>', {class: 'statHeaderDamage', text: gameStats.playerDamage['enemy']})
-        )
+        this.createStatRow('Enemy', null, gameStats.playerDamage['enemy'])
       );
     }
 
     $('#gameOverBox').show();
+  }
+
+  createStatRow(playerName, playerDeck, playerDamage) {
+    return $('<div/>', {class: 'row statRow'}).append(
+      $('<div/>', {class: 'playerName', text: playerName})
+    ).append(
+      $('<div/>', {class: 'playerDeck', text: playerDeck})
+    ).append(
+      $('<div/>', {class: 'playerDamage', text: playerDamage})
+    )
   }
 
   updateGameProgress(progressPct) {

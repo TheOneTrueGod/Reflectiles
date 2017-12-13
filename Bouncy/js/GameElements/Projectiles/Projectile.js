@@ -31,9 +31,15 @@ class Projectile {
     this.duration = -1;
     this.wallsHit = 0;
     this.lastCollisionPoint = null;
+    this.projectileStyle = null;
     if (projectileOptions && projectileOptions.hit_effects) {
       this.hitEffects = projectileOptions.hit_effects;
     }
+  }
+
+  setStyle(style) {
+    this.projectileStyle = style;
+    return this;
   }
 
   addUnitHitCallback(unitHitCallback) {
@@ -204,6 +210,9 @@ class Projectile {
   }
 
   getStyle() {
+    if (this.projectileStyle) {
+      return this.projectileStyle;
+    }
     var style = this.abilityDef ? this.abilityDef.getStyle() : null;
     if (!style) {
       return AbilityStyle.FALLBACK_STYLE;
