@@ -8,7 +8,7 @@
 
 function SeanDeck() {
   var abilities = [
-    {
+    { // 1000 damage.  500 more per turn
       name: 'Poison Drill',
       description: 'Shoots a projectile that passes through enemies.<br>' +
         'It deals [[hit_effects[0].base_damage]] damage to up to [[num_hits]] targets.<br>' +
@@ -28,12 +28,12 @@ function SeanDeck() {
       },
       {
         effect: ProjectileShape.HitEffects.POISON,
-        damage: 100,
+        damage: 50,
         duration: 2
       }],
       "charge":{"initial_charge":-1, "max_charge":4, "charge_type":"TURNS"}
     },
-    {
+    { // 3000 damage max
       name: 'Infect',
       description: 'Shoots a projectile that hits a single enemy.<br>' +
         'That enemy is infected.  If they die in the next [[hit_effects[0].duration]] ' +
@@ -54,7 +54,7 @@ function SeanDeck() {
           projectile_type: ProjectileShape.ProjectileTypes.HIT,
           //bullet_speed: 6,
           speed: 8,
-          num_bullets: 20,
+          num_bullets: 30,
           gravity: {x: 0, y: 0},
           hit_effects: [{
             effect: ProjectileShape.HitEffects.DAMAGE,
@@ -64,49 +64,30 @@ function SeanDeck() {
       }],
       icon: "../Bouncy/assets/icons/nuclear.png"
     },
-    {
-      name: 'Chaos Orb',
-      description: 'Shoots an orb that rapidly decays.<br>' +
-        'It fires [[num_bullets]] projectiles that deal [[hit_effects[0].base_damage]] damage<br>' +
-        'Afterwards, it explodes into another [[timeout_effects[0].abil_def.num_bullets]] projectiles',
-      card_text_description: '61 X [[hit_effects[0].base_damage]]',
+    { // 2440 damage max.  Actually dealing less than that
+      name: 'Shoot \'em up',
+      description: 'Shoots a wild spray of bullets.<br>' +
+        '[[num_bullets]] bullets deal [[hit_effects[0].base_damage]] damage',
+      card_text_description: '[[num_bullets]] X [[hit_effects[0].base_damage]]',
       style: (new AbilitySheetSpriteAbilityStyleBuilder)
-        .setSheet('bullet_sheet').setCoordNums(166, 296, 184, 314).setRotation(0).fixRotation(true).build(),
-      shard_style: (new AbilitySheetSpriteAbilityStyleBuilder)
-        .setSheet('bullet_sheet').setCoordNums(36, 139, 44, 147).setRotation(0).fixRotation(true).build(),
-      num_bullets: 50,
+        .setSheet('bullet_sheet').setCoordNums(29, 301, 37, 320).setRotation(Math.PI / 2).build(),
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
-      shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
-      projectile_type: ProjectileShape.ProjectileTypes.FROZEN_ORB,
-      icon:"../Bouncy/assets/icons/icon_plain_forb.png",
-      hit_effects: [
-        {
-          effect: ProjectileShape.HitEffects.DAMAGE,
-          base_damage: 40
-        }
-      ],
-      timeout_effects: [
-        {
-          effect: PositionBasedEffect.EFFECTS.USE_ABILITY,
-          abil_def: {
-            style: (new AbilitySheetSpriteAbilityStyleBuilder)
-              .setSheet('bullet_sheet').setCoordNums(36, 139, 44, 147).setRotation(0).fixRotation(true).build(),
-            ability_type: AbilityDef.AbilityTypes.PROJECTILE,
-            shape: ProjectileAbilityDef.Shapes.BULLET_EXPLOSION,
-            projectile_type: ProjectileShape.ProjectileTypes.HIT,
-            gravity: {x: 0, y: 0},
-            speed: 8,
-            size: 6,
-            num_bullets: 11,
-            hit_effects:
-              [{
-                effect: ProjectileShape.HitEffects.DAMAGE,
-                base_damage: 40
-              }],
-          }
-        }
-      ],
-      charge:{"initial_charge": -1, "max_charge": 3, "charge_type":"TURNS"}
+      shape: ProjectileAbilityDef.Shapes.CHAIN_SHOT,
+      projectile_type: ProjectileShape.ProjectileTypes.HIT,
+      destroy_on_wall: true,
+      num_bullets: 25,
+      bullet_wave_delay: 3,
+      accuracy_decay: Math.PI / 128.0,
+      icon: "../Bouncy/assets/icons/bullets.png",
+      hit_effects: [{
+        effect: ProjectileShape.HitEffects.DAMAGE,
+        base_damage: 30
+      },
+      {
+        effect: ProjectileShape.HitEffects.POISON,
+        damage: 15,
+        duration: 1
+      }],
     },
     {
       name: 'Ghost Shot',
@@ -131,11 +112,11 @@ function SeanDeck() {
             shape: ProjectileAbilityDef.Shapes.BULLET_EXPLOSION,
             inherit_angle: true,
             projectile_type: ProjectileShape.ProjectileTypes.HIT,
-            num_bullets: 10,
             speed: 8,
             gravity: {x: 0, y: 0},
             angle_start: -Math.PI / 4.0,
             angle_end: Math.PI / 4.0,
+            num_bullets: 10,
             hit_effects:
               [{
                 effect: ProjectileShape.HitEffects.DAMAGE,
@@ -159,9 +140,15 @@ function SeanDeck() {
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
       projectile_type: ProjectileShape.ProjectileTypes.HIT,
-      hit_effects:[{damage: 100, duration: 3, effect:ProjectileShape.HitEffects.POISON, aoe_type:"BOX","aoe_size":{"x":[-2,2],"y":[-1,1]}}],
+      hit_effects:[{
+        damage: 100,
+        duration: 3,
+        effect:ProjectileShape.HitEffects.POISON,
+        aoe_type: "BOX",
+        aoe_size:{x:[-2,2],y:[-1,1]}
+      }],
       icon: "../Bouncy/assets/icons/poison-gas.png",
-      "charge":{"initial_charge":-1, "max_charge":3, "charge_type":"TURNS"}
+      charge:{initial_charge: -1, max_charge: 6, charge_type: "TURNS"}
     }
   ];
 

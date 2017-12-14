@@ -74,7 +74,7 @@ function ClarenceDeck() {
       }],
       max_range: {top: 2, bottom: -1, left: 2, right: 2},
       icon: "../Bouncy/assets/icons/turret.png",
-      charge: {initial_charge: -1, max_charge: 2, charge_type: AbilityDef.CHARGE_TYPES.TURNS},
+      charge: {initial_charge: -1, max_charge: 3, charge_type: AbilityDef.CHARGE_TYPES.TURNS},
     },
     {
       name: 'Cannon Turret',
@@ -104,7 +104,7 @@ function ClarenceDeck() {
       }],
       max_range: {top: 2, bottom: -1, left: 2, right: 2},
       icon: "../Bouncy/assets/icons/cannon.png",
-      charge: {initial_charge: -1, max_charge: 3, charge_type: AbilityDef.CHARGE_TYPES.TURNS},
+      charge: {initial_charge: -1, max_charge: 4, charge_type: AbilityDef.CHARGE_TYPES.TURNS},
     },
     {
       name: 'Focused Fire',
@@ -118,7 +118,7 @@ function ClarenceDeck() {
       icon: "../Bouncy/assets/icons/targeting.png",
       hit_effects: [{
         effect: ProjectileShape.HitEffects.DAMAGE,
-        base_damage: 100
+        base_damage: 200
       }],
     },
     {
@@ -192,10 +192,11 @@ function ClarenceDeck() {
               abil_def: {
                 ability_type: AbilityDef.AbilityTypes.POSITION,
                 projectile_type: "HIT",
-                hit_effects:[{effect: ProjectileShape.HitEffects.DAMAGE, base_damage: 100, aoe_type:"BOX"}],
+                hit_effects:[{effect: ProjectileShape.HitEffects.DAMAGE, base_damage: 50, aoe_type:"BOX"}],
               },
             }],
             zone_size: {"left":1,"right":1,"top":1,"bottom":1,"y_range": 0},
+            charge: {initial_charge: -1, max_charge: 3, charge_type: AbilityDef.CHARGE_TYPES.TURNS},
           }
         }
       ],

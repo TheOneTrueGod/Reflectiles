@@ -7,7 +7,7 @@
 class ProjectileShapeChainShot extends ProjectileShape {
   constructor(abilityDef) {
     super(abilityDef);
-    this.num_waves = abilityDef.getOptionalParam('bullet_waves', 4);
+    this.num_waves = abilityDef.getOptionalParam('num_bullets', 4);
     var wave_delay = abilityDef.getOptionalParam('bullet_wave_delay', 10);
     this.ACTIVATE_ON_TICKS = {0: 0};
     this.FINAL_TICK = 1;
@@ -74,7 +74,7 @@ class ProjectileShapeChainShot extends ProjectileShape {
       angle += (boardState.getRandom() - 0.5) * 2 * accuracyForShot;
       boardState.addProjectile(
         Projectile.createProjectile(
-          playerID, 
+          playerID,
           this.projectileType,
           castPoint,
           null,

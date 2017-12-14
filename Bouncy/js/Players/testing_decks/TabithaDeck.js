@@ -14,7 +14,7 @@ function TabithaDeck() {
       icon: "../Bouncy/assets/icons/icon_plain_drill.png",
       hit_effects: [{
         effect: ProjectileShape.HitEffects.DAMAGE,
-        base_damage: 200
+        base_damage: 150
       }],
       charge:{initial_charge: -1, max_charge: 3, charge_type: AbilityDef.CHARGE_TYPES.TURNS}
     },
@@ -46,7 +46,7 @@ function TabithaDeck() {
             hit_effects:
               [{
                 effect: ProjectileShape.HitEffects.DAMAGE,
-                base_damage: 80
+                base_damage: 70
               }],
           }
         }
@@ -65,7 +65,7 @@ function TabithaDeck() {
       shape: ProjectileAbilityDef.Shapes.RAIN,
       projectile_type: ProjectileShape.ProjectileTypes.HIT,
       destroy_on_wall: true,
-      hit_effects: [{effect: ProjectileShape.HitEffects.DAMAGE, base_damage: 25},
+      hit_effects: [{effect: ProjectileShape.HitEffects.DAMAGE, base_damage: 20},
         {
           effect: ProjectileShape.HitEffects.BULLET_SPLIT,
           style: (new AbilitySheetSpriteAbilityStyleBuilder)
@@ -73,12 +73,12 @@ function TabithaDeck() {
           projectile_type: ProjectileShape.ProjectileTypes.HIT,
           hit_effects: [{
             effect:ProjectileShape.HitEffects.DAMAGE,
-            base_damage: 10,
+            base_damage: 5,
           }],
           num_bullets: 2
         }
       ],
-      num_bullets: 40,
+      num_bullets: 50,
       icon: "../Bouncy/assets/icons/icon_plain_rain.png",
       charge: {"initial_charge":-1, "max_charge": 5, "charge_type":"TURNS"},
     },
@@ -92,15 +92,15 @@ function TabithaDeck() {
         .setSheet('bullet_sheet').setCoordNums(166, 296, 184, 314).setRotation(0).fixRotation(true).build(),
       shard_style: (new AbilitySheetSpriteAbilityStyleBuilder)
         .setSheet('bullet_sheet').setCoordNums(36, 139, 44, 147).setRotation(0).fixRotation(true).build(),
-      num_bullets: 50,
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
       projectile_type: ProjectileShape.ProjectileTypes.FROZEN_ORB,
       icon:"../Bouncy/assets/icons/icon_plain_forb.png",
+      num_bullets: 50,
       hit_effects: [
         {
           effect: ProjectileShape.HitEffects.DAMAGE,
-          base_damage: 40
+          base_damage: 30
         }
       ],
       timeout_effects: [
@@ -119,7 +119,7 @@ function TabithaDeck() {
             hit_effects:
               [{
                 effect: ProjectileShape.HitEffects.DAMAGE,
-                base_damage: 40
+                base_damage: 30
               }],
           }
         }
@@ -142,7 +142,7 @@ function TabithaDeck() {
       icon:"../Bouncy/assets/icons/icon_plain_wave.png",
       hit_effects: [{
         effect: ProjectileShape.HitEffects.DAMAGE,
-        base_damage: 40
+        base_damage: 30
       }],
       charge:{initial_charge: -1, max_charge: 4, charge_type: AbilityDef.CHARGE_TYPES.TURNS}
     }

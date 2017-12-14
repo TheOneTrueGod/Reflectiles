@@ -11,7 +11,7 @@ function ChipDeck() {
         .setSheet('bullet_sheet').setCoordNums(275, 69, 294, 78).setRotation(0).build(),
       projectile_type: ProjectileShape.ProjectileTypes.HIT,
       num_bullets: 5,
-      hit_effects:[{effect: ProjectileShape.HitEffects.DAMAGE,"base_damage":200}]
+      hit_effects:[{effect: ProjectileShape.HitEffects.DAMAGE, base_damage: 180}]
     },{
       name: 'Drill Shot',
       description: 'Shoots a projectile that passes through enemies.<br>' +
@@ -26,7 +26,7 @@ function ChipDeck() {
       icon: "../Bouncy/assets/icons/icon_plain_drill.png",
       hit_effects: [{
         effect: ProjectileShape.HitEffects.DAMAGE,
-        base_damage: 300
+        base_damage: 250
       }],
     },{
       name: 'Shield',
@@ -47,14 +47,14 @@ function ChipDeck() {
             "ability_type": AbilityDef.AbilityTypes.PROJECTILE,
             shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
             projectile_type: "PENETRATE",
-            "hit_effects":[{effect: ProjectileShape.HitEffects.DAMAGE, "base_damage":400}]
+            "hit_effects":[{effect: ProjectileShape.HitEffects.DAMAGE, base_damage: 400}]
           }
         }]
       },
       projectile_interaction: {enemy_projectiles: {destroy: true}},
       duration: 6,
-      zone_size: {"left":1,"right":1,"top":0,"bottom":0,"y_range": 0},
-      max_range: {"left": 5, "right": 5, "top": 1, "bottom": 1},
+      zone_size: {left:1, right:1, top:0, bottom:0, y_range: 0},
+      max_range: {left: 5, right: 5, top: 1, bottom: 1},
       unit_enter_effect: {},
       icon: "../Bouncy/assets/icons/icon_plain_shield.png",
       charge: {"initial_charge":-1,"max_charge":3,"charge_type":"TURNS"},
@@ -64,9 +64,12 @@ function ChipDeck() {
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
       projectile_type: ProjectileShape.ProjectileTypes.HIT,
-      hit_effects: [{"effect": ProjectileShape.HitEffects.FREEZE, "duration":3}],
-      icon:"../Bouncy/assets/icons/icon_plain_frost.png",
-      charge: {"initial_charge":-1,"max_charge":2,"charge_type":"TURNS"}
+      hit_effects: [
+        {effect: ProjectileShape.HitEffects.DAMAGE, base_damage: 100, aoe_type: "BOX"},
+        {effect: ProjectileShape.HitEffects.FREEZE, duration: 3, aoe_type: "BOX"}
+      ],
+      icon: "../Bouncy/assets/icons/icon_plain_frost.png",
+      charge: {"initial_charge":-1,"max_charge":3,"charge_type":"TURNS"}
     },{
       name: 'Demi',
       description: 'Halves the health of each enemy in a 5x3 radius.<br>' +
@@ -81,10 +84,10 @@ function ChipDeck() {
         aoe_type: "BOX",
         aoe_size: {"x":[-2, 2], y:[-1, 1]}
       }],
-      icon:"../Bouncy/assets/icons/icon_plain_hearts.png"
-    }
-]
-  ;
+      icon:"../Bouncy/assets/icons/icon_plain_hearts.png",
+      charge: {"initial_charge":-1,"max_charge":3,"charge_type":"TURNS"}
+    }];
+
   for (var i = 0; i < abilities.length; i++) {
     abilities[i] = AbilityDef.createFromJSON(abilities[i]);
   }
