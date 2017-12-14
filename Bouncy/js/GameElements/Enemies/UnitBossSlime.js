@@ -4,7 +4,7 @@ class UnitBossSlime extends UnitBasic {
     this.traits[Unit.UNIT_TRAITS.FROST_IMMUNE] = true;
     this.traits[Unit.UNIT_TRAITS.RESILIANT] = 500;
   }
-  
+
   getUnitSize() {
     return {x: Unit.UNIT_SIZE * 3, y: Unit.UNIT_SIZE * 3};
   }
@@ -15,12 +15,12 @@ class UnitBossSlime extends UnitBasic {
     };
   }
 
-  dealDamage(boardState, amount) {
+  dealDamage(boardState, amount, source) {
     let spawnThreshold = NumbersBalancer.getUnitAbilityNumber(
       NumbersBalancer.UNIT_ABILITIES.BOSS_SLIME_SPLIT_THRESHOLD
     );
     let startHealth = this.health.current;
-    super.dealDamage(boardState, amount);
+    super.dealDamage(boardState, amount, source);
     let endHealth = this.health.current;
     let unitsToSpawn = Math.floor(startHealth / spawnThreshold) - Math.floor(endHealth / spawnThreshold);
     for (var i = 0; i < unitsToSpawn; i++) {

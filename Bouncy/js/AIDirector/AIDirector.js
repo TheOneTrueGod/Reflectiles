@@ -157,6 +157,15 @@ class AIDirector {
         }
       }
     }
+
+    boardState.callOnAllUnits((unit) => {
+      unit.doSpawnEffect(boardState);
+    });
+
+    boardState.callOnAllUnits((unit) => {
+      unit.playSpawnEffectAtPct(boardState, 1);
+      unit.moveTarget = null;
+    });
   }
 
   giveUnitsOrders(boardState) {

@@ -19,6 +19,9 @@ class Unit {
     this.collisionBox = [];
     var health = NumbersBalancer.getUnitHealth(this);
     this.health = {current: health, max: health};
+    if (isNaN(this.health.current) || isNaN(this.health.max)) {
+      debugger;
+    }
     var armour = NumbersBalancer.getUnitArmour(this);
     this.armour = {current: armour, max: armour};
     var shield = NumbersBalancer.getUnitShield(this);
@@ -38,6 +41,10 @@ class Unit {
     this.traits = {};
 
     this.createCollisionBox();
+  }
+
+  doSpawnEffect(boardState) {
+
   }
 
   getTraitValue(trait) {
@@ -87,6 +94,10 @@ class Unit {
         )
       )
     ) {
+      this.readyToDel = true;
+    }
+
+    if (isNaN(this.health.current) || isNaN(this.armour.current) || isNaN(this.shield.current)) {
       this.readyToDel = true;
     }
 
@@ -482,12 +493,15 @@ class Unit {
   }
 
   playSpawnEffectAtPct(boardState, pct) {
+    if (!this.spawnEffectStart) { return; }
     if (!this.creatorAbility || this.creatorAbility.ZONE_TYPE !== ZoneAbilityDef.ZoneTypes.BLOCKER_BARRIER) {
       this.gameSprite.scale.x = lerp(0, this.spriteScale.x, pct);
     }
     this.gameSprite.scale.y = lerp(0, this.spriteScale.y, pct);
     this.x = lerp(this.spawnEffectStart.x, this.moveTarget.x, pct);
     this.y = lerp(this.spawnEffectStart.y, this.moveTarget.y, pct);
+    this.gameSprite.x = this.x;
+    this.gameSprite.y = this.y;
   }
 }
 

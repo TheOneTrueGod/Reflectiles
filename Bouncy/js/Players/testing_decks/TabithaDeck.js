@@ -43,6 +43,7 @@ function TabithaDeck() {
             projectile_type: ProjectileShape.ProjectileTypes.BOUNCE,
             max_bounces: 2,
             num_bullets: 11,
+            destroy_on_wall: [],
             hit_effects:
               [{
                 effect: ProjectileShape.HitEffects.DAMAGE,
@@ -97,6 +98,7 @@ function TabithaDeck() {
       projectile_type: ProjectileShape.ProjectileTypes.FROZEN_ORB,
       icon:"../Bouncy/assets/icons/icon_plain_forb.png",
       num_bullets: 50,
+      destroy_on_wall: [],
       hit_effects: [
         {
           effect: ProjectileShape.HitEffects.DAMAGE,
@@ -115,6 +117,7 @@ function TabithaDeck() {
             gravity: {x: 0, y: 0},
             speed: 8,
             size: 6,
+            destroy_on_wall: [],
             num_bullets: 11,
             hit_effects:
               [{
@@ -136,6 +139,7 @@ function TabithaDeck() {
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.WAVE,
       projectile_type: ProjectileShape.ProjectileTypes.BOUNCE,
+      destroy_on_wall: [],
       max_bounces: 2,
       num_bullets: 20,
       return_num_bullets: 5,

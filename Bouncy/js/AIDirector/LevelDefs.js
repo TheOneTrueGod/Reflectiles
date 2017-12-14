@@ -22,11 +22,11 @@ class LevelDefs {
   isLevelAvailable(level) {
     let world = this.extractWorld(level);
     let stage = this.extractStage(level);
-    if (world <= 1) {
+    if (world <= 2) {
       return true;
     }
-    if (world == 2) {
-      return stage != 3;
+    if (world == 3) {
+      return stage == 1;
     }
     return false;
   }

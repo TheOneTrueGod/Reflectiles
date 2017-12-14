@@ -14,6 +14,7 @@ class FrozenOrbProjectile extends BouncingProjectile {
     this.abilityDef = abilityDef;
     if (!this.abilityDef.shardDef) {
       this.abilityDef.shardDef = this.abilityDef.clone();
+      this.abilityDef.shardDef.parentAbilIndex = this.abilityDef.index;
       var shard_style = this.abilityDef.getOptionalParam('shard_style');
       if (shard_style) {
         this.abilityDef.shardDef.abilityStyle = AbilityStyle.loadFromJSON(shard_style);
@@ -50,6 +51,7 @@ class FrozenOrbProjectile extends BouncingProjectile {
           this.abilityDef.shardDef,
           {}
         ).addUnitHitCallback(this.unitHitCallback.bind(this))
+        .setStyle(this.styleDef)
       );
     }
   }

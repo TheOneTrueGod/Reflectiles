@@ -14,7 +14,7 @@ class UnitSlime extends UnitBasic {
       new UnitLine(l * 0.5, t * 0.5, 0, t, this), // Top-left
       new UnitLine(0, t, r * 0.5, t * 0.5, this), // Top-right
       new UnitLine(r * 0.5, t * 0.5, r, t * 0.25, this), // right-Top-right
-      new UnitLine(r, b * 0.5, r, t * 0.25, this), // Right
+      new UnitLine(r, t * 0.25, r, b * 0.5, this), // Right
       new UnitLine(r, b * 0.5, r * 0.5, b, this), // Bottom-right
     ];
 

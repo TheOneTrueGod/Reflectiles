@@ -6,56 +6,115 @@
 // Warlock -- Every time a nearby unit dies, create a bone shield where that unit used to be.
 class LevelDefsWorld2 {
   static getStageDef(stage) {
+    let __ = null;
+    let A = UnitBasicSquare;
+    let B = UnitBasicDiamond;
+    let C = UnitShover;
+    let D = UnitHeavy;
+    let SH = UnitShooter;
+    let KN = UnitKnight;
+    let BO = UnitBomber;
+    let SL = UnitSlime;
+    let BL = UnitBlocker;
+
     if (stage == 1) {
       // Hard level.  15 waves,
       return new LevelDef({
-        'waveCount': 2,
+        'initialSpawn':[
+          [__, SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL, __],
+          [SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL],
+          [__, SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL, __],
+          [SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL],
+          [__, SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL, __],
+        ],
         'waves':[
           {'type': WAVE_TYPES.FORMATION, units: [
-            [null, null, null],
-            [null, UnitBossSlime, null],
-            [null, null, null],
+            [SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL],
           ]},
-          {'type': WAVE_TYPES.UNIT_LIST, 'units':[]},
-          {'type': WAVE_TYPES.GOTO, 'offset': -1, 'until': {'condition': WAVE_CONDITION.BOSS_HEALTH, 'health_percent': 0}},
+          {'type': WAVE_TYPES.FORMATION, units: [
+            [__, SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL, __],
+          ]},
+          {'type': WAVE_TYPES.FORMATION, units: [
+            [SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL],
+          ]},
+          {'type': WAVE_TYPES.FORMATION, units: [
+            [SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL],
+          ]},
+          {'type': WAVE_TYPES.FORMATION, units: [
+            [SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL],
+            [SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL],
+          ]},
         ]
       })
     } else if (stage == 2) {
         // Hard level.  15 waves,
         return new LevelDef({
           'waveCount': 2,
+          'initialSpawn':[
+            [SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL],
+            [__, SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL, __],
+            [SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL],
+            [__, SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL, __],
+            [__, __, BL, __, __, __, __, __, __, __, __, __, BL, __, __],
+            [BL, __, __, __, __, __, __, __, __, __, __, __, __, __, BL],
+          ],
           'waves':[
             {'type': WAVE_TYPES.FORMATION, units: [
-              [UnitBlocker, null, UnitBlocker, null, UnitBlocker, null, UnitBlocker],
-              [null, UnitBlocker, null, UnitBlocker, null, UnitBlocker, null, UnitBlocker],
-              [null, null, UnitBlocker, null, UnitBlocker, null, UnitBlocker, null, UnitBlocker],
+              [SL, SL, SH, __, __, __, __, __, __, __, __, __, SH, SL, SL],
+              [SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL],
             ]},
-            {'type': WAVE_TYPES.UNIT_LIST, 'units':[]},
-            {'type': WAVE_TYPES.GOTO, 'offset': -1, 'until': {'condition': WAVE_CONDITION.BOSS_HEALTH, 'health_percent': 0}},
+            {'type': WAVE_TYPES.FORMATION, units: [
+              [SL, SL, SL, SL, SH, SL, BO, BO, SL, SH, SL, SL, SL, SL, SL],
+              [__, __, __, SL, SL, SL, SL, SL, SL, SL, SL, SL, __, __, __],
+            ]},
           ]
-        })
+        });
+    } else if (stage == 3) {
+      return new LevelDef({
+        'waveCount': 2,
+        'initialSpawn':[
+          [SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL],
+          [__, SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL, __],
+          [SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL],
+          [__, SL, BO, SL, __, SL, __, SL, __, SL, __, SL, BO, SL, __],
+          [__, KN, BL, KN, __, __, __, __, __, __, __, KN, BL, KN, __],
+          [BL, __, __, __, __, __, __, __, __, __, __, __, __, __, BL],
+        ],
+        'waves':[
+          {'type': WAVE_TYPES.FORMATION, units: [
+            [__, SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL, __],
+          ]},
+          {'type': WAVE_TYPES.FORMATION, units: [
+            [SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL],
+          ]},
+          {'type': WAVE_TYPES.FORMATION, units: [
+            [__, SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL, __],
+          ]},
+          {'type': WAVE_TYPES.FORMATION, units: [
+            [SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL],
+          ]},
+          {'type': WAVE_TYPES.FORMATION, units: [
+            [SL, SL, SH, __, __, __, __, __, __, __, __, __, SH, SL, SL],
+            [SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL],
+          ]},
+          {'type': WAVE_TYPES.FORMATION, units: [
+            [SL, SL, SL, SL, SH, SL, BO, BO, SL, SH, SL, SL, SL, SL, SL],
+            [__, __, __, SL, SL, SL, SL, SL, SL, SL, SL, SL, __, __, __],
+          ]},
+        ]
+      });
     } else if (stage == 'boss') {
       // hard level that culminates in a boss,
       return new LevelDef({
         'waveCount': 12,
+        'initialSpawn':[
+          [SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL],
+          [SL, SL, SL, SL, SL, SL, __, __, __, SL, SL, SL, SL, SL, SL],
+          [SL, SL, SL, __, __, SL, SL, SL, SL, SL, __, __, SL, SL, SL],
+          [__, __, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, __, __],
+          [SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL],
+        ],
         'waves':[
-          {'type': WAVE_TYPES.BASIC_WAVE, 'count': 8},
-          {'type': WAVE_TYPES.ADVANCED_WAVE, 'count': 8, 'advanced': [null, null, null]},
-          {'type': WAVE_TYPES.BASIC_WAVE, 'count': 8},
-          {'type': WAVE_TYPES.FORMATION, units: [
-            [null, null, UnitBomber, UnitBomber, UnitBomber, UnitBomber, null, null],
-            [UnitBlocker, null, null, null, null, null, null, UnitBlocker]
-          ]},
-          {'type': WAVE_TYPES.BASIC_WAVE, 'count': 10},
-          {'type': WAVE_TYPES.ADVANCED_WAVE, 'count': 10, 'advanced': [null, null, null]},
-          {'type': WAVE_TYPES.BASIC_WAVE, 'count': 10},
-          {'type': WAVE_TYPES.FORMATION, units: [
-            [    null,    null, null, UnitShooter, UnitKnight, UnitShooter, null, null,    null],
-            [UnitBlocker, null, null,    null,       null,        null,     null, null, UnitBlocker],
-          ]},
-          {'type': WAVE_TYPES.BASIC_WAVE, 'count': 12},
-          {'type': WAVE_TYPES.ADVANCED_WAVE, 'count': 12, 'advanced': [null, null, null]},
-          {'type': WAVE_TYPES.BASIC_WAVE, 'count': 12},
           {'type': WAVE_TYPES.FORMATION, units: [
             [null, null, null],
             [null, UnitBossSlime, null],

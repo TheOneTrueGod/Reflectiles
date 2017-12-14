@@ -181,7 +181,7 @@ class Projectile {
   }
 
   hitWall(boardState, intersection) {
-    if (this.destroyOnWall) {
+    if (this.destroyOnWall !== false) {
       if (intersection.line instanceof BorderWallLine) {
         if (typeof(this.destroyOnWall) == "object" && this.destroyOnWall.indexOf) {
           if (this.destroyOnWall.indexOf(intersection.line.side) !== -1) {

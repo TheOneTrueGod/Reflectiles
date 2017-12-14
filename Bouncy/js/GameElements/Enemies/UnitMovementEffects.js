@@ -1,5 +1,6 @@
 class UnitMovementEffects {
   static playJumpingSpawnEffect(boardState, unit, pct) {
+    if (!unit.spawnEffectStart) { return; }
     //unit.gameSprite.scale.y = lerp(0, unit.spriteScale.y, pct);
     unit.gameSprite.scale.x = unit.spriteScale.x;
     unit.gameSprite.scale.y = unit.spriteScale.y;

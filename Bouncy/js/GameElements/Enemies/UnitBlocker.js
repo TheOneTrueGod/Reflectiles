@@ -81,6 +81,34 @@ class UnitBlocker extends UnitBasic {
     hitEffect.doHitEffect(boardState, unit, intersection, projectile);
   }
 
+  doSpawnEffect(boardState) {
+    this.useAbility(boardState);
+  }
+
+  useAbility(boardState) {
+    this.formLinks(boardState);
+    if (this.linkedWith) {
+      let linkedWith = boardState.findUnit(this.linkedWith);
+      let thisCoord = boardState.sectors.getGridCoord(this);
+      let linkCoord = boardState.sectors.getGridCoord(linkedWith);
+      for (var x = thisCoord.x + 1; x < linkCoord.x; x++) {
+        let targetPoint = {x: x, y: thisCoord.y};
+        let playerUnits = boardState.getPlayerUnitsAtPosition(targetPoint);
+        for (var j = 0; j < playerUnits.length; j++) {
+          playerUnits[j].knockback();
+        }
+        UnitBlocker.abilityDef.doActionOnTick(
+          'enemy',
+          0,
+          boardState,
+          boardState.sectors.getPositionFromGrid(targetPoint),
+          //{x: this.x, y: this.y},
+          boardState.sectors.getPositionFromGrid(targetPoint)
+        );
+      }
+    }
+  }
+
   startOfPhase(boardState, phase) {
     super.startOfPhase(boardState, phase);
     if (!this.canUseAbilities()) { return; }
@@ -88,38 +116,7 @@ class UnitBlocker extends UnitBasic {
       this.breakLink(boardState);
     }
     if (phase == TurnPhasesEnum.END_OF_TURN) {
-      this.formLinks(boardState);
-      if (this.linkedWith) {
-        let linkedWith = boardState.findUnit(this.linkedWith);
-        let thisCoord = boardState.sectors.getGridCoord(this);
-        let linkCoord = boardState.sectors.getGridCoord(linkedWith);
-        for (var x = thisCoord.x + 1; x < linkCoord.x; x++) {
-          let targetPoint = {x: x, y: thisCoord.y};
-          /*let unitsAtPosition = boardState.sectors.getUnitsAtGridSquare(targetPoint.x, targetPoint.y);
-          let blockSpawn = false;
-          for (let intersectUnitId of unitsAtPosition) {
-            if (boardState.findUnit(intersectUnitId).preventsUnitEntry(null)) {
-              blockSpawn = true;
-            }
-          }
-          if (blockSpawn) {
-            continue;
-          }*/
-
-          let playerUnits = boardState.getPlayerUnitsAtPosition(targetPoint);
-          for (var j = 0; j < playerUnits.length; j++) {
-            playerUnits[j].knockback();
-          }
-          UnitBlocker.abilityDef.doActionOnTick(
-            'enemy',
-            0,
-            boardState,
-            boardState.sectors.getPositionFromGrid(targetPoint),
-            //{x: this.x, y: this.y},
-            boardState.sectors.getPositionFromGrid(targetPoint)
-          );
-        }
-      }
+      this.useAbility(boardState);
     }
   }
 

@@ -13,6 +13,7 @@ class GameStats {
   }
 
   addPlayerDamage(player, ability, amount) {
+    if (isNaN(amount)) { return; }
     this.doNullPlayerCheck(player, ability);
     this.playerDamage[player][ability].damage += amount;
   }

@@ -46,45 +46,53 @@ class UnitKnight extends UnitBasic {
     hitEffect.doHitEffect(boardState, unit, intersection, projectile);
   }
 
+  doSpawnEffect(boardState) {
+    this.useAbility(boardState);
+  }
+
+  useAbility(boardState) {
+    for (var i = -1; i <= 1; i++) {
+      var castPoint = {x: this.x, y: this.y};
+      var targetPoint = {x: this.x + Unit.UNIT_SIZE * i, y: this.y + Unit.UNIT_SIZE};
+      var pos = boardState.sectors.snapPositionToGrid(targetPoint);
+      if (
+        targetPoint.y <= boardState.boardSize.height - Unit.UNIT_SIZE &&
+        targetPoint.x > 0 &&
+        targetPoint.x < boardState.boardSize.width
+      ) {
+        let unitsAtPosition = boardState.sectors.getUnitsAtPosition(targetPoint.x, targetPoint.y);
+        let blockSpawn = false;
+        for (let intersectUnitId of unitsAtPosition) {
+          let intersectUnit = boardState.findUnit(intersectUnitId);
+          if (
+            intersectUnit.preventsUnitEntry(null) ||
+            (
+              intersectUnit instanceof ZoneEffect && (
+              intersectUnit.creatorAbility.ZONE_TYPE === ZoneAbilityDef.ZoneTypes.KNIGHT_SHIELD ||
+              intersectUnit.creatorAbility.ZONE_TYPE === ZoneAbilityDef.ZoneTypes.BLOCKER_BARRIER
+            ))
+          ) {
+            blockSpawn = true;
+          }
+        }
+        if (blockSpawn) {
+          continue;
+        }
+
+        let playerUnits = boardState.getPlayerUnitsAtPosition(targetPoint);
+        for (var j = 0; j < playerUnits.length; j++) {
+          playerUnits[j].knockback();
+        }
+        UnitKnight.abilityDef.doActionOnTick('enemy', 0, boardState, castPoint, targetPoint);
+      }
+    }
+  }
+
   startOfPhase(boardState, phase) {
     super.startOfPhase(boardState, phase);
     if (!this.canUseAbilities()) { return; }
     if (phase == TurnPhasesEnum.END_OF_TURN) {
-      for (var i = -1; i <= 1; i++) {
-        var castPoint = {x: this.x, y: this.y};
-        var targetPoint = {x: this.x + Unit.UNIT_SIZE * i, y: this.y + Unit.UNIT_SIZE};
-        var pos = boardState.sectors.snapPositionToGrid(targetPoint);
-        if (
-          targetPoint.y <= boardState.boardSize.height - Unit.UNIT_SIZE &&
-          targetPoint.x > 0 &&
-          targetPoint.x < boardState.boardSize.width
-        ) {
-          let unitsAtPosition = boardState.sectors.getUnitsAtPosition(targetPoint.x, targetPoint.y);
-          let blockSpawn = false;
-          for (let intersectUnitId of unitsAtPosition) {
-            let intersectUnit = boardState.findUnit(intersectUnitId);
-            if (
-              intersectUnit.preventsUnitEntry(null) ||
-              (
-                intersectUnit instanceof ZoneEffect && (
-                intersectUnit.creatorAbility.ZONE_TYPE === ZoneAbilityDef.ZoneTypes.KNIGHT_SHIELD ||
-                intersectUnit.creatorAbility.ZONE_TYPE === ZoneAbilityDef.ZoneTypes.BLOCKER_BARRIER
-              ))
-            ) {
-              blockSpawn = true;
-            }
-          }
-          if (blockSpawn) {
-            continue;
-          }
-
-          let playerUnits = boardState.getPlayerUnitsAtPosition(targetPoint);
-          for (var j = 0; j < playerUnits.length; j++) {
-            playerUnits[j].knockback();
-          }
-          UnitKnight.abilityDef.doActionOnTick('enemy', 0, boardState, castPoint, targetPoint);
-        }
-      }
+      this.useAbility(boardState);
     }
   }
 }

@@ -51,14 +51,14 @@ function SeanDeck() {
         abil_def: {
           ability_type: AbilityDef.AbilityTypes.PROJECTILE,
           shape: ProjectileAbilityDef.Shapes.BULLET_EXPLOSION,
-          projectile_type: ProjectileShape.ProjectileTypes.HIT,
+          projectile_type: ProjectileShape.ProjectileTypes.PENETRATE,
           //bullet_speed: 6,
           speed: 8,
-          num_bullets: 30,
+          num_bullets: 20,
           gravity: {x: 0, y: 0},
           hit_effects: [{
             effect: ProjectileShape.HitEffects.DAMAGE,
-            base_damage: 100
+            base_damage: 200
           }],
         }
       }],
