@@ -240,7 +240,7 @@ class MainGame {
   gameNotStartedCallback(metaData) {
     this.updatePlayerData(metaData.player_data);
     UIListeners.setOtherDecks(metaData.other_decks);
-    NumbersBalancer.setDifficulty(metaData.difficulty ? metaData.difficulty : NumbersBalancer.MEDIUM);
+    NumbersBalancer.setDifficulty(metaData.difficulty ? metaData.difficulty : NumbersBalancer.DIFFICULTIES.HARD);
     AIDirector.setLevel(metaData.level);
     UIListeners.updateGameSetupScreen(this.players, metaData.difficulty, metaData.level);
   }

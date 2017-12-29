@@ -118,6 +118,7 @@ class BoardState {
       var newUnit = Unit.loadFromServerData(unitData);
       this.addUnit(newUnit);
     }
+    UIListeners.refreshAbilityDisplay();
   }
 
   addInitialPlayers(players) {

@@ -28,13 +28,21 @@ class ProjectileShapeTriShot extends ProjectileShape {
      );
   }
 
+  getSpreadOffset() {
+    /*if (this.num_bullets % 2 == 0) {
+      return this.calculateSpread(startPos, endPos) * i / this.bullets_per_side / 2;
+    }*/
+    return 0;
+  }
+
   createTargettingGraphic(startPos, endPos, color) {
     // Create a new Graphics object and add it to the scene
     var lineGraphic = new PIXI.Graphics();
     const circleSize = 8;
     for (var i = -this.bullets_per_side; i <= this.bullets_per_side; i++) {
       var angle = Math.atan2(endPos.y - startPos.y, endPos.x - startPos.x) +
-        this.calculateSpread(startPos, endPos) * i / this.bullets_per_side;
+        this.calculateSpread(startPos, endPos) * i / this.bullets_per_side +
+        this.getSpreadOffset();
       var dist = ((endPos.x - startPos.x) ** 2 + (endPos.y - startPos.y) ** 2) ** 0.5;
       dist = 250;
       dist -= circleSize;
@@ -91,10 +99,11 @@ class ProjectileShapeTriShot extends ProjectileShape {
       for (var i = -this.bullets_per_side; i <= this.bullets_per_side; i++) {
         var angle = Math.atan2(
           targetPoint.y - castPoint.y, targetPoint.x - castPoint.x
-        ) + this.calculateSpread(castPoint, targetPoint) * i / this.bullets_per_side;
+        ) + this.calculateSpread(castPoint, targetPoint) * i / this.bullets_per_side +
+          this.getSpreadOffset();
         boardState.addProjectile(
           Projectile.createProjectile(
-            playerID, 
+            playerID,
             this.projectileType,
             castPoint,
             null,

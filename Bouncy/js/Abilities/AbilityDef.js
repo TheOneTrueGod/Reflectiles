@@ -97,14 +97,6 @@ class AbilityDef {
 
   getAbilityHTML() {
     var card = this.createAbilityCard();
-    var chargeDisplay = $("<div>", {"class": "chargeDisplay"});
-    switch(this.chargeType) {
-      case AbilityDef.CHARGE_TYPES.TURNS:
-        chargeDisplay.addClass("chargeTypeTurns");
-      break;
-    }
-    card.append(chargeDisplay);
-
     var tooltip = this.createTooltip();
     if (tooltip) {
       card.attr("data-toggle", "tooltip");
@@ -115,10 +107,24 @@ class AbilityDef {
       });
     }
 
+    var topRight = this.getHTMLForCardNotUseableSection();
+    if (topRight) { card.append(topRight); }
+
+    return card;
+  }
+
+  getHTMLForCardNotUseableSection() {
+    var chargeDisplay = $("<div>", {"class": "chargeDisplay"});
+    switch(this.chargeType) {
+      case AbilityDef.CHARGE_TYPES.TURNS:
+        chargeDisplay.addClass("chargeTypeTurns");
+      break;
+    }
+
     var chargeNumber = $("<div>", {"class": "chargeNumber noselect"});
     chargeDisplay.append(chargeNumber);
 
-    return card;
+    return chargeDisplay;
   }
 
   createTooltip() {
@@ -256,6 +262,7 @@ class AbilityDef {
     $card.append(this.getTextDescription());
 
     $card.append(this.getCooldownIcon());
+    $card.append(this.getHTMLForTopLeftOfCard());
 
     return $card;
   }
@@ -277,6 +284,10 @@ class AbilityDef {
       $cooldownIcon.append($cooldownText);
       return $cooldownIcon;
     }
+  }
+
+  getHTMLForTopLeftOfCard() {
+    return null;
   }
 
   getTextDescription() {

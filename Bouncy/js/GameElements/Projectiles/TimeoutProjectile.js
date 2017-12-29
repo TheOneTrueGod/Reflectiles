@@ -1,4 +1,4 @@
-class TimeoutProjectile extends Projectile {
+class TimeoutProjectile extends BouncingProjectile {
   constructor(playerID, startPoint, targetPoint, angle, abilityDef, projectileOptions) {
     super(playerID, startPoint, targetPoint, angle, abilityDef, projectileOptions);
     var targetVec = Victor(targetPoint.x - startPoint.x, targetPoint.y - startPoint.y);
@@ -14,10 +14,10 @@ class TimeoutProjectile extends Projectile {
       this
     );
 
-    if (!unit.readyToDelete()) {
+    /*if (!unit.readyToDelete()) {
       EffectFactory.createDamageEffect(boardState, intersection);
-    }
+    }*/
 
-    this.delete();
+    //this.delete();
   }
 }

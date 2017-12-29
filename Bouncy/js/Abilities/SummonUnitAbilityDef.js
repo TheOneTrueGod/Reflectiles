@@ -7,6 +7,7 @@ class SummonUnitAbilityDef extends AbilityDef {
       this.loadNestedAbilityDefs(defJSON.unit_abilities);
     }
     this.UNITS_TO_SUMMON = this.getOptionalParam('unit_count', 1);
+    this.MAX_SUMMON = this.getOptionalParam('max_summon', 0);
     this.MAX_RANGE = this.getOptionalParam('max_range', {left: 0, right: 0, top: 0, bottom: 0});
     this.AREA_TYPE = this.getOptionalParam('area_type', SummonUnitAbilityDef.AREA_TYPES.SINGLE);
   }
@@ -243,6 +244,42 @@ class SummonUnitAbilityDef extends AbilityDef {
       );
 
     return lineGraphic;
+  }
+
+  canBeUsed() {
+    let displayContainer = $('[ability-id=' + this.index + ']').find('.chargeDisplay');
+    if (!super.canBeUsed()) {
+      displayContainer.removeClass('cantUseReasonSummon');
+      return false;
+    }
+
+    if (this.MAX_SUMMON <= 0) {
+      return true;
+    }
+
+    if (!MainGame.boardState) {
+      return true;
+    }
+
+    let summonedList = MainGame.boardState.getAllUnitsByCondition((unit) => {
+      return unit instanceof ZoneEffect && unit.creatorAbility == this;
+    });
+
+    displayContainer.addClass('cantUseReasonSummon');
+
+    return summonedList.length < this.MAX_SUMMON;
+  }
+
+  getHTMLForTopLeftOfCard() {
+    if (this.MAX_SUMMON <= 0) {
+      return null;
+    }
+
+    let $topLeftIcon = $("<div>", {"class": "topLeftIcon summonLimit"});
+    let $topLeftText = $("<div>", {"class": "topLeftText"});
+    $topLeftText.text(this.MAX_SUMMON);
+    $topLeftIcon.append($topLeftText);
+    return $topLeftIcon;
   }
 
   endOfPhase(boardState, phase, zone) {}

@@ -62,6 +62,25 @@ class UIListeners {
     }
   }
 
+  refreshAbilityDisplay() {
+    let player;
+    let players = MainGame.players;
+    var playerID = $('#gameContainer').attr('playerid');
+    for (var key in players) {
+      if (players[key].getUserID() === playerID) {
+        player = players[key];
+      }
+    }
+    if (!player) {
+      throw new Error("PlayerID [" + playerID + "] not in Players");
+    }
+
+    var abilities = player.getAbilities();
+    for (var i = 0; i < abilities.length; i++) {
+      abilities[i].chargeUpdated();
+    }
+  }
+
   setupUIListeners() {
     $('#missionEndTurnButton').on('click', function() {
       TurnControls.setPlayState(false);

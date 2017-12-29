@@ -1,6 +1,17 @@
 function TJDeck() {
   var abilities = [
-    { // 1000 max damage
+    { // 1200 damage expected, 1800 max
+      name: 'Explosion',
+      description: 'Fires a single bullet, dealing [[hit_effects[0].base_damage]] damage in a 3x3 area',
+      card_text_description: '[[hit_effects[0].base_damage]] 3x3',
+      ability_type: AbilityDef.AbilityTypes.PROJECTILE,
+      shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
+      projectile_type: ProjectileShape.ProjectileTypes.HIT,
+      destroy_on_wall: true,
+      hit_effects:[{base_damage: 200, effect:ProjectileShape.HitEffects.DAMAGE, aoe_type:"BOX"}],
+      icon: "../Bouncy/assets/icons/icon_plain_explosion.png"
+    },
+    { // 1200 max damage
       name: 'Shotgun',
       description: 'Fires a spray of [[num_bullets]] bullets, dealing [[hit_effects[0].base_damage]] damage.<br>These bullets will penetrate their targets.',
       card_text_description: '[[num_bullets]] X [[hit_effects[0].base_damage]]',
@@ -11,21 +22,11 @@ function TJDeck() {
       shape: ProjectileAbilityDef.Shapes.SPRAY_SHOT,
       projectile_type: ProjectileShape.ProjectileTypes.PENETRATE,
       destroy_on_wall: true,
-      hit_effects: [{base_damage: 100, effect: ProjectileShape.HitEffects.DAMAGE}],
-      num_bullets: 10
+      hit_effects: [{base_damage: 120, effect: ProjectileShape.HitEffects.DAMAGE}],
+      num_bullets: 10,
+      charge: {initial_charge: -1, max_charge: 2, charge_type: "TURNS"},
     },
-    { // 1080 damage expected, 1620 max
-      name: 'Explosion',
-      description: 'Fires a single bullet, dealing [[hit_effects[0].base_damage]] damage in a 3x3 area',
-      card_text_description: '[[hit_effects[0].base_damage]] 3x3',
-      ability_type: AbilityDef.AbilityTypes.PROJECTILE,
-      shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
-      projectile_type: ProjectileShape.ProjectileTypes.HIT,
-      destroy_on_wall: true,
-      hit_effects:[{base_damage: 180, effect:ProjectileShape.HitEffects.DAMAGE, aoe_type:"BOX"}],
-      icon: "../Bouncy/assets/icons/icon_plain_explosion.png"
-    },
-    { // 980 damage expected
+    { // 1400 damage expected
       name: 'Spread Shot',
       description: 'Fires [[num_bullets]] bullets, each dealing [[hit_effects[0].base_damage]] damage',
       card_text_description: '[[num_bullets]] X [[hit_effects[0].base_damage]]',
@@ -36,7 +37,8 @@ function TJDeck() {
       projectile_type: ProjectileShape.ProjectileTypes.HIT,
       destroy_on_wall: true,
       num_bullets: 7,
-      hit_effects:[{effect: ProjectileShape.HitEffects.DAMAGE, base_damage: 140}]
+      hit_effects:[{effect: ProjectileShape.HitEffects.DAMAGE, base_damage: 200}],
+      charge: {initial_charge: -1, max_charge: 2, charge_type: "TURNS"},
     },
     { // 1440 damage
       name: 'Double Wave',
@@ -54,7 +56,7 @@ function TJDeck() {
       icon:"../Bouncy/assets/icons/icon_plain_wave.png",
       hit_effects: [{
         effect: ProjectileShape.HitEffects.DAMAGE,
-        base_damage: 40
+        base_damage: 50
       }],
       charge: {"initial_charge":-1, "max_charge": 5, "charge_type":"TURNS"},
     }, { // 2250 max damage.
@@ -69,7 +71,8 @@ function TJDeck() {
       shape: ProjectileAbilityDef.Shapes.RAIN,
       projectile_type: ProjectileShape.ProjectileTypes.HIT,
       destroy_on_wall: true,
-      hit_effects: [{effect: ProjectileShape.HitEffects.DAMAGE, base_damage: 20},
+      hit_effects: [
+        {effect: ProjectileShape.HitEffects.DAMAGE, base_damage: 20},
         {
           effect: ProjectileShape.HitEffects.BULLET_SPLIT,
           style: (new AbilitySheetSpriteAbilityStyleBuilder)

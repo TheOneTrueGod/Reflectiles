@@ -1,7 +1,7 @@
 class NumbersBalancer {
   constructor() {
     this.num_players = 4;
-    this.difficulty = this.DIFFICULTIES.MEDIUM;
+    this.difficulty = this.DIFFICULTIES.HARD;
   }
 
   setNumPlayers(num_players) {
@@ -40,11 +40,11 @@ class NumbersBalancer {
   getDifficultyMultiplier() {
     switch (this.difficulty) {
       case this.DIFFICULTIES.EASY:
-        return 0.75;
+        return 0.5;
       case this.DIFFICULTIES.MEDIUM:
-        return 1;
+        return 0.75;
       case this.DIFFICULTIES.HARD:
-        return 1.25;
+        return 1;
       case this.DIFFICULTIES.NIGHTMARE:
         return 1.5;
     }
