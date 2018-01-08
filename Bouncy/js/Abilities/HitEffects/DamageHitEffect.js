@@ -15,17 +15,24 @@ class DamageHitEffect extends HitEffect {
     if (is_penetrate) {
       base_damage = base_damage - projectile.damageDealt;
     }
+    let damageMod = 1;
     if (intersection && intersection.line instanceof UnitCriticalLine) {
-      base_damage = base_damage * intersection.line.getCriticalMultiplier();
+      damageMod *= intersection.line.getCriticalMultiplier();
     }
 
-    var finalDamage = base_damage;
+    let damageBuff = projectile.getBuff(ProjectileDamageBuff.name);
+    if (damageBuff) {
+      damageMod *= damageBuff.getAmount();
+    }
+
+    var finalDamage = base_damage * damageMod;
 
     var damageDealt = unit.dealDamage(boardState, finalDamage, projectile);
     if (is_penetrate && (!unit.readyToDelete() || Math.floor(finalDamage) == Math.floor(damageDealt))) {
       projectile.delete();
     }
-    return damageDealt;
+    
+    return damageDealt / damageMod;
   }
 }
 

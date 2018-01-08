@@ -8,11 +8,17 @@ class SingleHitProjectile extends Projectile {
       this
     );
 
-    if (!unit.readyToDelete()) {
+    if (
+      !unit.readyToDelete() &&
+      (!intersection.line || !intersection.line.forcePassthrough(this))
+    ) {
       EffectFactory.createDamageEffect(boardState, intersection);
     }
 
-    if (!intersection.line.forceBounce()) {
+    if (
+      !intersection.line.forceBounce(this) &&
+      !intersection.line.forcePassthrough(this)
+    ) {
       this.delete();
     }
   }

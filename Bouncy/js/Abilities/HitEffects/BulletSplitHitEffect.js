@@ -44,6 +44,7 @@ class BulletSplitHitEffect extends HitEffect {
           }
         ).addUnitHitCallback(this.projectileShape.unitHitCallback.bind(this.projectileShape))
         .setStyle(this.styleDef)
+        .cloneBuffsFrom(projectile)
       );
     }
   }

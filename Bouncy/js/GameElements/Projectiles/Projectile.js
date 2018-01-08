@@ -32,6 +32,7 @@ class Projectile {
     this.wallsHit = 0;
     this.lastCollisionPoint = null;
     this.projectileStyle = null;
+    this.buffs = {};
     if (projectileOptions && projectileOptions.hit_effects) {
       this.hitEffects = projectileOptions.hit_effects;
     }
@@ -81,6 +82,28 @@ class Projectile {
       var AOESprite = 'sprite_explosion';
       EffectFactory.createExplosionSpriteAtUnit(boardState, targetPos, AOESprite);
     }
+  }
+
+  addBuff(buff) {
+    if (this.buffs.hasOwnProperty(buff.constructor.name)) {
+      return;
+    }
+
+    this.buffs[buff.constructor.name] = buff;
+  }
+
+  cloneBuffsFrom(otherProjectile) {
+    for (var key in otherProjectile.buffs) {
+      this.addBuff(otherProjectile.buffs[key].clone());
+    }
+    return this;
+  }
+
+  getBuff(buffClassName) {
+    if (this.buffs.hasOwnProperty(buffClassName)) {
+      return this.buffs[buffClassName];
+    }
+    return null;
   }
 
   runTick(boardState, boardWidth, boardHeight) {
@@ -171,6 +194,9 @@ class Projectile {
   shouldBounceOffLine(line) {
     if (line instanceof BorderWallLine) {
       return line.side !== BorderWallLine.BOTTOM;
+    }
+    if (line.forcePassthrough(this)) {
+      return false;
     }
     return true;
   }
@@ -263,4 +289,8 @@ Projectile.createProjectile = function(
       return new GrenadeProjectile(playerID, startPoint, targetPoint, angle, abilityDef);
   }
   throw new Error("projectileType [" + projectileType + "] not handled");
+};
+
+Projectile.BuffTypes = {
+  DAMAGE: 'DAMAGE',
 };

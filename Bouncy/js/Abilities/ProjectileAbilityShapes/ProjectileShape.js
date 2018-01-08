@@ -6,6 +6,14 @@ class ProjectileShape {
   }
 
   unitHitCallback(boardState, unit, intersection, projectile) {
+    if (intersection && intersection.line && intersection.line.triggerHit) {
+      intersection.line.triggerHit(boardState, unit, intersection, projectile);
+    }
+
+    if (intersection.line.forcePassthrough(projectile)) {
+      return 0;
+    }
+
     let hitEffects;
     if (projectile.hitEffects) {
       hitEffects = projectile.hitEffects;
@@ -106,6 +114,7 @@ ProjectileShape.ProjectileTypes = {
 ProjectileShape.HitEffects = {
   DAMAGE: 'DAMAGE',
   POISON: 'POISON',
+  WEAKNESS: 'WEAKNESS',
   FREEZE: 'FREEZE',
   BULLET_SPLIT: 'BULLET_SPLIT',
   INFECT: 'INFECT',

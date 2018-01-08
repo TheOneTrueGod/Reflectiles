@@ -22,61 +22,15 @@ class UnitBasic extends Unit {
     }
     var sprite = null;
     if (effect == FreezeStatusEffect.getEffectType()) {
-      sprite = new PIXI.Graphics();
-      sprite.position.set(-this.physicsWidth / 2, -this.physicsHeight / 2);
-      sprite.lineStyle(3, 0x0000FF)
-         .moveTo(0, 0)
-         .lineTo(this.physicsWidth, this.physicsHeight)
-         .moveTo(this.physicsWidth, 0)
-         .lineTo(0, this.physicsHeight)
-         .moveTo(0, 0)
-         .lineTo(this.physicsWidth, 0)
-         .lineTo(this.physicsWidth, this.physicsHeight)
-         .lineTo(0, this.physicsHeight)
-         .lineTo(0, 0);
-      this.gameSprite.addChildAt(sprite, this.gameSprite.children.length - 1);
+      sprite = FreezeStatusEffect.addEffectSprite(this);
     } else if (effect == PoisonStatusEffect.getEffectType()) {
-      sprite = new PIXI.Graphics();
-      sprite.position.set(0, 0);
-      var color = 0x00AA00;
-      var alpha = 0.5;
-      sprite.lineStyle(0, 0, 0)
-        .beginFill(color, alpha);
-
-      var path = [];
-      for (var i = 0; i < this.collisionBox.length; i++) {
-        path.push(new PIXI.Point(
-          this.collisionBox[i].x1 / this.gameSprite.scale.x,
-          this.collisionBox[i].y1 / this.gameSprite.scale.y
-        ));
-      }
-
-      sprite.drawPolygon(path);
-      this.gameSprite.addChildAt(sprite, 0);
+      sprite = PoisonStatusEffect.addEffectSprite(this);
     } else if (effect == InfectStatusEffect.getEffectType()) {
-      sprite = new PIXI.Graphics();
-      sprite.position.set(0, 0);
-      var color = 0x6F256F;
-      var alpha = 0.5;
-      sprite.beginFill(color, alpha).lineStyle(0, 0, 1);
-
-      var path = [];
-      for (var i = 0; i < this.collisionBox.length; i++) {
-        path.push(new PIXI.Point(
-          this.collisionBox[i].x1 / this.gameSprite.scale.x,
-          this.collisionBox[i].y1 / this.gameSprite.scale.y
-        ));
-      }
-
-      sprite.drawPolygon(path);
-      this.gameSprite.addChildAt(sprite, 0);
+      sprite = InfectStatusEffect.addEffectSprite(this);
     } else if (effect == ShieldStatusEffect.getEffectType()) {
-      if (!UnitBasic.OUTLINE_FILTER_PURPLE) {
-        UnitBasic.OUTLINE_FILTER_PURPLE =
-          new PIXI.filters.OutlineFilter(2, 0xc119b9);
-      }
-      this.gameSprite.filters = [UnitBasic.OUTLINE_FILTER_PURPLE];
-      this.createHealthBarSprite(this.gameSprite);
+      sprite = ShieldStatusEffect.addEffectSprite(this);
+    } else if (effect == WeaknessStatusEffect.getEffectType()) {
+      sprite = WeaknessStatusEffect.addEffectSprite(this);
     }
     if (sprite) {
 

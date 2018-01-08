@@ -89,18 +89,19 @@ class ZoneEffect extends Unit {
     if (interaction.destroy) {
       this.createHealthBarSprite(this.gameSprite);
       projectile.readyToDel = true;
+      if (!this.creatorAbility.getOptionalParam('invulnerable', false)) {
+        this.decreaseTime(boardState, 1);
+      }
     }
 
     if (interaction.buff) {
-
-    }
-
-    this.hitByProjectile(boardState, unit, intersection, projectile);
-  }
-
-  hitByProjectile(boardState, unit, intersection, projectile) {
-    if (!this.creatorAbility.getOptionalParam('invulnerable', false)) {
-      this.decreaseTime(boardState, 1);
+      switch (interaction.buff.type) {
+        case Projectile.BuffTypes.DAMAGE:
+          projectile.addBuff(new ProjectileDamageBuff());
+          break;
+        default:
+        throw new Error("unhandled buff type: [" + interaction.buff.type + "]");
+      }
     }
   }
 
@@ -115,13 +116,10 @@ class ZoneEffect extends Unit {
       var t = -((this.size.top + 0.5) * this.physicsHeight);
       var b = ((this.size.bottom + 0.5) * this.physicsHeight);
 
-      var lineType = AbilityTriggeringLine;
-      if (projectileInteraction.force_bounce) {
+      var lineType = ZoneLine;
+      /*if (projectileInteraction.force_bounce) {
         lineType = BouncingLine;
-      }
-      if (projectileInteraction.destroy) {
-        lineType = AbilityTriggeringLine;
-      }
+      }*/
 
       var offset = 0;
       /*if (!(this instanceof Turret)) {

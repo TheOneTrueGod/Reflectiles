@@ -1,5 +1,9 @@
 class GameLine extends Line {
-  forceBounce() {
+  forceBounce(projectile) {
+    return false;
+  }
+
+  forcePassthrough(projectile) {
     return false;
   }
 }
@@ -10,7 +14,7 @@ class BorderWallLine extends GameLine {
     this.side = side;
   }
 
-  forceBounce() {
+  forceBounce(projectile) {
     return this.side !== this.BOTTOM;
   }
 }
@@ -26,7 +30,7 @@ class UnitLine extends GameLine {
     this.unit = unit;
   }
 
-  forceBounce() {
+  forceBounce(projectile) {
     return false;
   }
 
@@ -51,7 +55,7 @@ class UnitCriticalLine extends UnitLine {
 }
 
 class BouncingLine extends UnitLine {
-  forceBounce() {
+  forceBounce(projectile) {
     return true;
   }
 
@@ -67,5 +71,31 @@ class AbilityTriggeringLine extends UnitLine {
 
   clone() {
     return new AbilityTriggeringLine(this.x1, this.y1, this.x2, this.y2, this.unit);
+  }
+}
+
+class ZoneLine extends UnitLine {
+  triggerHit(boardState, unit, intersection, projectile) {
+    return this.unit.triggerHit(boardState, unit, intersection, projectile);
+  }
+
+  forcePassthrough(projectile) {
+    let interaction = this.unit.getInteractionForProjectile(projectile);
+    if (interaction.force_passthrough) {
+      return true;
+    }
+    return false;
+  }
+
+  forceBounce(projectile) {
+    let interaction = this.unit.getInteractionForProjectile(projectile);
+    if (interaction.force_bounce) {
+      return true;
+    }
+    return false;
+  }
+
+  clone() {
+    return new ZoneLine(this.x1, this.y1, this.x2, this.y2, this.unit);
   }
 }

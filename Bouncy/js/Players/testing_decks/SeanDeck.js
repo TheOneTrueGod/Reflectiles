@@ -54,7 +54,7 @@ function SeanDeck() {
           projectile_type: ProjectileShape.ProjectileTypes.PENETRATE,
           //bullet_speed: 6,
           speed: 8,
-          num_bullets: 20,
+          num_bullets: 10,
           gravity: {x: 0, y: 0},
           hit_effects: [{
             effect: ProjectileShape.HitEffects.DAMAGE,
@@ -81,12 +81,12 @@ function SeanDeck() {
       icon: "../Bouncy/assets/icons/bullets.png",
       hit_effects: [{
         effect: ProjectileShape.HitEffects.DAMAGE,
-        base_damage: 30
+        base_damage: 35
       },
       {
         effect: ProjectileShape.HitEffects.POISON,
-        damage: 15,
-        duration: 1
+        damage: 10,
+        duration: 2
       }],
     },
     {

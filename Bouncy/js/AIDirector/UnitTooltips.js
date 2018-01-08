@@ -323,6 +323,8 @@ class UnitTooltips {
         return '#47e549';
       case 'FreezeStatusEffect':
         return '#6666ff';
+      case 'WeaknessStatusEffect':
+        return '#8F4F58';
       case 'InfectStatusEffect':
         return '#db4dff';
     }
@@ -340,6 +342,8 @@ class UnitTooltips {
         return 'Poison';
       case 'FreezeStatusEffect':
         return 'Freeze';
+      case 'WeaknessStatusEffect':
+        return 'Weakness';
       case 'InfectStatusEffect':
         return 'Infect';
     }
@@ -358,6 +362,8 @@ class UnitTooltips {
         return 'Deals ' + statusEffect.damage + ' damage per turn for ' + statusEffect.duration + ' turns';
       case 'FreezeStatusEffect':
         return 'The unit is stunned for ' + statusEffect.duration + ' turns';
+      case 'WeaknessStatusEffect':
+        return 'The unit takes 50% more damage';
       case 'InfectStatusEffect':
         return 'If the unit dies within ' + statusEffect.duration + ' turns, it explodes';
     }

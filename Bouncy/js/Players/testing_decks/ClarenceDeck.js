@@ -75,7 +75,7 @@ function ClarenceDeck() {
       max_range: {top: 2, bottom: -1, left: 2, right: 2},
       icon: "../Bouncy/assets/icons/turret.png",
       charge: {initial_charge: -1, max_charge: 1, charge_type: AbilityDef.CHARGE_TYPES.TURNS},
-      max_summon: 3,
+      max_summon: 2,
     },
     {
       name: 'Cannon Turret',

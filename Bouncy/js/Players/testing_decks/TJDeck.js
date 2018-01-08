@@ -26,20 +26,6 @@ function TJDeck() {
       num_bullets: 10,
       charge: {initial_charge: -1, max_charge: 2, charge_type: "TURNS"},
     },
-    { // 1400 damage expected
-      name: 'Spread Shot',
-      description: 'Fires [[num_bullets]] bullets, each dealing [[hit_effects[0].base_damage]] damage',
-      card_text_description: '[[num_bullets]] X [[hit_effects[0].base_damage]]',
-      ability_type: AbilityDef.AbilityTypes.PROJECTILE,
-      shape: "TRI_SHOT",
-      style: (new AbilitySheetSpriteAbilityStyleBuilder)
-        .setSheet('bullet_sheet').setCoordNums(275, 69, 294, 78).setRotation(0).build(),
-      projectile_type: ProjectileShape.ProjectileTypes.HIT,
-      destroy_on_wall: true,
-      num_bullets: 7,
-      hit_effects:[{effect: ProjectileShape.HitEffects.DAMAGE, base_damage: 200}],
-      charge: {initial_charge: -1, max_charge: 2, charge_type: "TURNS"},
-    },
     { // 1440 damage
       name: 'Double Wave',
       description: 'Sprays [[num_bullets]] in two waves.<br>' +
@@ -88,6 +74,27 @@ function TJDeck() {
       num_bullets: 50,
       icon: "../Bouncy/assets/icons/icon_plain_rain.png",
       charge: {"initial_charge":-1, "max_charge": 5, "charge_type":"TURNS"},
+    },
+    {
+      name: 'Rage',
+      description: 'Creates a zone around you that lasts [[duration]] turns.<br>' +
+        'Any projectile entering or leaving the zone becomes Powerful, dealing 20% extra damage.',
+      card_text_description: '+20%',
+      zone_tooltip_name: 'Rage',
+      zone_tooltip_description: 'Any projectile entering or leaving this zone becomes Powerful, dealing 20% extra damage.',
+      ability_type: AbilityDef.AbilityTypes.ZONE,
+      projectile_interaction: {
+        player_projectiles: {
+          buff: {type: Projectile.BuffTypes.DAMAGE},
+          force_passthrough: true,
+        },
+      },
+      unit_interaction: { prevent_unit_entry: false },
+      duration: 3,
+      zone_size: {left: 1, right:1, top:1, bottom:1, y_range: 0},
+      max_range: {left: 0, right: 0, top: 0, bottom: 0},
+      icon: "../Bouncy/assets/icons/icon_strong.png",
+      charge: {initial_charge: -1, max_charge: 5, charge_type: "TURNS"},
     }
   ];
   for (var i = 0; i < abilities.length; i++) {
@@ -95,3 +102,20 @@ function TJDeck() {
   }
   return abilities;
 }
+
+const OLD_TJ_ABILITIES = {
+  SPREAD_SHOT: { // 1400 damage expected
+    name: 'Spread Shot',
+    description: 'Fires [[num_bullets]] bullets, each dealing [[hit_effects[0].base_damage]] damage',
+    card_text_description: '[[num_bullets]] X [[hit_effects[0].base_damage]]',
+    ability_type: AbilityDef.AbilityTypes.PROJECTILE,
+    shape: "TRI_SHOT",
+    style: (new AbilitySheetSpriteAbilityStyleBuilder)
+      .setSheet('bullet_sheet').setCoordNums(275, 69, 294, 78).setRotation(0).build(),
+    projectile_type: ProjectileShape.ProjectileTypes.HIT,
+    destroy_on_wall: true,
+    num_bullets: 7,
+    hit_effects:[{effect: ProjectileShape.HitEffects.DAMAGE, base_damage: 200}],
+    charge: {initial_charge: -1, max_charge: 2, charge_type: "TURNS"},
+  },
+};

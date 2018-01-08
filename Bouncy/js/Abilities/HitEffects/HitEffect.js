@@ -6,9 +6,6 @@ class HitEffect {
   }
 
   doHitEffect(boardState, unit, intersection, source) {
-    if (intersection && intersection.line instanceof AbilityTriggeringLine) {
-      intersection.line.triggerHit(boardState, unit, intersection, source);
-    }
     var AOEType = idx(this.hitEffectDef, 'aoe_type', ProjectileShape.AOE_TYPES.NONE);
     var aoeUnitsToHit = [];
     var damageDealt = 0;
@@ -64,6 +61,8 @@ HitEffect.getHitEffectFromType = function(hitEffectDef, abilityDef, projectileSh
       return new BulletSplitHitEffect(hitEffectDef, abilityDef, projectileShape);
     case ProjectileShape.HitEffects.INFECT:
       return new InfectHitEffect(hitEffectDef, abilityDef);
+    case ProjectileShape.HitEffects.WEAKNESS:
+      return new WeaknessHitEffect(hitEffectDef, abilityDef);
   }
   return new HitEffect(hitEffectDef, abilityDef);
 }

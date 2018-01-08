@@ -41,6 +41,16 @@ class ShieldStatusEffect extends StatusEffect {
     superSerial.health = this.health;
     return superSerial;
   }
+
+  static addEffectSprite(unit) {
+    if (!UnitBasic.OUTLINE_FILTER_PURPLE) {
+      UnitBasic.OUTLINE_FILTER_PURPLE =
+        new PIXI.filters.OutlineFilter(2, 0xc119b9);
+    }
+    unit.gameSprite.filters = [UnitBasic.OUTLINE_FILTER_PURPLE];
+    unit.createHealthBarSprite(unit.gameSprite);
+    return null;
+  }
 }
 
 ShieldStatusEffect.loadFromServerData = function(server_data) {

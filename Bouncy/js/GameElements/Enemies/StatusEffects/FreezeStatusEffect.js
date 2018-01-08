@@ -11,12 +11,30 @@ class FreezeStatusEffect extends StatusEffect {
     this.duration -= 1;
   }
 
-  getDamageMultiplier() {
-    return 0.5;
-  }
-
   getEffectType() {
     return this.constructor.name;
+  }
+
+  static addEffectSprite(unit) {
+    let sprite = new PIXI.Graphics();
+    sprite.position.set(-unit.physicsWidth / 2, -unit.physicsHeight / 2);
+    sprite.lineStyle(3, 0x0000FF)
+       .moveTo(0, 0)
+       .lineTo(unit.physicsWidth, unit.physicsHeight)
+       .moveTo(unit.physicsWidth, 0)
+       .lineTo(0, unit.physicsHeight)
+       .moveTo(0, 0)
+       .lineTo(unit.physicsWidth, 0)
+       .lineTo(unit.physicsWidth, unit.physicsHeight)
+       .lineTo(0, unit.physicsHeight)
+       .lineTo(0, 0);
+    if (unit.gameSprite.children.length > 0) {
+      unit.gameSprite.addChildAt(sprite, unit.gameSprite.children.length - 1);
+    } else {
+      unit.gameSprite.addChild(sprite);
+    }
+
+    return sprite;
   }
 }
 

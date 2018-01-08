@@ -557,10 +557,16 @@ class BoardState {
 
   addProjectile(projectile) {
     projectile.addToStage(this.stage);
-    if (projectile instanceof Effect && false) {
-      this.effects.push(projectile);
-    } else {
-      this.projectiles.push(projectile);
+    this.projectiles.push(projectile);
+    if (!(projectile instanceof Effect)) {
+      let unitsAtPos =
+        this.sectors.getUnitsAtPosition(projectile.x, projectile.y);
+      unitsAtPos.forEach((unitID) => {
+        let unit = this.findUnit(unitID);
+        if (unit instanceof ZoneEffect) {
+          unit.triggerHit(this, unit, null, projectile);
+        }
+      });
     }
   }
 

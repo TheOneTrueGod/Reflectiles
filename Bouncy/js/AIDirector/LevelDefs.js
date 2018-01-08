@@ -7,6 +7,8 @@ class LevelDefs {
       return LevelDefsWorld1.getStageDef(stage);
     } else if (world == 2) {
       return LevelDefsWorld2.getStageDef(stage);
+    } else if (world == 3) {
+      return LevelDefsWorld3.getStageDef(stage);
     }
     return new LevelDef();
   }

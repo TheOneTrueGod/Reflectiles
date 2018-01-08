@@ -28,6 +28,7 @@
 <link rel="stylesheet" type="text/css" href="../Bouncy/style/unitTooltips.css">
 <div class="pageBorder">
   <div class="titleArea">
+    <div class="backLink"><a href="/">&lt; Back</a></div>
     <h2> Reflectiles </h2>
     <div class="username"><?php echo $user->getUserName(); ?></div>
   </div>

@@ -60,7 +60,7 @@ function ChipDeck() {
       charge: {"initial_charge":-1,"max_charge":3,"charge_type":"TURNS"},
     },{
       name: 'Freeze',
-      description: 'Freezes a single enemy for [[hit_effects[0].duration]] turns',
+      description: 'Freezes a 3x3 square of enemies for [[hit_effects[1].duration]] turns',
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
       projectile_type: ProjectileShape.ProjectileTypes.HIT,
@@ -71,18 +71,24 @@ function ChipDeck() {
       icon: "../Bouncy/assets/icons/icon_plain_frost.png",
       charge: {"initial_charge":-1,"max_charge":3,"charge_type":"TURNS"}
     },{
-      name: 'Demi',
-      description: 'Halves the health of each enemy in a 5x3 radius.<br>' +
-        'Does not affect armour or shields.',
-      card_text_description: '50% 5x3',
+      name: 'Mass Weaken',
+      description: 'Deals [[hit_effects[0].base_damage]] to each enemy in a 5x3 radius.<br>' +
+        'Applies weakness to each enemy hit for [[hit_effects[1].duration]] turns, increasing the damage they take by 50%',
+      card_text_description: '100 5x3',
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
       projectile_type: ProjectileShape.ProjectileTypes.HIT,
       hit_effects:[{
         effect: ProjectileShape.HitEffects.DAMAGE,
-        base_damage: "50%",
+        base_damage: 100,
         aoe_type: "BOX",
         aoe_size: {"x":[-2, 2], y:[-1, 1]}
+      },
+      {
+        effect: ProjectileShape.HitEffects.WEAKNESS,
+        duration: 2,
+        aoe_type: "BOX",
+        aoe_size: {"x":[-2, 2], y:[-1, 1]},
       }],
       icon:"../Bouncy/assets/icons/icon_plain_hearts.png",
       charge: {"initial_charge":-1,"max_charge":3,"charge_type":"TURNS"}

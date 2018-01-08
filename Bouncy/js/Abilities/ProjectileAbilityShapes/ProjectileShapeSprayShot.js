@@ -109,7 +109,7 @@ class ProjectileShapeSprayShot extends ProjectileShape {
   doActionOnTick(playerID, tick, boardState, castPoint, targetPoint) {
     if (tick == this.ACTIVATE_ON_TICK) {
       var spread = this.calculateSpread(castPoint, targetPoint);
-      for (var i = 0; i <= this.num_bullets; i++) {
+      for (var i = 0; i < this.num_bullets; i++) {
         var rand = boardState.getRandom();
         var angle = Math.atan2(
           targetPoint.y - castPoint.y, targetPoint.x - castPoint.x
@@ -118,7 +118,7 @@ class ProjectileShapeSprayShot extends ProjectileShape {
         var speed = lerp(6, 7, i / this.num_bullets);
         boardState.addProjectile(
           Projectile.createProjectile(
-            playerID, 
+            playerID,
             this.projectileType,
             castPoint,
             targetPoint,

@@ -20,7 +20,9 @@ class Tester extends MainGame {
     var TestAbils = TestDeck();
     // SET COMMANDS HERE
     this.abilitiesToUse = [
-      [ClarenceAbils[4].index, {x: 0, y: -250}],
+      [TJAbils[4].index, {x: 0, y: -250}],
+      [TJAbils[1].index, {x: 0, y: -250}],
+      [TJAbils[1].index, {x: 0, y: -250}]
       /*[TestAbils[0].index, {x: 0, y: -250}],
       [TestAbils[1].index, {x: 0, y: -250}],
       [TestAbils[0].index, {x: 0, y: -250}],*/

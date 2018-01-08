@@ -177,7 +177,7 @@ class Unit {
       }
     }
 
-    maxDamageDealt = maxDamageDealt / Math.max(damageMult, 0.00001)
+    maxDamageDealt = maxDamageDealt / Math.max(damageMult, 0.00001);
     damageDealt += Math.min(this.health.current, Math.floor(damageToDeal));
     this.setHealth(this.health.current - Math.floor(Math.max(damageToDeal, 0)));
     if (amount > 0) {
@@ -199,6 +199,7 @@ class Unit {
     if (!abilID) {
       console.warn("Unknown ability ID: " + abilID);
     }
+
     if (playerID) {
       boardState.gameStats.addPlayerDamage(playerID, abilID, damageDealt);
     } else {
@@ -206,7 +207,7 @@ class Unit {
       console.warn("Unknown source: ", source);
     }
 
-    return Math.min(maxDamageDealt, amount);
+    return damageDealt / Math.max(damageMult, 0.00001);
   }
 
   delete() {

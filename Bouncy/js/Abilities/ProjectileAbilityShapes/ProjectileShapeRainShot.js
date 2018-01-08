@@ -70,7 +70,7 @@ class ProjectileShapeRainShot extends ProjectileShape {
   doActionOnTick(playerID, tick, boardState, castPoint, targetPoint) {
     if (tick >= this.ACTIVATE_ON_TICK && tick <= this.FINAL_TICK) {
       for (var i = 0; i < this.SHOTS_PER_TICK; i++) {
-        if ((tick - this.ACTIVATE_ON_TICK) * this.SHOTS_PER_TICK + i > this.num_bullets) {
+        if ((tick - this.ACTIVATE_ON_TICK) * this.SHOTS_PER_TICK + i >= this.num_bullets) {
           continue;
         }
         var rand = boardState.getRandom();
@@ -79,7 +79,7 @@ class ProjectileShapeRainShot extends ProjectileShape {
         var speed = 4;
         boardState.addProjectile(
           Projectile.createProjectile(
-            playerID, 
+            playerID,
             this.projectileType,
             castPoint,
             null,
