@@ -252,6 +252,8 @@ class UnitTooltips {
         return 'Slime';
       case 'UnitBossSlime':
         return 'Giant Slime';
+      case 'UnitSkeleton':
+        return 'Skeleton';
     }
     console.warn('no unit name for [' + unit.constructor.name + ']');
     return '<' + unit.constructor.name + '>';
@@ -295,6 +297,11 @@ class UnitTooltips {
         let splitThreshold = NumbersBalancer.getUnitAbilityNumber(
           NumbersBalancer.UNIT_ABILITIES.BOSS_SLIME_SPLIT_THRESHOLD);
         return 'Whenever this slime takes ' + splitThreshold + ' damage, it releases a smaller slime nearby.'
+      case 'UnitSkeleton':
+        let hitsToKill = NumbersBalancer.getUnitAbilityNumber(
+          NumbersBalancer.UNIT_ABILITIES.SKELETON_HITS_TO_KILL);
+        let healthValue = NumbersBalancer.getUnitHealth(unit);
+        return 'Skeletons take ' + Math.floor(healthValue / hitsToKill) + ' damage every time they are hit.';
     }
     console.warn('no description for [' + unit.constructor.name + ']');
     return '<no description>';

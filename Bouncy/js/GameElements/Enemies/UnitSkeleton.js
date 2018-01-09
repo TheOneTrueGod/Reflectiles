@@ -14,6 +14,14 @@ class UnitSkeleton extends UnitBasic {
     ];
   }
 
+  dealDamage(boardState, amount, source) {
+    let damageToDeal = this.health.max / NumbersBalancer.getUnitAbilityNumber(
+      NumbersBalancer.UNIT_ABILITIES.SKELETON_HITS_TO_KILL);
+
+    super.dealDamage(boardState, damageToDeal, source);
+    return damageToDeal;
+  }
+
   createSprite() {
     return this.createSpriteFromResource('enemy_skeleton');
   }

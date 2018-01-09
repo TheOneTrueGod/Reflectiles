@@ -6,13 +6,18 @@ class Tester extends MainGame {
 
     this.unitsToSpawn =
     [
+      [null, UnitSkeleton,UnitSkeleton, UnitSkeleton, null],
+    ];
+
+    /*this.unitsToSpawn =
+    [
       [null, null, null, null, null, null, null],
       [null, UnitBossHealer, null, null, UnitBossSlime, null],
       [null, null, null, null, null, null, null],
       [UnitBomber, UnitBasicDiamond, UnitBasicSquare, UnitSlime, UnitSlime],
       [UnitHeavy, UnitKnight, UnitProtector, UnitShooter, UnitShover],
       [UnitFast, UnitSkeleton],
-    ];
+    ];*/
   }
 
   testAbility() {
@@ -22,9 +27,11 @@ class Tester extends MainGame {
     var TestAbils = TestDeck();
     // SET COMMANDS HERE
     this.abilitiesToUse = [
-      [TJAbils[4].index, {x: 0, y: -250}],
       [TJAbils[1].index, {x: 0, y: -250}],
-      [TJAbils[1].index, {x: 0, y: -250}]
+      [TJAbils[1].index, {x: 0, y: -250}],
+      [TJAbils[1].index, {x: 0, y: -250}],
+      [TJAbils[1].index, {x: 0, y: -250}],
+      [TJAbils[1].index, {x: 0, y: -250}],
       /*[TestAbils[0].index, {x: 0, y: -250}],
       [TestAbils[1].index, {x: 0, y: -250}],
       [TestAbils[0].index, {x: 0, y: -250}],*/

@@ -16,6 +16,7 @@ class LevelDefsWorld3 {
     let BO = UnitBomber;
     let SL = UnitSlime;
     let BL = UnitBlocker;
+    let SK = UnitSkeleton;
 
     if (stage == 1) {
       // Hard level.  15 waves,
@@ -25,7 +26,7 @@ class LevelDefsWorld3 {
           [D, D, D, D, D, D, D, D, D, D, D, D, D, D, D],
           [D, D, D, D, D, D, D, D, D, D, D, D, D, D, D],
           [D, D, D, D, D, D, D, D, D, D, D, D, D, D, D],
-          [D, D, D, D, D, D, D, D, D, D, D, D, D, D, D],
+          [D, SK, D, D, D, D, D, D, D, D, D, D, D, SK, D],
         ],
         'waves':[
           {'type': WAVE_TYPES.FORMATION, units: [

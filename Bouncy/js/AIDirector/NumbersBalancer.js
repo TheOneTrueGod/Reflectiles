@@ -114,6 +114,9 @@ class NumbersBalancer {
       case "UnitBossSlime":
         healthVal = 5000;
         break;
+      case "UnitSkeleton":
+        healthVal = 300;
+        break;
     }
     return {
       health: Math.floor(healthVal * healthMultiplier),
@@ -160,6 +163,8 @@ class NumbersBalancer {
         return 50 * playerMult;
       case this.UNIT_ABILITIES.BOSS_SLIME_SPLIT_THRESHOLD:
         return 50 * playerMult;
+      case this.UNIT_ABILITIES.SKELETON_HITS_TO_KILL:
+        return 3 * playerMult;
     }
     throw new Exception("Failure");
   }
@@ -181,6 +186,7 @@ NumbersBalancer.prototype.UNIT_ABILITIES = {
   UNIT_BOSS_HEALER_NUM_TARGETS: 'UNIT_BOSS_HEALER_NUM_TARGETS',
   UNIT_BOSS_HEALER_AMOUNT: 'UNIT_BOSS_HEALER_AMOUNT',
   BOSS_SLIME_SPLIT_THRESHOLD: 'BOSS_SLIME_SPLIT_THRESHOLD',
+  SKELETON_HITS_TO_KILL: 'SKELETON_HITS_TO_KILL',
 }
 
 NumbersBalancer.prototype.DIFFICULTIES = {
