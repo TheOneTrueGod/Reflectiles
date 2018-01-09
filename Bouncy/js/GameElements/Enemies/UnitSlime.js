@@ -23,20 +23,7 @@ class UnitSlime extends UnitBasic {
   }
 
   createSprite() {
-    var sprite;
-    sprite = new PIXI.Sprite(
-      PIXI.loader.resources['enemy_slime'].texture
-    );
-
-    this.createHealthBarSprite(sprite);
-
-    sprite.anchor.set(0.5);
-
-    sprite.width = Unit.UNIT_SIZE;
-    sprite.height = Unit.UNIT_SIZE;
-
-    //this.addPhysicsLines(sprite);
-    return sprite;
+    return this.createSpriteFromResource('enemy_slime');
   }
 
   playMovement(pct) {

@@ -94,20 +94,7 @@ class UnitBossSlime extends UnitBasic {
   }
 
   createSprite() {
-    var sprite;
-    sprite = new PIXI.Sprite(
-      PIXI.loader.resources['enemy_boss_slime'].texture
-    );
-
-    this.createHealthBarSprite(sprite);
-
-    sprite.anchor.set(0.5);
-
-    sprite.width = this.physicsWidth;
-    sprite.height = this.physicsHeight;
-
-    //this.addPhysicsLines(sprite);
-    return sprite;
+    return this.createSpriteFromResource('enemy_boss_slime');
   }
 
   doMovement(boardState) {

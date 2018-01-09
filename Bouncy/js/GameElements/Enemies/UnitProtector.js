@@ -16,19 +16,7 @@ class UnitProtector extends UnitBasic {
   }
 
   createSprite() {
-    var sprite;
-    sprite = new PIXI.Sprite(
-      PIXI.loader.resources['enemy_protector'].texture
-    );
-
-    //this.addPhysicsLines(sprite);
-    this.createHealthBarSprite(sprite);
-
-    sprite.anchor.set(0.5);
-
-    sprite.width = Unit.UNIT_SIZE;
-    sprite.height = Unit.UNIT_SIZE;
-    return sprite;
+    return this.createSpriteFromResource('enemy_protector');
   }
 
   startOfPhase(boardState, phase) {

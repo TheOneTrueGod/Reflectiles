@@ -31,19 +31,7 @@ class UnitBossHealer extends UnitBasic {
   }
 
   createSprite() {
-    var sprite;
-    sprite = new PIXI.Sprite(
-      PIXI.loader.resources['enemy_boss_healer'].texture
-    );
-
-    //this.addPhysicsLines(sprite);
-    this.createHealthBarSprite(sprite);
-
-    sprite.anchor.set(0.5);
-
-    sprite.width = this.physicsWidth;
-    sprite.height = this.physicsHeight;
-    return sprite;
+    return this.createSpriteFromResource('enemy_boss_healer');
   }
 
   canHealTarget(targetUnit) {

@@ -63,19 +63,7 @@ class UnitBomber extends UnitBasic {
   }
 
   createSprite() {
-    var sprite;
-    sprite = new PIXI.Sprite(
-      PIXI.loader.resources['enemy_bomber'].texture
-    );
-
-    //this.addPhysicsLines(sprite);
-    this.createHealthBarSprite(sprite);
-
-    sprite.anchor.set(0.5);
-    
-    sprite.width = Unit.UNIT_SIZE;
-    sprite.height = Unit.UNIT_SIZE;
-    return sprite;
+    return this.createSpriteFromResource('enemy_bomber');
   }
 
   createHealthBarSprite(sprite) {

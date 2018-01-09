@@ -1,4 +1,4 @@
-class UnitBasicSquare extends UnitBasic {
+class UnitSkeleton extends UnitBasic {
   createCollisionBox() {
     var t = -this.physicsHeight / 2;
     var b = this.physicsHeight / 2;
@@ -15,12 +15,12 @@ class UnitBasicSquare extends UnitBasic {
   }
 
   createSprite() {
-    return this.createSpriteFromResource('enemy_square');
+    return this.createSpriteFromResource('enemy_skeleton');
   }
 }
 
-UnitBasicSquare.loadFromServerData = function(serverData) {
+UnitSkeleton.loadFromServerData = function(serverData) {
   return UnitBasic.loadFromServerData(serverData);
 }
 
-UnitBasicSquare.AddToTypeMap();
+UnitSkeleton.AddToTypeMap();

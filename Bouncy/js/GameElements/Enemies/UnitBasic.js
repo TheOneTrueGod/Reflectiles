@@ -112,22 +112,26 @@ class UnitBasic extends Unit {
     this.healthBarSprites.textSprite = healthBarGraphic;
   }
 
-  createSprite() {
+  createSpriteFromResource(resource) {
     var sprite = new PIXI.Sprite(
-      PIXI.loader.resources['byte_diamond_red'].texture
+      PIXI.loader.resources[resource].texture
     );
 
-    this.addPhysicsLines(sprite);
+    //this.addPhysicsLines(sprite);
     this.createHealthBarSprite(sprite);
 
     sprite.anchor.set(0.5);
-    for (var effect in this.statusEffects) {
+    /*for (var effect in this.statusEffects) {
       this.addEffectSprite(this.statusEffects[effect].getEffectType());
-    }
+    }*/
 
-    sprite.width = Unit.UNIT_SIZE;
-    sprite.height = Unit.UNIT_SIZE;
+    sprite.width = this.physicsWidth;
+    sprite.height = this.physicsHeight;
     return sprite;
+  }
+
+  createSprite() {
+    this.createSpriteFromResource('byte_diamond_red');
   }
 
   canUseAbilities() {

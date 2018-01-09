@@ -6,10 +6,12 @@ class Tester extends MainGame {
 
     this.unitsToSpawn =
     [
-      [UnitSlime, UnitSlime, UnitSlime, UnitSlime, UnitSlime],
-      [UnitSlime, UnitSlime, UnitBasicSquare, UnitSlime, UnitSlime],
-      [UnitSlime, UnitSlime, UnitSlime, UnitSlime, UnitSlime],
-      [UnitSlime, UnitSlime, UnitSlime, UnitSlime, UnitSlime],
+      [null, null, null, null, null, null, null],
+      [null, UnitBossHealer, null, null, UnitBossSlime, null],
+      [null, null, null, null, null, null, null],
+      [UnitBomber, UnitBasicDiamond, UnitBasicSquare, UnitSlime, UnitSlime],
+      [UnitHeavy, UnitKnight, UnitProtector, UnitShooter, UnitShover],
+      [UnitFast, UnitSkeleton],
     ];
   }
 
