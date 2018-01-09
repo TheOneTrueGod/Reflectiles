@@ -6,6 +6,8 @@ class Tester extends MainGame {
 
     this.unitsToSpawn =
     [
+      [null, UnitProtector, null, UnitProtector, null],
+      [null, UnitSkeleton,UnitSkeleton, UnitSkeleton, null],
       [null, UnitSkeleton,UnitSkeleton, UnitSkeleton, null],
     ];
 

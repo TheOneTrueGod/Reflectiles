@@ -1,25 +1,27 @@
 class UnitSkeleton extends UnitBasic {
-  createCollisionBox() {
-    var t = -this.physicsHeight / 2;
-    var b = this.physicsHeight / 2;
-    var r = this.physicsWidth / 2;
-    var l = -this.physicsWidth / 2;
-
-    var offset = 0;
-    this.collisionBox = [
-      new UnitLine(l - offset, t, r + offset, t, this), // Top
-      new UnitLine(r, t - offset, r, b + offset, this), // Right
-      new UnitLine(r + offset, b, l - offset, b, this), // Bottom
-      new UnitLine(l, b + offset, l, t - offset, this), // Left
-    ];
+  constructor(x, y, owner, id) {
+    super(x, y, owner, id);
+    this.traits[Unit.UNIT_TRAITS.RESILIANT] =
+      NumbersBalancer.getUnitAbilityNumber(this, 
+        NumbersBalancer.UNIT_ABILITIES.SKELETON_MAX_DAMAGE);
   }
 
-  dealDamage(boardState, amount, source) {
-    let damageToDeal = this.health.max / NumbersBalancer.getUnitAbilityNumber(
-      NumbersBalancer.UNIT_ABILITIES.SKELETON_HITS_TO_KILL);
+  createCollisionBox() {
+    var s = Unit.UNIT_SIZE / 2 * 0.8;
+    // Octagonal
+    this.collisionBox = [
+      new UnitLine(-s, s / 2, -s, -s / 2, this), // Left
+      new UnitLine(-s, -s / 2, -s / 2, -s, this), // TL
 
-    super.dealDamage(boardState, damageToDeal, source);
-    return damageToDeal;
+      new UnitLine(-s / 2, -s, s / 2, -s, this), // Top
+      new UnitLine(s / 2, -s, s, -s / 2, this), // TR
+
+      new UnitLine(s, -s / 2, s, s / 2, this), // Right
+      new UnitLine(s, s / 2, s / 2, s, this), // BR
+
+      new UnitLine(s / 2, s, -s / 2, s, this), // Bottom
+      new UnitLine(-s / 2, s, -s, s / 2, this) // BL
+    ];
   }
 
   createSprite() {

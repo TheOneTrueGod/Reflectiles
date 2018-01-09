@@ -1,7 +1,7 @@
 class UnitBomber extends UnitBasic {
   constructor(x, y, owner, id) {
     super(x, y, owner, id);
-    this.timeLeft = NumbersBalancer.getUnitAbilityNumber(NumbersBalancer.UNIT_ABILITIES.BOMBER_DURATION);
+    this.timeLeft = NumbersBalancer.getUnitAbilityNumber(this, NumbersBalancer.UNIT_ABILITIES.BOMBER_DURATION);
     this.countdownSprite = null;
   }
 
@@ -53,7 +53,7 @@ class UnitBomber extends UnitBasic {
           angle,
           {
             //'friendly_fire': true,
-            'damage_to_players': NumbersBalancer.getUnitAbilityNumber(
+            'damage_to_players': NumbersBalancer.getUnitAbilityNumber(this, 
               NumbersBalancer.UNIT_ABILITIES.BOMBER_EXPLOSION_DAMAGE
             ) / num_projectiles,
           }

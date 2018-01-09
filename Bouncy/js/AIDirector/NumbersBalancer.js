@@ -115,7 +115,7 @@ class NumbersBalancer {
         healthVal = 5000;
         break;
       case "UnitSkeleton":
-        healthVal = 300;
+        healthVal = 100;
         break;
     }
     return {
@@ -137,7 +137,7 @@ class NumbersBalancer {
     return this.getUnitHealthStats(unit).shield;
   }
 
-  getUnitAbilityNumber(ability) {
+  getUnitAbilityNumber(unit, ability) {
     var playerMult =
       this.getDifficultyMultiplier() * this.getPlayerCountMultiplier();
     switch (ability) {
@@ -163,8 +163,9 @@ class NumbersBalancer {
         return 50 * playerMult;
       case this.UNIT_ABILITIES.BOSS_SLIME_SPLIT_THRESHOLD:
         return 50 * playerMult;
-      case this.UNIT_ABILITIES.SKELETON_HITS_TO_KILL:
-        return 3 * playerMult;
+      case this.UNIT_ABILITIES.SKELETON_MAX_DAMAGE:
+        let health = this.getUnitHealth(unit);
+        return Math.ceil(health / (4 * playerMult));
     }
     throw new Exception("Failure");
   }

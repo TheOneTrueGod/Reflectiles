@@ -98,7 +98,7 @@ UnitKnight.createAbilityDef = function() {
     "zone_health": {
       'health': 0,
       'shield': 0,
-      'armour': NumbersBalancer.getUnitAbilityNumber.bind(
+      'armour': NumbersBalancer.getUnitAbilityNumber.bind(this, 
         NumbersBalancer,
         NumbersBalancer.UNIT_ABILITIES.KNIGHT_SHIELD
       ),

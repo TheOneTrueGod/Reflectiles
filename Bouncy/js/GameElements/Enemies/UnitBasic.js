@@ -117,7 +117,6 @@ class UnitBasic extends Unit {
       PIXI.loader.resources[resource].texture
     );
 
-    //this.addPhysicsLines(sprite);
     this.createHealthBarSprite(sprite);
 
     sprite.anchor.set(0.5);

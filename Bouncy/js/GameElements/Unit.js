@@ -355,6 +355,10 @@ class Unit {
     } else {
       stage.addChild(this.gameSprite);
     }
+
+    if (DEBUG_MODE && this.addPhysicsLines) {
+      this.addPhysicsLines(this.gameSprite);
+    }
   }
 
   addToBackOfStage() {

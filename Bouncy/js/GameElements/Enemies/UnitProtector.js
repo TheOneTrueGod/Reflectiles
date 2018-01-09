@@ -26,7 +26,7 @@ class UnitProtector extends UnitBasic {
 
     var validTargets = [];
     var secondaryTargets = [];
-    var range = NumbersBalancer.getUnitAbilityNumber(
+    var range = NumbersBalancer.getUnitAbilityNumber(this,
       NumbersBalancer.UNIT_ABILITIES.PROTECTOR_SHIELD_RANGE
     );
     for (var x = -range; x <= range; x++) {
@@ -53,7 +53,7 @@ class UnitProtector extends UnitBasic {
         }
       }
     }
-    var numTargets = NumbersBalancer.getUnitAbilityNumber(
+    var numTargets = NumbersBalancer.getUnitAbilityNumber(this,
       NumbersBalancer.UNIT_ABILITIES.PROTECTOR_SHIELD_NUM_TARGETS
     );
     for (var i = 0; i < numTargets; i++) {
@@ -80,7 +80,7 @@ class UnitProtector extends UnitBasic {
 
   projectileAnimationOver(targetUnit) {
     targetUnit.addStatusEffect(
-      new ShieldStatusEffect(NumbersBalancer.getUnitAbilityNumber(
+      new ShieldStatusEffect(NumbersBalancer.getUnitAbilityNumber(this, 
         NumbersBalancer.UNIT_ABILITIES.PROTECTOR_SHIELD
       ))
     );

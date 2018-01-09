@@ -2,7 +2,6 @@ class UnitBossHealer extends UnitBasic {
   constructor(x, y, owner, id) {
     super(x, y, owner, id);
     this.traits[Unit.UNIT_TRAITS.FROST_IMMUNE] = true;
-    this.traits[Unit.UNIT_TRAITS.RESILIANT] = 500;
   }
 
   getUnitSize() {
@@ -48,7 +47,7 @@ class UnitBossHealer extends UnitBasic {
     if (phase != TurnPhasesEnum.END_OF_TURN) { return; }
 
     var validTargets = [];
-    var range = NumbersBalancer.getUnitAbilityNumber(
+    var range = NumbersBalancer.getUnitAbilityNumber(this,
       NumbersBalancer.UNIT_ABILITIES.UNIT_BOSS_HEALER_RANGE
     );
     for (var x = -range; x <= range; x++) {
@@ -68,7 +67,7 @@ class UnitBossHealer extends UnitBasic {
       }
     }
 
-    var numTargets = NumbersBalancer.getUnitAbilityNumber(
+    var numTargets = NumbersBalancer.getUnitAbilityNumber(this,
       NumbersBalancer.UNIT_ABILITIES.UNIT_BOSS_HEALER_NUM_TARGETS
     );
 
@@ -104,7 +103,7 @@ class UnitBossHealer extends UnitBasic {
 
   projectileAnimationOver(targetUnit) {
     targetUnit.heal(
-      NumbersBalancer.getUnitAbilityNumber(
+      NumbersBalancer.getUnitAbilityNumber(this, 
         NumbersBalancer.UNIT_ABILITIES.UNIT_BOSS_HEALER_AMOUNT
       )
     );

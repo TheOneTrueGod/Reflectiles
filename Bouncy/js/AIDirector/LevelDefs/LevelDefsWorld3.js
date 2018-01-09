@@ -22,11 +22,9 @@ class LevelDefsWorld3 {
       // Hard level.  15 waves,
       return new LevelDef({
         'initialSpawn':[
-          [D, D, D, D, D, D, D, D, D, D, D, D, D, D, D],
-          [D, D, D, D, D, D, D, D, D, D, D, D, D, D, D],
-          [D, D, D, D, D, D, D, D, D, D, D, D, D, D, D],
-          [D, D, D, D, D, D, D, D, D, D, D, D, D, D, D],
-          [D, SK, D, D, D, D, D, D, D, D, D, D, D, SK, D],
+          [SK, SK, SK, SK, SK, SK, SK, SK, SK, SK, SK, SK, SK, SK, SK],
+          [SK, SK, SK, SK, SK, SK, SK, SK, SK, SK, SK, SK, SK, SK, SK],
+          [SK, SK, SK, SK, SK, SK, SK, SK, SK, SK, SK, SK, SK, SK, SK],
         ],
         'waves':[
           {'type': WAVE_TYPES.FORMATION, units: [

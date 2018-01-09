@@ -271,22 +271,22 @@ class UnitTooltips {
         return null;
       case 'UnitBomber':
         return 'A unit carrying a bomb.  It will explode in ' + unit.timeLeft + ' turn' + (unit.timeLeft > 1 ? 's' : '') + ', dealing ' +
-          NumbersBalancer.getUnitAbilityNumber(NumbersBalancer.UNIT_ABILITIES.BOMBER_EXPLOSION_DAMAGE) + ' damage.';
+          NumbersBalancer.getUnitAbilityNumber(unit, NumbersBalancer.UNIT_ABILITIES.BOMBER_EXPLOSION_DAMAGE) + ' damage.';
       case 'UnitKnight':
         return 'Every turn, the knight creates three shields in front of itself.' +
-          '  Each shield has ' + NumbersBalancer.getUnitAbilityNumber(NumbersBalancer.UNIT_ABILITIES.KNIGHT_SHIELD) + ' health.';
+          '  Each shield has ' + NumbersBalancer.getUnitAbilityNumber(unit, NumbersBalancer.UNIT_ABILITIES.KNIGHT_SHIELD) + ' health.';
       case 'UnitProtector':
-        let numTargets = NumbersBalancer.getUnitAbilityNumber(NumbersBalancer.UNIT_ABILITIES.PROTECTOR_SHIELD_NUM_TARGETS);
-        let shieldVal = NumbersBalancer.getUnitAbilityNumber(NumbersBalancer.UNIT_ABILITIES.PROTECTOR_SHIELD);
+        let numTargets = NumbersBalancer.getUnitAbilityNumber(unit, NumbersBalancer.UNIT_ABILITIES.PROTECTOR_SHIELD_NUM_TARGETS);
+        let shieldVal = NumbersBalancer.getUnitAbilityNumber(unit, NumbersBalancer.UNIT_ABILITIES.PROTECTOR_SHIELD);
         return 'Every turn, the protector shields ' + numTargets + ' nearby units.' +
           '  Each shield has ' + shieldVal + ' health.';
       case 'UnitShooter':
-        let damage = NumbersBalancer.getUnitAbilityNumber(NumbersBalancer.UNIT_ABILITIES.SHOOTER_DAMAGE);
+        let damage = NumbersBalancer.getUnitAbilityNumber(unit, NumbersBalancer.UNIT_ABILITIES.SHOOTER_DAMAGE);
         return 'Shoots every turn dealing ' + damage + ' damage.';
       case 'UnitBossHealer':
-        let healAmount = NumbersBalancer.getUnitAbilityNumber(
+        let healAmount = NumbersBalancer.getUnitAbilityNumber(unit,
           NumbersBalancer.UNIT_ABILITIES.UNIT_BOSS_HEALER_AMOUNT);
-        let healTargets = NumbersBalancer.getUnitAbilityNumber(
+        let healTargets = NumbersBalancer.getUnitAbilityNumber(unit,
           NumbersBalancer.UNIT_ABILITIES.UNIT_BOSS_HEALER_NUM_TARGETS);
         return 'Every turn, this unit heals up to ' + healTargets + ' units for ' + healAmount + ' health.';
       case 'UnitBlocker':
@@ -294,14 +294,11 @@ class UnitTooltips {
       case 'UnitSlime':
         return null;
       case 'UnitBossSlime':
-        let splitThreshold = NumbersBalancer.getUnitAbilityNumber(
+        let splitThreshold = NumbersBalancer.getUnitAbilityNumber(unit,
           NumbersBalancer.UNIT_ABILITIES.BOSS_SLIME_SPLIT_THRESHOLD);
         return 'Whenever this slime takes ' + splitThreshold + ' damage, it releases a smaller slime nearby.'
       case 'UnitSkeleton':
-        let hitsToKill = NumbersBalancer.getUnitAbilityNumber(
-          NumbersBalancer.UNIT_ABILITIES.SKELETON_HITS_TO_KILL);
-        let healthValue = NumbersBalancer.getUnitHealth(unit);
-        return 'Skeletons take ' + Math.floor(healthValue / hitsToKill) + ' damage every time they are hit.';
+        return '';
     }
     console.warn('no description for [' + unit.constructor.name + ']');
     return '<no description>';

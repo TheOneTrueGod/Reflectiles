@@ -16,7 +16,7 @@ class UnitBossSlime extends UnitBasic {
   }
 
   dealDamage(boardState, amount, source) {
-    let spawnThreshold = NumbersBalancer.getUnitAbilityNumber(
+    let spawnThreshold = NumbersBalancer.getUnitAbilityNumber(this, 
       NumbersBalancer.UNIT_ABILITIES.BOSS_SLIME_SPLIT_THRESHOLD
     );
     let startHealth = this.health.current;

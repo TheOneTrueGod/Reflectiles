@@ -10,6 +10,8 @@
  * Background of a person in a square
  * Make freeze spread across all shields.  They take double damage
  */
+DEBUG_MODE = false;
+
 class MainGame {
   constructor() {
     this.ticksPerTurn = 20;
