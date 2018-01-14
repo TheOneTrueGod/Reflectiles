@@ -22,26 +22,23 @@ class LevelDefsWorld3 {
       // Hard level.  15 waves,
       return new LevelDef({
         'initialSpawn':[
-          [SK, SK, SK, SK, SK, SK, SK, SK, SK, SK, SK, SK, SK, SK, SK],
-          [SK, SK, SK, SK, SK, SK, SK, SK, SK, SK, SK, SK, SK, SK, SK],
-          [SK, SK, SK, SK, SK, SK, SK, SK, SK, SK, SK, SK, SK, SK, SK],
+          [SK, __, SK, __, SK, __, SK, __, SK, __, SK, __, SK, __, SK],
+          [SK, SK, SK, __, __, SK, SK, SK, SK, SK, __, __, SK, SK, SK],
+          [SK, SK, SK, SK, __, __, SK, SK, SK, __, __, SK, SK, SK, SK],
+          [SK, SK, SK, SK, SK, __, __, SK, __, __, SK, SK, SK, SK, SK],
         ],
         'waves':[
           {'type': WAVE_TYPES.FORMATION, units: [
-            [SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL],
+            [SK, SK, __, __, SK, SK, __, SK, __, SK, SK, __, __, SK, SK],
           ]},
           {'type': WAVE_TYPES.FORMATION, units: [
-            [__, SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL, __],
+            [SK, SK, SK, SK, SK, __, __, SK, __, __, SK, SK, SK, SK, SK],
           ]},
           {'type': WAVE_TYPES.FORMATION, units: [
-            [SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL],
+            [SK, SK, SK, __, __, SK, SK, SK, SK, SK, __, __, SK, SK, SK],
           ]},
           {'type': WAVE_TYPES.FORMATION, units: [
-            [SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL],
-          ]},
-          {'type': WAVE_TYPES.FORMATION, units: [
-            [SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL],
-            [SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL],
+            [SK, SK, SK, SK, SK, __, __, __, __, __, SK, SK, SK, SK, SK],
           ]},
         ]
       })

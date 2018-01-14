@@ -144,7 +144,7 @@ class UIListeners {
     if (playersWon) {
       $('#gameOverBox #title').text("A winner is you!");
     } else {
-      $('#gameOverBox').text("Game Over");
+      $('#gameOverBox #title').text("Game Over");
     }
 
     $('#gameOverBox #stats').empty().append(
