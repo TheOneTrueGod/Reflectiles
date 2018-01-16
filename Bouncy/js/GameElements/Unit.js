@@ -246,6 +246,10 @@ class Unit {
     return this.memoizedCollisionBox;
   }
 
+  invalidateCollisionBox() {
+    this.memoizedCollisionBox = null;
+  }
+
   isFinishedDoingAction() {
     return this.moveTarget === null;
   }
@@ -444,7 +448,12 @@ class Unit {
       if (pct > 1) {
         pct = 1;
       }
+      let oldX = this.x;
+      let oldY = this.y;
       this.playSpawnEffectAtPct(boardState, pct);
+      if (oldX != this.x || oldY != this.y) {
+        this.invalidateCollisionBox();
+      }
 
       if (pct == 1) {
         this.moveTarget = null;

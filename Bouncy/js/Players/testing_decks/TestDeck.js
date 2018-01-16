@@ -29,7 +29,32 @@ function TestDeck() {
       unit_enter_effect: {},
       icon: "../Bouncy/assets/icons/icon_plain_shield.png",
       charge: {"initial_charge":-1,"max_charge":3,"charge_type":"TURNS"},
-    }
+    },
+    { // 2440 damage max.  Actually dealing less than that
+      name: 'Shoot \'em up',
+      description: 'Shoots a wild spray of bullets.<br>' +
+        '[[num_bullets]] bullets deal [[hit_effects[0].base_damage]] damage',
+      card_text_description: '[[num_bullets]] X [[hit_effects[0].base_damage]]',
+      style: (new AbilitySheetSpriteAbilityStyleBuilder)
+        .setSheet('bullet_sheet').setCoordNums(29, 301, 37, 320).setRotation(Math.PI / 2).build(),
+      ability_type: AbilityDef.AbilityTypes.PROJECTILE,
+      shape: ProjectileAbilityDef.Shapes.CHAIN_SHOT,
+      projectile_type: ProjectileShape.ProjectileTypes.HIT,
+      destroy_on_wall: true,
+      num_bullets: 1000,
+      bullet_wave_delay: 1,
+      accuracy_decay: Math.PI / 32.0,
+      icon: "../Bouncy/assets/icons/bullets.png",
+      hit_effects: [{
+        effect: ProjectileShape.HitEffects.DAMAGE,
+        base_damage: 10
+      },
+      {
+        effect: ProjectileShape.HitEffects.POISON,
+        damage: 10,
+        duration: 2
+      }],
+    },
   ];
   for (var i = 0; i < abilities.length; i++) {
     abilities[i] = AbilityDef.createFromJSON(abilities[i]);

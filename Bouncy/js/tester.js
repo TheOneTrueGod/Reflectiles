@@ -6,9 +6,9 @@ class Tester extends MainGame {
 
     this.unitsToSpawn =
     [
-      [null, UnitProtector, null, UnitProtector, null],
-      [null, UnitSkeleton,UnitSkeleton, UnitSkeleton, null],
-      [null, UnitSkeleton,UnitSkeleton, UnitSkeleton, null],
+      [null, null, null, null, null],
+      [null, null, UnitBossSlime, null, null],
+      [null, null, null, null, null],
     ];
 
     /*this.unitsToSpawn =
@@ -29,11 +29,11 @@ class Tester extends MainGame {
     var TestAbils = TestDeck();
     // SET COMMANDS HERE
     this.abilitiesToUse = [
-      [TJAbils[1].index, {x: 0, y: -250}],
-      [TJAbils[1].index, {x: 0, y: -250}],
-      [TJAbils[1].index, {x: 0, y: -250}],
-      [TJAbils[1].index, {x: 0, y: -250}],
-      [TJAbils[1].index, {x: 0, y: -250}],
+      [TJAbils[3].index, {x: 0, y: -250}],
+      null,
+      null,
+      null,
+      null,
       /*[TestAbils[0].index, {x: 0, y: -250}],
       [TestAbils[1].index, {x: 0, y: -250}],
       [TestAbils[0].index, {x: 0, y: -250}],*/
