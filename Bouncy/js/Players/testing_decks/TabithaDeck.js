@@ -31,6 +31,7 @@ function TabithaDeck() {
       shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
       projectile_type: ProjectileShape.ProjectileTypes.TIMEOUT,
       icon: "../Bouncy/assets/icons/icon_plain_burst.png",
+      max_bounces: -1,
       hit_effects: [],
       timeout_effects: [
         {
@@ -40,8 +41,8 @@ function TabithaDeck() {
               .setSheet('bullet_sheet').setCoordNums(334, 70, 341, 77).setRotation(0).fixRotation(true).build(),
             ability_type: AbilityDef.AbilityTypes.PROJECTILE,
             shape: ProjectileAbilityDef.Shapes.BULLET_EXPLOSION,
-            projectile_type: ProjectileShape.ProjectileTypes.BOUNCE,
-            max_bounces: 2,
+            projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
+            max_bounces: 1,
             num_bullets: 11,
             destroy_on_wall: [],
             hit_effects:
@@ -138,9 +139,9 @@ function TabithaDeck() {
         .setSheet('bullet_sheet').setCoordNums(274, 68, 295, 79).setRotation(0).build(),
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.WAVE,
-      projectile_type: ProjectileShape.ProjectileTypes.BOUNCE,
+      projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
       destroy_on_wall: [],
-      max_bounces: 2,
+      max_bounces: 1,
       num_bullets: 20,
       return_num_bullets: 5,
       icon:"../Bouncy/assets/icons/icon_plain_wave.png",

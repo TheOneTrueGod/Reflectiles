@@ -60,6 +60,61 @@ class UIListeners {
       $('#missionProgramDisplay').append($div);
       abilities[i].chargeUpdated();
     }
+
+    $div = $("<div>", {"class": "abilityContainer standardAbilityContainer"});
+    $div.append(this.getCancelAbilityHTML());
+    $div.append(this.getMoveAbilityHTML());
+    $('#missionProgramDisplay').append($div);
+  }
+
+  getCancelAbilityHTML() {
+    return this.createStandardAbilityHTML(
+      "pass",
+      "icon_cancel",
+      "Pass",
+      "Take no action",
+      true
+    );
+  }
+
+  getMoveAbilityHTML() {
+    return this.createStandardAbilityHTML(
+      "move",
+      "icon_walk",
+      "Move",
+      "Move to a new location"
+    );
+  }
+
+  createStandardAbilityHTML(
+    abilityID,
+    icon,
+    name,
+    tooltipText,
+    disabled
+  ) {
+    let card = $("<div>",
+      {"class": "abilityCard halfSize" + (disabled ? " disabled" : ""), "ability-id": abilityID}
+    ).append($("<div>", {"class": "abilityCardIcon"})
+      .append($("<img>", {"src": "../Bouncy/assets/icons/" + icon + ".png"}))
+    );
+
+    let tooltip = $("<div>", {"class": "tooltip"});
+    tooltip.append(
+      $("<div class='cardTooltipName'>" + name + "</div>", {"class": "tooltipName"})
+    );
+
+    tooltip.append(
+      $("<div class='cardTooltipDescription'>" + tooltipText + "</div>", {"class": "tooltipText"})
+    );
+
+    card.attr("data-toggle", "tooltip");
+    card.attr("title", tooltip.html());
+    card.tooltip({
+      constraints: [{'to':'scrollParent','pin':true}],
+      html: true
+    });
+    return card;
   }
 
   refreshAbilityDisplay() {

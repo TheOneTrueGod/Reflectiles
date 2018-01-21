@@ -58,6 +58,7 @@ class ProjectileAbilityDef extends AbilityDef {
 
     this.accuracy = new ProjectileAccuracy(defJSON.accuracy);
     this.shape = ProjectileShape.getProjectileShape(defJSON['shape'], this);
+    this.collisionBehaviours = defJSON['collision_behaviours'];
 
     if (defJSON.timeout_effects) {
       this.loadNestedAbilityDefs(defJSON.timeout_effects);
@@ -135,6 +136,26 @@ class ProjectileAbilityDef extends AbilityDef {
 
       return lineGraphic;
     }
+  }
+
+  getCollisionBehaviours() {
+    let max_bounces = this.getOptionalParam('max_bounces');
+    if (this.collisionBehaviours == null) {
+      if (max_bounces) {
+        return [
+          {behaviour: CollisionBehaviour.BOUNCE, count: max_bounces}
+        ];
+      } else {
+        return [];
+      }
+    }
+    return this.collisionBehaviours;
+    /* Example of a complex behaviour list; [
+      {behaviour: CollisionBehaviour.PASSTHROUGH, count: 1},
+      {behaviour: CollisionBehaviour.BOUNCE, count: 2},
+      {behaviour: CollisionBehaviour.PASSTHROUGH, count: 1},
+      {behaviour: CollisionBehaviour.BOUNCE, count: 1},
+    ]*/
   }
 }
 

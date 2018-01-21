@@ -4,12 +4,17 @@ class Tester extends MainGame {
     this.loadImages(this.testAbility.bind(this));
     UnitBasic.createAbilityDefs();
 
-    this.unitsToSpawn =
+    this.unitsToSpawn = [
+      [null, UnitBasicSquare, UnitShooter, UnitBasicSquare],
+      [],
+      [null, UnitBasicSquare, UnitShooter, UnitBasicSquare]
+    ];
+    /*this.unitsToSpawn =
     [
       [null, null, null, null, null],
       [null, null, UnitBossSlime, null, null],
       [null, null, null, null, null],
-    ];
+    ];*/
 
     /*this.unitsToSpawn =
     [
@@ -25,12 +30,13 @@ class Tester extends MainGame {
   testAbility() {
     var ClarenceAbils = ClarenceDeck();
     var TJAbils = TJDeck();
+    var TabithaAbils = TabithaDeck();
     var ChipAbils = ChipDeck();
     var TestAbils = TestDeck();
     // SET COMMANDS HERE
     this.abilitiesToUse = [
-      [TJAbils[3].index, {x: 0, y: -250}],
-      null,
+      //[TestAbils[3].index, {x: -100, y: -50}],
+      [ChipAbils[2].index, {x: 0, y: -400}],
       null,
       null,
       null,

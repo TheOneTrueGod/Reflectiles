@@ -33,7 +33,7 @@ class UnitShooter extends UnitBasic {
       {x: this.x, y: this.y}, {x: this.x, y: this.y + 50},
       Math.PI / 2, this.unitHitCallback,
       {
-        'damage_to_players': NumbersBalancer.getUnitAbilityNumber(this, 
+        'damage_to_players': NumbersBalancer.getUnitAbilityNumber(this,
           NumbersBalancer.UNIT_ABILITIES.SHOOTER_DAMAGE
         ),
       }

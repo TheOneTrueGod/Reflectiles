@@ -27,6 +27,7 @@ class Projectile {
     this.gameSprite = null;
     this.readyToDel = false;
     this.unitHitCallback = null;
+    this.eventListeners = {};
     this.timeoutCallback = null;
     this.duration = -1;
     this.wallsHit = 0;
@@ -36,6 +37,13 @@ class Projectile {
     if (projectileOptions && projectileOptions.hit_effects) {
       this.hitEffects = projectileOptions.hit_effects;
     }
+
+    this.behaviourTracker = {};
+    this.collisionBehaviours = [];
+    if (abilityDef) {
+      this.collisionBehaviours = abilityDef.getCollisionBehaviours();
+    }
+
   }
 
   setStyle(style) {
@@ -44,13 +52,40 @@ class Projectile {
   }
 
   addUnitHitCallback(unitHitCallback) {
-    this.unitHitCallback = unitHitCallback;
+    this.addProjectileEventListener(
+      ProjectileEvents.ON_HIT, unitHitCallback);
     return this;
   }
 
   addTimeoutCallback(timeoutCallback) {
     this.timeoutCallback = timeoutCallback;
     return this;
+  }
+
+  cloneListeners(otherProjectile) {
+    for (let event in otherProjectile.eventListeners) {
+      for (let listener of otherProjectile.eventListeners[event]) {
+        this.addProjectileEventListener(event, listener);
+      }
+    }
+    return this;
+  }
+
+  addProjectileEventListener(event, eventCallback) {
+    if (this.eventListeners[event] === undefined) {
+      this.eventListeners[event] = [];
+    }
+    this.eventListeners[event].push(eventCallback);
+  }
+
+  throwProjectileEvent(event, boardState, unit, intersection) {
+    let damageDealt = 0;
+    if (this.eventListeners[event] !== undefined) {
+      for (let listener of this.eventListeners[event]) {
+        damageDealt += listener(boardState, unit, intersection, this);
+      }
+    }
+    return damageDealt;
   }
 
   findCollisionBoxesForLine(boardState, line) {
@@ -198,7 +233,46 @@ class Projectile {
     if (line.forcePassthrough(this)) {
       return false;
     }
-    return true;
+    let nextBehaviour = this.determineNextIntersectionBehaviour(line);
+
+    return nextBehaviour === CollisionBehaviour.BOUNCE;
+  }
+
+  incrementCollisionBehaviour(behaviour) {
+    if (!this.behaviourTracker[behaviour]) {
+      this.behaviourTracker[behaviour] = 0;
+    }
+    this.behaviourTracker[behaviour] += 1;
+  }
+
+  determineNextIntersectionBehaviour(intersection) {
+    let i1 = new Victor(intersection.x1, intersection.y1);
+    let i2 = new Victor(intersection.x2, intersection.y2);
+    let p = new Victor(this.x, this.y);
+
+    let direction = (i2.x - i1.x) * (p.y - i1.y) - (i2.y - i1.y) * (p.x - i1.x);
+
+    if (direction >= 0) {
+      return CollisionBehaviour.NOTHING;
+    }
+
+    let behaviours = this.collisionBehaviours;
+
+    let behavioursTaken = {};
+
+    for (let i = 0; i < behaviours.length; i++) {
+      if (this.behaviourTracker[behaviours[i].behaviour] === undefined) {
+        this.behaviourTracker[behaviours[i].behaviour] = 0;
+      }
+      if (behavioursTaken[behaviours[i].behaviour] === undefined) {
+        behavioursTaken[behaviours[i].behaviour] = this.behaviourTracker[behaviours[i].behaviour];
+      }
+      behavioursTaken[behaviours[i].behaviour] -= behaviours[i].count;
+      if (behaviours[i].count == -1 || behavioursTaken[behaviours[i].behaviour] < 0) {
+        return behaviours[i].behaviour;
+      }
+    }
+    return CollisionBehaviour.TIMEOUT;
   }
 
   hitUnit(boardState, unit, intersection) {
@@ -270,8 +344,8 @@ Projectile.createProjectile = function(
   playerID, projectileType, startPoint, targetPoint, angle, abilityDef, projectileOptions
 ) {
   switch (projectileType) {
-    case ProjectileShape.ProjectileTypes.BOUNCE:
-      return new BouncingProjectile(playerID, startPoint, targetPoint, angle, abilityDef);
+    case ProjectileShape.ProjectileTypes.STANDARD:
+      return new StandardProjectile(playerID, startPoint, targetPoint, angle, abilityDef);
     case ProjectileShape.ProjectileTypes.HIT:
       return new SingleHitProjectile(playerID, startPoint, targetPoint, angle, abilityDef, projectileOptions);
     case ProjectileShape.ProjectileTypes.PENETRATE:
@@ -291,6 +365,20 @@ Projectile.createProjectile = function(
   throw new Error("projectileType [" + projectileType + "] not handled");
 };
 
+CollisionBehaviour = {
+  PASSTHROUGH: 'PASSTHROUGH',
+  BOUNCE: 'BOUNCE',
+  TIMEOUT: 'TIMEOUT',
+  NOTHING: 'NOTHING',
+};
+
 Projectile.BuffTypes = {
   DAMAGE: 'DAMAGE',
+};
+
+ProjectileEvents = {
+  ON_HIT: 'ON_HIT',
+  ON_TIMEOUT: 'ON_TIMEOUT',
+  ON_BOUNCE: 'ON_BOUNCE',
+  ON_PASSTHROUGH: 'ON_PASSTHROUGH',
 };

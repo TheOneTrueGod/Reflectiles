@@ -48,7 +48,7 @@ class EnemyProjectile extends Projectile {
       return;
     }
     if (unit instanceof ZoneEffect) {
-      if (intersection && intersection.line instanceof AbilityTriggeringLine) {
+      if (intersection && intersection.line.triggerHit) {
         intersection.line.triggerHit(boardState, unit, intersection, this);
       }
       return;

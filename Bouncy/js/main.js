@@ -404,7 +404,18 @@ class MainGame {
     if (this.aimPreview) {
       this.aimPreview.removeAimIndicator();
     }
-    if (abilityIndex !== null) {
+    if (abilityIndex == "move") {
+      var validMove = PlayerCommandMove.findValidMove(
+        this.boardState,
+        $('#gameContainer').attr('playerID'),
+        event.offsetX,
+        event.offsetY
+      );
+      if (validMove) {
+        this.aimPreview = new PlayerCommandMove(validMove.x, validMove.y);
+        this.aimPreview.addAimIndicator(this.boardState, this.stage, this.players);
+      }
+    } else if (abilityIndex !== null) {
       this.aimPreview = new PlayerCommandUseAbility(x, y, abilityIndex, $('#gameContainer').attr('playerID'));
       this.aimPreview.addAimIndicator(this.boardState, this.stage, this.players);
     } else {

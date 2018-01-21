@@ -13,12 +13,7 @@ class PassthroughProjectile extends Projectile {
     super.hitUnit(boardState, unit, intersection);
     EffectFactory.createDamageEntireUnitEffect(boardState, unit)
 
-    this.unitHitCallback(
-      boardState,
-      unit,
-      intersection,
-      this
-    );
+    this.throwProjectileEvent(ProjectileEvents.ON_HIT, boardState, unit, intersection);
     this.lastHitUnit = unit.id;
     this.hitsLeft -= 1;
     if (this.hitsLeft <= 0) {

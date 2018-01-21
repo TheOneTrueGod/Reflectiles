@@ -1,4 +1,4 @@
-class FrozenOrbProjectile extends BouncingProjectile {
+class FrozenOrbProjectile extends StandardProjectile {
   constructor(playerID, startPoint, targetPoint, angle, abilityDef, projectileOptions, style) {
     super(playerID, startPoint, targetPoint, angle, abilityDef, projectileOptions, style);
     var targetVec = Victor(targetPoint.x - startPoint.x, targetPoint.y - startPoint.y);
@@ -26,6 +26,7 @@ class FrozenOrbProjectile extends BouncingProjectile {
     this.shot_duration = this.shot_gap * this.num_bullets;
     this.duration = this.shot_duration + this.shot_start_tick;
     this.startDuration = this.duration;
+    this.max_bounces = -1;
   }
 
   runTick(boardState, boardWidth, boardHeight) {
@@ -50,7 +51,8 @@ class FrozenOrbProjectile extends BouncingProjectile {
           angle,
           this.abilityDef.shardDef,
           {}
-        ).addUnitHitCallback(this.unitHitCallback.bind(this))
+        )
+        .cloneListeners(this)
         .setStyle(this.styleDef)
       );
     }

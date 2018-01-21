@@ -20,7 +20,7 @@ class DamageHitEffect extends HitEffect {
       damageMod *= intersection.line.getCriticalMultiplier();
     }
 
-    let damageBuff = projectile.getBuff(ProjectileDamageBuff.name);
+    let damageBuff = projectile.getBuff ? projectile.getBuff(ProjectileDamageBuff.name) : null;
     if (damageBuff) {
       damageMod *= damageBuff.getAmount();
     }
@@ -31,7 +31,7 @@ class DamageHitEffect extends HitEffect {
     if (is_penetrate && (!unit.readyToDelete() || Math.floor(finalDamage) == Math.floor(damageDealt))) {
       projectile.delete();
     }
-    
+
     return damageDealt / damageMod;
   }
 }

@@ -11,7 +11,14 @@ class PlayerInput {
     if (abilityID === undefined) {
       throw new Error("Can't set an undefined ability");
     }
-    if (abilityID === null || AbilityDef.abilityDefList[abilityID].canBeUsed()) {
+    if (abilityID === "move") {
+      this.selectedAbility = abilityID;
+    } else if (abilityID === "pass") {
+      //this.selectedAbility = abilityID;
+    } else if (
+      abilityID === null ||
+      AbilityDef.abilityDefList[abilityID].canBeUsed()
+    ) {
       this.selectedAbility = abilityID;
     }
   }
@@ -33,32 +40,31 @@ class PlayerInput {
       event.button == 0
     ) {
       MainGame.setAimPreview(null, null, null);
-      MainGame.setPlayerCommand(
-        new PlayerCommandUseAbility(
+      if (this.selectedAbility == "move") {
+        var validMove = PlayerCommandMove.findValidMove(
+          MainGame.boardState,
+          $('#gameContainer').attr('playerID'),
           event.offsetX,
-          event.offsetY,
-          this.selectedAbility,
-          $('#gameContainer').attr('playerID')
-        )
-      );
+          event.offsetY
+        );
+        if (validMove) {
+          MainGame.setPlayerCommand(
+            new PlayerCommandMove(validMove.x, validMove.y)
+          );
+        }
+      } else {
+        MainGame.setPlayerCommand(
+          new PlayerCommandUseAbility(
+            event.offsetX,
+            event.offsetY,
+            this.selectedAbility,
+            $('#gameContainer').attr('playerID')
+          )
+        );
+      }
 
       this.setSelectedAbility(null);
       UIListeners.updateSelectedAbility();
-    }
-
-    if (event.button == 2) {
-      var validMove = PlayerCommandMove.findValidMove(
-        MainGame.boardState,
-        $('#gameContainer').attr('playerID'),
-        event.offsetX,
-        event.offsetY
-      );
-      if (validMove) {
-        MainGame.setPlayerCommand(
-          new PlayerCommandMove(validMove.x, validMove.y)
-        );
-      }
-      return false;
     }
   }
 

@@ -8,12 +8,7 @@ class PenetrateProjectile extends Projectile {
     super.hitUnit(boardState, unit, intersection);
     EffectFactory.createDamageEntireUnitEffect(boardState, unit);
 
-    var damageDealt = this.unitHitCallback(
-      boardState,
-      unit,
-      intersection,
-      this
-    );
+    var damageDealt = this.throwProjectileEvent(ProjectileEvents.ON_HIT, boardState, unit, intersection);
 
     this.damageDealt += damageDealt;
   }
