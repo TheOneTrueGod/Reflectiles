@@ -1,7 +1,7 @@
 class StandardProjectile extends Projectile {
   constructor(playerID, startPoint, targetPoint, angle, abilityDef, projectileOptions) {
     super(playerID, startPoint, targetPoint, angle, abilityDef, projectileOptions);
-    this.max_bounces = abilityDef.getOptionalParam('max_bounces', -1);
+    this.max_bounces = abilityDef.getOptionalParam('max_bounces', 0);
     this.num_bounces = 0;
   }
 

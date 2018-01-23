@@ -45,7 +45,7 @@ class FrozenOrbProjectile extends StandardProjectile {
       boardState.addProjectile(
         Projectile.createProjectile(
           this.playerID,
-          ProjectileShape.ProjectileTypes.HIT,
+          ProjectileShape.ProjectileTypes.STANDARD,
           {x: this.x, y: this.y},
           target,
           angle,

@@ -6,7 +6,7 @@ function TJDeck() {
       card_text_description: '[[hit_effects[0].base_damage]] 3x3',
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
-      projectile_type: ProjectileShape.ProjectileTypes.HIT,
+      projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
       destroy_on_wall: true,
       hit_effects:[{base_damage: 200, effect:ProjectileShape.HitEffects.DAMAGE, aoe_type:"BOX"}],
       icon: "../Bouncy/assets/icons/icon_plain_explosion.png"
@@ -35,7 +35,7 @@ function TJDeck() {
         .setSheet('bullet_sheet').setCoordNums(274, 68, 295, 79).setRotation(0).build(),
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.DOUBLE_WAVE,
-      projectile_type: ProjectileShape.ProjectileTypes.HIT,
+      projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
       num_bullets: 36,
       return_num_bullets: 0,
       destroy_on_wall: true,
@@ -55,7 +55,7 @@ function TJDeck() {
         .setSheet('bullet_sheet').setCoordNums(37, 159, 44, 166).setRotation(0).fixRotation(true).build(),
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.RAIN,
-      projectile_type: ProjectileShape.ProjectileTypes.HIT,
+      projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
       destroy_on_wall: true,
       hit_effects: [
         {effect: ProjectileShape.HitEffects.DAMAGE, base_damage: 20},
@@ -63,7 +63,7 @@ function TJDeck() {
           effect: ProjectileShape.HitEffects.BULLET_SPLIT,
           style: (new AbilitySheetSpriteAbilityStyleBuilder)
             .setSheet('bullet_sheet').setCoordNums(19, 159, 24, 166).setRotation(0).fixRotation(true).build(),
-          projectile_type: ProjectileShape.ProjectileTypes.HIT,
+          projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
           hit_effects: [{
             effect:ProjectileShape.HitEffects.DAMAGE,
             base_damage: 5,
@@ -112,7 +112,7 @@ const OLD_TJ_ABILITIES = {
     shape: "TRI_SHOT",
     style: (new AbilitySheetSpriteAbilityStyleBuilder)
       .setSheet('bullet_sheet').setCoordNums(275, 69, 294, 78).setRotation(0).build(),
-    projectile_type: ProjectileShape.ProjectileTypes.HIT,
+    projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
     destroy_on_wall: true,
     num_bullets: 7,
     hit_effects:[{effect: ProjectileShape.HitEffects.DAMAGE, base_damage: 200}],

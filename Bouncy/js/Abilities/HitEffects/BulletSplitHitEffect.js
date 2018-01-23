@@ -29,7 +29,7 @@ class BulletSplitHitEffect extends HitEffect {
       boardState.addProjectile(
         Projectile.createProjectile(
           projectile.playerID,
-          idx(this.hitEffectDef, 'projectile_type', ProjectileShape.ProjectileTypes.HIT),
+          idx(this.hitEffectDef, 'projectile_type', ProjectileShape.ProjectileTypes.STANDARD),
           castPoint,
           null,
           projectileAngle,

@@ -345,14 +345,9 @@ Projectile.createProjectile = function(
 ) {
   switch (projectileType) {
     case ProjectileShape.ProjectileTypes.STANDARD:
-      return new StandardProjectile(playerID, startPoint, targetPoint, angle, abilityDef);
-    case ProjectileShape.ProjectileTypes.HIT:
-      return new SingleHitProjectile(playerID, startPoint, targetPoint, angle, abilityDef, projectileOptions);
+      return new StandardProjectile(playerID, startPoint, targetPoint, angle, abilityDef, projectileOptions);
     case ProjectileShape.ProjectileTypes.PENETRATE:
       return new PenetrateProjectile(playerID, startPoint, targetPoint, angle, abilityDef, projectileOptions);
-    case ProjectileShape.ProjectileTypes.PASSTHROUGH:
-      return new PassthroughProjectile(playerID, startPoint, targetPoint, angle,
-        abilityDef, abilityDef.getOptionalParam("num_hits", 5), projectileOptions);
     case ProjectileShape.ProjectileTypes.TIMEOUT:
       return new TimeoutProjectile(playerID, startPoint, targetPoint, angle, abilityDef, projectileOptions);
     case ProjectileShape.ProjectileTypes.FROZEN_ORB:

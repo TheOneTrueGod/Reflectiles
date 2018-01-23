@@ -24,7 +24,7 @@ const OLD_CLARENCE_ABILITIES = {
     unit_abilities: [{
         abil_def: {
           ability_type: AbilityDef.AbilityTypes.POSITION,
-          projectile_type: "HIT",
+          projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
           speed: 8,
           hit_effects:[{effect: ProjectileShape.HitEffects.DAMAGE, base_damage: 200, aoe_type:"BOX", aoe_size: {x: [-1, 1], y: [-1, 1]}}],
           charge: {initial_charge: -1, max_charge: 2, charge_type: AbilityDef.CHARGE_TYPES.TURNS},
@@ -32,7 +32,7 @@ const OLD_CLARENCE_ABILITIES = {
       }, {
       abil_def: {
         ability_type: AbilityDef.AbilityTypes.POSITION,
-        projectile_type: "HIT",
+        projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
         speed: 8,
         hit_effects:[{effect: ProjectileShape.HitEffects.DAMAGE, base_damage: 300, aoe_type:"BOX", aoe_size: {x: [-1, 1], y: [-10, 1]}}],
         charge: {initial_charge: -1, max_charge: 2, charge_type: AbilityDef.CHARGE_TYPES.TURNS},
@@ -65,7 +65,7 @@ function ClarenceDeck() {
         abil_def: {
           ability_type: AbilityDef.AbilityTypes.PROJECTILE,
           shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
-          projectile_type: "HIT",
+          projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
           destroy_on_wall: [BorderWallLine.TOP],
           speed: 8,
           hit_effects:[{effect: ProjectileShape.HitEffects.DAMAGE, base_damage: 150}],
@@ -96,7 +96,7 @@ function ClarenceDeck() {
         abil_def: {
           ability_type: AbilityDef.AbilityTypes.PROJECTILE,
           shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
-          projectile_type: "HIT",
+          projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
           destroy_on_wall: [BorderWallLine.TOP],
           speed: 8,
           hit_effects:[{effect: ProjectileShape.HitEffects.DAMAGE, base_damage: 100, aoe_type:"BOX"}],
@@ -115,7 +115,7 @@ function ClarenceDeck() {
       card_text_description: '[[hit_effects[0].base_damage]]',
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
-      projectile_type: ProjectileShape.ProjectileTypes.HIT,
+      projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
       special_effects: [AbilityDef.SPECIAL_EFFECTS.TURRET_AIM, AbilityDef.SPECIAL_EFFECTS.TURRET_FIRE],
       icon: "../Bouncy/assets/icons/targeting.png",
       hit_effects: [{
@@ -141,7 +141,7 @@ function ClarenceDeck() {
       unit_abilities: [{
         abil_def: {
           ability_type: AbilityDef.AbilityTypes.POSITION,
-          projectile_type: "HIT",
+          projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
           hit_effects:[{effect: ProjectileShape.HitEffects.DAMAGE, base_damage: 100, aoe_type: "BOX"}],
         }
       }],
@@ -193,7 +193,7 @@ function ClarenceDeck() {
               phase: TurnPhasesEnum.ENEMY_MOVE,
               abil_def: {
                 ability_type: AbilityDef.AbilityTypes.POSITION,
-                projectile_type: "HIT",
+                projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
                 hit_effects:[{effect: ProjectileShape.HitEffects.DAMAGE, base_damage: 50, aoe_type:"BOX"}],
               },
             }],

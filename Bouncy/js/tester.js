@@ -36,6 +36,7 @@ class Tester extends MainGame {
     // SET COMMANDS HERE
     this.abilitiesToUse = [
       //[TestAbils[3].index, {x: -100, y: -50}],
+      [TabithaAbils[1].index, {x: 0, y: -100}],
       [ChipAbils[2].index, {x: 0, y: -400}],
       null,
       null,

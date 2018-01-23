@@ -9,7 +9,10 @@ function TabithaDeck() {
         .setSheet('bullet_sheet').setCoordNums(65, 301, 73, 320).build(),
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
-      projectile_type: ProjectileShape.ProjectileTypes.PASSTHROUGH,
+      projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
+      collision_behaviours: [
+        {behaviour: CollisionBehaviour.PASSTHROUGH, count: 6},
+      ],
       num_hits: 7,
       icon: "../Bouncy/assets/icons/icon_plain_drill.png",
       hit_effects: [{
@@ -22,9 +25,9 @@ function TabithaDeck() {
       name: 'Fireworks',
       description: 'Launches a projectile.<br>' +
         'It explodes into [[timeout_effects[0].abil_def.num_bullets]] bullets ' +
-        ' that bounce [[timeout_effects[0].abil_def.max_bounces]] times.<br>' +
+        ' that bounce 2 times.<br>' +
         'Each time, they deal [[timeout_effects[0].abil_def.hit_effects[0].base_damage]] damage.',
-      card_text_description: '[[timeout_effects[0].abil_def.num_bullets]] X [[timeout_effects[0].abil_def.hit_effects[0].base_damage]] x [[timeout_effects[0].abil_def.max_bounces]]',
+      card_text_description: '[[timeout_effects[0].abil_def.num_bullets]] X [[timeout_effects[0].abil_def.hit_effects[0].base_damage]] x 2',
       style: (new AbilitySheetSpriteAbilityStyleBuilder)
         .setSheet('bullet_sheet').setCoordNums(323, 70, 331, 77).setRotation(0).fixRotation(true).build(),
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
@@ -41,8 +44,11 @@ function TabithaDeck() {
               .setSheet('bullet_sheet').setCoordNums(334, 70, 341, 77).setRotation(0).fixRotation(true).build(),
             ability_type: AbilityDef.AbilityTypes.PROJECTILE,
             shape: ProjectileAbilityDef.Shapes.BULLET_EXPLOSION,
+            speed: 8,
             projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
-            max_bounces: 1,
+            collision_behaviours: [
+              {behaviour: CollisionBehaviour.BOUNCE, count: 1},
+            ],
             num_bullets: 11,
             destroy_on_wall: [],
             hit_effects:
@@ -65,14 +71,14 @@ function TabithaDeck() {
         .setSheet('bullet_sheet').setCoordNums(37, 159, 44, 166).setRotation(0).fixRotation(true).build(),
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.RAIN,
-      projectile_type: ProjectileShape.ProjectileTypes.HIT,
+      projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
       destroy_on_wall: true,
       hit_effects: [{effect: ProjectileShape.HitEffects.DAMAGE, base_damage: 20},
         {
           effect: ProjectileShape.HitEffects.BULLET_SPLIT,
           style: (new AbilitySheetSpriteAbilityStyleBuilder)
             .setSheet('bullet_sheet').setCoordNums(19, 159, 24, 166).setRotation(0).fixRotation(true).build(),
-          projectile_type: ProjectileShape.ProjectileTypes.HIT,
+          projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
           hit_effects: [{
             effect:ProjectileShape.HitEffects.DAMAGE,
             base_damage: 5,
@@ -114,7 +120,7 @@ function TabithaDeck() {
               .setSheet('bullet_sheet').setCoordNums(36, 139, 44, 147).setRotation(0).fixRotation(true).build(),
             ability_type: AbilityDef.AbilityTypes.PROJECTILE,
             shape: ProjectileAbilityDef.Shapes.BULLET_EXPLOSION,
-            projectile_type: ProjectileShape.ProjectileTypes.HIT,
+            projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
             gravity: {x: 0, y: 0},
             speed: 8,
             size: 6,
@@ -141,7 +147,9 @@ function TabithaDeck() {
       shape: ProjectileAbilityDef.Shapes.WAVE,
       projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
       destroy_on_wall: [],
-      max_bounces: 1,
+      collision_behaviours: [
+        {behaviour: CollisionBehaviour.BOUNCE, count: 1},
+      ],
       num_bullets: 20,
       return_num_bullets: 5,
       icon:"../Bouncy/assets/icons/icon_plain_wave.png",

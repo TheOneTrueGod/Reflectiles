@@ -9,7 +9,7 @@ function ChipDeck() {
       shape:"TRI_SHOT",
       style: (new AbilitySheetSpriteAbilityStyleBuilder)
         .setSheet('bullet_sheet').setCoordNums(275, 69, 294, 78).setRotation(0).build(),
-      projectile_type: ProjectileShape.ProjectileTypes.HIT,
+      projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
       num_bullets: 5,
       hit_effects:[{effect: ProjectileShape.HitEffects.DAMAGE, base_damage: 180}]
     },{
@@ -21,7 +21,10 @@ function ChipDeck() {
         .setSheet('bullet_sheet').setCoordNums(275, 69, 294, 78).setRotation(0).setTrail({type: 'laser'}).build(),*/
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
-      projectile_type: ProjectileShape.ProjectileTypes.PASSTHROUGH,
+      projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
+      collision_behaviours: [
+        {behaviour: CollisionBehaviour.PASSTHROUGH, count: 3},
+      ],
       num_hits: 4,
       icon: "../Bouncy/assets/icons/icon_plain_drill.png",
       hit_effects: [{
@@ -63,7 +66,7 @@ function ChipDeck() {
       description: 'Freezes a 3x3 square of enemies for [[hit_effects[1].duration]] turns',
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
-      projectile_type: ProjectileShape.ProjectileTypes.HIT,
+      projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
       hit_effects: [
         {effect: ProjectileShape.HitEffects.DAMAGE, base_damage: 100, aoe_type: "BOX"},
         {effect: ProjectileShape.HitEffects.FREEZE, duration: 3, aoe_type: "BOX"}
@@ -77,7 +80,7 @@ function ChipDeck() {
       card_text_description: '100 5x3',
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
-      projectile_type: ProjectileShape.ProjectileTypes.HIT,
+      projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
       hit_effects:[{
         effect: ProjectileShape.HitEffects.DAMAGE,
         base_damage: 100,

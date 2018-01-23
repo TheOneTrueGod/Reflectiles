@@ -6,7 +6,7 @@ function TestDeck() {
       card_text_description: '[[hit_effects[0].base_damage]] 3x3',
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
-      projectile_type: ProjectileShape.ProjectileTypes.HIT,
+      projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
       collision_behaviours: [
         {behaviour: CollisionBehaviour.PASSTHROUGH, count: 2},
         {behaviour: CollisionBehaviour.BOUNCE, count: 1},
@@ -48,7 +48,7 @@ function TestDeck() {
         .setSheet('bullet_sheet').setCoordNums(29, 301, 37, 320).setRotation(Math.PI / 2).build(),
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.CHAIN_SHOT,
-      projectile_type: ProjectileShape.ProjectileTypes.HIT,
+      projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
       destroy_on_wall: true,
       num_bullets: 1000,
       bullet_wave_delay: 1,

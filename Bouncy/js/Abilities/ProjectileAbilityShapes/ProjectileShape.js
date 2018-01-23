@@ -101,9 +101,7 @@ ProjectileShape.getProjectileShape = function(shapeType, abilityDef) {
 
 
 ProjectileShape.ProjectileTypes = {
-  HIT: 'HIT',
   STANDARD: 'STANDARD',
-  PASSTHROUGH: 'PASSTHROUGH', // Pierces through units and deals its damage to some total number of them
   PENETRATE: 'PENETRATE', // Carries on through until all of its damage is spent
   TIMEOUT: 'TIMEOUT',
   FROZEN_ORB: 'FROZEN_ORB',

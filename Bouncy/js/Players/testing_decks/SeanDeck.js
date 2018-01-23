@@ -19,7 +19,10 @@ function SeanDeck() {
         .setSheet('bullet_sheet').setCoordNums(29, 301, 37, 320).setRotation(Math.PI / 2).build(),
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
-      projectile_type: ProjectileShape.ProjectileTypes.PASSTHROUGH,
+      projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
+      collision_behaviours: [
+        {behaviour: CollisionBehaviour.PASSTHROUGH, count: 9},
+      ],
       num_hits: 10,
       icon: "../Bouncy/assets/icons/icon_plain_drill.png",
       hit_effects: [{
@@ -44,7 +47,7 @@ function SeanDeck() {
         .setSheet('bullet_sheet').setCoordNums(393, 157, 406, 171).setRotation(0).fixRotation(true).build(),
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
-      projectile_type: ProjectileShape.ProjectileTypes.HIT,
+      projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
       hit_effects: [{
         effect: ProjectileShape.HitEffects.INFECT,
         duration: 2,
@@ -73,7 +76,7 @@ function SeanDeck() {
         .setSheet('bullet_sheet').setCoordNums(29, 301, 37, 320).setRotation(Math.PI / 2).build(),
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.CHAIN_SHOT,
-      projectile_type: ProjectileShape.ProjectileTypes.HIT,
+      projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
       destroy_on_wall: true,
       num_bullets: 25,
       bullet_wave_delay: 3,
@@ -111,7 +114,7 @@ function SeanDeck() {
             ability_type: AbilityDef.AbilityTypes.PROJECTILE,
             shape: ProjectileAbilityDef.Shapes.BULLET_EXPLOSION,
             inherit_angle: true,
-            projectile_type: ProjectileShape.ProjectileTypes.HIT,
+            projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
             speed: 8,
             gravity: {x: 0, y: 0},
             angle_start: -Math.PI / 4.0,
@@ -139,7 +142,7 @@ function SeanDeck() {
         .setRotation(-Math.PI).build(),
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
-      projectile_type: ProjectileShape.ProjectileTypes.HIT,
+      projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
       hit_effects:[{
         damage: 100,
         duration: 3,
