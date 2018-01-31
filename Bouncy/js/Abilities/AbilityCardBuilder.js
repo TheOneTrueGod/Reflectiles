@@ -1,8 +1,8 @@
 class AbilityCardBuilder {
   // Small ability card with icon, name, and tooltip
   static createDeckListAbilityCard(ability) {
-    return $("<div>", {
-      class: "abilityCard deckList",
+    let $card = $("<div>", {
+      class: "abilityCard deckList noselect",
     }).append(
       $("<img>", {
         class: "abilityCardIcon",
@@ -14,6 +14,10 @@ class AbilityCardBuilder {
         text: ability.getName(),
       })
     );
+
+    this.addTooltipToCard($card, ability)
+
+    return $card;
   }
 
   static createStandardAbilityCard(ability) {
@@ -33,20 +37,24 @@ class AbilityCardBuilder {
     $card.append(ability.getCooldownIcon());
     $card.append(ability.getHTMLForTopLeftOfCard());
 
-    var tooltip = ability.createTooltip();
-    if (tooltip) {
-      $card.attr("data-toggle", "tooltip");
-      $card.attr("title", tooltip.html());
-      $card.tooltip({
-        constraints: [{'to':'scrollParent','pin':true}],
-        html: true
-      });
-    }
+    this.addTooltipToCard($card, ability);
 
     var topRight = ability.getHTMLForCardNotUseableSection();
     if (topRight) { $card.append(topRight); }
 
     return $card;
+  }
+
+  static addTooltipToCard($card, ability) {
+    var tooltip = ability.createTooltip();
+    if (tooltip) {
+      $card.attr("data-toggle", "tooltip");
+      $card.attr("title", tooltip.html());
+      $card.tooltip({
+        constraints: [{'to':'scrollParent','pin':true, attachment: 'together'}],
+        html: true
+      });
+    }
   }
 
   /* card pieces */

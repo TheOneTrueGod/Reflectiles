@@ -6,7 +6,7 @@ class BouncyUser extends User {
     $this->experience = 0;
     $this->cards = [];
     for ($i = 0; $i < 5 * 5; $i++) {
-      array_push($this->cards, new PlayerCard($i));
+      array_push($this->cards, new PlayerCard($i, $i));
     }
     $this->decks = array(
       new PlayerDeck(0, "Damage",  '[0, 1, 2, 3, 4]'),

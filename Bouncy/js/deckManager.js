@@ -16,13 +16,21 @@ class DeckManager {
     $('#loadingContainer').hide();
     $('.deckControlSection').removeClass("hidden");
 
-    $(".deckControlSection").on("click", ".abilityCard", (event) => {
+    $(".deckControlSection .deckContentsSection").on("click", ".abilityCard", (event) => {
+      let clickTarget = $(event.target);
+      if (!clickTarget.hasClass("abilityCard")) {
+        clickTarget = clickTarget.closest(".abilityCard");
+      }
+      this.removeCardFromDeck(clickTarget.data("playerCard"));
+    });
+
+    $(".deckControlSection .cardsSection").on("click", ".abilityCard", (event) => {
       let clickTarget = $(event.target);
       if (!clickTarget.hasClass("abilityCard")) {
         clickTarget = clickTarget.closest(".abilityCard");
       }
       let cardAbility = this.selectedDeck.addCard(clickTarget.data("playerCard"));
-      this.addCardToDeckSection(cardAbility);
+      this.addCardToDeckSection(clickTarget.data("playerCard"), cardAbility);
     });
   }
 
@@ -58,14 +66,31 @@ class DeckManager {
     $deckSection.empty();
     let deck = this.getDeckByID(deckID);
     let abilities = deck.getAbilities();
-    for (let ability of abilities) {
-      this.addCardToDeckSection(ability);
+    let playerCards = deck.getPlayerCards();
+    for (let i = 0; i < abilities.length; i++) {
+      let ability = abilities[i];
+      let playerCard = playerCards[i];
+      this.addCardToDeckSection(playerCard, ability);
     }
+
   }
 
-  addCardToDeckSection(ability) {
+  addCardToDeckSection(playerCard, ability) {
     let $deckSection = $('.deckContentsSection');
-    $deckSection.append(AbilityCardBuilder.createDeckListAbilityCard(ability));
+    let displayCard = AbilityCardBuilder.createDeckListAbilityCard(ability);
+    $deckSection.append(displayCard);
+    $(displayCard).data("playerCard", playerCard);
+  }
+
+  removeCardFromDeck(playerCard) {
+    let $deckSection = $('.deckContentsSection');
+    this.selectedDeck.removeCard(playerCard);
+    $(".deckContentsSection .abilityCard").each((index, cardDisplay) => {
+      let $cardDisplay = $(cardDisplay);
+      if ($($cardDisplay).data('playerCard') === playerCard) {
+        $cardDisplay.remove();
+      }
+    });
   }
 }
 

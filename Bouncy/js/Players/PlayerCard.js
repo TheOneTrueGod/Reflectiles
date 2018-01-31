@@ -1,11 +1,14 @@
 class PlayerCard {
-  constructor(index, cardData) {
-    this.index = index; // Index can be null if it's not in their collection
+  constructor(cardData) {
     if (cardData instanceof PlayerCard) {
+      // index refers to the card in the player's collection
+      this.index = cardData.index
+      // cardID refers to the id of the ability def
       this.cardID = cardData.cardID;
       this.cardPerks = cardData.cardPerks;
       this.cardExperience = cardData.cardExperience;
     } else {
+      this.index = cardData.card_index
       this.cardID = cardData.card_id;
       this.cardPerks = cardData.card_perks;
       this.cardExperience = cardData.card_experience;
@@ -13,13 +16,13 @@ class PlayerCard {
   }
 
   cloneForDeck() {
-    return new PlayerCard(null, this);
+    return new PlayerCard(this);
   }
 
   static unstringifyAllCards(cardList) {
     let toReturn = [];
     for (let i = 0; i < cardList.length; i++) {
-      toReturn.push(new PlayerCard(i, cardList[i]));
+      toReturn.push(new PlayerCard(cardList[i]));
     }
     return toReturn;
   }

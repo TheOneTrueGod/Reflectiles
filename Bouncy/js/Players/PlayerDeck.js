@@ -11,9 +11,8 @@ class PlayerDeck {
       this.name = deckData.name;
       this.id = deckData.id;
       this.cardList = deckData.cardList.map((cardData) => {
-        return new PlayerCard(null, cardData);
+        return new PlayerCard(cardData);
       });
-
 
       for (let i = 0; i < this.cardList.length; i++) {
         this.instantiateCard(this.cardList[i]);
@@ -27,10 +26,26 @@ class PlayerDeck {
     return this.instantiateCard(clonedCard);
   }
 
+  removeCard(playerCard) {
+    let i = 0;
+    while (i < this.cardList.length) {
+      if (playerCard.index === this.cardList[i].index) {
+        this.cardList.splice(i, 1);
+        this.abilities.splice(i, 1);
+      } else {
+        i += 1;
+      }
+    }
+  }
+
   instantiateCard(playerCard) {
     let ability = AbilityManager.getAbility(playerCard);
     this.abilities.push(ability);
     return ability;
+  }
+
+  getPlayerCards() {
+    return this.cardList;
   }
 
   getAbilities() {
