@@ -250,8 +250,7 @@ class MainGame {
   updatePlayerData(player_data) {
     this.players = [];
     var num_players = 0;
-    AbilityDef.ABILITY_DEF_INDEX = 0;
-    AbilityDef.abilityDefList = {};
+    AbilityManager.reinitializeAbilities();
     UnitBasic.createAbilityDefs();
     for (var key in player_data) {
       if (!player_data[key]) {

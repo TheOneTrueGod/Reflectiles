@@ -9,11 +9,11 @@ class BouncyUser extends User {
       array_push($this->cards, new PlayerCard($i));
     }
     $this->decks = array(
-      new PlayerDeck(0, "Damage", PlayerDeck::getTJDeck()),
-      new PlayerDeck(1, "Support", PlayerDeck::getChipDeck()),
-      new PlayerDeck(2, "Chaos", PlayerDeck::getTabithaDeck()),
-      new PlayerDeck(3, "Poison", PlayerDeck::getSeanDeck()),
-      new PlayerDeck(4, "Turrets", PlayerDeck::getClarenceDeck()),
+      new PlayerDeck(0, "Damage",  '[0, 1, 2, 3, 4]'),
+      new PlayerDeck(1, "Support", '[5, 6, 7, 8, 9]'),
+      new PlayerDeck(2, "Chaos",   '[10, 11, 12, 13, 14]'),
+      new PlayerDeck(3, "Poison",  '[15, 16, 17, 18, 19]'),
+      new PlayerDeck(4, "Turrets", '[20, 21, 22, 23, 24]'),
     );
   }
 

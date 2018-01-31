@@ -43,8 +43,8 @@
 <?php require('Bouncy/js_includes.html'); ?>
 <?php
   $serialized_decks = addslashes(json_encode(array_map(
-    function ($deck) {
-      return $deck->serialize();
+    function ($deck) use ($bouncy_user) {
+      return $deck->serialize($bouncy_user);
     },
     PlayerDeck::getAllDecksForPlayer($bouncy_user)
   )));

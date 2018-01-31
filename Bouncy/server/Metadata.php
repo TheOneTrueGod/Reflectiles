@@ -35,9 +35,10 @@ class Metadata {
       'level' => $this->level,
     );
     if ($user) {
+      $bouncy_user = BouncyUser::getFromID($user->id);
       $toRet['other_decks'] = array_map(
-        function ($deck) {
-          return $deck->serialize();
+        function ($deck) use ($bouncy_user) {
+          return $deck->serialize($bouncy_user);
         },
         PlayerDeck::getAllDecksForPlayer($user)
       );
@@ -65,10 +66,11 @@ class Metadata {
       throw new Exception("Can't add a player to a full slot [" . $slot . "]");
     }
 
+    $bouncy_user = BouncyUser::getFromID($user->id);
     $this->player_data[$slot] = json_encode(array(
-      "user_id" => $user->getID(),
-      "user_name" => $user->getUserName(),
-      "ability_deck" => PlayerDeck::getDeckForPlayer($user, null)->serialize()
+      "user_id" => $bouncy_user->getID(),
+      "user_name" => $bouncy_user->getUserName(),
+      "ability_deck" => PlayerDeck::getDeckForPlayer($bouncy_user, null)->serialize($bouncy_user)
     ));
   }
 
@@ -106,10 +108,12 @@ class Metadata {
     if (!$new_deck) {
       throw new Exception("Couldn't find deck [" . $deck_id . "] for player [" . $user->getUserID() . "]");
     }
+    $bouncy_user = BouncyUser::getFromID($user->id);
+
     $this->player_data[$slot] = json_encode(array(
-      "user_id" => $user->getID(),
-      "user_name" => $user->getUserName(),
-      "ability_deck" => $new_deck->serialize()
+      "user_id" => $bouncy_user->getID(),
+      "user_name" => $bouncy_user->getUserName(),
+      "ability_deck" => $new_deck->serialize($bouncy_user)
     ));
   }
 }

@@ -1,16 +1,33 @@
 <?php
 class PlayerDeck {
-  function __construct($id, $name, $deckJSON) {
+  function __construct($id, $name, $cardListJSON) {
     $this->id = $id;
     $this->name = $name;
-    $this->deckJSON = $deckJSON;
+    $this->cardListJSON = $cardListJSON;
   }
 
-  public function serialize() {
+  public function serialize($bouncy_user) {
+    $serializedCards = array();
+    $card_list = json_decode($this->cardListJSON);
+    foreach ($card_list as $card_index) {
+      $card = $bouncy_user->cards[intval($card_index)];
+      if ($card) {
+        array_push($serializedCards, $card->serialize());
+      } else {
+        print_r(debug_backtrace());
+        print_r("ERROR: ");
+        print_r($bouncy_user);
+        print_r("\n");
+        print_r("Card Index: ");
+        print_r($card_index);
+        print_r("\n");
+      }
+    }
+
     return array(
       'id' => $this->id,
       'name' => $this->name,
-      'deckJSON' => $this->deckJSON
+      'cardList' => $serializedCards
     );
   }
 

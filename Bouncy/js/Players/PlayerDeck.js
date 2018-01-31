@@ -2,11 +2,19 @@ class PlayerDeck {
   constructor(deckData) {
     this.name = "Unnamed";
     this.id = undefined;
+    this.abilities = [];
+
     if (deckData) {
       this.name = deckData.name;
       this.id = deckData.id;
+      let cardList = deckData.cardList;
 
-      switch (this.id) {
+      for (let cardInfo of cardList) {
+        let ability = AbilityManager.getAbility(cardInfo.card_id, cardInfo.card_perks);
+        this.abilities.push(ability);
+      }
+
+      /*switch (this.id) {
         case 0:
           this.abilities = TJDeck();
           break;
@@ -29,7 +37,7 @@ class PlayerDeck {
             this.abilities.push(AbilityDef.createFromJSON(serializedDeck[i]));
           }
           break;
-      }
+      }*/
     }
   }
 
