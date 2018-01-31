@@ -15,8 +15,8 @@ class AbilityManager {
     this.clarenceDeck = ClarenceDeck();
   }
 
-  getAbility(abilityID, perks) {
-    let rawDef = AbilityDef.abilityDefList[abilityID].rawDef;
+  getAbility(playerCard) {
+    let rawDef = AbilityDef.abilityDefList[playerCard.cardID].rawDef;
     return AbilityDef.createFromJSON(rawDef);
   }
 }

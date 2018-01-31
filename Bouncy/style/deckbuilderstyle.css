@@ -34,4 +34,6 @@
 .deckContentsSection {
   width: 20%;
   float: right;
+  overflow-y: auto;
+  overflow-x: hidden;
 }

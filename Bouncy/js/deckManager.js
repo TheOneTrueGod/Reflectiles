@@ -1,5 +1,7 @@
 class DeckManager {
   constructor(serializedDecks, serializedCards) {
+    this.selectedDeck = null;
+
     this.decks = PlayerDeck.unstringifyAllDecks(JSON.parse(serializedDecks));
     this.cards = PlayerCard.unstringifyAllCards(JSON.parse(serializedCards));
 
@@ -13,6 +15,15 @@ class DeckManager {
 
     $('#loadingContainer').hide();
     $('.deckControlSection').removeClass("hidden");
+
+    $(".deckControlSection").on("click", ".abilityCard", (event) => {
+      let clickTarget = $(event.target);
+      if (!clickTarget.hasClass("abilityCard")) {
+        clickTarget = clickTarget.closest(".abilityCard");
+      }
+      let cardAbility = this.selectedDeck.addCard(clickTarget.data("playerCard"));
+      this.addCardToDeckSection(cardAbility);
+    });
   }
 
   getDeckByID(id) {
@@ -29,15 +40,16 @@ class DeckManager {
     $('[data-deck-id=' + deckID + ']').addClass("selected");
 
     this.displayDeck(deckID);
+    this.selectedDeck = this.decks[deckID];
   }
 
   createCardSection() {
     $('.cardsSection').empty();
     for (let card of this.cards) {
       let ability = AbilityDef.abilityDefList[card.cardID];
-      $('.cardsSection').append(
-        AbilityCardBuilder.createDeckListAbilityCard(ability)
-      );
+      let displayCard = AbilityCardBuilder.createDeckListAbilityCard(ability);
+      $('.cardsSection').append(displayCard);
+      $(displayCard).data("playerCard", card);
     }
   }
 
@@ -47,10 +59,13 @@ class DeckManager {
     let deck = this.getDeckByID(deckID);
     let abilities = deck.getAbilities();
     for (let ability of abilities) {
-      $deckSection.append(
-        AbilityCardBuilder.createDeckListAbilityCard(ability)
-      );
+      this.addCardToDeckSection(ability);
     }
+  }
+
+  addCardToDeckSection(ability) {
+    let $deckSection = $('.deckContentsSection');
+    $deckSection.append(AbilityCardBuilder.createDeckListAbilityCard(ability));
   }
 }
 
