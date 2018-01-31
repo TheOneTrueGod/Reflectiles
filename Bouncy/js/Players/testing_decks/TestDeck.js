@@ -14,7 +14,7 @@ function TestDeck() {
         {behaviour: CollisionBehaviour.BOUNCE, count: 1},
       ],
       hit_effects:[{base_damage: 50, effect:ProjectileShape.HitEffects.DAMAGE}],
-      icon: "../Bouncy/assets/icons/icon_plain_explosion.png"
+      icon: "/Bouncy/assets/icons/icon_plain_explosion.png"
     },
     {
       ability_type: AbilityDef.AbilityTypes.ZONE,
@@ -36,7 +36,7 @@ function TestDeck() {
       zone_size: {left:1, right:1, top:0, bottom:0, y_range: 0},
       max_range: {left: 5, right: 5, top: 1, bottom: 1},
       unit_enter_effect: {},
-      icon: "../Bouncy/assets/icons/icon_plain_shield.png",
+      icon: "/Bouncy/assets/icons/icon_plain_shield.png",
       charge: {"initial_charge":-1,"max_charge":3,"charge_type":"TURNS"},
     },
     { // 2440 damage max.  Actually dealing less than that
@@ -53,7 +53,7 @@ function TestDeck() {
       num_bullets: 1000,
       bullet_wave_delay: 1,
       accuracy_decay: Math.PI / 32.0,
-      icon: "../Bouncy/assets/icons/bullets.png",
+      icon: "/Bouncy/assets/icons/bullets.png",
       hit_effects: [{
         effect: ProjectileShape.HitEffects.DAMAGE,
         base_damage: 10
@@ -82,7 +82,7 @@ function TestDeck() {
       duration: 3,
       zone_size: {left: 0, right: 0, top: 1, bottom: 1, y_range: 0},
       max_range: {left: 5, right: 5, top: 5, bottom: 5},
-      icon: "../Bouncy/assets/icons/icon_strong.png",
+      icon: "/Bouncy/assets/icons/icon_strong.png",
       charge: {initial_charge: -1, max_charge: 5, charge_type: "TURNS"},
     }
   ];

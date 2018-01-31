@@ -3,6 +3,7 @@ const BOUNCY_SERVER_ACTIONS = [
   'GET_BOARD_DATA' => 'get_board_data',
   'SET_BOARD_AT_TURN_START' => 'set_board_at_turn_start',
   'FINALIZE_TURN' => 'finalize_turn',
+  'FINISH_GAME' => 'finish_game',
   'SUBMIT_PLAYER_COMMANDS' => 'submit_player_commands',
   'GET_TURN_STATUS' => 'get_turn_status',
   'GET_GAME_METADATA' => 'get_game_metadata',
@@ -51,6 +52,11 @@ class BouncyController {
           throw new Exception("Only the host can do this action");
         }
         return $this->finalizeTurn();
+      case BOUNCY_SERVER_ACTIONS['FINISH_GAME']:
+        if (!$this->user->isHost()) {
+          throw new Exception("Only the host can do this action");
+        }
+        return $this->finishGame();
       case BOUNCY_SERVER_ACTIONS['SUBMIT_PLAYER_COMMANDS']:
         return $this->savePlayerCommands();
       case BOUNCY_SERVER_ACTIONS['UPDATE_PRE_GAME_STATE']:
@@ -137,6 +143,13 @@ class BouncyController {
     );
   }
 
+  private function finishGame() {
+    $experienceGained = (int)$this->request->param('experience');
+    if (is_int($experienceGained) && $experienceGained > 0) {
+      $this->gameObject->finishGame($experienceGained);
+    }
+  }
+
   private function savePlayerCommands() {
     $this->gameObject->setPlayerCommand(
       $this->user->getID(),
@@ -144,7 +157,7 @@ class BouncyController {
     );
     $this->gameObject->save();
   }
-  
+
   private function getPlayerSlotFromRequest() {
     $player_slot = $this->request->param('player_slot');
     if (!(0 <= $player_slot && $player_slot < 4)) {

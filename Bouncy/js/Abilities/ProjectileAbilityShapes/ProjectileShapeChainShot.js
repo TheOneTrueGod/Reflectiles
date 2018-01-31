@@ -17,33 +17,6 @@ class ProjectileShapeChainShot extends ProjectileShape {
     }
   }
 
-  appendIconHTML($container) {
-    $container.append(
-      $("<div>", {
-        "class": "iconMockShot",
-        "style": "top: 10px; left: 25px;"
-      })
-    );
-    $container.append(
-      $("<div>", {
-        "class": "iconMockShot",
-        "style": "top: 20px; left: 25px;"
-      })
-    );
-    $container.append(
-      $("<div>", {
-        "class": "iconMockShot",
-        "style": "top: 30px; left: 25px;"
-      })
-    );
-    $container.append(
-      $("<div>", {
-        "class": "iconMockShot",
-        "style": "top: 40px; left: 25px;"
-      })
-    );
-  }
-
   appendIconDescHTML($container) {
 
   }

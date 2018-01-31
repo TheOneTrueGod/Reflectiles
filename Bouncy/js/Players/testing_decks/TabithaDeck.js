@@ -14,7 +14,7 @@ function TabithaDeck() {
         {behaviour: CollisionBehaviour.PASSTHROUGH, count: 6},
       ],
       num_hits: 7,
-      icon: "../Bouncy/assets/icons/icon_plain_drill.png",
+      icon: "/Bouncy/assets/icons/icon_plain_drill.png",
       hit_effects: [{
         effect: ProjectileShape.HitEffects.DAMAGE,
         base_damage: 150
@@ -33,7 +33,7 @@ function TabithaDeck() {
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
       projectile_type: ProjectileShape.ProjectileTypes.TIMEOUT,
-      icon: "../Bouncy/assets/icons/icon_plain_burst.png",
+      icon: "/Bouncy/assets/icons/icon_plain_burst.png",
       max_bounces: -1,
       hit_effects: [],
       timeout_effects: [
@@ -87,7 +87,7 @@ function TabithaDeck() {
         }
       ],
       num_bullets: 50,
-      icon: "../Bouncy/assets/icons/icon_plain_rain.png",
+      icon: "/Bouncy/assets/icons/icon_plain_rain.png",
       charge: {"initial_charge":-1, "max_charge": 5, "charge_type":"TURNS"},
     },
     {
@@ -103,7 +103,7 @@ function TabithaDeck() {
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
       projectile_type: ProjectileShape.ProjectileTypes.FROZEN_ORB,
-      icon:"../Bouncy/assets/icons/icon_plain_forb.png",
+      icon: "/Bouncy/assets/icons/icon_plain_forb.png",
       num_bullets: 50,
       destroy_on_wall: [],
       hit_effects: [
@@ -152,7 +152,7 @@ function TabithaDeck() {
       ],
       num_bullets: 20,
       return_num_bullets: 5,
-      icon:"../Bouncy/assets/icons/icon_plain_wave.png",
+      icon: "/Bouncy/assets/icons/icon_plain_wave.png",
       hit_effects: [{
         effect: ProjectileShape.HitEffects.DAMAGE,
         base_damage: 30

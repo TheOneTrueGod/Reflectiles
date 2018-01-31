@@ -164,6 +164,40 @@
   top: -10px;
 }
 
+.abilityCard.deckList {
+  border-width: 1px;
+  width: 136px;
+  height: 28px;
+  font-size: 14px;
+  margin-top: -2px;
+  box-sizing: border-box;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  cursor: pointer;
+  display: inline-block;
+}
+
+.cardsSection .abilityCard.deckList {
+  margin: 0 0.5%;
+  margin-bottom: -2px;
+  width: 24%;
+}
+
+.deckList .abilityCardName {
+  position: relative;
+  top: 2px;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: inherit;
+}
+
+.abilityCard.deckList:first-child {
+  margin-top: 0;
+}
+
 .abilityCard.halfSize.selected {
   top: 0;
 }
@@ -225,6 +259,18 @@
 .halfSize .abilityCardIcon {
   top: 4px;
   left: 4px;
+}
+
+.deckList .abilityCardIcon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50px;
+  margin-left: 2px;
+  margin-right: 2px;
+  margin-top: 1px;
+  position: relative;
+  left: 0;
+  top: 0;
 }
 
 .cooldownIcon,
@@ -753,4 +799,14 @@
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+}
+
+.clearfix {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.deckControlSection.hidden {
+  display: none;
 }

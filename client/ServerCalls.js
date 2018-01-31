@@ -34,9 +34,9 @@ class ServerCalls {
     if (ServerCalls.loadingMetadata) { return; }
     ServerCalls.loadingMetadata = true;
     this.MakeServerCall(
-      (response) => { 
+      (response) => {
         ServerCalls.loadingMetadata = false;
-        callback.call(context, response); 
+        callback.call(context, response);
       },
       ServerCalls.SERVER_ACTIONS.GET_GAME_METADATA,
       context
@@ -102,7 +102,7 @@ class ServerCalls {
       userToken: this.userToken
     };
     if (player_slot !== null) { data.player_slot = player_slot; }
-    
+
     if (slot_action === this.SLOT_ACTIONS.CHANGE_DECK) {
       data.deck_id = other_data;
     } else if (slot_action == this.SLOT_ACTIONS.SET_LEVEL) {
@@ -145,6 +145,18 @@ class ServerCalls {
     });
   }
 
+  FinishGame(context, experience) {
+    $.post({
+      url: "../gamelogic/" + this.gameID,
+      context: context,
+      data: {
+        action: ServerCalls.SERVER_ACTIONS.FINISH_GAME,
+        experience: experience,
+        userToken: this.userToken,
+      },
+    });
+  }
+
   SavePlayerCommands(boardStateObj, playerCommands) {
     $.get({
       url: "../gamelogic/" + this.gameID,
@@ -162,6 +174,7 @@ ServerCalls.SERVER_ACTIONS = {
   GET_BOARD_DATA: 'get_board_data',
   SET_BOARD_AT_TURN_START: 'set_board_at_turn_start',
   FINALIZE_TURN: 'finalize_turn',
+  FINISH_GAME: 'finish_game',
   SUBMIT_PLAYER_COMMANDS: 'submit_player_commands',
   GET_TURN_STATUS: 'get_turn_status',
   GET_GAME_METADATA: 'get_game_metadata',

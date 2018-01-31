@@ -9,7 +9,7 @@ function TJDeck() {
       projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
       destroy_on_wall: true,
       hit_effects:[{base_damage: 200, effect:ProjectileShape.HitEffects.DAMAGE, aoe_type:"BOX"}],
-      icon: "../Bouncy/assets/icons/icon_plain_explosion.png"
+      icon: "/Bouncy/assets/icons/icon_plain_explosion.png"
     },
     { // 1200 max damage
       name: 'Shotgun',
@@ -24,6 +24,7 @@ function TJDeck() {
       destroy_on_wall: true,
       hit_effects: [{base_damage: 120, effect: ProjectileShape.HitEffects.DAMAGE}],
       num_bullets: 10,
+      icon: "/Bouncy/assets/icons/shotgun.png",
       charge: {initial_charge: -1, max_charge: 2, charge_type: "TURNS"},
     },
     { // 1440 damage
@@ -39,7 +40,7 @@ function TJDeck() {
       num_bullets: 36,
       return_num_bullets: 0,
       destroy_on_wall: true,
-      icon:"../Bouncy/assets/icons/icon_plain_wave.png",
+      icon: "/Bouncy/assets/icons/icon_plain_wave.png",
       hit_effects: [{
         effect: ProjectileShape.HitEffects.DAMAGE,
         base_damage: 50
@@ -72,7 +73,7 @@ function TJDeck() {
         }
       ],
       num_bullets: 50,
-      icon: "../Bouncy/assets/icons/icon_plain_rain.png",
+      icon: "/Bouncy/assets/icons/icon_plain_rain.png",
       charge: {"initial_charge":-1, "max_charge": 5, "charge_type":"TURNS"},
     },
     {
@@ -93,7 +94,7 @@ function TJDeck() {
       duration: 3,
       zone_size: {left: 1, right:1, top:1, bottom:1, y_range: 0},
       max_range: {left: 0, right: 0, top: 0, bottom: 0},
-      icon: "../Bouncy/assets/icons/icon_strong.png",
+      icon: "/Bouncy/assets/icons/icon_strong.png",
       charge: {initial_charge: -1, max_charge: 5, charge_type: "TURNS"},
     }
   ];

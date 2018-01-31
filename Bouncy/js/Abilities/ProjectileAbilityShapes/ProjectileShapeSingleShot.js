@@ -7,15 +7,6 @@ class ProjectileShapeSingleShot extends ProjectileShape {
     this.ACTIVATE_ON_TICK = 0;
   }
 
-  appendIconHTML($container) {
-    $container.append(
-      $("<div>", {
-        "class": "iconMockShot",
-        "style": "top: 10px; left: 40px;"
-      })
-    );
-  }
-
   getTextDesc() {
     var hitEffects = this.abilityDef.getHitEffects();
     for (var i = 0; i < hitEffects.length; i++) {
@@ -43,7 +34,7 @@ class ProjectileShapeSingleShot extends ProjectileShape {
 
       boardState.addProjectile(
         Projectile.createProjectile(
-          playerID, 
+          playerID,
           this.projectileType,
           castPoint,
           randomTarget,

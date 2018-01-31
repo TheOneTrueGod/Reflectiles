@@ -13,27 +13,6 @@ class ProjectileShapeBulletExplosion extends ProjectileShape {
     this.INHERIT_ANGLE = abilityDef.getOptionalParam('inherit_angle', false);
   }
 
-  appendIconHTML($container) {
-    $container.append(
-      $("<div>", {
-        "class": "iconMockShot",
-        "style": "top: 10px; left: 25px;"
-      })
-    );
-    $container.append(
-      $("<div>", {
-        "class": "iconMockShot",
-        "style": "top: 20px; left: 15px;"
-      })
-    );
-    $container.append(
-      $("<div>", {
-        "class": "iconMockShot",
-        "style": "top: 20px; left: 35px;"
-      })
-    );
-  }
-
   getTextDesc() {
     var hitEffects = this.abilityDef.getHitEffects();
     for (var i = 0; i < hitEffects.length; i++) {
@@ -56,7 +35,7 @@ class ProjectileShapeBulletExplosion extends ProjectileShape {
 
         boardState.addProjectile(
           Projectile.createProjectile(
-            playerID, 
+            playerID,
             this.projectileType,
             castPoint,
             null,

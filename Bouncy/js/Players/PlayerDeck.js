@@ -51,4 +51,12 @@ class PlayerDeck {
   getID() {
     return this.id;
   }
+
+  static unstringifyAllDecks(deckList) {
+    let toReturn = [];
+    for (let i = 0; i < deckList.length; i++) {
+      toReturn.push(new PlayerDeck(deckList[i]));
+    }
+    return toReturn;
+  }
 }

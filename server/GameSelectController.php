@@ -12,7 +12,9 @@ class GameSelectController {
       <div class="pageBorder">
         <div class="titleArea">
           <h2> Game Select </h2>
-          <div class="username"><?php echo $user->getUserName(); ?></div>
+          <a href="<?php echo BouncyUserController::getURLPath()?>" class="username">
+            <?php echo $user->getUserName(); ?>
+          </a>
         </div>
         <div class="row titleTableRow">
           <div class="col-2">Game ID</div>

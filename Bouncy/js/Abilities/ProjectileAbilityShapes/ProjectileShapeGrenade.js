@@ -7,15 +7,6 @@ class ProjectileShapeGrenade extends ProjectileShape {
     this.ACTIVATE_ON_TICK = 0;
   }
 
-  appendIconHTML($container) {
-    $container.append(
-      $("<div>", {
-        "class": "iconMockShot",
-        "style": "top: 10px; left: 40px;"
-      })
-    );
-  }
-
   doActionOnTick(playerID, tick, boardState, castPoint, targetPoint) {
     if (tick == this.ACTIVATE_ON_TICK) {
       var angle = Math.atan2(
@@ -23,7 +14,7 @@ class ProjectileShapeGrenade extends ProjectileShape {
       );
       boardState.addProjectile(
         Projectile.createProjectile(
-          playerID, 
+          playerID,
           this.projectileType,
           castPoint,
           targetPoint,

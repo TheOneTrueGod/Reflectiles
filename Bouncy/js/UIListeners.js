@@ -56,7 +56,7 @@ class UIListeners {
     var abilities = player.getAbilities();
     for (var i = 0; i < abilities.length; i++) {
       $div = $("<div>", {"class": "abilityContainer"});
-      $div.append(abilities[i].getAbilityHTML());
+      $div.append(AbilityCardBuilder.createStandardAbilityCard(abilities[i]));
       $('#missionProgramDisplay').append($div);
       abilities[i].chargeUpdated();
     }

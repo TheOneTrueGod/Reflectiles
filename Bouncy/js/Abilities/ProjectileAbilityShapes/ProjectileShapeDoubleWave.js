@@ -18,46 +18,6 @@ class ProjectileShapeDoubleWave extends ProjectileShape {
 
   }
 
-  appendIconHTML($container) {
-    $container.append(
-      $("<div>", {
-        "class": "iconMockShot",
-        "style": "top: 35px; left: 25px;"
-      })
-    );
-    $container.append(
-      $("<div>", {
-        "class": "iconMockShot",
-        "style": "top: 25px; left: 15px;"
-      })
-    );
-    $container.append(
-      $("<div>", {
-        "class": "iconMockShot",
-        "style": "top: 25px; left: 35px;"
-      })
-    );
-    $container.append(
-      $("<div>", {
-        "class": "iconMockShot",
-        "style": "top: 15px; left: 40px;"
-      })
-    );
-    $container.append(
-      $("<div>", {
-        "class": "iconMockShot",
-        "style": "top: 15px; left: 10px;"
-      })
-    );
-    $container.append(
-      $("<div>", {
-        "class": "iconMockShot",
-        "style": "top: 17px; left: 25px;"
-      })
-    );
-
-  }
-
   appendIconDescHTML($container) {
 
   }
@@ -98,7 +58,7 @@ class ProjectileShapeDoubleWave extends ProjectileShape {
 
         boardState.addProjectile(
           Projectile.createProjectile(
-            playerID, 
+            playerID,
             this.projectileType,
             castPoint,
             null,

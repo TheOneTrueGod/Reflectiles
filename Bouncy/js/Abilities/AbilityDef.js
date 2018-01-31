@@ -1,10 +1,17 @@
 class AbilityDef {
-  constructor(defJSON) {
+  constructor(defJSON, subAbility) {
     this.rawDef = defJSON;
+    this.isSubAbility = subAbility;
 
-    this.index = AbilityDef.ABILITY_DEF_INDEX;
+    let indexPrefix = "";
+    if (subAbility) {
+      this.index = "sub_" + AbilityDef.SUB_ABILITY_DEF_INDEX;
+      AbilityDef.SUB_ABILITY_DEF_INDEX += 1;
+    } else {
+      this.index = AbilityDef.ABILITY_DEF_INDEX;
+      AbilityDef.ABILITY_DEF_INDEX += 1;
+    }
     AbilityDef.abilityDefList[this.index] = this;
-    AbilityDef.ABILITY_DEF_INDEX += 1;
 
     if (!defJSON['ability_type']) {
       throw new Error("Ability Defs need an abilityType");
@@ -49,7 +56,7 @@ class AbilityDef {
         )
         || nestedList[i].abil_def
       ) {
-        var newAbil = AbilityDef.createFromJSON(nestedList[i].abil_def);
+        var newAbil = AbilityDef.createFromJSON(nestedList[i].abil_def, true);
         nestedList[i].initializedAbilDef = newAbil;
         newAbil.parentAbilIndex = this.index;
         if (newAbil.abilityStyle === AbilityStyle.FALLBACK_STYLE) {
@@ -95,24 +102,6 @@ class AbilityDef {
     throw new Error("Ability Defs shouldn't be initialized");
   }
 
-  getAbilityHTML() {
-    var card = this.createAbilityCard();
-    var tooltip = this.createTooltip();
-    if (tooltip) {
-      card.attr("data-toggle", "tooltip");
-      card.attr("title", tooltip.html());
-      card.tooltip({
-        constraints: [{'to':'scrollParent','pin':true}],
-        html: true
-      });
-    }
-
-    var topRight = this.getHTMLForCardNotUseableSection();
-    if (topRight) { card.append(topRight); }
-
-    return card;
-  }
-
   getHTMLForCardNotUseableSection() {
     var chargeDisplay = $("<div>", {"class": "chargeDisplay"});
     switch(this.chargeType) {
@@ -125,6 +114,13 @@ class AbilityDef {
     chargeDisplay.append(chargeNumber);
 
     return chargeDisplay;
+  }
+
+  getName() {
+    if (this.cardName === undefined) {
+      this.cardName = this.getOptionalParam("name", null);
+    }
+    return this.cardName;
   }
 
   createTooltip() {
@@ -200,10 +196,6 @@ class AbilityDef {
     return text;
   }
 
-  createAbilityCard() {
-    throw new Error("Ability Defs shouldn't be initialized");
-  }
-
   createTargettingGraphic(startPos, endPos, color) {
     return null;
   }
@@ -238,37 +230,7 @@ class AbilityDef {
   }
 
   clone() {
-    return AbilityDef.createFromJSON(this.rawJSON);
-  }
-
-  createAbilityCard() {
-    var cardClass = "tempFirstAbil";
-
-    var $card = $("<div>", {
-      "class": "abilityCard " + cardClass + "",
-      "ability-id": this.index,
-    });
-
-    var $icon = $("<div>", {"class": "abilityCardIcon"});
-    $card.append($icon);
-    var iconURL = idx(this.rawDef, 'icon', null);
-    if (iconURL) {
-      var $image = $("<img src='" + iconURL + "'/>");
-      $icon.append($image);
-    } else {
-      this.addDefaultIcon($icon);
-    }
-
-    $card.append(this.getTextDescription());
-
-    $card.append(this.getCooldownIcon());
-    $card.append(this.getHTMLForTopLeftOfCard());
-
-    return $card;
-  }
-
-  addDefaultIcon($icon) {
-
+    return AbilityDef.createFromJSON(this.rawJSON, this.isSubAbility);
   }
 
   getCooldownIcon() {
@@ -289,31 +251,6 @@ class AbilityDef {
   getHTMLForTopLeftOfCard() {
     return null;
   }
-
-  getTextDescription() {
-    var $textDesc = $("<div>", {"class": "abilityCardTextDesc"});
-
-    var abilDefCardDescription = this.getOptionalParam('card_text_description');
-    if (abilDefCardDescription) {
-      abilDefCardDescription = this.replaceSmartTooltipText(abilDefCardDescription, false);
-      var className = "textDescText noselect";
-
-      /*if (abilDefCardDescription.length >= 10) {
-        className += " longDesc";
-      }*/
-      var $textContainer =
-        $("<div>", {
-          "class": className,
-        });
-      $textContainer.html(abilDefCardDescription);
-
-      $textDesc.append($textContainer);
-    } else {
-      this.shape.appendTextDescHTML($textDesc);
-    }
-
-    return $textDesc;
-  }
 }
 
 AbilityDef.CHARGE_TYPES = {
@@ -322,6 +259,7 @@ AbilityDef.CHARGE_TYPES = {
 
 AbilityDef.abilityDefList = {};
 AbilityDef.ABILITY_DEF_INDEX = 0;
+AbilityDef.SUB_ABILITY_DEF_INDEX = 0;
 
 AbilityDef.AbilityTypes = {
   PROJECTILE: 'PROJECTILE',
@@ -345,19 +283,19 @@ AbilityDef.findAbsoluteParent = function(abilityIndex) {
   return abilityIndex;
 }
 
-AbilityDef.createFromJSON = function(defJSON) {
+AbilityDef.createFromJSON = function(defJSON, subAbility) {
   if (!defJSON['ability_type']) {
     throw new Error("defJSON needs an ability_type")
   }
   switch (defJSON['ability_type']) {
     case AbilityDef.AbilityTypes.PROJECTILE:
-      return new ProjectileAbilityDef(defJSON);
+      return new ProjectileAbilityDef(defJSON, subAbility);
     case AbilityDef.AbilityTypes.ZONE:
-      return new ZoneAbilityDef(defJSON);
+      return new ZoneAbilityDef(defJSON, subAbility);
     case AbilityDef.AbilityTypes.CREATE_UNIT:
-      return new SummonUnitAbilityDef(defJSON);
+      return new SummonUnitAbilityDef(defJSON, subAbility);
     case AbilityDef.AbilityTypes.POSITION:
-      return new PositionBasedAbilityDef(defJSON);
+      return new PositionBasedAbilityDef(defJSON, subAbility);
     default:
       throw new Error("[" + defJSON['abilityType'] + "] not handled");
   }

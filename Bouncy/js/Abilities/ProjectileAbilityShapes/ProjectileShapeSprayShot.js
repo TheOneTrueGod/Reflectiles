@@ -11,47 +11,6 @@ class ProjectileShapeSprayShot extends ProjectileShape {
     this.ACTIVATE_ON_TICK = 0;
   }
 
-  appendIconHTML($container) {
-    $container.append(
-      $("<div>", {
-        "class": "iconMockShot",
-        "style": "top: 42px; left: 25px;"
-      })
-    );
-    $container.append(
-      $("<div>", {
-        "class": "iconMockShot",
-        "style": "top: 30px; left: 20px;"
-      })
-    );
-    $container.append(
-      $("<div>", {
-        "class": "iconMockShot",
-        "style": "top: 24px; left: 32px;"
-      })
-    );
-    $container.append(
-      $("<div>", {
-        "class": "iconMockShot",
-        "style": "top: 8px; left: 39px;"
-      })
-    );
-    $container.append(
-      $("<div>", {
-        "class": "iconMockShot",
-        "style": "top: 10px; left: 12px;"
-      })
-    );
-
-    $container.append(
-      $("<div>", {
-        "class": "iconMockShot",
-        "style": "top: 7px; left: 23px;"
-      })
-    );
-
-  }
-
   appendIconDescHTML($container) {
 
   }

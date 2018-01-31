@@ -1,6 +1,6 @@
 class ZoneAbilityDef extends AbilityDef {
-  constructor(defJSON) {
-    super(defJSON);
+  constructor(defJSON, subAbility) {
+    super(defJSON, subAbility);
     this.rawDef = defJSON;
     if (
       defJSON.unit_interaction &&

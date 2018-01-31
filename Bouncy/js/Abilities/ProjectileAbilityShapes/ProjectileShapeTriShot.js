@@ -62,28 +62,6 @@ class ProjectileShapeTriShot extends ProjectileShape {
     return lineGraphic;
   }
 
-  appendIconHTML($container) {
-    $container.append(
-      $("<div>", {
-        "class": "iconMockShot",
-        "style": "top: 10px; left: 25px;"
-      })
-    );
-    $container.append(
-      $("<div>", {
-        "class": "iconMockShot",
-        "style": "top: 20px; left: 15px;"
-      })
-    );
-    $container.append(
-      $("<div>", {
-        "class": "iconMockShot",
-        "style": "top: 20px; left: 35px;"
-      })
-    );
-
-  }
-
   getTextDesc() {
     var hitEffects = this.abilityDef.getHitEffects();
     for (var i = 0; i < hitEffects.length; i++) {

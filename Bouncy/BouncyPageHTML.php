@@ -25,12 +25,15 @@
   }
 ?>
 <link rel="stylesheet" type="text/css" href="../Bouncy/style/style.css">
+<link rel="stylesheet" type="text/css" href="../Bouncy/style/deckbuilderstyle.css">
 <link rel="stylesheet" type="text/css" href="../Bouncy/style/unitTooltips.css">
 <div class="pageBorder">
   <div class="titleArea">
     <div class="backLink"><a href="/">&lt; Back</a></div>
     <h2> Reflectiles </h2>
-    <div class="username"><?php echo $user->getUserName(); ?></div>
+    <a href="<?php echo BouncyUserController::getURLPath()?>" class="username">
+      <?php echo $user->getUserName(); ?>
+    </a>
   </div>
   <div id="gameContainer"
     class="<?php echo $is_host ? 'isHost': ''; ?>"

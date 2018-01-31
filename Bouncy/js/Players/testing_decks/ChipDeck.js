@@ -6,12 +6,13 @@ function ChipDeck() {
         'Each one deals [[hit_effects[0].base_damage]] damage.',
       card_text_description: '[[num_bullets]] X [[hit_effects[0].base_damage]]',
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
-      shape:"TRI_SHOT",
+      shape: "TRI_SHOT",
       style: (new AbilitySheetSpriteAbilityStyleBuilder)
         .setSheet('bullet_sheet').setCoordNums(275, 69, 294, 78).setRotation(0).build(),
       projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
       num_bullets: 5,
-      hit_effects:[{effect: ProjectileShape.HitEffects.DAMAGE, base_damage: 180}]
+      hit_effects:[{effect: ProjectileShape.HitEffects.DAMAGE, base_damage: 180}],
+      icon: "/Bouncy/assets/icons/spread_shot.png",
     },{
       name: 'Drill Shot',
       description: 'Shoots a projectile that passes through enemies.<br>' +
@@ -26,7 +27,7 @@ function ChipDeck() {
         {behaviour: CollisionBehaviour.PASSTHROUGH, count: 3},
       ],
       num_hits: 4,
-      icon: "../Bouncy/assets/icons/icon_plain_drill.png",
+      icon: "/Bouncy/assets/icons/icon_plain_drill.png",
       hit_effects: [{
         effect: ProjectileShape.HitEffects.DAMAGE,
         base_damage: 250
@@ -59,7 +60,7 @@ function ChipDeck() {
       zone_size: {left:1, right:1, top:0, bottom:0, y_range: 0},
       max_range: {left: 5, right: 5, top: 1, bottom: 1},
       unit_enter_effect: {},
-      icon: "../Bouncy/assets/icons/icon_plain_shield.png",
+      icon: "/Bouncy/assets/icons/icon_plain_shield.png",
       charge: {"initial_charge":-1,"max_charge":3,"charge_type":"TURNS"},
     },{
       name: 'Freeze',
@@ -71,7 +72,7 @@ function ChipDeck() {
         {effect: ProjectileShape.HitEffects.DAMAGE, base_damage: 100, aoe_type: "BOX"},
         {effect: ProjectileShape.HitEffects.FREEZE, duration: 3, aoe_type: "BOX"}
       ],
-      icon: "../Bouncy/assets/icons/icon_plain_frost.png",
+      icon: "/Bouncy/assets/icons/icon_plain_frost.png",
       charge: {"initial_charge":-1,"max_charge":3,"charge_type":"TURNS"}
     },{
       name: 'Mass Weaken',
@@ -93,7 +94,7 @@ function ChipDeck() {
         aoe_type: "BOX",
         aoe_size: {"x":[-2, 2], y:[-1, 1]},
       }],
-      icon:"../Bouncy/assets/icons/icon_plain_hearts.png",
+      icon: "/Bouncy/assets/icons/icon_plain_hearts.png",
       charge: {"initial_charge":-1,"max_charge":3,"charge_type":"TURNS"}
     }];
 

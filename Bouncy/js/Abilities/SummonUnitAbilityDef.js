@@ -1,6 +1,6 @@
 class SummonUnitAbilityDef extends AbilityDef {
-  constructor(defJSON) {
-    super(defJSON);
+  constructor(defJSON, subAbility) {
+    super(defJSON, subAbility);
     this.rawDef = defJSON;
 
     if (defJSON.unit_abilities) {
@@ -196,11 +196,6 @@ class SummonUnitAbilityDef extends AbilityDef {
 
   hasFinishedDoingEffect(tickOn) {
     return tickOn > 0;
-  }
-
-  addDefaultIcon($icon) {
-    var $image = $("<img src='../Bouncy/assets/icons/icon_plain_shield.png'/>");
-    $icon.append($image);
   }
 
   createTargettingGraphic(startPos, endPos, color) {

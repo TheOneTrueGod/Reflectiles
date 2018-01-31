@@ -40,8 +40,8 @@ class User {
   public static function getFromToken($token) {
     for ($i = 0; $i < count(User::$all_users); $i++) {
       $user = User::$all_users[$i];
-      if ($user->getToken() == $token) {
-        return $user;
+      if ($user[3] == $token) {
+        return new static($user[0], $user[1], $user[2], $user[3]);
       }
     }
     return null;
@@ -51,10 +51,10 @@ class User {
     for ($i = 0; $i < count(User::$all_users); $i++) {
       $user = User::$all_users[$i];
       if (
-        ($user->getID() == $username || $user->getUserName() == $username) &&
-        $user->getPassword() == $password
+        ($user[0] == $username || $user[1] == $username) &&
+        $user[2] == $password
       ) {
-        return $user;
+        return new static($user[0], $user[1], $user[2], $user[3]);
       }
     }
     return null;
@@ -63,8 +63,8 @@ class User {
   public static function getFromID($id) {
     for ($i = 0; $i < count(User::$all_users); $i++) {
       $user = User::$all_users[$i];
-      if ($user->getID() == $id) {
-        return $user;
+      if ($user[0] == $id) {
+        return new static($user[0], $user[1], $user[2], $user[3]);
       }
     }
     return null;
@@ -72,14 +72,14 @@ class User {
 }
 
 User::$all_users = array(
-  new User('totg', "TheOneTrueGod", 'peanut', 'rttqwervczxdrfasdf'),
-  new User('tab', "Tabitha", 'purple_rain', 'vdasfwqercvzxcfqwer'),
-  new User('chip', "ILoveTheLag", 'lag_is_life', 'bbuieqrpzcvoin'),
-  new User('tj', "Jabberwookie", 'greenhouse', 'bhcjdfjkewrigrnasdf'),
-  new User('sean', "Zahken", 'cromat', 'bbcbxziuqerwperiut'),
-  new User('mitch', "QQCanasian", 'qqcanasian', 'tupqwepribjfjeiwerb'),
-  new User('clarence', "Vauss", 'lilly', 'gbcbzxcvdsfqwerqwer'),
-  new User('test2', "test2", 'test', 'test2'),
-  new User('test3', "test3", 'test', 'test3'),
-  new User('test4', "test4", 'test', 'test4')
+  array('totg', "TheOneTrueGod", 'peanut', 'rttqwervczxdrfasdf'),
+  array('tab', "Tabitha", 'purple_rain', 'vdasfwqercvzxcfqwer'),
+  array('chip', "ILoveTheLag", 'lag_is_life', 'bbuieqrpzcvoin'),
+  array('tj', "Jabberwookie", 'greenhouse', 'bhcjdfjkewrigrnasdf'),
+  array('sean', "Zahken", 'cromat', 'bbcbxziuqerwperiut'),
+  array('mitch', "QQCanasian", 'qqcanasian', 'tupqwepribjfjeiwerb'),
+  array('clarence', "Vauss", 'lilly', 'gbcbzxcvdsfqwerqwer'),
+  array('test2', "test2", 'test', 'test2'),
+  array('test3', "test3", 'test', 'test3'),
+  array('test4', "test4", 'test', 'test4')
 );

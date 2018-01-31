@@ -39,7 +39,7 @@ const OLD_CLARENCE_ABILITIES = {
       }
     }],
     max_range: {top: 3, bottom: -1, left: 1, right: 1},
-    icon: "../Bouncy/assets/icons/spiral-bloom.png",
+    icon: "/Bouncy/assets/icons/spiral-bloom.png",
     charge: {initial_charge: -1, max_charge: 0, charge_type: AbilityDef.CHARGE_TYPES.TURNS},
   }
 };
@@ -73,7 +73,7 @@ function ClarenceDeck() {
         }
       }],
       max_range: {top: 2, bottom: -1, left: 2, right: 2},
-      icon: "../Bouncy/assets/icons/turret.png",
+      icon: "/Bouncy/assets/icons/turret.png",
       charge: {initial_charge: -1, max_charge: 1, charge_type: AbilityDef.CHARGE_TYPES.TURNS},
       max_summon: 2,
     },
@@ -104,7 +104,7 @@ function ClarenceDeck() {
         }
       }],
       max_range: {top: 2, bottom: -1, left: 2, right: 2},
-      icon: "../Bouncy/assets/icons/cannon.png",
+      icon: "/Bouncy/assets/icons/cannon.png",
       charge: {initial_charge: -1, max_charge: 2, charge_type: AbilityDef.CHARGE_TYPES.TURNS},
       max_summon: 2,
     },
@@ -117,7 +117,7 @@ function ClarenceDeck() {
       shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
       projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
       special_effects: [AbilityDef.SPECIAL_EFFECTS.TURRET_AIM, AbilityDef.SPECIAL_EFFECTS.TURRET_FIRE],
-      icon: "../Bouncy/assets/icons/targeting.png",
+      icon: "/Bouncy/assets/icons/targeting.png",
       hit_effects: [{
         effect: ProjectileShape.HitEffects.DAMAGE,
         base_damage: 200
@@ -146,7 +146,7 @@ function ClarenceDeck() {
         }
       }],
       max_range: {top: 4, bottom: -1, left: 3, right: 3},
-      icon: "../Bouncy/assets/icons/landmine.png",
+      icon: "/Bouncy/assets/icons/landmine.png",
       charge: {initial_charge: -1, max_charge: 5, charge_type: AbilityDef.CHARGE_TYPES.TURNS},
     },
     {
@@ -168,7 +168,7 @@ function ClarenceDeck() {
         max_dist: 300,
       },
       projectile_type: ProjectileShape.ProjectileTypes.GRENADE,
-      icon: "../Bouncy/assets/icons/molotov.png",
+      icon: "/Bouncy/assets/icons/molotov.png",
       hit_effects: [],
       timeout_effects: [
         {

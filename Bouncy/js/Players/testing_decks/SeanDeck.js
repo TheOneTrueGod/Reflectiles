@@ -24,7 +24,7 @@ function SeanDeck() {
         {behaviour: CollisionBehaviour.PASSTHROUGH, count: 9},
       ],
       num_hits: 10,
-      icon: "../Bouncy/assets/icons/icon_plain_drill.png",
+      icon: "/Bouncy/assets/icons/icon_plain_drill.png",
       hit_effects: [{
         effect: ProjectileShape.HitEffects.DAMAGE,
         base_damage: 50
@@ -65,7 +65,7 @@ function SeanDeck() {
           }],
         }
       }],
-      icon: "../Bouncy/assets/icons/nuclear.png"
+      icon: "/Bouncy/assets/icons/nuclear.png"
     },
     { // 2440 damage max.  Actually dealing less than that
       name: 'Shoot \'em up',
@@ -81,7 +81,7 @@ function SeanDeck() {
       num_bullets: 25,
       bullet_wave_delay: 3,
       accuracy_decay: Math.PI / 128.0,
-      icon: "../Bouncy/assets/icons/bullets.png",
+      icon: "/Bouncy/assets/icons/bullets.png",
       hit_effects: [{
         effect: ProjectileShape.HitEffects.DAMAGE,
         base_damage: 35
@@ -103,7 +103,7 @@ function SeanDeck() {
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
       projectile_type: ProjectileShape.ProjectileTypes.GHOST,
-      icon: "../Bouncy/assets/icons/incoming-rocket.png",
+      icon: "/Bouncy/assets/icons/incoming-rocket.png",
       duration: 1,
       hit_effects: [],
       timeout_effects: [
@@ -150,7 +150,7 @@ function SeanDeck() {
         aoe_type: "BOX",
         aoe_size:{x:[-2,2],y:[-1,1]}
       }],
-      icon: "../Bouncy/assets/icons/poison-gas.png",
+      icon: "/Bouncy/assets/icons/poison-gas.png",
       charge:{initial_charge: -1, max_charge: 6, charge_type: "TURNS"}
     }
   ];

@@ -43,17 +43,12 @@ class PlayerDeck {
   }
 
   public static function getAllDecksForPlayer($user) {
+    $bouncy_user = BouncyUser::getFromID($user->id);
     // These are actually filled in on the client side for now.
-    return array(
-      new PlayerDeck(0, "1 - Damage", self::getTJDeck()),
-      new PlayerDeck(1, "2 - Support", self::getChipDeck()),
-      new PlayerDeck(2, "3 - Chaos", self::getTabithaDeck()),
-      new PlayerDeck(3, "4 - Poison", self::getSeanDeck()),
-      new PlayerDeck(4, "5 - Turrets", self::getClarenceDeck()),
-    );
+    return $bouncy_user->decks;
   }
 
-  private static function getTJDeck() {
+  public static function getTJDeck() {
     return '['
       . self::getShotgunAbility() . ',' .
       '{
@@ -69,11 +64,11 @@ class PlayerDeck {
     ]';
   }
 
-  private static function getShotgunAbility() {
+  public static function getShotgunAbility() {
     return '{"ability_type":"PROJECTILE","shape":"SPRAY_SHOT","projectile_type":"HIT","hit_effects":[{"effect":"DAMAGE","base_damage":100}],"num_bullets":12}';
   }
 
-  private static function getChipDeck() {
+  public static function getChipDeck() {
     return '[{
       "ability_type":"PROJECTILE","shape":"TRI_SHOT","projectile_type":"HIT","num_bullets":2,"hit_effects":[{"effect":"DAMAGE","base_damage":200}]
     },{
@@ -90,13 +85,13 @@ class PlayerDeck {
   }
 
 
-  private static function getTestDeck() {
+  public static function getTestDeck() {
     return '[]';
   }
 
-  private static function getTabithaDeck() { return '[]'; }
-  private static function getSeanDeck() { return '[]'; }
-  private static function getClarenceDeck() { return '[]'; }
+  public static function getTabithaDeck() { return '[]'; }
+  public static function getSeanDeck() { return '[]'; }
+  public static function getClarenceDeck() { return '[]'; }
 }
 
 // For Sean;

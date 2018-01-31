@@ -114,4 +114,16 @@ class BouncyGameObject extends GameObject {
     $this->saveMetadata();
     return $this->metadata;
   }
+
+  public function finishGame($experienceGained) {
+    foreach ($this->metadata->player_data as $playerData) {
+      if ($playerData) {
+        $player = BouncyUser::getFromID($playerData->user_id);
+        if ($player) {
+          $player->addExperience($playerData->ability_deck->id, $experienceGained);
+        }
+      }
+    }
+    die();
+  }
 }

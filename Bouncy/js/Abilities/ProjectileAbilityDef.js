@@ -45,8 +45,8 @@ class ProjectileAccuracy {
 }
 
 class ProjectileAbilityDef extends AbilityDef {
-  constructor(defJSON) {
-    super(defJSON);
+  constructor(defJSON, subAbility) {
+    super(defJSON, subAbility);
     if (!defJSON['shape'] || !defJSON['projectile_type']) {
       throw new Error("shape and projectile_type are required in a ProjectileAbilityDef");
     }
@@ -94,10 +94,6 @@ class ProjectileAbilityDef extends AbilityDef {
 
   hasFinishedDoingEffect(tickOn) {
     return this.shape.hasFinishedDoingEffect(tickOn);
-  }
-
-  addDefaultIcon($icon) {
-    this.shape.appendIconHTML($icon);
   }
 
   createTargettingGraphic(startPos, endPos, color) {

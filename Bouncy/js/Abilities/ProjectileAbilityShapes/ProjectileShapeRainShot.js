@@ -13,46 +13,6 @@ class ProjectileShapeRainShot extends ProjectileShape {
     this.FINAL_TICK = this.num_bullets / this.SHOTS_PER_TICK;
   }
 
-  appendIconHTML($container) {
-    $container.append(
-      $("<div>", {
-        "class": "iconMockShot",
-        "style": "top: 35px; left: 25px;"
-      })
-    );
-    $container.append(
-      $("<div>", {
-        "class": "iconMockShot",
-        "style": "top: 25px; left: 15px;"
-      })
-    );
-    $container.append(
-      $("<div>", {
-        "class": "iconMockShot",
-        "style": "top: 25px; left: 35px;"
-      })
-    );
-    $container.append(
-      $("<div>", {
-        "class": "iconMockShot",
-        "style": "top: 15px; left: 40px;"
-      })
-    );
-    $container.append(
-      $("<div>", {
-        "class": "iconMockShot",
-        "style": "top: 15px; left: 10px;"
-      })
-    );
-    $container.append(
-      $("<div>", {
-        "class": "iconMockShot",
-        "style": "top: 17px; left: 25px;"
-      })
-    );
-
-  }
-
   appendIconDescHTML($container) {
 
   }
