@@ -47,14 +47,15 @@ class AbilityDef {
 
   loadNestedAbilityDefs(nestedList) {
     for (var i = 0; i < nestedList.length; i++) {
-      if ((
+      if (((
           nestedList[i].effect && (
             nestedList[i].effect == ZoneAbilityDef.UnitEffectTypes.ABILITY ||
             nestedList[i].effect == PositionBasedEffect.EFFECTS.USE_ABILITY ||
             nestedList[i].effect == ProjectileShape.HitEffects.INFECT
           )
         )
-        || nestedList[i].abil_def
+        || nestedList[i].abil_def)
+        && !nestedList[i].initializedDef
       ) {
         var newAbil = AbilityDef.createFromJSON(nestedList[i].abil_def, true);
         nestedList[i].initializedAbilDef = newAbil;
