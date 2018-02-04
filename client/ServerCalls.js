@@ -5,6 +5,18 @@ class ServerCalls {
     this.loadingMetadata = false;
   }
 
+  SavePlayerDecks(callback, playerDecks) {
+    $.post({
+      url: "/user/reflectiles/deck",
+      data: {
+        action: ServerCalls.DECK_ACTIONS.SAVE_DECKS,
+        deck_list: JSON.stringify(
+          playerDecks.map((deck) => { return deck.serialize(); })
+        ),
+      }
+    })
+  }
+
   MakeServerCall(callback, command, context) {
     $.get({
       url: "../gamelogic/" + this.gameID,
@@ -179,6 +191,10 @@ ServerCalls.SERVER_ACTIONS = {
   GET_TURN_STATUS: 'get_turn_status',
   GET_GAME_METADATA: 'get_game_metadata',
   UPDATE_PRE_GAME_STATE: 'update_pre_game_state'
+};
+
+ServerCalls.DECK_ACTIONS = {
+  SAVE_DECKS: 'save_decks',
 };
 
 ServerCalls.prototype.SLOT_ACTIONS = {

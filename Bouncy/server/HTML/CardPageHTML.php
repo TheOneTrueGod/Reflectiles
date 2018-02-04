@@ -20,21 +20,32 @@
       </div>
     </div>
     <div class="deckControlSection hidden">
-      <div class="deckFilterSection clearfix">
-        <?php foreach ($bouncy_user->decks as $deck) {?>
-        <div
-          class="button deckFilter"
-          data-deck-id=<?php print_r($deck->id); ?>
-        >
-          <?php
-          print_r($deck->name);
-          ?>
-        </div>
-        <? } ?>
-      </div>
       <div>
+        <div class="cardsTitleSection">Your Cards</div>
+        <div class="deckContentsTitleSection">Deck</div>
+      </div>
+      <div class="clearfix">
         <div class="cardsSection"> </div>
         <div class="deckContentsSection"> </div>
+      </div>
+      <div class="deckToolbar">
+        <div class="section tools clearfix active">
+          <div class="button chooseDeckButton">Choose Deck</div>
+          <span class="deckName"></span>
+          <div class="button saveButton green disabled">Save</div>
+        </div>
+        <div class="section deckFilterSection clearfix">
+          <?php foreach ($bouncy_user->decks as $deck) {?>
+          <div
+            class="button deckFilter"
+            data-deck-id=<?php print_r($deck->id); ?>
+          >
+            <?php
+            print_r($deck->name);
+            ?>
+          </div>
+          <? } ?>
+        </div>
       </div>
     </div>
   </div>

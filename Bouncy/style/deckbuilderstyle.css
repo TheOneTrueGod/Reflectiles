@@ -1,9 +1,10 @@
-.deckFilterSection {
+.deckToolbar {
   width: 100%;
   background: rgba(86, 61, 124, .15);
   padding: 1%;
   border: 1px solid;
   margin-bottom: 1%;
+  margin-top: 1%;
 }
 
 .deckFilter {
@@ -25,15 +26,41 @@
   height: 400px;
 }
 
-.cardsSection {
+.cardsTitleSection, .deckContentsTitleSection {
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.cardsSection, .cardsTitleSection {
   width: 79%;
   float: left;
   margin-right: 1%;
 }
 
-.deckContentsSection {
+.deckContentsSection, .deckContentsTitleSection {
   width: 20%;
   float: right;
   overflow-y: auto;
   overflow-x: hidden;
+}
+
+.deckToolbar .section {
+  display: none;
+}
+
+.deckToolbar .active {
+  display: block;
+}
+
+.deckToolbar .saveButton {
+  float: right;
+}
+
+.deckToolbar .deckName {
+  width: 60%;
+  text-align: center;
+  display: inline-block;
+  font-size: 20px;
+  font-weight: bold;
 }

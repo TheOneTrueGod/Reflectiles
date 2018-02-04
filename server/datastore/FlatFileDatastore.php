@@ -15,7 +15,7 @@ class FlatFileDatastore extends Datastore {
   }
 
   static function getGameObjectMetadata($game_id) {
-    $filename = self::getFileName($game_id, 'metadata', true, ".md");
+    $filename = self::getGameFileName($game_id, 'metadata', true, ".md");
     if (!file_exists($filename)) {
       throw new Exception("File doesn't exist: ''{$filename}'");
     }
@@ -25,7 +25,7 @@ class FlatFileDatastore extends Datastore {
 
   static function saveGameObjectMetadataJSON($game_object) {
     file_put_contents(
-      self::getFileName($game_object->getID(), 'metadata', true, ".md"),
+      self::getGameFileName($game_object->getID(), 'metadata', true, ".md"),
       json_encode($game_object->getMetadata()->serialize(null))
     );
   }
@@ -38,7 +38,7 @@ class FlatFileDatastore extends Datastore {
       preg_match('!' . $game_id . '/(\d+)!', end($files), $matches);
       $turn_id = $matches[1];
     }
-    $filename = self::getFileName($game_id, $turn_id, false);
+    $filename = self::getGameFileName($game_id, $turn_id, false);
     if (!file_exists($filename)) {
       throw new Exception("File doesn't exist: ''{$filename}'");
     }
@@ -55,7 +55,7 @@ class FlatFileDatastore extends Datastore {
 
   static function saveGameObjectJSON($game_object) {
     file_put_contents(
-      self::getFileName($game_object->getID(), $game_object->getCurrentTurn()),
+      self::getGameFileName($game_object->getID(), $game_object->getCurrentTurn()),
       $game_object->getJSON()
     );
   }
@@ -64,13 +64,21 @@ class FlatFileDatastore extends Datastore {
     $path = self::getSavePath();
     $files = glob($path.'/*');
     natsort($files);
-    return array_map(function($file) {
+    $file_list = array_map(function($file) {
       preg_match('!(\d+)!', $file, $matches);
+      if (!$matches) {
+        return null;
+      }
       return array(
         'game_json' => self::getGameObjectJSON($matches[1]),
         'metadata' => self::getGameObjectMetadata($matches[1])
       );
     }, $files);
+
+    $file_list = array_filter($file_list, function($game_data) {
+      return $game_data !== null;
+    });
+    return $file_list;
   }
 
   private function getSavePath($game_id = -1, $create = true) {
@@ -87,7 +95,7 @@ class FlatFileDatastore extends Datastore {
     return $path;
   }
 
-  private function getFileName($game_id, $turn_id, $create = true, $extension = ".sav") {
+  private function getGameFileName($game_id, $turn_id, $create = true, $extension = ".sav") {
     $filename = $turn_id . $extension;
     $path = self::getSavePath($game_id, $create);
 
@@ -103,5 +111,39 @@ class FlatFileDatastore extends Datastore {
       if (!file_exists($path)) { return false; }
     }
     return true;
+  }
+
+  /* Users */
+
+  private function getUserSavePath($user) {
+    $path = "saves";
+    if (!file_exists($path)) { mkdir($path); }
+    $path .= "/users";
+
+    if (!file_exists($path)) { mkdir($path); }
+    $path .= "/" . $user->id;
+    if (!file_exists($path)) { mkdir($path); }
+    return $path;
+  }
+
+  static function getUserDataFileName($user) {
+    $path = self::getUserSavePath($user);
+    $path .= "/userData.sav";
+
+    return $path;
+  }
+
+  static function saveUserData($user, $serialized_user_data) {
+    file_put_contents(
+      self::getUserDataFileName($user),
+      json_encode($serialized_user_data)
+    );
+  }
+
+  static function loadUserData($user) {
+    $path = self::getUserDataFileName($user);
+    if (!file_exists($path)) { return null; }
+    $json = file_get_contents($path);
+    return $json;
   }
 }

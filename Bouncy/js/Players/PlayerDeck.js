@@ -10,7 +10,7 @@ class PlayerDeck {
     if (deckData) {
       this.name = deckData.name;
       this.id = deckData.id;
-      this.cardList = deckData.cardList.map((cardData) => {
+      this.cardList = deckData.card_list.map((cardData) => {
         return new PlayerCard(cardData);
       });
 
@@ -20,7 +20,20 @@ class PlayerDeck {
     }
   }
 
+  serialize() {
+    return {
+      name: this.name,
+      id: this.id,
+      card_list: this.cardList.map((card) => { return card.serialize(); }),
+    };
+  }
+
   addCard(playerCard) {
+    for (var i = 0; i < this.cardList.length; i++) {
+      if (this.cardList[i].index == playerCard.index) {
+        return null;
+      }
+    }
     let clonedCard = playerCard.cloneForDeck();
     this.cardList.push(clonedCard);
     return this.instantiateCard(clonedCard);

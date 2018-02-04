@@ -29,7 +29,7 @@ KleinUtils::addLogicResponder($klein, LoginController, GameLogicController, 'POS
 KleinUtils::addHTMLResponder($klein, LoginController, GameDeletionController, 'GET');
 KleinUtils::addHTMLResponder($klein, LoginController, GameDeletionController, 'POST');
 KleinUtils::addHTMLResponder($klein, LoginController, BouncyUserController, 'GET');
-KleinUtils::addHTMLResponder($klein, LoginController, BouncyUserController, 'POST');
+KleinUtils::addLogicResponder($klein, LoginController, BouncyUserController, 'POST');
 
 $klein->respond('GET', '/logout', function($request, $response) {
   $_SESSION['user_token'] = null;

@@ -6,6 +6,25 @@ class PlayerDeck {
     $this->cardListJSON = $cardListJSON;
   }
 
+  public static function constructFromSerialized($serialized) {
+    if (is_array($serialized->card_list)) {
+      $cardList = json_encode(array_map(
+        function($serialized_card) {
+          return $serialized_card->card_id;
+        },
+        $serialized->card_list
+      ));
+    } else if (is_string($serialized->card_list)) {
+      $cardList = $serialized->card_list;
+    }
+
+    return new PlayerDeck(
+      $serialized->id,
+      $serialized->name,
+      $cardList
+    );
+  }
+
   public function serialize($bouncy_user) {
     $serializedCards = array();
     $card_list = json_decode($this->cardListJSON);
@@ -27,7 +46,7 @@ class PlayerDeck {
     return array(
       'id' => $this->id,
       'name' => $this->name,
-      'cardList' => $serializedCards
+      'card_list' => $serializedCards
     );
   }
 

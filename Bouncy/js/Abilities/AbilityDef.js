@@ -134,6 +134,8 @@ class AbilityDef {
     if (name) {
       tooltip.append(
         $("<div class='cardTooltipName'>" + name + "</div>", {"class": "tooltipName"})
+        .append(this.getHTMLForTopLeftOfCard())
+        .append(this.getCooldownIcon())
       );
     }
 

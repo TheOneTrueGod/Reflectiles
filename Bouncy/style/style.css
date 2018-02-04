@@ -766,6 +766,17 @@
   background: #88ff88;
 }
 
+.button.disabled {
+  background: repeating-linear-gradient(
+    45deg,
+    #A7A7A6,
+    #A7A7A6 10px,
+    #7A7A7A 10px,
+    #7A7A7A 15px
+  );
+  cursor: default;
+}
+
 .joinGameButton {
   position: relative;
   top: 70px;
@@ -781,6 +792,15 @@
 
 .cardTooltipName {
   border-bottom: 1px solid white;
+}
+
+.cardTooltipName .cooldownIcon {
+  top: 7px;
+  right: 3px;
+}
+
+.cardTooltipName .topLeftIcon {
+  top: 6px;
 }
 
 .cardTooltipDescription {

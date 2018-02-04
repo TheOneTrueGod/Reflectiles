@@ -22,6 +22,7 @@ class DeckManager {
         clickTarget = clickTarget.closest(".abilityCard");
       }
       this.removeCardFromDeck(clickTarget.data("playerCard"));
+      this.markDeckDirty();
     });
 
     $(".deckControlSection .cardsSection").on("click", ".abilityCard", (event) => {
@@ -30,8 +31,27 @@ class DeckManager {
         clickTarget = clickTarget.closest(".abilityCard");
       }
       let cardAbility = this.selectedDeck.addCard(clickTarget.data("playerCard"));
-      this.addCardToDeckSection(clickTarget.data("playerCard"), cardAbility);
+      if (cardAbility) {
+        this.addCardToDeckSection(clickTarget.data("playerCard"), cardAbility);
+        this.markDeckDirty();
+      }
     });
+
+    $('.chooseDeckButton').on('click', (event) => {
+      $('.deckToolbar .active').removeClass('active');
+      $('.deckToolbar .deckFilterSection').addClass('active');
+    });
+
+    $('.deckToolbar .saveButton').on('click', (event) => {
+      if (!$('.deckToolbar .saveButton').hasClass('disabled')) {
+        $('.deckToolbar .saveButton').addClass("disabled");
+        this.saveDeckChanges();
+      }
+    });
+  }
+
+  markDeckDirty() {
+    $('.deckToolbar .saveButton').removeClass("disabled");
   }
 
   getDeckByID(id) {
@@ -47,8 +67,13 @@ class DeckManager {
     $('.deckFilter.selected').removeClass('selected');
     $('[data-deck-id=' + deckID + ']').addClass("selected");
 
+    $('.deckToolbar .active').removeClass('active');
+    $('.deckToolbar .tools').addClass('active');
+
     this.displayDeck(deckID);
     this.selectedDeck = this.decks[deckID];
+
+    $('.deckToolbar .deckName').text(this.decks[deckID].name);
   }
 
   createCardSection() {
@@ -72,7 +97,6 @@ class DeckManager {
       let playerCard = playerCards[i];
       this.addCardToDeckSection(playerCard, ability);
     }
-
   }
 
   addCardToDeckSection(playerCard, ability) {
@@ -87,10 +111,15 @@ class DeckManager {
     this.selectedDeck.removeCard(playerCard);
     $(".deckContentsSection .abilityCard").each((index, cardDisplay) => {
       let $cardDisplay = $(cardDisplay);
+      $cardDisplay.tooltip('hide');
       if ($($cardDisplay).data('playerCard') === playerCard) {
         $cardDisplay.remove();
       }
     });
+  }
+
+  saveDeckChanges() {
+    ServerCalls.SavePlayerDecks(() => {}, this.decks);
   }
 }
 

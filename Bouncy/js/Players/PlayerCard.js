@@ -15,6 +15,15 @@ class PlayerCard {
     }
   }
 
+  serialize() {
+    return {
+      index: this.index,
+      card_id: this.cardID,
+      card_perks: this.cardPerks,
+      card_experience: this.cardExperience,
+    };
+  }
+
   cloneForDeck() {
     return new PlayerCard(this);
   }
