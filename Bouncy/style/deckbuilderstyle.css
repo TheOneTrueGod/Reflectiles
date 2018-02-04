@@ -45,6 +45,15 @@
   overflow-x: hidden;
 }
 
+.deckContentsSection {
+  background: linear-gradient(
+    to bottom,
+    rgba(86, 61, 124, .15) 0%,
+    rgba(86, 61, 124, .15) 170px,
+    black 50%,
+    black 100%)
+}
+
 .deckToolbar .section {
   display: none;
 }

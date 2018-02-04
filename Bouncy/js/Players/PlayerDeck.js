@@ -1,3 +1,6 @@
+const MIN_DECK_SIZE = 3;
+const MAX_DECK_SIZE = 5;
+
 class PlayerDeck {
   constructor(deckData) {
     this.name = "Unnamed";
@@ -29,6 +32,10 @@ class PlayerDeck {
   }
 
   addCard(playerCard) {
+    if (this.cardList.length >= MAX_DECK_SIZE) {
+      return null;
+    }
+    
     for (var i = 0; i < this.cardList.length; i++) {
       if (this.cardList[i].index == playerCard.index) {
         return null;
