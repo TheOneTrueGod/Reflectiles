@@ -9,6 +9,12 @@ class FlatFileDatastore extends Datastore {
       return null;
     }
     natsort($files);
+    $files = array_filter($files, function($file) {
+      if (!preg_match('!(\d+)!', $file, $matches)) {
+        return false;
+      }
+      return true;
+    });
     preg_match('!(\d+)!', end($files), $matches);
     $game_id = $matches[1] + 1;
     return $game_id;
@@ -98,7 +104,6 @@ class FlatFileDatastore extends Datastore {
   private function getGameFileName($game_id, $turn_id, $create = true, $extension = ".sav") {
     $filename = $turn_id . $extension;
     $path = self::getSavePath($game_id, $create);
-
     return $path . "/" . $filename;
   }
 
