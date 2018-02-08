@@ -1,5 +1,5 @@
 const MIN_DECK_SIZE = 3;
-const MAX_DECK_SIZE = 6;
+const MAX_DECK_SIZE = 10;
 
 class PlayerDeck {
   constructor(deckData) {

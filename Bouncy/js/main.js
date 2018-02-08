@@ -506,7 +506,7 @@ class MainGame {
         });
       }
       player.endOfTurn();
-      for (var i = 0; i <= discardedCards; i++) {
+      for (var i = 0; i < discardedCards; i++) {
         player.drawCard(this.boardState);
       }
     });
