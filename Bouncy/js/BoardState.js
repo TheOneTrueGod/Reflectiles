@@ -377,11 +377,6 @@ class BoardState {
     for (var unit in this.units) {
       this.units[unit].endOfPhase(this, phase);
     }
-    if (phase === TurnPhasesEnum.ENEMY_SPAWN) {
-      for (var key in players) {
-        players[key].endOfTurn();
-      }
-    }
     this.doDeleteChecks();
   }
 

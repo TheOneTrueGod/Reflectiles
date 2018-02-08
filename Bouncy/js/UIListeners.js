@@ -36,7 +36,7 @@ class UIListeners {
   }
 
   createAbilityDisplay(players) {
-    $('#missionProgramDisplay').append(
+    $('#missionProgramDisplay').empty().append(
       $("<div>", {"class": "missionProgramDisplayLockOverlay"})
     );
 
@@ -53,7 +53,7 @@ class UIListeners {
 
     var $div; var $ability;
 
-    var abilities = player.getAbilities();
+    var abilities = player.getHand();
     for (var i = 0; i < abilities.length; i++) {
       $div = $("<div>", {"class": "abilityContainer"});
       $div.append(AbilityCardBuilder.createStandardAbilityCard(abilities[i]));
@@ -130,7 +130,7 @@ class UIListeners {
       throw new Error("PlayerID [" + playerID + "] not in Players");
     }
 
-    var abilities = player.getAbilities();
+    var abilities = player.getHand();
     for (var i = 0; i < abilities.length; i++) {
       abilities[i].chargeUpdated();
     }
@@ -144,8 +144,9 @@ class UIListeners {
 
     var self = this;
 
-    $('#missionProgramDisplay .abilityCard').on(
+    $('#missionProgramDisplay').on(
       'click',
+      '.abilityCard',
       function() {
         // Deselect currently selected abilities
         PlayerInput.setSelectedAbility($(this).attr("ability-id"));

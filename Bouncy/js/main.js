@@ -121,6 +121,11 @@ class MainGame {
       self.boardState = new BoardState(this.boardSize, self.stage);
       self.boardState.addInitialPlayers(self.players);
       AIDirector.createInitialUnits(self.boardState);
+      self.players.forEach((player) => {
+        player.drawInitialHand(this.boardState);
+        UIListeners.createAbilityDisplay(this.players);
+      });
+
       ServerCalls.SetupBoardAtGameStart(self.boardState, self, AIDirector);
     })
     .setLoadCompleteCallback(this.gameReadyToBegin.bind(this))
@@ -163,6 +168,7 @@ class MainGame {
 
     this.boardState.loadUnits(serverBoardData.units);
     UIListeners.updateTeamHealth(this.boardState.teamHealth[0], this.boardState.teamHealth[1]);
+    UIListeners.createAbilityDisplay(this.players);
 
     if (lastBoardState) {
       let desyncReason = this.boardState.checkForDesync(lastBoardState);
@@ -487,6 +493,25 @@ class MainGame {
     } else {
       UIListeners.showGameOverScreen(this.boardState.didPlayersWin(AIDirector), this.boardState.gameStats);
     }
+
+    this.players.forEach((player) => {
+      let discardedCards = 0;
+      if (player.user_id in this.playerCommands) {
+        this.playerCommands[player.user_id].forEach((command) => {
+          if (command instanceof PlayerCommandUseAbility) {
+            if (player.discardCard(command.abilityID)) {
+              discardedCards += 1;
+            }
+          }
+        });
+      }
+      player.endOfTurn();
+      for (var i = 0; i <= discardedCards; i++) {
+        player.drawCard(this.boardState);
+      }
+    });
+
+    UIListeners.createAbilityDisplay(this.players);
 
     this.boardState.incrementTurn(this.players);
     this.boardState.saveState();
