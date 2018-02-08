@@ -8,6 +8,9 @@ class PlayerCard {
       this.cardPerks = cardData.cardPerks;
       this.cardExperience = cardData.cardExperience;
     } else {
+      if (cardData.card_id === null) {
+        throw new Error("invalid card data");
+      }
       this.index = cardData.card_index
       this.cardID = cardData.card_id;
       this.cardPerks = cardData.card_perks;

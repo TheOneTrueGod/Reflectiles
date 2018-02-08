@@ -91,7 +91,7 @@ class ServerCalls {
     });
   };
 
-  SetBoardStateAtStartOfTurn(boardStateObj, context, aiDirector) {
+  SetBoardStateAtStartOfTurn(boardStateObj, context, aiDirector, experienceGained) {
     $.post({
       url: "../gamelogic/" + this.gameID,
       context: context,
@@ -101,7 +101,8 @@ class ServerCalls {
         turn: boardStateObj.turn,
         userToken: this.userToken,
         game_over: boardStateObj.isGameOver(aiDirector),
-        players_won: boardStateObj.didPlayersWin(aiDirector)
+        players_won: boardStateObj.didPlayersWin(aiDirector),
+        experience_gained: experienceGained
       },
     });
   };

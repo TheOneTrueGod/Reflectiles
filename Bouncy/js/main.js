@@ -21,8 +21,6 @@
  * Change how shots interact with the world.  They should have num_bounces, num_passthroughs, and events like on_hit, on_bounce, and on_passthrough
  * Add circular AoEs
  * Add player progression
-  - Requires saving players
- * Add deck modifications
  * Add Minor Actions
  * Actions should be able to move you
  * Attribute bonus damage back the buff creator
@@ -258,7 +256,7 @@ class MainGame {
       }
       num_players += 1;
       var playerData = JSON.parse(player_data[key]);
-      var newPlayer = Player(playerData, key);
+      var newPlayer = new Player(playerData, key);
       this.players[key] = newPlayer;
     }
     NumbersBalancer.setNumPlayers(num_players);
@@ -493,7 +491,8 @@ class MainGame {
     this.boardState.incrementTurn(this.players);
     this.boardState.saveState();
     if (this.isHost) {
-      ServerCalls.SetBoardStateAtStartOfTurn(this.boardState, this, AIDirector);
+      let experienceGained = 1000;
+      ServerCalls.SetBoardStateAtStartOfTurn(this.boardState, this, AIDirector, experienceGained);
     } else {
       $('#gameContainer').addClass("turnPlaying");
       this.resyncAtTurnEnd();

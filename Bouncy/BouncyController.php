@@ -121,9 +121,11 @@ class BouncyController {
     $this->gameObject->setCurrentTurn(
       $this->request->param('turn')
     );
+
     $this->gameObject->setGameOver(
       $this->request->param('game_over'),
-      $this->request->param('players_won')
+      $this->request->param('players_won'),
+      $this->request->param('experience_gained')
     );
     $this->gameObject->save();
   }

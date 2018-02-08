@@ -85,9 +85,16 @@ class BouncyGameObject extends GameObject {
     $this->board_state = $board_state;
   }
 
-  public function setGameOver($game_over, $players_won) {
+  public function setGameOver($game_over, $players_won, $experience_gained) {
+    $was_game_over = $this->game_over;
     $this->game_over = $game_over === true || $game_over === "true";
     $this->players_won = $players_won === true || $players_won === "true";
+    if ($was_game_over === false && $this->isGameOver()) {
+      if (!$this->didPlayersWin()) {
+        $experience_gained /= 2;
+      }
+      $this->finishGame($experience_gained);
+    }
   }
   public function isGameOver() { return $this->game_over; }
   public function didPlayersWin() { return $this->players_won; }
@@ -116,14 +123,17 @@ class BouncyGameObject extends GameObject {
   }
 
   public function finishGame($experienceGained) {
-    foreach ($this->metadata->player_data as $playerData) {
-      if ($playerData) {
-        $player = BouncyUser::getFromID($playerData->user_id);
+    foreach ($this->metadata->player_data as $player_data) {
+      if ($player_data) {
+        $decoded = json_decode($player_data);
+        $player = BouncyUser::getFromID($decoded->user_id);
         if ($player) {
-          $player->addExperience($playerData->ability_deck->id, $experienceGained);
+          foreach ($decoded->ability_deck->card_list as $card_data) {
+            $player->addExperience($card_data->card_index, $experienceGained);
+          }
         }
+        $player->saveAllCards();
       }
     }
-    die();
   }
 }

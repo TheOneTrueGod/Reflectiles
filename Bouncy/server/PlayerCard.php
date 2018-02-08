@@ -9,9 +9,15 @@ class PlayerCard {
       $this->card_perks = [];
       $this->card_experience = 0;
     } else {
-      $this->id = $card_data['card_id'];
-      $this->card_perks = $card_data['card_perks'];
-      $this->card_experience = $card_data['card_experience'];
+      $this->card_id = $card_data->card_id;
+      $this->card_perks = $card_data->card_perks;
+      $this->card_experience = $card_data->card_experience;
+    }
+  }
+
+  function addExperience($experience) {
+    if (is_int($experience) && $experience > 0) {
+      $this->card_experience += $experience;
     }
   }
 

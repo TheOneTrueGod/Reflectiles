@@ -16,8 +16,13 @@ class StandardProjectile extends Projectile {
 
   hitUnit(boardState, unit, intersection) {
     super.hitUnit(boardState, unit, intersection);
-    let behaviour = this.determineNextIntersectionBehaviour(intersection.line);
-    this.incrementCollisionBehaviour(behaviour);
+    let behaviour = null;
+    if (intersection.line.forcePassthrough(this)) {
+      behaviour = CollisionBehaviour.PASSTHROUGH;
+    } else {
+      behaviour = this.determineNextIntersectionBehaviour(intersection.line);
+      this.incrementCollisionBehaviour(behaviour);
+    }
 
     let throwProjectileEvent = (event) => {
       return this.throwProjectileEvent(event, boardState, unit, intersection);

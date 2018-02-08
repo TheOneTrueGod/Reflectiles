@@ -63,6 +63,9 @@ class User {
   public static function getFromID($id) {
     for ($i = 0; $i < count(User::$all_users); $i++) {
       $user = User::$all_users[$i];
+      //print_r("---------[");
+      //print_r($user[0], $id);
+      //print_r("]---------");
       if ($user[0] == $id) {
         return new static($user[0], $user[1], $user[2], $user[3]);
       }

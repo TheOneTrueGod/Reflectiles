@@ -26,6 +26,7 @@ class DeckManager {
     });
 
     $(".deckControlSection .cardsSection").on("click", ".abilityCard", (event) => {
+      // On Card Click
       let clickTarget = $(event.target);
       if (!clickTarget.hasClass("abilityCard")) {
         clickTarget = clickTarget.closest(".abilityCard");
