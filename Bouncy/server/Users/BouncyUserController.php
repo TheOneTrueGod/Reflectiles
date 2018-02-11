@@ -12,7 +12,7 @@ class BouncyUserController {
     $bouncy_user = BouncyUser::getFromID($user->id);
     if (!$request->action) {
       ob_start();
-      require('Bouncy/server/HTML/CardPageHTML.php');
+      require('Bouncy/server/HTML/DeckManagerHTML.php');
       return ob_get_clean();
     }
 
