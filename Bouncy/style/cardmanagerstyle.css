@@ -1,0 +1,46 @@
+
+h3.cardName {
+  text-align: center;
+}
+
+.cardControlSection {
+  border: 1px solid black;
+  border-radius: 2px;
+  background: tan;
+  padding: 8px;
+}
+
+.cardControlSection .cardTree {
+  background: darkgray;
+  border: 1px solid black;
+  height: 500px;
+  position: relative;
+}
+
+.cardControlSection .perkNode {
+  display: inline;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 60px;
+  height: 60px;
+  text-align: center;
+  border: 1px solid black;
+  background: pink;
+  padding: 5px;
+  font-size: 12px;
+  padding: 3px;
+}
+
+.cardControlSection .cardDescription {
+  background: lightgray;
+  margin-top: 8px;
+  padding: 8px;
+  border: 1px solid black;
+  min-height: 100px;
+}
+
+.cardControlSection .perkNode.preview {
+  border: 4px solid orange;
+  padding: 0;
+}

@@ -3,7 +3,7 @@
 ?>
 <link rel="stylesheet" type="text/css" href="/Bouncy/style/style.css">
 <link rel="stylesheet" type="text/css" href="/Bouncy/style/deckbuilderstyle.css">
-
+<link rel="stylesheet" type="text/css" href="/Bouncy/style/cardmanagerstyle.css">
 <div class="pageBorder">
   <div class="titleArea">
     <div class="backLink"><a href="/">&lt; Back</a></div>
@@ -18,6 +18,11 @@
       <div class="loadingScreen">
         Loading
       </div>
+    </div>
+    <div class="cardControlSection hidden">
+      <h3 class="cardName">Card Name</h3>
+      <div class="cardTree"></div>
+      <div class="cardDescription">The card description will go here</div>
     </div>
     <div class="deckControlSection hidden">
       <div>
@@ -68,9 +73,14 @@
   )));
 ?>
 <script src="/Bouncy/js/deckManager.js"></script>
+<script src="/Bouncy/js/cardManager.js"></script>
 <script>
 let deckManager = new DeckManager(
   "<?php echo $serialized_decks; ?>",
   "<?php echo $serialized_cards; ?>",
+  new CardManager()
 );
+
+// TODO: DELETE ME
+$(".deckControlSection .cardsSection .abilityCard").first().click();
 </script>

@@ -1,9 +1,10 @@
 class DeckManager {
-  constructor(serializedDecks, serializedCards) {
+  constructor(serializedDecks, serializedCards, cardManager) {
     this.selectedDeck = null;
 
     this.decks = PlayerDeck.unstringifyAllDecks(JSON.parse(serializedDecks));
     this.cards = PlayerCard.unstringifyAllCards(JSON.parse(serializedCards));
+    this.cardManager = cardManager;
 
     this.createCardSection();
 
@@ -16,27 +17,17 @@ class DeckManager {
     $('#loadingContainer').hide();
     $('.deckControlSection').removeClass("hidden");
 
-    $(".deckControlSection .deckContentsSection").on("click", ".abilityCard", (event) => {
-      let clickTarget = $(event.target);
-      if (!clickTarget.hasClass("abilityCard")) {
-        clickTarget = clickTarget.closest(".abilityCard");
-      }
-      this.removeCardFromDeck(clickTarget.data("playerCard"));
-      this.markDeckDirty();
-    });
+    $(".deckControlSection .deckContentsSection")
+      .on("click", ".abilityCard", (event) => { this.deckCardClicked(event); })
+      .on("contextmenu", ".abilityCard", (event) => { this.deckCardClicked(event); });
 
-    $(".deckControlSection .cardsSection").on("click", ".abilityCard", (event) => {
-      // On Card Click
-      let clickTarget = $(event.target);
-      if (!clickTarget.hasClass("abilityCard")) {
-        clickTarget = clickTarget.closest(".abilityCard");
-      }
-      let cardAbility = this.selectedDeck.addCard(clickTarget.data("playerCard"));
-      if (cardAbility) {
-        this.addCardToDeckSection(clickTarget.data("playerCard"), cardAbility);
-        this.markDeckDirty();
-      }
-    });
+    $(".deckControlSection .cardsSection")
+      .on("click", ".abilityCard", (event) => {
+        this.collectionCardClicked(event);
+      })
+      .on("contextmenu", ".abilityCard", (event) => {
+        this.collectionCardClicked(event);
+      });
 
     $('.chooseDeckButton').on('click', (event) => {
       $('.deckToolbar .active').removeClass('active');
@@ -49,6 +40,44 @@ class DeckManager {
         this.saveDeckChanges();
       }
     });
+  }
+
+  deckCardClicked(event) {
+    let clickTarget = $(event.target);
+    if (!clickTarget.hasClass("abilityCard")) {
+      clickTarget = clickTarget.closest(".abilityCard");
+    }
+    this.removeCardFromDeck(clickTarget.data("playerCard"));
+    this.markDeckDirty();
+
+    event.preventDefault();
+    return false;
+  }
+
+  collectionCardClicked(event) {
+    // On Card Click
+    let clickTarget = $(event.target);
+    if (!clickTarget.hasClass("abilityCard")) {
+      clickTarget = clickTarget.closest(".abilityCard");
+    }
+    let cardAbility = this.selectedDeck.addCard(clickTarget.data("playerCard"));
+
+    if (event.button == 2 || event.shiftKey) {
+      if (cardAbility) {
+        this.addCardToDeckSection(clickTarget.data("playerCard"), cardAbility);
+        this.markDeckDirty();
+      }
+    } else {
+      this.showCardManager(clickTarget.data("playerCard"), cardAbility);
+    }
+    event.preventDefault();
+    return false;
+  }
+
+  showCardManager(playerCard, cardAbility) {
+    this.cardManager.setupForCard(playerCard)
+    $(".deckControlSection").addClass("hidden");
+    $(".cardControlSection").removeClass("hidden");
   }
 
   markDeckDirty() {

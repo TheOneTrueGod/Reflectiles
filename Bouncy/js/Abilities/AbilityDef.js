@@ -124,11 +124,15 @@ class AbilityDef {
     return this.cardName;
   }
 
-  createTooltip() {
-    var name = this.getOptionalParam("name", null);
-    var text = this.replaceSmartTooltipText(
+  getDescription() {
+    return this.replaceSmartTooltipText(
       this.getOptionalParam("description", null)
     );
+  }
+
+  createTooltip() {
+    var name = this.getOptionalParam("name", null);
+    var text = this.getDescription();
     var tooltip = $("<div>", {"class": "tooltip"});
     if (!name && !text) { return null; }
     if (name) {

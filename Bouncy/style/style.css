@@ -827,6 +827,6 @@
   clear: both;
 }
 
-.deckControlSection.hidden {
+.hidden {
   display: none;
 }
