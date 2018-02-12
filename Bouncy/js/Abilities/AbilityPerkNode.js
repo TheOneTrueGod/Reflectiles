@@ -11,7 +11,13 @@ class AbilityPerkNode {
     return this;
   }
 
-  createNodeHTML() {
-    return $('<div>', {text: this.key, class: 'perkNode'});
+  createNodeHTML(level) {
+    let levelText = this.levels;
+    if (!!level) {
+      levelText = level + "/" + this.levels
+    }
+    return $('<div>', {class: 'perkNode'})
+      .append($("<div>", {text: this.key, class: 'perkName noselect'}))
+      .append($("<div>", {text: levelText, class: 'perkLevel noselect'}));
   }
 }

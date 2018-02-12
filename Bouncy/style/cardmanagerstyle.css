@@ -32,6 +32,15 @@ h3.cardName {
   padding: 3px;
 }
 
+.cardControlSection .perkNode .perkLevel {
+  margin-top: 36px;
+}
+
+.cardControlSection .perkNode div,
+.cardControlSection .perkNode {
+  cursor: pointer;
+}
+
 .cardControlSection .cardDescription {
   background: lightgray;
   margin-top: 8px;
