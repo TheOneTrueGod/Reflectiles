@@ -6,7 +6,7 @@
 <link rel="stylesheet" type="text/css" href="/Bouncy/style/cardmanagerstyle.css">
 <div class="pageBorder">
   <div class="titleArea">
-    <div class="backLink"><a href="/">&lt; Back</a></div>
+    <div class="backLink"><a href="/">&lt; Game Selector</a></div>
     <h2> Reflectiles Deck Manager </h2>
     <a href="<?php echo BouncyUserController::getURLPath()?>" class="username">
       <?php echo $user->getUserName(); ?>
@@ -20,8 +20,20 @@
       </div>
     </div>
     <div class="cardControlSection hidden">
-      <h3 class="cardName">Card Name</h3>
+      <div class="headerSection">
+        <h3 class="cardName">Card Name</h3>
+        <div class="saveButton button green disabled">Save</div>
+      </div>
       <div class="cardTree"></div>
+      <div class="cardExperienceSection">
+        <div class="cardExperienceBarBorder">
+          <div class="cardExperienceBar"></div>
+          <div class="cardExperienceNumber noselect">34452</div>
+        </div>
+        <div class="cardPerkPointsAvailable">
+          <div class="cardPerkPoints"></div>
+        </div>
+      </div>
       <div class="cardDescription">The card description will go here</div>
     </div>
     <div class="deckControlSection hidden">

@@ -11,21 +11,40 @@ class CardManager {
     this.abilityDef = null;
     this.playerCard = null;
     this.previewPerkList = [];
+    $(".cardControlSection .saveButton").on(
+      "click",
+      (event) => { this.handleSave(event); }
+    );
+
+    $(".cardControlSection .cardTree")
+      .on("click", ".perkNode", (event) => { this.cardClicked(event); })
+      .on("contextmenu", ".perkNode", (event) => { this.cardClicked(event); });
   }
 
   setupForCard(playerCard) {
     this.playerCard = playerCard;
-    this.abilityDef = AbilityFactory.GetAbility(
-      playerCard.cardID, playerCard.cardPerks
-    );
 
-    $(".cardControlSection .cardName").text(this.abilityDef.getName());
-    $(".cardControlSection .cardDescription").html(this.abilityDef.getDescription());
-    $(".cardControlSection .cardTree").on("click", ".perkNode", (event) => {
-      this.cardClicked(event);
-    });
+    $(".cardControlSection .saveButton").addClass("disabled");
+    $(".cardControlSection .cardExperienceNumber").text(this.playerCard.getLeftoverExperience());
+    this.updateCardDetails();
 
     this.buildPerkTree();
+  }
+
+  updateCardDetails() {
+    this.abilityDef = AbilityFactory.GetAbility(
+      this.playerCard.cardID, this.playerCard.cardPerks.slice(0).concat(this.previewPerkList)
+    );
+
+    // Card name and description
+    $(".cardControlSection .cardName").text(this.abilityDef.getName());
+    $(".cardControlSection .cardDescription").html(this.abilityDef.getDescription());
+
+    // Update experience section
+    let cardLevel = this.playerCard.getCardLevel();
+    $(".cardControlSection .cardPerkPointsAvailable .cardPerkPoints").text(
+      cardLevel - this.playerCard.cardPerks.length - this.previewPerkList.length
+    );
   }
 
   cardClicked(event) {
@@ -34,7 +53,49 @@ class CardManager {
       target = target.closest(".perkNode");
     }
     let perkKey = target.attr("perkkey");
+    if (event.button == 2) {
+      this.tryToRemovePerk(perkKey);
+    } else {
+      this.tryToAddPerk(perkKey);
+    }
 
+    if (this.previewPerkList.length > 0) {
+      $(".cardControlSection .saveButton").removeClass("disabled");
+    } else {
+      $(".cardControlSection .saveButton").addClass("disabled");
+    }
+
+    event.preventDefault();
+    return false;
+  }
+
+  tryToRemovePerk(perkKey) {
+    let index = this.previewPerkList.indexOf(perkKey);
+    if (index !== -1) {
+      let perkTree = AbilityFactory.GetPerkTree(
+        this.playerCard.cardID
+      );
+
+      this.previewPerkList.splice(index, 1);
+
+      this.updateCardDetails();
+      let perkHTML = this.buildPerkCard(perkTree[perkKey]);
+      let newIndex = this.previewPerkList.indexOf(perkKey);
+      if (newIndex !== -1) {
+        $(perkHTML).addClass("preview");
+      }
+
+      for (let treePerkKey in perkTree) {
+        if (perkTree[treePerkKey].children.indexOf(perkKey) !== -1) {
+          while (this.previewPerkList.indexOf(treePerkKey) !== -1) {
+            this.tryToRemovePerk(treePerkKey);
+          }
+        }
+      }
+    }
+  }
+
+  tryToAddPerk(perkKey) {
     if (AbilityFactory.CanAddPerk(
       this.playerCard.cardID,
       perkKey,
@@ -48,26 +109,41 @@ class CardManager {
       let perkHTML = this.buildPerkCard(perkTree[perkKey]);
 
       $(perkHTML).addClass("preview");
+      this.updateCardDetails();
     }
   }
 
   buildPerkCard(perk) {
     let $cardTree = $('.cardControlSection .cardTree');
 
-    let perkList = this.playerCard.cardPerks.slice(0).concat(this.previewPerkList);
-    let perkCount = 0;
-    perkList.forEach((perkName) => {
+    let previewPerkCount = 0;
+    let ownedPerkCount = 0;
+    this.previewPerkList.forEach((perkName) => {
       if (perkName === perk.key) {
-        perkCount += 1;
+        previewPerkCount += 1;
       }
     });
 
-    let nodeHTML = perk.createNodeHTML(perkCount);
+    this.playerCard.cardPerks.forEach((perkName) => {
+      if (perkName === perk.key) {
+        ownedPerkCount += 1;
+      }
+    });
+
+    let nodeHTML = perk.createNodeHTML(previewPerkCount + ownedPerkCount);
     nodeHTML.css('top', this.getPerkTop(perk.position));
     nodeHTML.css('left', this.getPerkLeft(perk.position));
     nodeHTML.css('width', CMC.NODE_WIDTH);
     nodeHTML.css('height', CMC.NODE_HEIGHT);
     nodeHTML.attr("perkkey", perk.key);
+
+    if (previewPerkCount == 0) {
+      if (ownedPerkCount == perk.levels) {
+        nodeHTML.addClass("owned mastered");
+      } else if (ownedPerkCount > 0) {
+        nodeHTML.addClass("owned");
+      }
+    }
 
     $cardTree.append(nodeHTML);
 
@@ -118,5 +194,11 @@ class CardManager {
 
     // This makes the browser recognize that the SVGs created above are SVGs.
     $cardTree.html($cardTree.html());
+  }
+
+  handleSave(event) {
+    this.playerCard.addPerks(this.previewPerkList);
+    this.previewPerkList = [];
+    this.setupForCard(this.playerCard);
   }
 }

@@ -25,7 +25,7 @@ const AbilityFactory = {
 
     return perkMap;
   },
-  CanAddPerk: function(abilityCoreID, perkKey, perkList) {
+  ConvertPerkListToCounts: function(perkList) {
     let perkCounts = {};
     perkList.forEach((perkName) => {
       if (!perkCounts[perkName]) {
@@ -33,6 +33,11 @@ const AbilityFactory = {
       }
       perkCounts[perkName] += 1;
     });
+
+    return perkCounts;
+  },
+  CanAddPerk: function(abilityCoreID, perkKey, perkList) {
+    let perkCounts = AbilityFactory.ConvertPerkListToCounts(perkList);
 
     let perkTree = this.GetPerkTree(abilityCoreID);
     let perk = perkTree[perkKey];

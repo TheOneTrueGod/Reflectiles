@@ -29,11 +29,10 @@ h3.cardName {
   background: pink;
   padding: 5px;
   font-size: 12px;
-  padding: 3px;
 }
 
 .cardControlSection .perkNode .perkLevel {
-  margin-top: 36px;
+  margin-top: 32px;
 }
 
 .cardControlSection .perkNode div,
@@ -49,7 +48,77 @@ h3.cardName {
   min-height: 100px;
 }
 
+.cardControlSection .perkNode.owned {
+  background: lightblue;
+}
+
+.cardControlSection .perkNode.mastered {
+  background: lightblue;
+  border: 4px solid green;
+  padding: 2px;
+}
+
 .cardControlSection .perkNode.preview {
   border: 4px solid orange;
-  padding: 0;
+  padding: 2px;
+}
+
+.cardControlSection .cardExperienceSection {
+  margin-top: 8px;
+  position: relative;
+}
+
+.cardControlSection .cardExperienceBarBorder {
+  position: relative;
+  border: 1px solid black;
+  width: 715px;
+}
+
+.cardControlSection .cardExperienceBar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 50%;
+  background: #00FF00;
+}
+
+.cardControlSection .cardExperienceNumber {
+  position: relative;
+  text-align: center;
+}
+
+.cardControlSection .cardPerkPointsAvailable {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  bottom: 0;
+  width: 40px;
+  height: 40px;
+  margin-top: -20px;
+  border: 1px solid black;
+  border-radius: 20px;
+  background: #00FF00;
+}
+
+.cardControlSection .cardPerkPoints {
+  text-align: center;
+  position: relative;
+  top: 4px;
+  font-size: 20px;
+  font-weight: bolder;
+}
+
+.cardControlSection .replacedText {
+  color: red;
+}
+
+.cardControlSection .saveButton {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.cardControlSection .headerSection {
+  position: relative;
 }

@@ -18,6 +18,10 @@ class PlayerCard {
     }
   }
 
+  addPerks(perks) {
+    this.cardPerks = this.cardPerks.concat(perks);
+  }
+
   serialize() {
     return {
       index: this.index,
@@ -29,6 +33,14 @@ class PlayerCard {
 
   cloneForDeck() {
     return new PlayerCard(this);
+  }
+
+  getCardLevel() {
+    return Math.floor(this.cardExperience / 10000);
+  }
+
+  getLeftoverExperience() {
+    return this.cardExperience - Math.floor(this.getCardLevel() * 10000);
   }
 
   static unstringifyAllCards(cardList) {
