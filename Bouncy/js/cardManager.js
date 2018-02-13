@@ -96,11 +96,14 @@ class CardManager {
   }
 
   tryToAddPerk(perkKey) {
-    if (AbilityFactory.CanAddPerk(
-      this.playerCard.cardID,
-      perkKey,
-      this.playerCard.cardPerks.slice(0).concat(this.previewPerkList)
-    )) {
+    if (
+      this.playerCard.getCardLevel() > this.playerCard.cardPerks.length + this.previewPerkList.length &&
+      AbilityFactory.CanAddPerk(
+        this.playerCard.cardID,
+        perkKey,
+        this.playerCard.cardPerks.slice(0).concat(this.previewPerkList)
+      )
+    ) {
       this.previewPerkList.push(perkKey);
 
       let perkTree = AbilityFactory.GetPerkTree(
@@ -200,5 +203,6 @@ class CardManager {
     this.playerCard.addPerks(this.previewPerkList);
     this.previewPerkList = [];
     this.setupForCard(this.playerCard);
+    ServerCalls.SavePlayerCard(null, this.playerCard);
   }
 }

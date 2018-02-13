@@ -1,6 +1,7 @@
 <?php
 const DECK_ACTIONS = [
   'SAVE_DECKS' => 'save_decks',
+  'SAVE_CARD' => 'save_card',
 ];
 
 class BouncyUserController {
@@ -17,8 +18,9 @@ class BouncyUserController {
     }
 
     if ($request->action == DECK_ACTIONS['SAVE_DECKS']) {
-      // Continue from here
       $bouncy_user->saveDecksFromClient($request->deck_list);
+    } else if ($request->action == DECK_ACTIONS['SAVE_CARD']) {
+      $bouncy_user->saveCardFromClient($request->card);
     }
   }
 }

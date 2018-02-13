@@ -17,6 +17,16 @@ class ServerCalls {
     })
   }
 
+  SavePlayerCard(callback, playerCard) {
+    $.post({
+      url: "/user/reflectiles/deck",
+      data: {
+        action: ServerCalls.DECK_ACTIONS.SAVE_CARD,
+        card: JSON.stringify(playerCard.serialize()),
+      }
+    });
+  }
+
   MakeServerCall(callback, command, context) {
     $.get({
       url: "../gamelogic/" + this.gameID,
@@ -196,6 +206,7 @@ ServerCalls.SERVER_ACTIONS = {
 
 ServerCalls.DECK_ACTIONS = {
   SAVE_DECKS: 'save_decks',
+  SAVE_CARD: 'save_card',
 };
 
 ServerCalls.prototype.SLOT_ACTIONS = {

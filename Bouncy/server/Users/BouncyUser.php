@@ -95,6 +95,14 @@ class BouncyUser extends User {
     $this->saveAllDecks();
   }
 
+  public function saveCardFromClient($card_json) {
+    //$this->decodeDecks(json_decode($client_deck_json));
+    $decoded_card = json_decode($card_json);
+    $card = new PlayerCard($decoded_card->index, $decoded_card);
+    $this->cards[$card->card_index] = $card;
+    $this->saveAllCards();
+  }
+
   private function decodeDecks($deckJSON) {
     $deckList = array_map(function ($deckSerialized) {
       return PlayerDeck::constructFromSerialized($deckSerialized);
