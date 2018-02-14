@@ -3,6 +3,9 @@ const AbilityFactory = {
     return AbilityCore.GetAbilityCore(abilityCoreID);
   },
   GetAbility: function(abilityCoreID, perkList) {
+    if (abilityCoreID instanceof PlayerCard) {
+      return AbilityFactory.GetAbility(abilityCoreID.cardID, abilityCoreID.cardPerks);
+    }
     let abilityCore = this.GetAbilityCore(abilityCoreID);
     if (abilityCore) {
       return abilityCore.BuildAbility(perkList);

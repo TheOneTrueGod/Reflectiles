@@ -109,7 +109,7 @@ class DeckManager {
   createCardSection() {
     $('.cardsSection').empty();
     for (let card of this.cards) {
-      let ability = AbilityDef.abilityDefList[card.cardID];
+      let ability = AbilityFactory.GetAbility(card);
       let displayCard = AbilityCardBuilder.createDeckListAbilityCard(ability);
       $('.cardsSection').append(displayCard);
       $(displayCard).data("playerCard", card);

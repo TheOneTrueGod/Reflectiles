@@ -1,4 +1,9 @@
 <?php
+function slog($text) {
+  file_put_contents("slog.txt", $text, FILE_APPEND);
+  file_put_contents("slog.txt", "\n", FILE_APPEND);
+}
+
 function logLine($text) {
   print_r($text);
   echo "\n";

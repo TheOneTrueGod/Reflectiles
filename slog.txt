@@ -1,0 +1,7 @@
+Game Over!/nPlayers Lost/nGame Over!/nPlayers Won/nGame Over!
+Players Won
+Game Over!
+Players Won
+Game Over!
+Players Won
+1000

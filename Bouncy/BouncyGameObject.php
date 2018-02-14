@@ -3,6 +3,8 @@ require_once('server/GameObject.php');
 require_once('Bouncy/BouncyController.php');
 require_once('Bouncy/server/PlayerDeck.php');
 require_once('Bouncy/server/Metadata.php');
+require_once('./testing_utils/TestingUtils.php');
+
 class BouncyGameObject extends GameObject {
   function __construct($id, $name, $turn_id = 1, $game_data, $metadata) {
     GameObject::__construct($id, $name, $turn_id);
@@ -93,7 +95,7 @@ class BouncyGameObject extends GameObject {
       if (!$this->didPlayersWin()) {
         $experience_gained /= 2;
       }
-      $this->finishGame($experience_gained);
+      $this->finishGame(intval($experience_gained));
     }
   }
   public function isGameOver() { return $this->game_over; }
@@ -136,4 +138,41 @@ class BouncyGameObject extends GameObject {
       }
     }
   }
+}
+
+if (strpos(__FILE__, $_SERVER['SCRIPT_NAME']) !== false) {
+  require_once('./testing_utils/TestingUtils.php');
+  require_once('./Bouncy/server/Users/BouncyUser.php');
+
+  $USER_ID = 999999999;
+  $GAME_ID = 999999999;
+
+  runTest("Creating Game", function() {
+    $gameObj = new BouncyGameObject($GAME_ID, "Created Reflectiles Game", 1, [], []);
+    $gameObj->createInitialMetadata();
+    $gameObj->save();
+    $gameObj->savePlayerData();
+
+    $user = new BouncyUser($USER_ID, 'testing_user', 'testing_user', 'testing_user');
+    $user->resetDeckData();
+    $user->resetCardData();
+
+    $user->saveAllDecks();
+    $user->saveAllCards();
+
+    $gameObj->addPlayer(0, $user);
+  });
+
+  runTest("Adding Experience", function () {
+    $CARD_EXP = 10000;
+
+    $user = new BouncyUser($USER_ID, 'testing_user', 'testing_user', 'testing_user');
+
+    $gameObj = BouncyGameObject::loadFromFile($GAME_ID);
+    $gameObj->setGameOver(true, true, $CARD_EXP);
+    $user = new BouncyUser($USER_ID, 'testing_user', 'testing_user', 'testing_user');
+    if($user->cards[0]->card_experience !== $CARD_EXP) {
+      throw new Exception("Card Experience Didn't Save");
+    }
+  });
 }

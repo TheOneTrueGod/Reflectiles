@@ -86,3 +86,5 @@ User::$all_users = array(
   array('test3', "test3", 'test', 'test3'),
   array('test4', "test4", 'test', 'test4')
 );
+
+User::$all_users[999999999] = array('test_user', "test_user", "test_user", "test_user");

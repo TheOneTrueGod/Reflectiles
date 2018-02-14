@@ -14,7 +14,7 @@ class NewGameController {
     return $toRet;
   }
 
-  private function createNewGame($request) {
+  public function createNewGame($request) {
     $game_id = DatastoreFactory::getDatastore()->getNewGameID();
     $gameType = $request->gameType;
     if ($game_id == null || $gameType == null) { return null; }

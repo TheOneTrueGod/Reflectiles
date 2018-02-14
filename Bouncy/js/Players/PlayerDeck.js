@@ -59,7 +59,8 @@ class PlayerDeck {
   }
 
   instantiateCard(playerCard) {
-    let ability = AbilityManager.getAbility(playerCard);
+    //let ability = AbilityManager.getAbility(playerCard);
+    let ability = AbilityFactory.GetAbility(playerCard);
     this.abilities.push(ability);
     return ability;
   }

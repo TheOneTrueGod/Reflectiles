@@ -94,5 +94,5 @@ let deckManager = new DeckManager(
 );
 
 // TODO: DELETE ME
-$(".deckControlSection .cardsSection .abilityCard").first().click();
+//$(".deckControlSection .cardsSection .abilityCard").first().click();
 </script>
