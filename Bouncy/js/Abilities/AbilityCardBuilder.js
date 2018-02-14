@@ -1,8 +1,9 @@
 class AbilityCardBuilder {
   // Small ability card with icon, name, and tooltip
-  static createDeckListAbilityCard(ability) {
+  static createDeckListAbilityCard(playerCard, ability) {
     let $card = $("<div>", {
       class: "abilityCard deckList noselect",
+      "data-index": playerCard.index,
     }).append(
       $("<img>", {
         class: "abilityCardIcon",
@@ -14,6 +15,15 @@ class AbilityCardBuilder {
         text: ability.getName(),
       })
     );
+
+    let perkPoints = playerCard.getPerkPoints();
+    if (perkPoints > 0) {
+      $card.append(
+        $("<span>", {class: "abilityPerkCountCircle"}).append(
+          $("<div>", {class: "abilityPerkCountText", text: perkPoints})
+        )
+      );
+    }
 
     this.addTooltipToCard($card, ability)
 

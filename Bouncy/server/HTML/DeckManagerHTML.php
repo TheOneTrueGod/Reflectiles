@@ -21,6 +21,7 @@
     </div>
     <div class="cardControlSection hidden">
       <div class="headerSection">
+        <div class="deckManagerButton button">Back</div>
         <h3 class="cardName">Card Name</h3>
         <div class="saveButton button green disabled">Save</div>
       </div>

@@ -23,6 +23,16 @@ class GameStats {
     this.playerDamage[player][ability].uses += 1;
   }
 
+  getExperienceEarned() {
+    let damageDealt = 0;
+    for (let playerID in this.playerDamage) {
+      for (let ability in this.playerDamage[playerID]) {
+        damageDealt += this.playerDamage[playerID][ability].damage;
+      }
+    }
+    return Math.floor(damageDealt / 10);
+  }
+
   serialize() {
     return {
       player_damage: this.playerDamage

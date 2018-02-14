@@ -516,7 +516,7 @@ class MainGame {
     this.boardState.incrementTurn(this.players);
     this.boardState.saveState();
     if (this.isHost) {
-      let experienceGained = 1000;
+      let experienceGained = this.boardState.gameStats.getExperienceEarned();
       ServerCalls.SetBoardStateAtStartOfTurn(this.boardState, this, AIDirector, experienceGained);
     } else {
       $('#gameContainer').addClass("turnPlaying");

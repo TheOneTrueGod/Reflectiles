@@ -122,3 +122,9 @@ h3.cardName {
 .cardControlSection .headerSection {
   position: relative;
 }
+
+.cardControlSection .deckManagerButton {
+  position: absolute;
+  top: 0;
+  left: 0;
+}

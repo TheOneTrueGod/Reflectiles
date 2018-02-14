@@ -184,6 +184,25 @@
   margin: 0 0.5%;
   margin-bottom: -2px;
   width: 24%;
+  position: relative;
+}
+
+.cardsSection .abilityCard.deckList .abilityPerkCountCircle {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  border: 1px solid black;
+  width: 15px;
+  height: 15px;
+  text-align: center;
+  background: lightgreen;
+  border-radius: 20px;
+}
+
+.abilityPerkCountCircle .abilityPerkCountText {
+  margin-top: -1px;
+  font-size: 10px;
+  font-weight: bold;
 }
 
 .deckList .abilityCardName {

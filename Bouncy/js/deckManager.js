@@ -1,5 +1,6 @@
 class DeckManager {
   constructor(serializedDecks, serializedCards, cardManager) {
+    cardManager.setDeckManager(this);
     this.selectedDeck = null;
 
     this.decks = PlayerDeck.unstringifyAllDecks(JSON.parse(serializedDecks));
@@ -109,11 +110,21 @@ class DeckManager {
   createCardSection() {
     $('.cardsSection').empty();
     for (let card of this.cards) {
-      let ability = AbilityFactory.GetAbility(card);
-      let displayCard = AbilityCardBuilder.createDeckListAbilityCard(ability);
+      let displayCard = this.createDisplayCard(card);
       $('.cardsSection').append(displayCard);
-      $(displayCard).data("playerCard", card);
     }
+  }
+
+  createDisplayCard(playerCard) {
+    let ability = AbilityFactory.GetAbility(playerCard);
+    let displayCard = AbilityCardBuilder.createDeckListAbilityCard(playerCard, ability);
+    $(displayCard).data("playerCard", playerCard);
+    return displayCard;
+  }
+
+  updateCard(playerCard) {
+    let displayCard = this.createDisplayCard(playerCard);
+    $('.cardsSection [data-index="' + playerCard.index + '"]').replaceWith(displayCard);
   }
 
   displayDeck(deckID) {
@@ -131,7 +142,7 @@ class DeckManager {
 
   addCardToDeckSection(playerCard, ability) {
     let $deckSection = $('.deckContentsSection');
-    let displayCard = AbilityCardBuilder.createDeckListAbilityCard(ability);
+    let displayCard = AbilityCardBuilder.createDeckListAbilityCard(playerCard, ability);
     $deckSection.append(displayCard);
     $(displayCard).data("playerCard", playerCard);
   }

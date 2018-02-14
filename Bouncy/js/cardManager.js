@@ -7,7 +7,8 @@ const CMC = { // Card Manager Constants
 };
 
 class CardManager {
-  constructor() {
+  constructor(deckManager) {
+    this.deckManager = null;
     this.abilityDef = null;
     this.playerCard = null;
     this.previewPerkList = [];
@@ -19,6 +20,16 @@ class CardManager {
     $(".cardControlSection .cardTree")
       .on("click", ".perkNode", (event) => { this.cardClicked(event); })
       .on("contextmenu", ".perkNode", (event) => { this.cardClicked(event); });
+
+    $(".cardControlSection .deckManagerButton").on("click", (event) => {
+      this.deckManager.updateCard(this.playerCard);
+      $(".cardControlSection").addClass("hidden");
+      $(".deckControlSection").removeClass("hidden");
+    });
+  }
+
+  setDeckManager(deckManager) {
+    this.deckManager = deckManager;
   }
 
   setupForCard(playerCard) {

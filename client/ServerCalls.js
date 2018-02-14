@@ -112,7 +112,7 @@ class ServerCalls {
         userToken: this.userToken,
         game_over: boardStateObj.isGameOver(aiDirector),
         players_won: boardStateObj.didPlayersWin(aiDirector),
-        experience_gained: 1000 //experienceGained
+        experience_gained: experienceGained
       },
     });
   };
