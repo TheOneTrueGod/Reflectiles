@@ -1,4 +1,4 @@
-const CMC = {
+const CMC = { // Card Manager Constants
   CONTAINER_PADDING : 25,
   NODE_WIDTH : 80,
   NODE_HEIGHT : 80,
@@ -26,6 +26,8 @@ class CardManager {
 
     $(".cardControlSection .saveButton").addClass("disabled");
     $(".cardControlSection .cardExperienceNumber").text(this.playerCard.getLeftoverExperience());
+    let expPercent = Math.floor(this.playerCard.getExperiencePercent() * 100);
+    $(".cardControlSection .cardExperienceBar").css("width", expPercent + "%");
     this.updateCardDetails();
 
     this.buildPerkTree();

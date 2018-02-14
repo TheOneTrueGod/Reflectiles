@@ -40,7 +40,19 @@ class PlayerCard {
   }
 
   getLeftoverExperience() {
-    return this.cardExperience - Math.floor(this.getCardLevel() * 10000);
+    return this.cardExperience - this.getExperienceForLevel(this.getCardLevel());
+  }
+
+  getExperienceForLevel(level) {
+    return 10000 * level;
+  }
+
+  getExperiencePercent() {
+    let experienceForCurrentLevel =
+      this.getExperienceForLevel(this.getCardLevel() + 1) -
+      this.getExperienceForLevel(this.getCardLevel());
+    let leftoverExperience = this.getLeftoverExperience();
+    return leftoverExperience / experienceForCurrentLevel;
   }
 
   static unstringifyAllCards(cardList) {
