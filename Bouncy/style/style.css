@@ -274,6 +274,29 @@
   background-size: 50px 50px;
 }
 
+.abilityCard.neutral {
+  background-color: tan;
+}
+.abilityCard.weapon {
+  background-color: tan;
+}
+.abilityCard.chaos {
+  background-color: tan;
+}
+.abilityCard.poison {
+  background-color: tan;
+}
+.abilityCard.engineer {
+  background-color: tan;
+}
+.abilityCard.chaos {
+  background-color: tan;
+}
+.abilityCard.defender {
+  background-color: tan;
+}
+
+
 .cardContactBounce { background-color: #ac0; }
 .cardContactHit { background-color: #c16; }
 .cardContactAOE { background-color: #c11; }

@@ -15,6 +15,10 @@ class AbilityCore {
     return perkList;
   }
 
+  static GetCardDeckType() {
+    return CardDeckTypes.NEUTRAL;
+  }
+
   static GetAbilityCore(coreID) {
     if (AbilityCore.coreList.hasOwnProperty(coreID)) {
       return AbilityCore.coreList[coreID];

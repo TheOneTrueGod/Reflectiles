@@ -31,6 +31,10 @@ class AbilityCore0 extends AbilityCore {
     ];
     return perkList;
   }
+
+  static GetCardDeckType() {
+    return CardDeckTypes.WEAPON;
+  }
 }
 
 AbilityCore.coreList[0] = AbilityCore0;

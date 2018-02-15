@@ -1,8 +1,9 @@
 class AbilityCardBuilder {
   // Small ability card with icon, name, and tooltip
   static createDeckListAbilityCard(playerCard, ability) {
+    let deckType = playerCard.getCardDeckType();
     let $card = $("<div>", {
-      class: "abilityCard deckList noselect",
+      class: "abilityCard deckList noselect " + deckType,
       "data-index": playerCard.index,
     }).append(
       $("<img>", {
@@ -48,8 +49,9 @@ class AbilityCardBuilder {
   }
 
   static createStandardAbilityCard(ability) {
+    let deckType = playerCard.getCardDeckType();
     var $card = $("<div>", {
-      "class": "abilityCard",
+      "class": "abilityCard " + deckType,
       "ability-id": ability.index,
     });
 

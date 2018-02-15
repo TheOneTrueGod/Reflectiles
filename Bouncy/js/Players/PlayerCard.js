@@ -18,6 +18,14 @@ class PlayerCard {
     }
   }
 
+  getCardDeckType() {
+    let abilityCore = AbilityFactory.GetAbilityCore(this.cardID);
+    if (!abilityCore) {
+      return CardDeckTypes.NEUTRAL;
+    }
+    return abilityCore.GetCardDeckType();
+  }
+
   addPerks(perks) {
     this.cardPerks = this.cardPerks.concat(perks);
   }
@@ -67,3 +75,12 @@ class PlayerCard {
     return toReturn;
   }
 }
+
+const CardDeckTypes = {
+  WEAPON: 'weapon',
+  CHAOS: 'chaos',
+  POISON: 'poison',
+  ENGINEER: 'engineer',
+  DEFENDER: 'defender',
+  NEUTRAL: 'neutral',
+};

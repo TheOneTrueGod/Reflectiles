@@ -32,20 +32,20 @@ class PlayerDeck {
   }
 
   canAddCardToDeck(playerCard) {
-    if (this.cardList.length >= MAX_DECK_SIZE) {
-      return false;
-    }
-
     for (var i = 0; i < this.cardList.length; i++) {
       if (this.cardList[i].index == playerCard.index) {
-        return false;
+        return DeckReason.CARD_IN_DECK;
       }
+    }
+
+    if (this.cardList.length >= MAX_DECK_SIZE) {
+      return DeckReason.DECK_FULL;
     }
     return true;
   }
 
   addCard(playerCard) {
-    if (!this.canAddCardToDeck(playerCard)) {
+    if (this.canAddCardToDeck(playerCard) !== true) {
       return null;
     }
     let clonedCard = playerCard.cloneForDeck();
@@ -103,3 +103,8 @@ class PlayerDeck {
     return toReturn;
   }
 }
+
+DeckReason = {
+  CARD_IN_DECK: 'card_in_deck',
+  DECK_FILL: 'deck_full',
+};

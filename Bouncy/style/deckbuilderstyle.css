@@ -78,3 +78,7 @@
   font-size: 20px;
   font-weight: bold;
 }
+
+.deckList.abilityCard.cantAdd {
+  background: gray;
+}

@@ -41,6 +41,8 @@ class DeckManager {
         this.saveDeckChanges();
       }
     });
+
+    this.updateCardStatus();
   }
 
   deckCardClicked(event) {
@@ -51,6 +53,7 @@ class DeckManager {
     if (event.button == 2 || event.shiftKey) {
       this.removeCardFromDeck(clickTarget.data("playerCard"));
       this.markDeckDirty();
+      this.updateCardStatus();
     } else {
       this.showCardManager(clickTarget.data("playerCard"));
     }
@@ -73,6 +76,7 @@ class DeckManager {
         if (cardAbility) {
           this.addCardToDeckSection(playerCard, cardAbility);
           this.markDeckDirty();
+          this.updateCardStatus();
         }
       }
     } else {
@@ -86,6 +90,20 @@ class DeckManager {
     this.cardManager.setupForCard(playerCard)
     $(".deckControlSection").addClass("hidden");
     $(".cardControlSection").removeClass("hidden");
+  }
+
+  updateCardStatus() {
+    $(".cardsSection .abilityCard.deckList").each((_, $card) => {
+      let cardIndex = $card.getAttribute("data-index");
+      let playerCard = this.cards[cardIndex];
+      let reason = this.selectedDeck.canAddCardToDeck(playerCard);
+      $($card).removeClass("cantAdd");
+      if (reason !== true) {
+        if (reason !== DeckReason.DECK_FULL) {
+          $($card).addClass("cantAdd");
+        }
+      }
+    });
   }
 
   markDeckDirty() {
@@ -132,6 +150,7 @@ class DeckManager {
   updateCard(playerCard) {
     let displayCard = this.createDisplayCard(playerCard);
     $('.cardsSection [data-index="' + playerCard.index + '"]').replaceWith(displayCard);
+    this.updateCardStatus();
   }
 
   displayDeck(deckID) {
