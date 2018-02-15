@@ -10,10 +10,12 @@ class AbilityCardBuilder {
         src: AbilityCardBuilder.getIconURL(ability),
       })
     ).append(
-      $("<span>", {
-        class: "abilityCardName",
-        text: ability.getName(),
-      })
+      $("<span>").append(
+        $("<span>", {
+          class: "abilityCardName",
+          text: ability.getName(),
+        })
+      )
     );
 
     let perkPoints = playerCard.getPerkPoints();
@@ -24,6 +26,21 @@ class AbilityCardBuilder {
         )
       );
     }
+
+    let experiencePct = Math.floor(playerCard.getExperiencePercent() * 100);
+    $card.append(
+      $("<div>", {class: "experienceBarContainer"}).append(
+        $("<div>", {
+          class: "experienceBar",
+          width: experiencePct + "%",
+          //"margin-left": (100 - experiencePct) + "%"
+        })
+      )
+    ).append(
+      $("<span>", {class: "levelCircle"}).append(
+        $("<div>", {class: "levelText", text: playerCard.getCardLevel()})
+      )
+    );
 
     this.addTooltipToCard($card, ability)
 

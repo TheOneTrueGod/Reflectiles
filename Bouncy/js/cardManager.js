@@ -33,6 +33,7 @@ class CardManager {
   }
 
   setupForCard(playerCard) {
+    this.previewPerkList = [];
     this.playerCard = playerCard;
 
     $(".cardControlSection .saveButton").addClass("disabled");
@@ -54,9 +55,8 @@ class CardManager {
     $(".cardControlSection .cardDescription").html(this.abilityDef.getDescription());
 
     // Update experience section
-    let cardLevel = this.playerCard.getCardLevel();
     $(".cardControlSection .cardPerkPointsAvailable .cardPerkPoints").text(
-      cardLevel - this.playerCard.cardPerks.length - this.previewPerkList.length
+      this.playerCard.getPerkPoints() - this.previewPerkList.length
     );
   }
 
@@ -110,7 +110,7 @@ class CardManager {
 
   tryToAddPerk(perkKey) {
     if (
-      this.playerCard.getCardLevel() > this.playerCard.cardPerks.length + this.previewPerkList.length &&
+      this.playerCard.getPerkPoints() > this.previewPerkList.length &&
       AbilityFactory.CanAddPerk(
         this.playerCard.cardID,
         perkKey,
@@ -214,7 +214,6 @@ class CardManager {
 
   handleSave(event) {
     this.playerCard.addPerks(this.previewPerkList);
-    this.previewPerkList = [];
     this.setupForCard(this.playerCard);
     ServerCalls.SavePlayerCard(null, this.playerCard);
   }

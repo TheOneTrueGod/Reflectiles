@@ -31,15 +31,22 @@ class PlayerDeck {
     };
   }
 
-  addCard(playerCard) {
+  canAddCardToDeck(playerCard) {
     if (this.cardList.length >= MAX_DECK_SIZE) {
-      return null;
+      return false;
     }
 
     for (var i = 0; i < this.cardList.length; i++) {
       if (this.cardList[i].index == playerCard.index) {
-        return null;
+        return false;
       }
+    }
+    return true;
+  }
+
+  addCard(playerCard) {
+    if (!this.canAddCardToDeck(playerCard)) {
+      return null;
     }
     let clonedCard = playerCard.cloneForDeck();
     this.cardList.push(clonedCard);

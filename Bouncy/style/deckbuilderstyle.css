@@ -19,12 +19,17 @@
   text-align: center;
 }
 
-.cardsSection, .deckContentsSection {
+.cardsSection, .deckContentsSection, .controls {
   background: rgba(86, 61, 124, .15);
   padding: 1%;
   border: 1px solid;
   height: 400px;
 }
+
+ .controls {
+   height: auto;
+   margin-top: 1%;
+ }
 
 .cardsTitleSection, .deckContentsTitleSection {
   text-align: center;
@@ -49,9 +54,9 @@
   background: linear-gradient(
     to bottom,
     rgba(86, 61, 124, .15) 0%,
-    rgba(86, 61, 124, .15) 330px,
-    black 350px,
-    black 100%)
+    rgba(86, 61, 124, .15) 370px,
+    black 380px,
+    black 100%);
 }
 
 .deckToolbar .section {

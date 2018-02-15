@@ -36,11 +36,11 @@ class PlayerCard {
   }
 
   getPerkPoints() {
-    return this.getCardLevel() - this.cardPerks.length;
+    return this.getCardLevel() - this.cardPerks.length - 1;
   }
 
   getCardLevel() {
-    return Math.floor(this.cardExperience / 5000);
+    return Math.floor(this.cardExperience / 5000) + 1;
   }
 
   getLeftoverExperience() {
@@ -48,7 +48,7 @@ class PlayerCard {
   }
 
   getExperienceForLevel(level) {
-    return 5000 * level;
+    return 5000 * (level - 1);
   }
 
   getExperiencePercent() {

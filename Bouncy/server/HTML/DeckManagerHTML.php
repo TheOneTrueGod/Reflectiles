@@ -65,6 +65,10 @@
           <? } ?>
         </div>
       </div>
+      <div class="controls">
+        Left Click to select card perks.<br>
+        Shift + Left Click to add or remove a card from your deck
+      </div>
     </div>
   </div>
 </div>

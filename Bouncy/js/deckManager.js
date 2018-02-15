@@ -48,8 +48,12 @@ class DeckManager {
     if (!clickTarget.hasClass("abilityCard")) {
       clickTarget = clickTarget.closest(".abilityCard");
     }
-    this.removeCardFromDeck(clickTarget.data("playerCard"));
-    this.markDeckDirty();
+    if (event.button == 2 || event.shiftKey) {
+      this.removeCardFromDeck(clickTarget.data("playerCard"));
+      this.markDeckDirty();
+    } else {
+      this.showCardManager(clickTarget.data("playerCard"));
+    }
 
     event.preventDefault();
     return false;
@@ -61,21 +65,24 @@ class DeckManager {
     if (!clickTarget.hasClass("abilityCard")) {
       clickTarget = clickTarget.closest(".abilityCard");
     }
-    let cardAbility = this.selectedDeck.addCard(clickTarget.data("playerCard"));
+    let playerCard = clickTarget.data("playerCard");
 
     if (event.button == 2 || event.shiftKey) {
-      if (cardAbility) {
-        this.addCardToDeckSection(clickTarget.data("playerCard"), cardAbility);
-        this.markDeckDirty();
+      if (playerCard) {
+        let cardAbility = this.selectedDeck.addCard(playerCard);
+        if (cardAbility) {
+          this.addCardToDeckSection(playerCard, cardAbility);
+          this.markDeckDirty();
+        }
       }
     } else {
-      this.showCardManager(clickTarget.data("playerCard"), cardAbility);
+      this.showCardManager(playerCard);
     }
     event.preventDefault();
     return false;
   }
 
-  showCardManager(playerCard, cardAbility) {
+  showCardManager(playerCard) {
     this.cardManager.setupForCard(playerCard)
     $(".deckControlSection").addClass("hidden");
     $(".cardControlSection").removeClass("hidden");
