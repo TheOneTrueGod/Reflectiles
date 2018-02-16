@@ -32,10 +32,24 @@ class PlayerDeck {
   }
 
   canAddCardToDeck(playerCard) {
+    let deckType = CardDeckTypes.NEUTRAL;
+    let cardDeckType = playerCard.getCardDeckType();
     for (var i = 0; i < this.cardList.length; i++) {
+      let cardDeckType = this.cardList[i].getCardDeckType();
+      if (cardDeckType !== CardDeckTypes.NEUTRAL) {
+        deckType = cardDeckType;
+      }
       if (this.cardList[i].index == playerCard.index) {
         return DeckReason.CARD_IN_DECK;
       }
+    }
+
+    if (
+      cardDeckType !== CardDeckTypes.NEUTRAL &&
+      deckType !== CardDeckTypes.NEUTRAL &&
+      cardDeckType !== deckType
+    ) {
+      return DeckReason.WRONG_TYPE;
     }
 
     if (this.cardList.length >= MAX_DECK_SIZE) {
@@ -107,4 +121,5 @@ class PlayerDeck {
 DeckReason = {
   CARD_IN_DECK: 'card_in_deck',
   DECK_FILL: 'deck_full',
+  WRONG_TYPE: 'wrong_type'
 };

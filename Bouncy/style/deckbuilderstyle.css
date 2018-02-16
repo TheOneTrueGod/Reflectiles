@@ -41,6 +41,8 @@
   width: 79%;
   float: left;
   margin-right: 1%;
+  padding-right: 2%;
+  overflow-y: overlay;
 }
 
 .deckContentsSection, .deckContentsTitleSection {

@@ -3019,7 +3019,7 @@ var Tooltip = function ($) {
       var tip = this.getTipElement();
       var hideEvent = $.Event(this.constructor.Event.HIDE);
       if (this._isTransitioning) {
-        throw new Error('Tooltip is transitioning');
+        //throw new Error('Tooltip is transitioning');
       }
       var complete = function complete() {
         if (_this23._hoverState !== HoverState.SHOW && tip.parentNode) {
