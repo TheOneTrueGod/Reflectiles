@@ -14,6 +14,53 @@ class BouncyUser extends User {
   }
 
   public function resetDeckData() {
+    if ($this->id == 'tab') {
+      $this->decks = array(
+        new PlayerDeck(0, "Chaos",   '[20, 21, 22, 23, 24, 25, 26, 27, 28, 29]'),
+        new PlayerDeck(1, "Damage",  '[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]'),
+        new PlayerDeck(2, "Support", '[10, 11, 12, 13, 14, 15, 16, 17, 18, 19]'),
+        new PlayerDeck(3, "Poison",  '[30, 31, 32, 33, 34, 35, 36, 37, 38, 39]'),
+        new PlayerDeck(4, "Turrets", '[40, 41, 42, 43, 44, 45, 46, 47, 48, 49]'),
+      );
+      return;
+    } else if ($this->id == 'chip') {
+      $this->decks = array(
+        new PlayerDeck(0, "Support", '[10, 11, 12, 13, 14, 15, 16, 17, 18, 19]'),
+        new PlayerDeck(1, "Damage",  '[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]'),
+        new PlayerDeck(2, "Chaos",   '[20, 21, 22, 23, 24, 25, 26, 27, 28, 29]'),
+        new PlayerDeck(3, "Poison",  '[30, 31, 32, 33, 34, 35, 36, 37, 38, 39]'),
+        new PlayerDeck(4, "Turrets", '[40, 41, 42, 43, 44, 45, 46, 47, 48, 49]'),
+      );
+      return;
+    } else if ($this->id == 'tj') {
+      $this->decks = array(
+        new PlayerDeck(0, "Damage",  '[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]'),
+        new PlayerDeck(1, "Support", '[10, 11, 12, 13, 14, 15, 16, 17, 18, 19]'),
+        new PlayerDeck(2, "Chaos",   '[20, 21, 22, 23, 24, 25, 26, 27, 28, 29]'),
+        new PlayerDeck(3, "Poison",  '[30, 31, 32, 33, 34, 35, 36, 37, 38, 39]'),
+        new PlayerDeck(4, "Turrets", '[40, 41, 42, 43, 44, 45, 46, 47, 48, 49]'),
+      );
+      return;
+    } else if ($this->id == 'sean') {
+      $this->decks = array(
+        new PlayerDeck(0, "Poison",  '[30, 31, 32, 33, 34, 35, 36, 37, 38, 39]'),
+        new PlayerDeck(1, "Damage",  '[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]'),
+        new PlayerDeck(2, "Support", '[10, 11, 12, 13, 14, 15, 16, 17, 18, 19]'),
+        new PlayerDeck(3, "Chaos",   '[20, 21, 22, 23, 24, 25, 26, 27, 28, 29]'),
+        new PlayerDeck(4, "Turrets", '[40, 41, 42, 43, 44, 45, 46, 47, 48, 49]'),
+      );
+      return;
+    } else if ($this->id == 'clarence') {
+      $this->decks = array(
+        new PlayerDeck(0, "Turrets", '[40, 41, 42, 43, 44, 45, 46, 47, 48, 49]'),
+        new PlayerDeck(1, "Damage",  '[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]'),
+        new PlayerDeck(2, "Support", '[10, 11, 12, 13, 14, 15, 16, 17, 18, 19]'),
+        new PlayerDeck(3, "Chaos",   '[20, 21, 22, 23, 24, 25, 26, 27, 28, 29]'),
+        new PlayerDeck(4, "Poison",  '[30, 31, 32, 33, 34, 35, 36, 37, 38, 39]'),
+      );
+      return;
+    }
+
     $this->decks = array(
       new PlayerDeck(0, "Damage",  '[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]'),
       new PlayerDeck(1, "Support", '[10, 11, 12, 13, 14, 15, 16, 17, 18, 19]'),
@@ -25,9 +72,10 @@ class BouncyUser extends User {
 
   public function resetCardData() {
     $this->cards = [];
+    $card_index = 0;
     for ($i = 0; $i < 5 * 5; $i++) {
-      array_push($this->cards, new PlayerCard($i, $i));
-      array_push($this->cards, new PlayerCard($i, $i));
+      array_push($this->cards, new PlayerCard($card_index++, $i));
+      array_push($this->cards, new PlayerCard($card_index++, $i));
     }
   }
 
@@ -59,7 +107,7 @@ class BouncyUser extends User {
   }
 
   private function serializeData() {
-    return [
+    $toRet = [
       'decks' => array_map(
         function($deck) {
           return $deck->serialize($this);
@@ -73,6 +121,7 @@ class BouncyUser extends User {
         $this->cards
       )
     ];
+    return $toRet;
   }
 
   private function deserializeData($user_data) {
@@ -137,6 +186,10 @@ if (strpos(__FILE__, $_SERVER['SCRIPT_NAME']) !== false) {
     $user->resetDeckData();
     $user->resetCardData();
 
+    if ($user->cards[0]->card_id !== 0 || $user->cards[1]->card_id !== 0) {
+      throw new Exception("Expected to own two copies of card index 0. [{$user->cards[0]->card_id}] vs [{$user->cards[1]->card_id}]");
+    }
+
     $user->saveAllDecks();
     $user->saveAllCards();
   });
@@ -146,6 +199,9 @@ if (strpos(__FILE__, $_SERVER['SCRIPT_NAME']) !== false) {
     $user = new BouncyUser(999999999, 'testing_user', 'testing_user', 'testing_user');
     if (strpos($user->decks[0]->cardListJSON, "null") !== false) {
       throw new Exception("Card list has a null card in it.");
+    }
+    if ($user->cards[0]->card_id !== 0 || $user->cards[1]->card_id !== 0) {
+      throw new Exception("Expected to own two copies of card index 0. [{$user->cards[0]->card_id}] vs [{$user->cards[1]->card_id}]");
     }
   }
 

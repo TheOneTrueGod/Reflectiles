@@ -4,7 +4,7 @@ class AbilityCardBuilder {
     let deckType = playerCard.getCardDeckType();
     let $card = $("<div>", {
       class: "abilityCard deckList noselect " + deckType,
-      "data-index": playerCard.index,
+      "data-index": playerCard.card_index,
     }).append(
       $("<img>", {
         class: "abilityCardIcon",

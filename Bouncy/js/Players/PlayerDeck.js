@@ -39,7 +39,7 @@ class PlayerDeck {
       if (cardDeckType !== CardDeckTypes.NEUTRAL) {
         deckType = cardDeckType;
       }
-      if (this.cardList[i].index == playerCard.index) {
+      if (this.cardList[i].card_index == playerCard.card_index) {
         return DeckReason.CARD_IN_DECK;
       }
     }
@@ -70,7 +70,7 @@ class PlayerDeck {
   removeCard(playerCard) {
     let i = 0;
     while (i < this.cardList.length) {
-      if (playerCard.index === this.cardList[i].index) {
+      if (playerCard.card_index === this.cardList[i].card_index) {
         this.cardList.splice(i, 1);
         this.abilities.splice(i, 1);
       } else {

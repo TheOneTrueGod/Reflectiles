@@ -10,13 +10,20 @@ class PlayerDeck {
     if (is_array($serialized->card_list)) {
       $cardList = json_encode(array_map(
         function($serialized_card) {
-          return $serialized_card->card_id;
+          slog(json_encode($serialized_card));
+          return $serialized_card->card_index;
         },
         $serialized->card_list
       ));
     } else if (is_string($serialized->card_list)) {
       $cardList = $serialized->card_list;
     }
+
+    if ($serialized->name == "Damage") {
+      slog(json_encode($cardList));
+      slog("==========");
+    }
+
 
     return new PlayerDeck(
       $serialized->id,
@@ -28,6 +35,8 @@ class PlayerDeck {
   public function serialize($bouncy_user) {
     $serializedCards = array();
     $card_list = json_decode($this->cardListJSON);
+    if ($this->name == "Damage") {
+    }
     foreach ($card_list as $card_index) {
       $card = $bouncy_user->cards[intval($card_index)];
       if ($card) {

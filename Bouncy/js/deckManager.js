@@ -130,6 +130,7 @@ class DeckManager {
     this.selectedDeck = this.decks[deckID];
 
     $('.deckToolbar .deckName').text(this.decks[deckID].name);
+    this.updateCardStatus();
   }
 
   createCardSection() {
@@ -149,7 +150,7 @@ class DeckManager {
 
   updateCard(playerCard) {
     let displayCard = this.createDisplayCard(playerCard);
-    $('.cardsSection [data-index="' + playerCard.index + '"]').replaceWith(displayCard);
+    $('.cardsSection [data-index="' + playerCard.card_index + '"]').replaceWith(displayCard);
     this.updateCardStatus();
   }
 

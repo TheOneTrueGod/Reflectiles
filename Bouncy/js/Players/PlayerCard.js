@@ -2,7 +2,7 @@ class PlayerCard {
   constructor(cardData) {
     if (cardData instanceof PlayerCard) {
       // index refers to the card in the player's collection
-      this.index = cardData.index
+      this.card_index = cardData.card_index
       // cardID refers to the id of the ability def
       this.cardID = cardData.cardID;
       this.cardPerks = cardData.cardPerks;
@@ -11,7 +11,7 @@ class PlayerCard {
       if (cardData.card_id === null) {
         throw new Error("invalid card data");
       }
-      this.index = cardData.card_index
+      this.card_index = cardData.card_index
       this.cardID = cardData.card_id;
       this.cardPerks = cardData.card_perks;
       this.cardExperience = cardData.card_experience;
@@ -32,7 +32,7 @@ class PlayerCard {
 
   serialize() {
     return {
-      index: this.index,
+      card_index: this.card_index,
       card_id: this.cardID,
       card_perks: this.cardPerks,
       card_experience: this.cardExperience,

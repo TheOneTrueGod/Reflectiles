@@ -11,6 +11,7 @@ require_once('server/GameLogicController.php');
 require_once('Bouncy/server/Users/BouncyUserController.php');
 require_once('server/KleinUtils.php');
 require_once('server/TestController.php');
+require_once('./testing_utils/TestingUtils.php');
 
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
