@@ -98,6 +98,8 @@
     <script src="/Bouncy/js/Abilities/AbilityCores/WeaponAbilityCores/AbilityCore<?php echo $i; ?>.js"></script>
     <script src="/Bouncy/js/Abilities/AbilityCores/DefenderAbilityCores/AbilityCore<?php echo $i + 5; ?>.js"></script>
     <script src="/Bouncy/js/Abilities/AbilityCores/ChaosAbilityCores/AbilityCore<?php echo $i + 10; ?>.js"></script>
+    <script src="/Bouncy/js/Abilities/AbilityCores/PoisonAbilityCores/AbilityCore<?php echo $i + 15; ?>.js"></script>
+    <script src="/Bouncy/js/Abilities/AbilityCores/EngineerAbilityCores/AbilityCore<?php echo $i + 20; ?>.js"></script>
 <?php
   }
 ?>
