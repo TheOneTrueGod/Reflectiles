@@ -49,9 +49,8 @@ class AbilityCardBuilder {
   }
 
   static createStandardAbilityCard(ability) {
-    let deckType = playerCard.getCardDeckType();
     var $card = $("<div>", {
-      "class": "abilityCard " + deckType,
+      "class": "abilityCard ",
       "ability-id": ability.index,
     });
 

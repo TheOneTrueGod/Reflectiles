@@ -92,13 +92,15 @@
 <script src="/Bouncy/js/Abilities/AbilityStyles/BulletSheetAbilityStyle.js"></script>
 <script src="/Bouncy/js/Abilities/AbilityStyles/AbilitySheetAbilityStyle.js"></script>
 <script src="/Bouncy/js/Abilities/AbilityStyles/ColorizedAbilityStyle.js"></script>
-
-<script src="/Bouncy/js/Abilities/AbilityCores/AbilityCore0.js"></script>
-<script src="/Bouncy/js/Abilities/AbilityCores/AbilityCore1.js"></script>
-<script src="/Bouncy/js/Abilities/AbilityCores/AbilityCore2.js"></script>
-<script src="/Bouncy/js/Abilities/AbilityCores/AbilityCore3.js"></script>
-<script src="/Bouncy/js/Abilities/AbilityCores/AbilityCore4.js"></script>
-<script src="/Bouncy/js/Abilities/AbilityCores/AbilityCore5.js"></script>
+<?php
+  for ($i = 0; $i < 5; $i++) {
+?>
+    <script src="/Bouncy/js/Abilities/AbilityCores/WeaponAbilityCores/AbilityCore<?php echo $i; ?>.js"></script>
+    <script src="/Bouncy/js/Abilities/AbilityCores/DefenderAbilityCores/AbilityCore<?php echo $i + 5; ?>.js"></script>
+    <script src="/Bouncy/js/Abilities/AbilityCores/ChaosAbilityCores/AbilityCore<?php echo $i + 10; ?>.js"></script>
+<?php
+  }
+?>
 
 <!-- Extends the above -->
 <script src="/Bouncy/js/GameElements/Effects/LineEffect.js"></script>

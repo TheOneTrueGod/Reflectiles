@@ -86,7 +86,7 @@ class CardsNMagicController {
         </div>
       </div>
     </div>
-    <?php require('CardsNMagic/js_includes.html'); ?>
+    <?php require('CardsNMagic/js_includes.php'); ?>
     <?php
     return ob_get_clean();
   }
