@@ -40,8 +40,8 @@ class AbilityStyle {
       },
       this.explosionStyleList.map((style) => {return style.getTexture(); })
     );
-    if (this.explosionDef.size !== 0) {
-      let size = this.explosionDef.size;
+    if (this.explosionDef.radius !== 0) {
+      let size = this.explosionDef.radius * 2;
       let scaleX = size / effect.width;
       let scaleY = size / effect.height;
       effect.scale.x = scaleX;
@@ -72,14 +72,14 @@ class AbilityStyle {
     }
   }
 
-  static getExplosionPrefab(type, size) {
-    if (!size) {
-      size = 0;
+  static getExplosionPrefab(type, radius) {
+    if (!radius) {
+      radius = 0;
     }
     switch (type) {
       case AbilityStyle.EXPLOSION_PREFABS.POISON:
         return {
-          size: size,
+          radius: radius,
           style_defs: [
           (new AbilitySheetSpriteAbilityStyleBuilder())
             .setSheet('poison_sheet').setCoordNums(4, 17, 17, 29)
@@ -102,7 +102,7 @@ class AbilityStyle {
         ]};
       case AbilityStyle.EXPLOSION_PREFABS.WHITE:
         return {
-          size: size,
+          radius: radius,
           style_defs: [
             (new AbilitySheetSpriteAbilityStyleBuilder())
               .setSheet('sprite_explosion').setCoordNums(0, 0, 44, 44)
