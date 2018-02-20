@@ -148,7 +148,7 @@ class BouncyUser extends User {
   public function saveCardFromClient($card_json) {
     //$this->decodeDecks(json_decode($client_deck_json));
     $decoded_card = json_decode($card_json);
-    $card = new PlayerCard($decoded_card->index, $decoded_card);
+    $card = new PlayerCard($decoded_card->card_index, $decoded_card);
     $this->cards[$card->card_index] = $card;
     $this->saveAllCards();
   }

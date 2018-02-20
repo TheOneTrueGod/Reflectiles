@@ -11,11 +11,15 @@ class AbilityCore0 extends AbilityCore {
   static BuildAbility(perkList) {
     let perkCounts = AbilityFactory.ConvertPerkListToCounts(perkList);
     let damageCount = idx(perkCounts, 'damage', 0);
-    let explosionRadius = 40;
+    let impactCount = idx(perkCounts, 'impact', 0);
+    let radiusCount = idx(perkCounts, 'radius', 0);
+    let explosionRadius = 40 + radiusCount * 5;
     const rawAbil = { // 1200 damage expected, 1800 max
       name: 'Explosion',
-      description: 'Fires a single bullet, dealing [[hit_effects[0].base_damage]] damage in a 3x3 area',
-      card_text_description: '[[hit_effects[0].base_damage]] 3x3',
+      description: 'Fires a rocket that deals ' +
+        (impactCount > 0 ? '[[hit_effects[0].base_damage]] to the first unit hit, and ' : '') +
+        '[[hit_effects[1].base_damage]] damage in a circle of size [[hit_effects[1].aoe_size]]',
+      card_text_description: '[[hit_effects[1].base_damage]] 3x3',
       style: (new AbilitySheetSpriteAbilityStyleBuilder)
         .setSheet('weapons_sheet')
         .setCoordNums(2, 1, 24, 23)
@@ -28,12 +32,18 @@ class AbilityCore0 extends AbilityCore {
       speed: 8,
       projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
       destroy_on_wall: true,
-      hit_effects:[{
-        base_damage: 200 + 20 * damageCount,
-        effect:ProjectileShape.HitEffects.DAMAGE,
-        aoe_type: ProjectileShape.AOE_TYPES.CIRCLE,
-        aoe_size: explosionRadius,
-      }],
+      hit_effects:[
+        {
+          base_damage: 20 * impactCount,
+          effect: ProjectileShape.HitEffects.DAMAGE,
+        },
+        {
+          base_damage: 200 + 20 * damageCount,
+          effect: ProjectileShape.HitEffects.DAMAGE,
+          aoe_type: ProjectileShape.AOE_TYPES.CIRCLE,
+          aoe_size: explosionRadius,
+        }
+      ],
       icon: "/Bouncy/assets/icons/icon_plain_explosion.png"
     };
     return AbilityDef.createFromJSON(rawAbil);
@@ -41,12 +51,12 @@ class AbilityCore0 extends AbilityCore {
 
   static GetPerkList() {
     let perkList = [
-      (new AbilityPerkNode('damage',    20, [0, 0])),
-      (new AbilityPerkNode('radius',     1, [0, 3])),
-      (new AbilityPerkNode('impact',     1, [0, 1])),
-      (new AbilityPerkNode('test 2-1',   1, [1, 1])).addChild('impact'),
-      (new AbilityPerkNode('test 2-2',   1, [1, 2])).addChild('impact'),
-      (new AbilityPerkNode('test 2-2-1', 1, [2, 2])).addChild('test 2-2'),
+      (new AbilityPerkNode('damage',     20, [0, 0])),
+      (new AbilityPerkNode('radius',     10, [0, 3])),
+      (new AbilityPerkNode('impact',     5,  [0, 1])),
+      (new AbilityPerkNode('test 2-1',   1,  [1, 1])).addChild('impact'),
+      (new AbilityPerkNode('test 2-2',   1,  [1, 2])).addChild('impact'),
+      (new AbilityPerkNode('test 2-2-1', 1,  [2, 2])).addChild('test 2-2'),
     ];
     return perkList;
   }
