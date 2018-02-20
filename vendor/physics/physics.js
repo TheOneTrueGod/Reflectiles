@@ -197,6 +197,54 @@ Physics.doLineReflections = function(x1, y1, angle, distance, lines, collisionCa
   return {reflection_lines: returnLines, intersections: deduplicate(intersections)};
 }
 
+function sqr(x) { return x * x }
+function dist2(v, w) { return sqr(v.x - w.x) + sqr(v.y - w.y) }
+function distToSegmentSquared(p, v, w) {
+  var l2 = dist2(v, w);
+  if (l2 == 0) return dist2(p, v);
+  var t = ((p.x - v.x) * (w.x - v.x) + (p.y - v.y) * (w.y - v.y)) / l2;
+  t = Math.max(0, Math.min(1, t));
+  return dist2(p, { x: v.x + t * (w.x - v.x),
+                    y: v.y + t * (w.y - v.y) });
+}
+function distToSegmentWeirdArgs(p, v, w) { return Math.sqrt(distToSegmentSquared(p, v, w)); }
+Physics.distToSegment = function(line, point) {
+  return distToSegmentWeirdArgs(point, {x: line.x1, y: line.y1}, {x: line.x2, y: line.y2});
+}
+
+Physics.inteceptCircleLineSeg = function (circle, line) {
+    var a, b, c, d, u1, u2, ret, retP1, retP2, v1, v2;
+    v1 = {};
+    v2 = {};
+    v1.x = line.p2.x - line.p1.x;
+    v1.y = line.p2.y - line.p1.y;
+    v2.x = line.p1.x - circle.center.x;
+    v2.y = line.p1.y - circle.center.y;
+    b = (v1.x * v2.x + v1.y * v2.y);
+    c = 2 * (v1.x * v1.x + v1.y * v1.y);
+    b *= -2;
+    d = Math.sqrt(b * b - 2 * c * (v2.x * v2.x + v2.y * v2.y - circle.radius * circle.radius));
+    if(isNaN(d)){ // no intercept
+        return [];
+    }
+    u1 = (b - d) / c;  // these represent the unit distance of point one and two on the line
+    u2 = (b + d) / c;
+    retP1 = {};   // return points
+    retP2 = {}
+    ret = []; // return array
+    if(u1 <= 1 && u1 >= 0){  // add point if on the line segment
+        retP1.x = line.p1.x + v1.x * u1;
+        retP1.y = line.p1.y + v1.y * u1;
+        ret[0] = retP1;
+    }
+    if(u2 <= 1 && u2 >= 0){  // second add point if on the line segment
+        retP2.x = line.p1.x + v1.x * u2;
+        retP2.y = line.p1.y + v1.y * u2;
+        ret[ret.length] = retP2;
+    }
+    return ret;
+}
+
 class Line {
   constructor(x1, y1, x2, y2) {
     if (!(this instanceof Line)) {

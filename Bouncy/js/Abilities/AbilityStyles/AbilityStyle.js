@@ -40,6 +40,13 @@ class AbilityStyle {
       },
       this.explosionStyleList.map((style) => {return style.getTexture(); })
     );
+    if (this.explosionDef.size !== 0) {
+      let size = this.explosionDef.size;
+      let scaleX = size / effect.width;
+      let scaleY = size / effect.height;
+      effect.scale.x = scaleX;
+      effect.scale.y = scaleY;
+    }
     boardState.addEffect(effect);
   }
 
@@ -65,10 +72,14 @@ class AbilityStyle {
     }
   }
 
-  static getExplosionPrefab(type) {
+  static getExplosionPrefab(type, size) {
+    if (!size) {
+      size = 0;
+    }
     switch (type) {
       case AbilityStyle.EXPLOSION_PREFABS.POISON:
         return {
+          size: size,
           style_defs: [
           (new AbilitySheetSpriteAbilityStyleBuilder())
             .setSheet('poison_sheet').setCoordNums(4, 17, 17, 29)
@@ -89,6 +100,27 @@ class AbilityStyle {
             .setSheet('poison_sheet').setCoordNums(137, 8, 164, 38)
             .build(),
         ]};
+      case AbilityStyle.EXPLOSION_PREFABS.WHITE:
+        return {
+          size: size,
+          style_defs: [
+            (new AbilitySheetSpriteAbilityStyleBuilder())
+              .setSheet('sprite_explosion').setCoordNums(0, 0, 44, 44)
+              .build(),
+            (new AbilitySheetSpriteAbilityStyleBuilder())
+              .setSheet('sprite_explosion').setCoordNums(44, 0, 44 * 2, 44)
+              .build(),
+            (new AbilitySheetSpriteAbilityStyleBuilder())
+              .setSheet('sprite_explosion').setCoordNums(44 * 2, 0, 44 * 3, 44)
+              .build(),
+            (new AbilitySheetSpriteAbilityStyleBuilder())
+              .setSheet('sprite_explosion').setCoordNums(44 * 3, 0, 44 * 4, 44)
+              .build(),
+            (new AbilitySheetSpriteAbilityStyleBuilder())
+              .setSheet('sprite_explosion').setCoordNums(44 * 4, 0, 44 * 5, 44)
+              .build(),
+          ]
+        }
     }
     return {};
   }
@@ -96,5 +128,6 @@ class AbilityStyle {
 
 AbilityStyle.FALLBACK_STYLE = new AbilityStyle({});
 AbilityStyle.EXPLOSION_PREFABS = {
-  POISON: 'POISON'
+  POISON: 'POISON',
+  WHITE: 'WHITE',
 };

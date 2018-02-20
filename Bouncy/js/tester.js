@@ -3,6 +3,7 @@ class Tester extends MainGame {
     this.unitType = UnitBomber;
     this.loadImages(this.testAbility.bind(this));
     UnitBasic.createAbilityDefs();
+    this.cachedAbilities = {};
 
     this.unitsToSpawn = [
       [null, UnitBasicSquare, UnitShooter, UnitBasicSquare],
@@ -27,17 +28,30 @@ class Tester extends MainGame {
     ];*/
   }
 
+  buildAbility(core, perkList) {
+    if (!perkList) {
+      perkList = [];
+    }
+    let key = core.prototype.constructor.name + perkList.join(",");
+    if (key in this.cachedAbilities) {
+      return this.cachedAbilities[key];
+    }
+    let ability = core.BuildAbility(perkList);
+    this.cachedAbilities[key] = ability;
+    return ability;
+  }
+
   testAbility() {
-    var ClarenceAbils = ClarenceDeck();
+    /*var ClarenceAbils = ClarenceDeck();
     var TJAbils = TJDeck();
     var TabithaAbils = TabithaDeck();
     var ChipAbils = ChipDeck();
-    var TestAbils = TestDeck();
+    var TestAbils = TestDeck();*/
     // SET COMMANDS HERE
     this.abilitiesToUse = [
       //[TestAbils[3].index, {x: -100, y: -50}],
-      [TabithaAbils[1].index, {x: 0, y: -100}],
-      [ChipAbils[2].index, {x: 0, y: -400}],
+      [this.buildAbility(AbilityCore0).index, {x: 0, y: -100}],
+      [this.buildAbility(AbilityCore0).index, {x: 0, y: -100}],
       null,
       null,
       null,

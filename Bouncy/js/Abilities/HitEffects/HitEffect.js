@@ -32,6 +32,25 @@ class HitEffect {
           }
         }
       }
+    } else if (AOEType == ProjectileShape.AOE_TYPES.CIRCLE) {
+      var radius = idx(this.hitEffectDef, 'aoe_size', 40);
+      let unitsAtPosition = boardState.sectors.getUnitsInSquare({
+        x1: source.x - radius, y1: source.y - radius,
+        x2: source.x + radius, y2: source.y + radius
+      });
+
+      if (source && source instanceof Projectile) {
+        source.createExplosionEffect(boardState, source);
+      } else if (this.abilityDef) {
+        this.abilityDef.createExplosionEffect(boardState, source);
+      }
+
+      for (var targetUnit of unitsAtPosition) {
+        let unit = boardState.findUnit(targetUnit);
+        if (unit.isInRangeOfCircle(source, radius)) {
+          aoeUnitsToHit.push(targetUnit);
+        }
+      }
     }
     if (aoeUnitsToHit) {
       aoeUnitsToHit = remove_duplicates(aoeUnitsToHit);

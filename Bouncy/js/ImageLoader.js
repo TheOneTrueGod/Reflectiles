@@ -28,6 +28,7 @@ class ImageLoader {
         .add("sprite_explosion",  "../Bouncy/assets/sprites/explosion.png")
         .add("bullet_sheet",  "../Bouncy/assets/sprites/bullet_sheet.png")
         .add("poison_sheet",  "../Bouncy/assets/sprites/poison_sheet.png")
+        .add("weapons_sheet",  "../Bouncy/assets/sprites/weapons_sheet.png")
         .add("deployables", "../Bouncy/assets/sprites/deployables.png")
         .load(callback);
   }

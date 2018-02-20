@@ -43,6 +43,16 @@ class Unit {
     this.createCollisionBox();
   }
 
+  isInRangeOfCircle(point, radius) {
+    let collisionBox = this.getCollisionBox();
+    for (let collisionLine of collisionBox) {
+      if (Physics.distToSegment(collisionLine, point) <= radius) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   doSpawnEffect(boardState) {
 
   }

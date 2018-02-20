@@ -120,5 +120,6 @@ ProjectileShape.HitEffects = {
 
 ProjectileShape.AOE_TYPES = {
   NONE: 'NONE',
-  BOX: 'BOX'
+  BOX: 'BOX',
+  CIRCLE: 'CIRCLE',
 };
