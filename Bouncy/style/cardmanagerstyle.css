@@ -54,13 +54,6 @@ h3.cardName {
   min-height: 100px;
 }
 
-.cardControlSection .perkNode.preview {
-  border: 3px solid orange;
-  padding: 3px;
-  background: #8E13A4;
-  color: white;
-}
-
 .cardControlSection .perkNode.notowned {
   color: white;
   background: #3127AD;
@@ -80,6 +73,13 @@ h3.cardName {
   background: #E81740;
   border: 3px solid green;
   padding: 3px;
+}
+
+.cardControlSection .perkNode.preview {
+  border: 3px solid orange;
+  padding: 3px;
+  background: #8E13A4;
+  color: white;
 }
 
 .cardControlSection .cardExperienceSection {

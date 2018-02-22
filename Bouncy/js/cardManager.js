@@ -150,19 +150,19 @@ class CardManager {
     nodeHTML.css('height', CMC.NODE_HEIGHT);
     nodeHTML.attr("perkkey", perk.key);
 
-      if (ownedPerkCount == perk.levels) {
-        nodeHTML.addClass("owned mastered");
-      } else if (ownedPerkCount > 0) {
-        nodeHTML.addClass("owned");
-      } else if (!AbilityFactory.CanAddPerk(
-          this.playerCard.cardID,
-          perk.key,
-          this.playerCard.cardPerks.slice(0).concat(this.previewPerkList)
-        )) {
-        nodeHTML.addClass("blocked");
-      } else {
-        nodeHTML.addClass("notowned");
-      }
+    if (ownedPerkCount + previewPerkCount == perk.levels) {
+      nodeHTML.addClass("owned mastered");
+    } else if (ownedPerkCount > 0) {
+      nodeHTML.addClass("owned");
+    } else if (!AbilityFactory.CanAddPerk(
+        this.playerCard.cardID,
+        perk.key,
+        this.playerCard.cardPerks.slice(0).concat(this.previewPerkList)
+      )) {
+      nodeHTML.addClass("blocked");
+    } else {
+      nodeHTML.addClass("notowned");
+    }
 
     if (previewPerkCount > 0) {
       nodeHTML.addClass("preview");
