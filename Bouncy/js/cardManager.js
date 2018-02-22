@@ -197,14 +197,16 @@ class CardManager {
     let lineSVG = $("<svg width='500' height='500'>");
     $cardTree.append(lineSVG);
     for (let key in perkTree) {
+      let parent = perkTree[key];
       for (let requirement of perkTree[key].requirements) {
-        let childKey = requirement.getPerkKey();
-        let parent = perkTree[key];
-        let child = perkTree[childKey];
+        let childKeys = requirement.getPerkKeys();
+        for (let childKey of childKeys) {
+          let child = perkTree[childKey];
 
-        let svgLines = requirement.getSVGLines(parent, child);
-        for (let line of svgLines) {
-          lineSVG.append(line);
+          let svgLines = requirement.getSVGLines(parent, child);
+          for (let line of svgLines) {
+            lineSVG.append(line);
+          }
         }
       }
     }

@@ -53,9 +53,15 @@ class AbilityCore0 extends AbilityCore {
     let perkList = [
       (new AbilityPerkNode('damage',     3, [0, 1])),
       (new AbilityPerkNode('impact',     3,  [0, 3])),
-      (new AbilityPerkNode('radius',     10, [1, 2]))
+      (new AbilityPerkNode('radius',     3, [1, 2]))
         .addRequirement(new PerkLevelRequirement('damage', 'max'))
         .addRequirement(new PerkLevelRequirement('impact', 'max')),
+      (new AbilityPerkNode('impact+',     3,  [2, 3])
+        .addRequirement(new OrPerkLevelRequirement(
+          [new PerkLevelRequirement('impact', 'max'),
+          new PerkLevelRequirement('radius', 'max')]
+        ))
+      )
     ];
     return perkList;
   }

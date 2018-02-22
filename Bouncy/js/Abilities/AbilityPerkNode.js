@@ -33,8 +33,8 @@ class AbilityPerkRequirement {
     this.perkName = perkName;
   }
 
-  getPerkKey() {
-    return this.perkName;
+  getPerkKeys() {
+    return [this.perkName];
   }
 
   hasPerkAsRequirement(perkKey) {
@@ -45,7 +45,7 @@ class AbilityPerkRequirement {
     return true;
   }
 
-  getSVGLines($otherPerk, $thisPerk) {
+  getSVGLines($otherPerk, $thisPerk, colorOverride) {
     return [];
   }
 }
@@ -60,7 +60,8 @@ class PerkLevelRequirement extends AbilityPerkRequirement {
     return this.perkName == perkKey;
   }
 
-  getSVGLines($otherPerk, $thisPerk) {
+  getSVGLines($otherPerk, $thisPerk, colorOverride) {
+    let color = colorOverride ? colorOverride : 'black';
     return [$(
       "<line>",
       {
@@ -68,7 +69,7 @@ class PerkLevelRequirement extends AbilityPerkRequirement {
         y1: CardManager.getPerkTop($otherPerk.position) + CMC.NODE_HEIGHT / 2,
         x2: CardManager.getPerkLeft($thisPerk.position) + CMC.NODE_WIDTH / 2,
         y2: CardManager.getPerkTop($thisPerk.position) + CMC.NODE_HEIGHT / 2,
-        stroke: "black", 'stroke-width': 2
+        stroke: color, 'stroke-width': 2
       }
     )];
   }
@@ -76,5 +77,42 @@ class PerkLevelRequirement extends AbilityPerkRequirement {
   isRequirementMet(perkCounts, perkTree) {
     let childPerk = perkTree[this.perkName];
     return perkCounts[this.perkName] >= childPerk.levels;
+  }
+}
+
+class OrPerkLevelRequirement extends AbilityPerkRequirement {
+  constructor(reqList) {
+    super(null);
+    this.reqList = reqList;
+  }
+
+  getPerkKeys() {
+    let keys = [];
+    for (let requirement of this.reqList) {
+      keys = keys.concat(requirement.getPerkKeys());
+    }
+    return keys;
+  }
+
+  hasPerkAsRequirement(perkKey) {
+    for (let requirement of this.reqList) {
+      if (requirement.perkName === perkKey) { return true; }
+    }
+    return false;
+  }
+
+  isRequirementMet(perkCounts, perkTree) {
+    for (let requirement of this.reqList) {
+      if (requirement.isRequirementMet(perkCounts, perkTree)) { return true; }
+    }
+    return false;
+  }
+
+  getSVGLines($otherPerk, $thisPerk, colorOverride) {
+    let lines = [];
+    for (let requirement of this.reqList) {
+      lines = lines.concat(requirement.getSVGLines($otherPerk, $thisPerk, "blue"));
+    }
+    return lines;
   }
 }
