@@ -45,15 +45,11 @@ const AbilityFactory = {
     let perkTree = this.GetPerkTree(abilityCoreID);
     let perk = perkTree[perkKey];
     if (!perk) { return false; }
-    if (perk.children.length > 0) {
-      for (var i = 0; i < perk.children.length; i++) {
-        let perkName = perk.children[i];
-        let childPerk = perkTree[perkName];
-        if (!(perkCounts[perkName] >= childPerk.levels)) {
-          return false;
-        }
+    for (let requirement of perk.requirements) {
+      if (!requirement.isRequirementMet(perkCounts, perkTree)) {
+        return false;
       }
     }
-    return !(perkCounts[perkKey] >= perk.levels);
+    return (perkCounts[perkKey] === undefined || perkCounts[perkKey] < perk.levels);
   }
 };

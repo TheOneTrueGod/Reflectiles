@@ -1,9 +1,9 @@
 const CMC = { // Card Manager Constants
   CONTAINER_PADDING : 25,
-  NODE_WIDTH : 80,
-  NODE_HEIGHT : 80,
-  HORIZONTAL_SPACE : 40,
-  VERTICAL_SPACE : 40,
+  NODE_WIDTH : 50,
+  NODE_HEIGHT : 50,
+  HORIZONTAL_SPACE : 20,
+  VERTICAL_SPACE : 20,
 };
 
 class CardManager {
@@ -40,9 +40,9 @@ class CardManager {
     $(".cardControlSection .cardExperienceNumber").text(this.playerCard.getLeftoverExperience());
     let expPercent = Math.floor(this.playerCard.getExperiencePercent() * 100);
     $(".cardControlSection .cardExperienceBar").css("width", expPercent + "%");
-    this.updateCardDetails();
 
     this.buildPerkTree();
+    this.updateCardDetails();
   }
 
   updateCardDetails() {
@@ -82,7 +82,7 @@ class CardManager {
     return false;
   }
 
-  tryToRemovePerk(perkKey) {
+  tryToRemovePerk(perkKey, recursed) {
     let index = this.previewPerkList.indexOf(perkKey);
     if (index !== -1) {
       let perkTree = AbilityFactory.GetPerkTree(
@@ -91,19 +91,18 @@ class CardManager {
 
       this.previewPerkList.splice(index, 1);
 
-      this.updateCardDetails();
-      let perkHTML = this.buildPerkCard(perkTree[perkKey]);
-      let newIndex = this.previewPerkList.indexOf(perkKey);
-      if (newIndex !== -1) {
-        $(perkHTML).addClass("preview");
-      }
-
       for (let treePerkKey in perkTree) {
-        if (perkTree[treePerkKey].children.indexOf(perkKey) !== -1) {
-          while (this.previewPerkList.indexOf(treePerkKey) !== -1) {
-            this.tryToRemovePerk(treePerkKey);
+        for (let requirement of perkTree[treePerkKey].requirements) {
+          if (requirement.hasPerkAsRequirement(perkKey)) {
+            while (this.previewPerkList.indexOf(treePerkKey) !== -1) {
+              this.tryToRemovePerk(treePerkKey, true);
+            }
           }
         }
+      }
+      if (!recursed) {
+        this.buildPerkTree();
+        this.updateCardDetails();
       }
     }
   }
@@ -122,9 +121,7 @@ class CardManager {
       let perkTree = AbilityFactory.GetPerkTree(
         this.playerCard.cardID
       );
-      let perkHTML = this.buildPerkCard(perkTree[perkKey]);
-
-      $(perkHTML).addClass("preview");
+      this.buildPerkTree();
       this.updateCardDetails();
     }
   }
@@ -147,18 +144,28 @@ class CardManager {
     });
 
     let nodeHTML = perk.createNodeHTML(previewPerkCount + ownedPerkCount);
-    nodeHTML.css('top', this.getPerkTop(perk.position));
-    nodeHTML.css('left', this.getPerkLeft(perk.position));
+    nodeHTML.css('top', CardManager.getPerkTop(perk.position));
+    nodeHTML.css('left', CardManager.getPerkLeft(perk.position));
     nodeHTML.css('width', CMC.NODE_WIDTH);
     nodeHTML.css('height', CMC.NODE_HEIGHT);
     nodeHTML.attr("perkkey", perk.key);
 
-    if (previewPerkCount == 0) {
       if (ownedPerkCount == perk.levels) {
         nodeHTML.addClass("owned mastered");
       } else if (ownedPerkCount > 0) {
         nodeHTML.addClass("owned");
+      } else if (!AbilityFactory.CanAddPerk(
+          this.playerCard.cardID,
+          perk.key,
+          this.playerCard.cardPerks.slice(0).concat(this.previewPerkList)
+        )) {
+        nodeHTML.addClass("blocked");
+      } else {
+        nodeHTML.addClass("notowned");
       }
+
+    if (previewPerkCount > 0) {
+      nodeHTML.addClass("preview");
     }
 
     $cardTree.append(nodeHTML);
@@ -166,11 +173,11 @@ class CardManager {
     return nodeHTML;
   }
 
-  getPerkTop(position) {
+  static getPerkTop(position) {
     return (position[1] * (CMC.NODE_WIDTH + CMC.HORIZONTAL_SPACE)) + CMC.CONTAINER_PADDING;
   }
 
-  getPerkLeft(position) {
+  static getPerkLeft(position) {
     return (position[0] * (CMC.NODE_HEIGHT + CMC.VERTICAL_SPACE)) + CMC.CONTAINER_PADDING;
   }
 
@@ -190,21 +197,15 @@ class CardManager {
     let lineSVG = $("<svg width='500' height='500'>");
     $cardTree.append(lineSVG);
     for (let key in perkTree) {
-      for (let childKey of perkTree[key].children) {
+      for (let requirement of perkTree[key].requirements) {
+        let childKey = requirement.getPerkKey();
         let parent = perkTree[key];
         let child = perkTree[childKey];
-        let parentHTML = htmlElements[key];
-        let childHTML = htmlElements[childKey];
-        lineSVG.append($(
-          "<line>",
-          {
-            x1: this.getPerkLeft(parent.position) + CMC.NODE_WIDTH / 2,
-            y1: this.getPerkTop(parent.position) + CMC.NODE_HEIGHT / 2,
-            x2: this.getPerkLeft(child.position) + CMC.NODE_WIDTH / 2,
-            y2: this.getPerkTop(child.position) + CMC.NODE_HEIGHT / 2,
-            stroke: "black", 'stroke-width': 2
-          }
-        ));
+
+        let svgLines = requirement.getSVGLines(parent, child);
+        for (let line of svgLines) {
+          lineSVG.append(line);
+        }
       }
     }
 

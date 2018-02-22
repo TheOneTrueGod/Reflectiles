@@ -20,7 +20,7 @@ class AbilityCore0 extends AbilityCore {
         (impactCount > 0 ? '[[hit_effects[0].base_damage]] to the first unit hit, and ' : '') +
         '[[hit_effects[1].base_damage]] damage in a circle of size [[hit_effects[1].aoe_size]]',
       card_text_description: '[[hit_effects[1].base_damage]] 3x3',
-      style: (new AbilitySheetSpriteAbilityStyleBuilder)
+      style: (new AbilitySheetSpriteAbilityStyleBuilder())
         .setSheet('weapons_sheet')
         .setCoordNums(2, 1, 24, 23)
         .setExplosion(AbilityStyle.getExplosionPrefab(
@@ -51,12 +51,11 @@ class AbilityCore0 extends AbilityCore {
 
   static GetPerkList() {
     let perkList = [
-      (new AbilityPerkNode('damage',     20, [0, 0])),
-      (new AbilityPerkNode('radius',     10, [0, 3])),
-      (new AbilityPerkNode('impact',     5,  [0, 1])),
-      (new AbilityPerkNode('test 2-1',   1,  [1, 1])).addChild('impact'),
-      (new AbilityPerkNode('test 2-2',   1,  [1, 2])).addChild('impact'),
-      (new AbilityPerkNode('test 2-2-1', 1,  [2, 2])).addChild('test 2-2'),
+      (new AbilityPerkNode('damage',     3, [0, 1])),
+      (new AbilityPerkNode('impact',     3,  [0, 3])),
+      (new AbilityPerkNode('radius',     10, [1, 2]))
+        .addRequirement(new PerkLevelRequirement('damage', 'max'))
+        .addRequirement(new PerkLevelRequirement('impact', 'max')),
     ];
     return perkList;
   }
