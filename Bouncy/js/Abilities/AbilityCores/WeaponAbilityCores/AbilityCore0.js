@@ -53,18 +53,55 @@ class AbilityCore0 extends AbilityCore {
   }
 
   static GetPerkList() {
+    // .addRequirement(new PerkLevelRequirement('damage+', 'max')),
+    // .addRequirement(new OrPerkLevelRequirement(
+    //  [new PerkLevelRequirement('impact', 'max'),
+    //  new PerkLevelRequirement('radius', 'max')]
+    //)
     let perkList = [
-      (new AbilityPerkNode('damage',     3, [0, 1])),
-      (new AbilityPerkNode('impact',     3,  [0, 3])),
-      (new AbilityPerkNode('radius',     3, [1, 2]))
-        .addRequirement(new PerkLevelRequirement('damage', 'max'))
-        .addRequirement(new PerkLevelRequirement('impact', 'max')),
-      (new AbilityPerkNode('impact+',     3,  [2, 3])
+      // Level 1.
+      (new AbilityPerkNode('damage1',      3, [0, 3])),
+      // Level 2.
+      (new AbilityPerkNode('impact2',      3, [1, 1]))
+        .addRequirement(new PerkLevelRequirement('damage1', 'max')),
+      (new AbilityPerkNode('radius2',      3, [1, 5]))
+        .addRequirement(new PerkLevelRequirement('damage1', 'max')),
+
+      // Level 3.
+      (new AbilityPerkNode('damage3',      3, [2, 1]))
         .addRequirement(new OrPerkLevelRequirement(
-          [new PerkLevelRequirement('impact', 'max'),
-          new PerkLevelRequirement('radius', 'max')]
-        ))
-      )
+          [new PerkLevelRequirement('impact2', 'max'),
+          new PerkLevelRequirement('radius2', 'max')]
+        )),
+
+      // Level 4
+      (new AbilityPerkNode('rocket count4', 3, [3, 1]))
+        .addRequirement(new PerkLevelRequirement('damage3', 'max'))
+        .addRequirement(new PerkLevelRequirement('impact2', 'max')),
+      (new AbilityPerkNode('impact4', 3, [3, 3]))
+        .addRequirement(new PerkLevelRequirement('damage3', 'max')),
+      // Level 5
+
+      // Level 6
+      (new AbilityPerkNode('cluster rocket', 3, [5, 1])),
+      (new AbilityPerkNode('mirv', 3, [5, 3])),
+
+      // Level 7
+
+      (new AbilityPerkNode('nuke', 3, [6, 5])),
+
+      // Level 8
+      (new AbilityPerkNode('rocket count6', 3, [7, 0])),
+      (new AbilityPerkNode('damage6', 3, [7, 4]))
+        .addRequirement(new OrPerkLevelRequirement(
+          [new PerkLevelRequirement('nuke', 'max'),
+          new PerkLevelRequirement('radius2', 'max')]
+        )),
+      (new AbilityPerkNode('radius6', 3, [7, 5])),
+
+      // Level 9
+      (new AbilityPerkNode('fallout zone', 3, [7, 6])),
+
     ];
     return perkList;
   }
