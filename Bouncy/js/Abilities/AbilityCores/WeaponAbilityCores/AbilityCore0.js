@@ -2,6 +2,9 @@
 // Perk Ideas;
 // -- Primary Target damage increase
 // -- Splash damage increase
+// -- Damage up.
+// -- -- Side effect of other perks is increasing cooldown
+// -- Cooldown Decrease
 //
 // Path 1; Fire multiple rockets machinegun style
 // Path 1 branch;  Micro rockets -- barrage of tiny rockets

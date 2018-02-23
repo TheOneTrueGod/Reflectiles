@@ -1,3 +1,13 @@
+// Shield.
+// Perk Ideas
+// Increase the duration
+// Retaliate against enemies shooting it
+// Retaliate against enemies walking into it
+// Increase width
+// Increase horizontal range you can cast it at
+// Stun enemies that it retaliates against
+// Knockback enemies that it retaliates against
+// 
 class AbilityCore7 extends AbilityCore {
   static BuildAbility(perkList) {
     const rawAbil = {
