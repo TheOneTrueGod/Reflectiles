@@ -50,6 +50,8 @@ class MainGame {
     this.aimPreview = null;
     this.gameStarted = false;
 
+    this.tickLoopTimeout = null;
+
     //Create the renderer
     var mad = $('#missionActionDisplay');
 
@@ -394,7 +396,7 @@ class MainGame {
       this.boardState.endPhase();
       this.playOutTurn.call(this, phase);
     } else {
-      window.setTimeout(this.loopTicksForPhase.bind(this, phase), this.TICK_DELAY);
+      this.tickLoopTimeout = window.setTimeout(this.loopTicksForPhase.bind(this, phase), this.TICK_DELAY);
     }
   }
 

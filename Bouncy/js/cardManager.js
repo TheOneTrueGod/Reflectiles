@@ -58,6 +58,10 @@ class CardManager {
     $(".cardControlSection .cardPerkPointsAvailable .cardPerkPoints").text(
       this.playerCard.getPerkPoints() - this.previewPerkList.length
     );
+
+    if (MainGame && MainGame instanceof CardDemo) {
+      MainGame.demoAbility(this.abilityDef);
+    }
   }
 
   cardClicked(event) {

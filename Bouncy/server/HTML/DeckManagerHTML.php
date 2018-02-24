@@ -20,22 +20,39 @@
       </div>
     </div>
     <div class="cardControlSection hidden">
-      <div class="headerSection">
-        <div class="deckManagerButton button">Back</div>
-        <h3 class="cardName">Card Name</h3>
-        <div class="saveButton button green disabled">Save</div>
-      </div>
-      <div class="cardTree"></div>
-      <div class="cardExperienceSection">
-        <div class="cardExperienceBarBorder">
-          <div class="cardExperienceBar"></div>
-          <div class="cardExperienceNumber noselect">34452</div>
+      <div>
+        <div class="headerSection">
+          <div class="deckManagerButton button">Back</div>
+          <h3 class="cardName">Card Name</h3>
+          <div class="saveButton button green disabled">Save</div>
         </div>
-        <div class="cardPerkPointsAvailable">
-          <div class="cardPerkPoints"></div>
+        <div class="cardTree"></div>
+        <div class="cardExperienceSection">
+          <div class="cardExperienceBarBorder">
+            <div class="cardExperienceBar"></div>
+            <div class="cardExperienceNumber noselect">34452</div>
+          </div>
+          <div class="cardPerkPointsAvailable">
+            <div class="cardPerkPoints"></div>
+          </div>
+        </div>
+        <div class="cardDescription">The card description will go here</div>
+      </div>
+      <div class="demoContainer">
+        <div id="gameContainer"
+          class="cardDemo"
+          host="false"
+          playerID="totg"
+        >
+          <div
+            id="gameBoard"
+            class="screen"
+            style="display: none;"
+          >
+            <div id="missionActionDisplay"></div>
+          </div>
         </div>
       </div>
-      <div class="cardDescription">The card description will go here</div>
     </div>
     <div class="deckControlSection hidden">
       <div>
@@ -91,6 +108,7 @@
 ?>
 <script src="/Bouncy/js/deckManager.js"></script>
 <script src="/Bouncy/js/cardManager.js"></script>
+<script src="/Bouncy/js/cardDemo.js"></script>
 <script>
 let deckManager = new DeckManager(
   "<?php echo $serialized_decks; ?>",

@@ -10,7 +10,6 @@ class PlayerDeck {
     if (is_array($serialized->card_list)) {
       $cardList = json_encode(array_map(
         function($serialized_card) {
-          slog(json_encode($serialized_card));
           return $serialized_card->card_index;
         },
         $serialized->card_list
@@ -18,12 +17,6 @@ class PlayerDeck {
     } else if (is_string($serialized->card_list)) {
       $cardList = $serialized->card_list;
     }
-
-    if ($serialized->name == "Damage") {
-      slog(json_encode($cardList));
-      slog("==========");
-    }
-
 
     return new PlayerDeck(
       $serialized->id,

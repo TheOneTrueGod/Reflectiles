@@ -76,3 +76,13 @@ body {
   border: 1px solid black;
   background: rgba(86, 61, 124, .15);
 }
+
+#gameContainer.cardDemo canvas,
+#gameContainer.cardDemo #missionActionDisplay {
+  width: 140px;
+}
+
+#gameContainer.cardDemo #missionActionDisplay {
+  height: 400px;
+  overflow: hidden;
+}

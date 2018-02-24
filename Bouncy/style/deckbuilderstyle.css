@@ -84,3 +84,13 @@
 .deckList.abilityCard.cantAdd {
   background: gray;
 }
+
+.cardControlSection {
+  position: relative;
+}
+
+.demoContainer {
+  position: absolute;
+  right: 20px;
+  top: 95px;
+}

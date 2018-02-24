@@ -49,6 +49,7 @@ class BoardState {
 
   reset() {
     this.units = [];
+    this.projectiles = [];
     this.sectors.reset();
     this.turn = 1;
     this.tick = 0;

@@ -48,7 +48,7 @@ class AbilityCore0 extends AbilityCore {
     const rawAbil = {
       name: 'Explosion',
       description: 'Fires ' +
-        (rocketCount == 1 ? 'a rocket that deals' : '[[num_bullets]] rockets that deal ') +
+        (rocketCount == 1 ? 'a rocket that deals ' : '[[num_bullets]] rockets that deal ') +
         (impact_damage > 0 ? '[[hit_effects[0].base_damage]] to the first unit hit, and ' : '') +
         '[[hit_effects[1].base_damage]] damage in a circle of size [[hit_effects[1].aoe_size]]',
       card_text_description: '[[hit_effects[1].base_damage]] 3x3',
