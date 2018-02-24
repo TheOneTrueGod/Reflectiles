@@ -53,7 +53,7 @@ class AbilityPerkRequirement {
 class PerkLevelRequirement extends AbilityPerkRequirement {
   constructor(perkName, level) {
     super(perkName);
-    this.level = level;
+    this.level = level === undefined ? 'max' : level;
   }
 
   hasPerkAsRequirement(perkKey) {

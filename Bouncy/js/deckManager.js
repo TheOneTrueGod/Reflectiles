@@ -43,6 +43,8 @@ class DeckManager {
     });
 
     this.updateCardStatus();
+
+    $('.abilityCard').first().click();
   }
 
   deckCardClicked(event) {

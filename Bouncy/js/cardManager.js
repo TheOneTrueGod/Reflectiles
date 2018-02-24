@@ -194,7 +194,7 @@ class CardManager {
       htmlElements[key] = nodeHTML;
     }
 
-    let lineSVG = $("<svg width='500' height='500'>");
+    let lineSVG = $("<svg width='100%' height='100%'>");
     $cardTree.append(lineSVG);
     for (let key in perkTree) {
       let parent = perkTree[key];
