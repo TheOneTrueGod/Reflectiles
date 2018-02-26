@@ -52,7 +52,7 @@ function TJDeck() {
         'Each one deals [[hit_effects[0].base_damage]] damage, and then splits into [[hit_effects[1].num_bullets]] projectiles that deal [[hit_effects[1].hit_effects[0].base_damage]] damage.<br>' +
         'Can\'t be aimed.',
       card_text_description: '[[num_bullets]] X [[hit_effects[0].base_damage]]',
-      style: (new AbilitySheetSpriteAbilityStyleBuilder)
+      style: (new AbilitySheetSpriteAbilityStyleBuilder())
         .setSheet('bullet_sheet').setCoordNums(37, 159, 44, 166).setRotation(0).fixRotation(true).build(),
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.RAIN,
@@ -62,7 +62,7 @@ function TJDeck() {
         {effect: ProjectileShape.HitEffects.DAMAGE, base_damage: 20},
         {
           effect: ProjectileShape.HitEffects.BULLET_SPLIT,
-          style: (new AbilitySheetSpriteAbilityStyleBuilder)
+          style: (new AbilitySheetSpriteAbilityStyleBuilder())
             .setSheet('bullet_sheet').setCoordNums(19, 159, 24, 166).setRotation(0).fixRotation(true).build(),
           projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
           hit_effects: [{

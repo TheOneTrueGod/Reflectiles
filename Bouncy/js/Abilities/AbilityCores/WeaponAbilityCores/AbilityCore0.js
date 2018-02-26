@@ -21,7 +21,10 @@ class AbilityCore0 extends AbilityCore {
       perkPcts[perk.key] = idx(perkCounts, perk.key, 0) / perk.levels;
     }
 
+    let shape = ProjectileAbilityDef.Shapes.CHAIN_SHOT;
+
     let rocketCount = 1 + idx(perkCounts, 'rocket count4', 0) + idx(perkCounts, 'rocket count8', 0);
+    let isClusterRocket = idx(perkPcts, 'cluster rocket') === 1;
 
     let damagePctIncrease =
       idx(perkPcts, 'damage1', 0) * 0.25 +
@@ -32,19 +35,34 @@ class AbilityCore0 extends AbilityCore {
       idx(perkPcts, 'damage5', 0) * 0.25 +
       idx(perkPcts, 'damage8', 0) * 0.5 +
       idx(perkPcts, 'damage small8', 0) * 0.5;
-    let base_damage = Math.round(200 * (1 + damagePctIncrease) / ((rocketCount - 1) * 0.75 + 1));
 
     let impactCount = idx(perkCounts, 'impact2', 0) + idx(perkCounts, 'impact5', 0);
-
-    let impact_damage = Math.round(base_damage * (impactCount / 10));
-    base_damage -= impact_damage / 2;
-    base_damage = Math.round(base_damage);
 
     let radiusIncrease =
       idx(perkPcts, 'radius2', 0) * 0.5 +
       idx(perkPcts, 'damage radius5', 0) * 0.5;
 
-    let explosionRadius = Math.round(40 * (1 + radiusIncrease));
+    let explosionRadius = 40 * (1 + radiusIncrease);
+
+    if (isClusterRocket) {
+      rocketCount = 10 + 5 * rocketCount;
+      explosionRadius /= 3;
+    }
+
+    explosionRadius = Math.round(explosionRadius);
+
+    let base_damage = Math.round(200 * (1 + damagePctIncrease) / ((rocketCount - 1) * 0.75 + 1));
+    let impact_damage = Math.round(base_damage * (impactCount / 10));
+    base_damage -= impact_damage / 2;
+    base_damage = Math.round(base_damage);
+
+    let abilityStyle = (new AbilitySheetSpriteAbilityStyleBuilder())
+      .setSheet('weapons_sheet')
+      .setCoordNums(2, 1, 24, 23)
+      .setExplosion(AbilityStyle.getExplosionPrefab(
+        AbilityStyle.EXPLOSION_PREFABS.WHITE, explosionRadius
+      ));
+
     const rawAbil = {
       name: 'Explosion',
       description: 'Fires ' +
@@ -52,16 +70,10 @@ class AbilityCore0 extends AbilityCore {
         (impact_damage > 0 ? '[[hit_effects[0].base_damage]] to the first unit hit, and ' : '') +
         '[[hit_effects[1].base_damage]] damage in a circle of size [[hit_effects[1].aoe_size]]',
       card_text_description: '[[hit_effects[1].base_damage]] 3x3',
-      style: (new AbilitySheetSpriteAbilityStyleBuilder())
-        .setSheet('weapons_sheet')
-        .setCoordNums(2, 1, 24, 23)
-        .setExplosion(AbilityStyle.getExplosionPrefab(
-          AbilityStyle.EXPLOSION_PREFABS.WHITE, explosionRadius
-        ))
-        .build(),
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
-      shape: ProjectileAbilityDef.Shapes.CHAIN_SHOT,
+      shape: shape,
       speed: 8,
+      scale: 0.5,
       projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
       destroy_on_wall: true,
       num_bullets: rocketCount,
@@ -80,6 +92,16 @@ class AbilityCore0 extends AbilityCore {
       ],
       icon: "/Bouncy/assets/icons/icon_plain_explosion.png"
     };
+
+    if (isClusterRocket) {
+      rawAbil.shape = ProjectileAbilityDef.Shapes.RAIN;
+      rawAbil.speed_decay = 0.9;
+      rawAbil.gravity = {x: 0, y: -0.9};
+      rawAbil.shots_per_tick = 1;
+      abilityStyle.setScale(0.75);
+    }
+
+    rawAbil.style = abilityStyle.build();
     return AbilityDef.createFromJSON(rawAbil);
   }
 

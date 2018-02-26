@@ -3,6 +3,10 @@ class GameStats {
     this.playerDamage = {};
   }
 
+  reset() {
+    this.playerDamage = {};
+  }
+
   doNullPlayerCheck(player, ability) {
     if (this.playerDamage[player] === undefined) {
       this.playerDamage[player] = {};

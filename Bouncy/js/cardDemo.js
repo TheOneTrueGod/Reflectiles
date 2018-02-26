@@ -1,7 +1,7 @@
 class CardDemo extends MainGame {
   constructor() {
     super();
-    this.MAX_TURNS_TO_PLAY = 3;
+    this.MAX_TURNS_TO_PLAY = 1;
     this.abilitiesToUse = [];
   }
 
@@ -12,9 +12,9 @@ class CardDemo extends MainGame {
     this.cachedAbilities = {};
 
     this.unitsToSpawn = [
-      [UnitBasicSquare, UnitShooter, UnitBasicSquare],
-      [UnitBasicSquare, UnitBasicSquare, UnitBasicSquare],
-      [UnitBasicSquare, UnitShooter, UnitBasicSquare]
+      [null, UnitBasicSquare, UnitBasicSquare, UnitShooter, UnitBasicSquare, UnitBasicSquare],
+      [null, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare],
+      [null, UnitBasicSquare, UnitBasicSquare, UnitShooter, UnitBasicSquare, UnitBasicSquare]
     ];
   }
 
@@ -47,10 +47,10 @@ class CardDemo extends MainGame {
 
   testAbility() {
     UIListeners.showGameBoard();
-    var width = Unit.UNIT_SIZE * 3; var height = Unit.UNIT_SIZE * 9;
+    var width = Unit.UNIT_SIZE * 7; var height = Unit.UNIT_SIZE * 9;
     let boardSize = {width: width, height: height};
     this.boardState = new BoardState(boardSize, this.stage);
-    this.boardState.sectors = new UnitSectors(9, 3, width, height);
+    this.boardState.sectors = new UnitSectors(9, 7, width, height);
 
     this.players[0] = new Player({user_name: 'totg', user_id: 'totg'}, 'totg');
     //this.TICK_DELAY = 10;
@@ -130,6 +130,14 @@ class CardDemo extends MainGame {
       'totg'
     );
     this.boardState.addUnit(newCore);
+  }
+
+  loopTicksForPhase(phase) {
+    super.loopTicksForPhase(phase);
+    for (let key in this.boardState.gameStats.playerDamage.totg) {
+      let damageStat = this.boardState.gameStats.playerDamage.totg[key];
+      $(".damageDealt").html("Damage<br>" + damageStat.damage);
+    }
   }
 }
 

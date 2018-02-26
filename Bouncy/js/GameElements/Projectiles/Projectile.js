@@ -6,24 +6,29 @@ class Projectile {
     this.y = startPoint.y;
     this.angle = angle;
     this.speed = idx(projectileOptions, 'speed', 8);
-    if (abilityDef) {
-      this.speed = abilityDef.getOptionalParam('speed', this.speed);
-    }
-    this.size = idx(projectileOptions, 'size', 5);
-    this.trailLength = idx(projectileOptions, 'trail_length', 5);
     this.gravity = idx(projectileOptions, 'gravity', null);
     this.speedDecay = idx(projectileOptions, 'speed_decay', null);
     this.speedDecayDelay = 0;
-    this.abilityDef = abilityDef;
     if (abilityDef) {
-      this.destroyOnWall = abilityDef.getOptionalParam('destroy_on_wall', false);
+      this.speed = abilityDef.getOptionalParam('speed', this.speed);
+      this.gravity = abilityDef.getOptionalParam('gravity', this.gravity);
+      this.speedDecay = abilityDef.getOptionalParam('speed_decay', this.speedDecay);
     }
-    this.destroyOnWall = idx(projectileOptions, 'destroy_on_wall', this.destroyOnWall);
     if (this.gravity) { this.gravity = Victor(this.gravity.x, this.gravity.y); }
     if (this.speedDecay) { this.speedDecayDelay = idx(this.speedDecay, 'delay', 0); }
     if (this.speedDecay && this.speedDecay.x && this.speedDecay.y) {
       this.speedDecay = Victor(this.speedDecay.x, this.speedDecay.y);
     }
+
+    this.size = idx(projectileOptions, 'size', 5);
+    this.trailLength = idx(projectileOptions, 'trail_length', 5);
+
+    this.abilityDef = abilityDef;
+    if (abilityDef) {
+      this.destroyOnWall = abilityDef.getOptionalParam('destroy_on_wall', false);
+    }
+    this.destroyOnWall = idx(projectileOptions, 'destroy_on_wall', this.destroyOnWall);
+
     this.gameSprite = null;
     this.readyToDel = false;
     this.unitHitCallback = null;

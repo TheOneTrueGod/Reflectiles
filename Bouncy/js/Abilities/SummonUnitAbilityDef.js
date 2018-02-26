@@ -130,7 +130,6 @@ class SummonUnitAbilityDef extends AbilityDef {
         for (var i = -Math.floor(this.UNITS_TO_SUMMON / 2); i < Math.ceil(this.UNITS_TO_SUMMON / 2); i++) {
           var castTarget = {x: targetPoint.x + i * Unit.UNIT_SIZE, y: targetPoint.y};
           if (this.canSummonUnitAtPosition(boardState, castTarget)) {
-            console.log(castTarget);
             this.createUnitAtPos(
               boardState,
               playerID,

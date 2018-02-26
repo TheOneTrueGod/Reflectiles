@@ -80,9 +80,17 @@ body {
 #gameContainer.cardDemo canvas,
 #gameContainer.cardDemo #missionActionDisplay {
   width: 140px;
+  height: 400px;
 }
 
 #gameContainer.cardDemo #missionActionDisplay {
+  width: 280px;
+  height: 800px;
+  overflow: hidden;
+}
+
+.demoContainer {
+  width: 140px;
   height: 400px;
   overflow: hidden;
 }

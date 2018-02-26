@@ -70,6 +70,7 @@ class AbilitySheetSpriteAbilityStyleBuilder extends SpriteAbilityStyleBuilder {
     this.rotation = Math.PI / 2;
     this.explosion = null;
     this.fix_rotation = false;
+    this.scale = 1;
   }
 
   setImageIndex(image_index) {
@@ -83,6 +84,7 @@ class AbilitySheetSpriteAbilityStyleBuilder extends SpriteAbilityStyleBuilder {
     this.coords = {left: left, top: top, right: right, bottom: bottom};
     return this;
   }
+  setScale(scale) { this.scale = scale; return this;}
   setRotation(rotation) { this.rotation = rotation; return this; }
   setExplosion(explosion) { this.explosion = explosion; return this; }
   fixRotation(val) { this.fix_rotation = val; return this; }
@@ -100,6 +102,7 @@ class AbilitySheetSpriteAbilityStyleBuilder extends SpriteAbilityStyleBuilder {
       sheet: this.sheet,
       explosion: this.explosion,
       fix_rotation: this.fix_rotation,
+      scale: this.scale,
     };
   }
 }

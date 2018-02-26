@@ -51,6 +51,7 @@ class BoardState {
     this.units = [];
     this.projectiles = [];
     this.sectors.reset();
+    this.gameStats.reset();
     this.turn = 1;
     this.tick = 0;
     this.UNIT_ID_INDEX = 1;

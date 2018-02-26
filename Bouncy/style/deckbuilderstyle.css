@@ -94,3 +94,11 @@
   right: 20px;
   top: 95px;
 }
+
+.damageDealt {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  color: white;
+  text-align: center;
+}
