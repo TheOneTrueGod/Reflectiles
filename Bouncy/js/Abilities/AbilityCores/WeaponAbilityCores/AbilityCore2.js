@@ -1,5 +1,10 @@
 class AbilityCore2 extends AbilityCore {
   static BuildAbility(perkList) {
+    let perkResults = this.BuildPerkDetails(perkList); let perkPcts = perkResults.perkPcts; let perkCounts = perkResults.perkCounts;
+
+    let damageMult = idx(perkPcts, 'damage', 0) * 3;
+    let damage = Math.floor(50 * damageMult);
+
     const rawAbil = { // 1440 damage
       name: 'Double Wave',
       description: 'Sprays [[num_bullets]] in two waves.<br>' +
@@ -16,7 +21,7 @@ class AbilityCore2 extends AbilityCore {
       icon: "/Bouncy/assets/icons/icon_plain_wave.png",
       hit_effects: [{
         effect: ProjectileShape.HitEffects.DAMAGE,
-        base_damage: 50
+        base_damage: damage,
       }],
       charge: {"initial_charge":-1, "max_charge": 5, "charge_type":"TURNS"},
     };

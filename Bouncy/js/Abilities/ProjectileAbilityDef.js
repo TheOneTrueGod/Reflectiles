@@ -65,7 +65,7 @@ class ProjectileAbilityDef extends AbilityDef {
     }
 
     for (var i = 0; i < defJSON.hit_effects.length; i++) {
-      if (defJSON.hit_effects[i].effect == ProjectileShape.HitEffects.INFECT) {
+      if (defJSON.hit_effects[i].abil_def) {
         this.loadNestedAbilityDefs([defJSON.hit_effects[i]]);
       }
     }

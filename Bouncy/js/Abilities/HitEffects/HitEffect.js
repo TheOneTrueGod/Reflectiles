@@ -82,6 +82,8 @@ HitEffect.getHitEffectFromType = function(hitEffectDef, abilityDef, projectileSh
       return new InfectHitEffect(hitEffectDef, abilityDef);
     case ProjectileShape.HitEffects.WEAKNESS:
       return new WeaknessHitEffect(hitEffectDef, abilityDef);
+    case ProjectileShape.HitEffects.USE_ABILITY:
+      return new UseAbilityEffect(hitEffectDef, abilityDef, projectileShape);
   }
   return new HitEffect(hitEffectDef, abilityDef);
 }

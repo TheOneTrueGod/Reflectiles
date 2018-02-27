@@ -48,7 +48,7 @@ class Projectile {
     if (abilityDef) {
       this.collisionBehaviours = abilityDef.getCollisionBehaviours();
     }
-
+    this.speed += 0.0000001;
   }
 
   setStyle(style) {

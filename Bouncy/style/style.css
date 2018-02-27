@@ -844,6 +844,15 @@
   );
   cursor: default;
 }
+.button.disabled.red {
+  background: repeating-linear-gradient(
+    45deg,
+    #FF7777,
+    #FF7777 10px,
+    #7A7A7A 10px,
+    #7A7A7A 15px
+  );
+}
 
 .joinGameButton {
   position: relative;

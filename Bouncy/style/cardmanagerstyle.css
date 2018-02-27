@@ -52,6 +52,7 @@ h3.cardName {
   padding: 8px;
   border: 1px solid black;
   min-height: 100px;
+  position: relative;
 }
 
 .cardControlSection .perkNode.notowned {

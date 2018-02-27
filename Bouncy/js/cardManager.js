@@ -53,6 +53,7 @@ class CardManager {
     // Card name and description
     $(".cardControlSection .cardName").text(this.abilityDef.getName());
     $(".cardControlSection .cardDescription").html(this.abilityDef.getDescription());
+    $(".cardControlSection .cardDescription").append(this.abilityDef.getCooldownIcon());
 
     // Update experience section
     $(".cardControlSection .cardPerkPointsAvailable .cardPerkPoints").text(
@@ -76,7 +77,9 @@ class CardManager {
       this.tryToAddPerk(perkKey);
     }
 
-    if (this.previewPerkList.length > 0) {
+    if (this.playerCard.getPerkPoints() < this.previewPerkList.length) {
+      $(".cardControlSection .saveButton").addClass("disabled").addClass("red");
+    } else if (this.previewPerkList.length > 0) {
       $(".cardControlSection .saveButton").removeClass("disabled");
     } else {
       $(".cardControlSection .saveButton").addClass("disabled");
@@ -113,7 +116,8 @@ class CardManager {
 
   tryToAddPerk(perkKey) {
     if (
-      this.playerCard.getPerkPoints() > this.previewPerkList.length &&
+      // Allow testing.
+      // this.playerCard.getPerkPoints() > this.previewPerkList.length &&
       AbilityFactory.CanAddPerk(
         this.playerCard.cardID,
         perkKey,
@@ -220,8 +224,10 @@ class CardManager {
   }
 
   handleSave(event) {
-    this.playerCard.addPerks(this.previewPerkList);
-    this.setupForCard(this.playerCard);
-    ServerCalls.SavePlayerCard(null, this.playerCard);
+    if (this.playerCard.getPerkPoints() >= this.previewPerkList.length) {
+      this.playerCard.addPerks(this.previewPerkList);
+      this.setupForCard(this.playerCard);
+      ServerCalls.SavePlayerCard(null, this.playerCard);
+    }
   }
 }

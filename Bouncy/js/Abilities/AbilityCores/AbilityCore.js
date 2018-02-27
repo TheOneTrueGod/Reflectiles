@@ -1,4 +1,15 @@
 class AbilityCore {
+  static BuildPerkDetails(perkList) {
+    let perks = this.GetPerkList();
+    let perkPcts = {};
+    let perkCounts = AbilityFactory.ConvertPerkListToCounts(perkList);
+
+    for (let perk of perks) {
+      perkPcts[perk.key] = idx(perkCounts, perk.key, 0) / perk.levels;
+    }
+    return {perkCounts, perkPcts};
+  }
+
   static BuildAbility(perkList) {
     throw new Error("You must override BuildAbility in a child of AbilityCore.");
   }

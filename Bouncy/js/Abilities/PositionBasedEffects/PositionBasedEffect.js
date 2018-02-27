@@ -4,6 +4,10 @@ class PositionBasedEffect {
     this.abilityDef = abilityDef;
   }
 
+  doHitEffect(boardState, unit, intersection, projectile) {
+    this.doEffect(boardState, projectile);
+  }
+
   doEffect(boardState, projectile) {
 
   }
@@ -12,7 +16,7 @@ class PositionBasedEffect {
 PositionBasedEffect.EFFECTS = {
   USE_ABILITY:'USE_ABILITY',
   BULLET_EXPLOSION:'BULLET_EXPLOSION'
-}
+};
 
 PositionBasedEffect.getEffectFromType = function(positionEffectDef, abilityDef, projectileShape) {
   switch(positionEffectDef.effect) {
@@ -22,4 +26,4 @@ PositionBasedEffect.getEffectFromType = function(positionEffectDef, abilityDef, 
       return new UseAbilityEffect(positionEffectDef, abilityDef, projectileShape);
   }
   return new PositionBasedEffect(positionEffectDef, abilityDef);
-}
+};

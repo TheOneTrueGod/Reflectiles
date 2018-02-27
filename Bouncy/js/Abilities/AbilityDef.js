@@ -53,9 +53,9 @@ class AbilityDef {
             nestedList[i].effect == PositionBasedEffect.EFFECTS.USE_ABILITY ||
             nestedList[i].effect == ProjectileShape.HitEffects.INFECT
           )
-        )
-        || nestedList[i].abil_def)
-        && !nestedList[i].initializedDef
+        ) ||
+        nestedList[i].abil_def) &&
+        !nestedList[i].initializedDef
       ) {
         var newAbil = AbilityDef.createFromJSON(nestedList[i].abil_def, true);
         nestedList[i].initializedAbilDef = newAbil;
@@ -198,6 +198,17 @@ class AbilityDef {
         text.slice(match.index + match[0].length, text.length);
 
 
+      match = text.match(search);
+    }
+
+    search = "\\<\\<.*?\\>\\>";
+    match = text.match(search);
+    while (match) {
+      let replacement = text.slice(match.index + 2, match.index + match[0].length - 2);
+      replacement = "<span class='replacedText'>" + replacement + "</span>";
+
+      text = text.slice(0, match.index) + replacement +
+        text.slice(match.index + match[0].length, text.length);
       match = text.match(search);
     }
     return text;

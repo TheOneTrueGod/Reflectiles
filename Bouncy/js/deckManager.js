@@ -44,7 +44,12 @@ class DeckManager {
 
     this.updateCardStatus();
 
-    $('.abilityCard').first().click();
+    var url_string = window.location.href;
+    var url = new URL(url_string);
+    var autoSelect = url.searchParams.get("card");
+    if (autoSelect !== null) {
+      $('.abilityCard[data-index=' + autoSelect + ']').first().click();
+    }
   }
 
   deckCardClicked(event) {
@@ -89,7 +94,7 @@ class DeckManager {
   }
 
   showCardManager(playerCard) {
-    this.cardManager.setupForCard(playerCard)
+    this.cardManager.setupForCard(playerCard);
     $(".deckControlSection").addClass("hidden");
     $(".cardControlSection").removeClass("hidden");
   }
