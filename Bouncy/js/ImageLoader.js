@@ -30,6 +30,7 @@ class ImageLoader {
         .add("poison_sheet",  "/Bouncy/assets/sprites/poison_sheet.png")
         .add("weapons_sheet",  "/Bouncy/assets/sprites/weapons_sheet.png")
         .add("deployables", "/Bouncy/assets/sprites/deployables.png")
+        .add("zone_icon_shield", "/Bouncy/assets/sprites/zone_icon_shield.png")
         .load(callback);
   }
 

@@ -36,6 +36,14 @@ class AbilityCore {
     }
     return null;
   }
+
+  static GetDemoUnits() {
+    return  [
+      [null, UnitBasicSquare, UnitBasicSquare, UnitShooter, UnitBasicSquare, UnitBasicSquare],
+      [null, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare],
+      [null, UnitBasicSquare, UnitBasicSquare, UnitShooter, UnitBasicSquare, UnitBasicSquare]
+    ];
+  }
 }
 
 AbilityCore.coreList = {};

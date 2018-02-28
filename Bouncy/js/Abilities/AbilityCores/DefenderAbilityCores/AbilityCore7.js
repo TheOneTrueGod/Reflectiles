@@ -38,6 +38,7 @@ class AbilityCore7 extends AbilityCore {
       zone_size: {left:1, right:1, top:0, bottom:0, y_range: 0},
       max_range: {left: 5, right: 5, top: 1, bottom: 1},
       unit_enter_effect: {},
+      zone_icon: 'zone_icon_shield',
       icon: "/Bouncy/assets/icons/icon_plain_shield.png",
       charge: {"initial_charge":-1,"max_charge":3,"charge_type":"TURNS"},
     };
@@ -122,6 +123,17 @@ class AbilityCore7 extends AbilityCore {
 
   static GetCardDeckType() {
     return CardDeckTypes.DEFENDER;
+  }
+
+  static GetDemoUnits() {
+    return  [
+      [null, UnitBasicSquare, UnitShooter, UnitBasicSquare, UnitShooter, UnitBasicSquare],
+      [null, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare],
+      [null, UnitBasicSquare, UnitShooter, UnitBasicSquare, UnitShooter, UnitBasicSquare],
+      [null, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare],
+      [null, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare],
+      [null, null, null, UnitBasicSquare],
+    ];
   }
 }
 

@@ -61,7 +61,7 @@ class CardManager {
     );
 
     if (MainGame && MainGame instanceof CardDemo) {
-      MainGame.demoAbility(this.abilityDef);
+      MainGame.demoAbility(this.abilityDef, this.playerCard);
     }
   }
 

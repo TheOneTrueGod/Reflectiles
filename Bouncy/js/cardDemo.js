@@ -18,20 +18,9 @@ class CardDemo extends MainGame {
     ];
   }
 
-  buildAbility(core, perkList) {
-    if (!perkList) {
-      perkList = [];
-    }
-    let key = core.prototype.constructor.name + perkList.join(",");
-    if (key in this.cachedAbilities) {
-      return this.cachedAbilities[key];
-    }
-    let ability = core.BuildAbility(perkList);
-    this.cachedAbilities[key] = ability;
-    return ability;
-  }
-
-  demoAbility(abilDef) {
+  demoAbility(abilDef, playerCard) {
+    let core = AbilityFactory.GetAbilityCore(playerCard.cardID);
+    this.unitsToSpawn = core.GetDemoUnits();
     this.abilitiesToUse = [
       [abilDef.index, {x: 0, y: -100}]
     ];
@@ -41,7 +30,6 @@ class CardDemo extends MainGame {
       clearTimeout(this.tickLoopTimeout);
       this.playingOutTurn = false;
       this.abilityTestRunCommands();
-
     }
   }
 

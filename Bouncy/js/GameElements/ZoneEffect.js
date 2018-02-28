@@ -146,6 +146,7 @@ class ZoneEffect extends Unit {
     this.size = this.creatorAbility.getZoneSize();
 
     this.SPRITE = this.creatorAbility.getOptionalParam('sprite', this.SPRITE);
+    this.ZONE_ICON = this.creatorAbility.getOptionalParam('zone_icon', this.ZONE_ICON);
     this.DELETION_PHASE = this.creatorAbility.getOptionalParam(
       'deletion_phase', this.DELETION_PHASE);
 
@@ -226,6 +227,13 @@ class ZoneEffect extends Unit {
           -left + 12, -top + 12,
           left + right - 24, top + bottom - 24
         );
+      }
+
+      if (this.ZONE_ICON) {
+        let zoneIconSprite =
+          new PIXI.Sprite(PIXI.loader.resources[this.ZONE_ICON].texture);
+        zoneIconSprite.anchor.set(0.5);
+        sprite.addChild(zoneIconSprite);
       }
       this.createHealthBarSprite(sprite);
     }
