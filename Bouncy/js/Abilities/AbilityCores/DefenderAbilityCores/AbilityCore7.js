@@ -7,7 +7,7 @@
 // Increase horizontal range you can cast it at
 // Stun enemies that it retaliates against
 // Knockback enemies that it retaliates against
-// 
+//
 class AbilityCore7 extends AbilityCore {
   static BuildAbility(perkList) {
     const rawAbil = {
@@ -46,7 +46,76 @@ class AbilityCore7 extends AbilityCore {
 
   static GetPerkList() {
     let perkList = [
-      (new AbilityPerkNode('damage',    20, [0, 0])),
+      // Level 0
+      (new AbilityPerkNode('melee thorns',    5, [0, 1])),
+      (new AbilityPerkNode('health 1',    3, [0, 3])),
+      (new AbilityPerkNode('size up 1',    3, [0, 5])),
+      // Level 1
+      (new AbilityPerkNode('thorns damage 1',    5, [1, 1]))
+        .addRequirement(new PerkLevelRequirement('melee thorns')),
+      (new AbilityPerkNode('health 2',    3, [1, 2]))
+        .addRequirement(new OrPerkLevelRequirement([
+          new PerkLevelRequirement('health 1'),
+          new PerkLevelRequirement('melee thorns')
+        ])),
+      (new AbilityPerkNode('cast range sideways',    3, [1, 4]))
+        .addRequirement(new OrPerkLevelRequirement(
+          [new PerkLevelRequirement('health 1'),
+          new PerkLevelRequirement('size up 1')]
+        )),
+      // Level 2
+      (new AbilityPerkNode('thorns damage 2',    5, [2, 0]))
+        .addRequirement(new PerkLevelRequirement('thorns damage 1')),
+      (new AbilityPerkNode('thorns damage 3',    5, [2, 1]))
+        .addRequirement(new PerkLevelRequirement('thorns damage 1')),
+      (new AbilityPerkNode('thorns range 1',    5, [2, 2]))
+        .addRequirement(new PerkLevelRequirement('thorns damage 1')),
+      // Level 3
+      (new AbilityPerkNode('shield duration',    5, [3, 4]))
+        .addRequirement(new OrPerkLevelRequirement([
+          new PerkLevelRequirement('health 2'),
+          new PerkLevelRequirement('cast range sideways'),
+        ])),
+      // Level 4
+      (new AbilityPerkNode('ranged thorns',    3, [4, 1]))
+        .addRequirement(new OrPerkLevelRequirement(
+          [new PerkLevelRequirement('thorns damage 2'),
+          new PerkLevelRequirement('thorns damage 3'),
+          new PerkLevelRequirement('thorns range 1')]
+        )),
+      (new AbilityPerkNode('stunning shield',    3, [4, 3]))
+        .addRequirement(new PerkLevelRequirement('thorns range 1'))
+        .addRequirement(new PerkLevelRequirement('shield duration')),
+      (new AbilityPerkNode('shield health 2',    5, [4, 5]))
+        .addRequirement(new OrPerkLevelRequirement([
+          new PerkLevelRequirement('cast range sideways'),
+          new PerkLevelRequirement('shield duration')
+        ])),
+      // Level 5
+      (new AbilityPerkNode('thorns range 2',    5, [5, 0]))
+        .addRequirement(new PerkLevelRequirement('ranged thorns')),
+      (new AbilityPerkNode('cast range 2',    5, [5, 4]))
+        .addRequirement(new PerkLevelRequirement('shield duration')),
+      // Level 6
+      (new AbilityPerkNode('thorn count',    5,   [6, 1]))
+        .addRequirement(new PerkLevelRequirement('ranged thorns')),
+      (new AbilityPerkNode('shield duration 2',    3, [6, 3]))
+        .addRequirement(new PerkLevelRequirement('stunning shield')),
+
+      // Level 7
+      (new AbilityPerkNode('thorns pierce',    3, [7, 0]))
+        .addRequirement(new PerkLevelRequirement('thorns range 2'))
+        .addRequirement(new PerkLevelRequirement('thorn count')),
+
+      (new AbilityPerkNode('stunning thorns',    3, [7, 2]))
+        .addRequirement(new PerkLevelRequirement('thorns range 1'))
+        .addRequirement(new OrPerkLevelRequirement([
+          new PerkLevelRequirement('shield width'),
+          new PerkLevelRequirement('shield duration 2'),
+        ])),
+      (new AbilityPerkNode('shield width',    3, [7, 5]))
+        .addRequirement(new PerkLevelRequirement('shield health 2'))
+        .addRequirement(new PerkLevelRequirement('cast range 2')),
     ];
     return perkList;
   }
