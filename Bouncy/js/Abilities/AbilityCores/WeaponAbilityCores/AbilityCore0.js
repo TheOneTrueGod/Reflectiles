@@ -192,7 +192,8 @@ class AbilityCore0 extends AbilityCore {
         .addRequirement(new OrPerkLevelRequirement(
           [new PerkLevelRequirement('impact2'),
           new PerkLevelRequirement('radius2')]
-        )),
+        ))
+        .addRequirement(new PerkLevelRequirement('damage2')),
 
       // Level 4
       (new AbilityPerkNode('rocket count4', 3, [3, 1]))

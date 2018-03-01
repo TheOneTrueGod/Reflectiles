@@ -259,7 +259,7 @@ class AbilityDef {
 
     if (cooldownTime) {
       let $cooldownIcon = $("<div>", {"class": "cooldownIcon"});
-      let $cooldownText = $("<div>", {"class": "cooldownText"});
+      let $cooldownText = $("<div>", {"class": "cooldownText noselect"});
       $cooldownText.text(cooldownTime);
       $cooldownIcon.append($cooldownText);
       return $cooldownIcon;

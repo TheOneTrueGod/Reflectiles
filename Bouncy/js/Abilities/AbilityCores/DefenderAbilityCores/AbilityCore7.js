@@ -1,12 +1,9 @@
 // Shield.
+// Each bullet deals ERROR damage on double wave
 // Perk Ideas
-// Increase the duration
-// Retaliate against enemies shooting it
-// Retaliate against enemies walking into it
-// Increase width
-// Increase horizontal range you can cast it at
-// Stun enemies that it retaliates against
-// Knockback enemies that it retaliates against
+// Moving shield?
+// Selectable text (experience, cooldown)
+// Clicking save when you have 0 points invested makes a call
 //
 class AbilityCore7 extends AbilityCore {
   static BuildAbility(perkList) {
@@ -21,6 +18,8 @@ class AbilityCore7 extends AbilityCore {
 
     let has_pierce = idx(perkPcts, 'thorns pierce', 0) === 1;
 
+    let width_bonus = idx(perkPcts, 'shield width 1', 0) + idx(perkPcts, 'shield width 2', 0);
+
     let width_bonus_left = idx(perkPcts, 'shield width 1', 0) === 1 ? 1 : 0;
     let width_bonus_right = idx(perkPcts, 'shield width 2', 0) === 1 ? 1 : 0;
 
@@ -34,7 +33,7 @@ class AbilityCore7 extends AbilityCore {
       name: 'Shield',
       description: 'Puts up a shield with [[duration]] health.<br>' +
         'It loses one health per turn, or when it defends.<br>' +
-        (thornsAbility ? 'Whenever a unit tries to enter, ' + (has_ranged_thorns ? 'or you defend against a bullet, ' : '') + 'relatiate for [[unit_interaction.unit_enter[0].abil_def.hit_effects[0].base_damage]] damage<br>' : '') +
+        (thornsAbility ? 'Whenever a unit tries to enter, ' + (has_ranged_thorns ? 'or you defend against a bullet, ' : '') + 'retaliate for [[unit_interaction.unit_enter[0].abil_def.hit_effects[0].base_damage]] damage.<br>' : '') +
         (has_pierce ? 'These thorns pierce up to <<3>> enemies.' : ''),
       card_text_description: '[[unit_interaction.unit_enter[0].abil_def.hit_effects[0].base_damage]]',
       zone_tooltip_name: 'Shield',

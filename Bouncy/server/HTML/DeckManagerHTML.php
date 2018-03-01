@@ -33,7 +33,7 @@
             <div class="cardExperienceNumber noselect">34452</div>
           </div>
           <div class="cardPerkPointsAvailable">
-            <div class="cardPerkPoints"></div>
+            <div class="cardPerkPoints noselect"></div>
           </div>
         </div>
         <div class="cardDescription">The card description will go here</div>
