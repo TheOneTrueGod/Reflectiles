@@ -35,6 +35,9 @@ class Projectile {
     this.eventListeners = {};
     this.timeoutCallback = null;
     this.duration = -1;
+    if (abilityDef) {
+      this.duration = abilityDef.getOptionalParam('duration', this.duration);
+    }
     this.wallsHit = 0;
     this.lastCollisionPoint = null;
     this.projectileStyle = null;

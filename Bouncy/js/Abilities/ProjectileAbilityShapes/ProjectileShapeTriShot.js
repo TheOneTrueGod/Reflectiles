@@ -8,6 +8,8 @@ class ProjectileShapeTriShot extends ProjectileShape {
     this.bullets_per_side = Math.floor(
       (abilityDef.getOptionalParam('num_bullets', 1) - 1) / 2
     );
+    this.min_angle = abilityDef.getOptionalParam('min_angle', Math.PI / 16.0);
+    this.max_angle = abilityDef.getOptionalParam('max_angle', Math.PI / 6.0);
     if (this.num_bullets % 2 == 0) {
       this.num_bullets -= 1;
       console.warn("ProjectileShapeTriShot doesn't support even numbers yet");
@@ -23,7 +25,7 @@ class ProjectileShapeTriShot extends ProjectileShape {
     var dist = Victor(endPos.x - startPos.x, endPos.y - startPos.y).length();
 
     return lerp(
-      MAX_ANGLE, MIN_ANGLE,
+      this.max_angle, this.min_angle,
       Math.min((dist - MIN_DIST) / MAX_DIST, 1)
      );
   }

@@ -4,6 +4,7 @@ class ZoneEffect extends Unit {
     this.timeLeft = {current: 3, max: 3}; // Placeholder.  Will replace in a bit.
     this.DELETION_PHASE = TurnPhasesEnum.ENEMY_SPAWN;
     this.SPRITE = null;
+    this.zone_icon_sprite = null;
     this.owningPlayerID = owningPlayerID;
     this.spriteScale = {x: 1, y: 1};
     if (creatorAbilityID !== undefined) {
@@ -230,10 +231,23 @@ class ZoneEffect extends Unit {
       }
 
       if (this.ZONE_ICON) {
-        let zoneIconSprite =
+
+        let backgroundSprite =
           new PIXI.Sprite(PIXI.loader.resources[this.ZONE_ICON].texture);
-        zoneIconSprite.anchor.set(0.5);
-        sprite.addChild(zoneIconSprite);
+        backgroundSprite.anchor.set(0.5);
+        backgroundSprite.width = 25;
+        backgroundSprite.height = 25;
+        sprite.addChild(backgroundSprite);
+        backgroundSprite.tint = 0xFFFFFF;
+
+        this.zone_icon_sprite =
+          new PIXI.Sprite(PIXI.loader.resources[this.ZONE_ICON].texture);
+        this.zone_icon_sprite.anchor.set(0.5);
+        this.zone_icon_sprite.width = 25;
+        this.zone_icon_sprite.height = 25;
+        sprite.addChild(this.zone_icon_sprite);
+
+        this.zone_icon_sprite.tint = 0x00FF00;
       }
       this.createHealthBarSprite(sprite);
     }
@@ -251,8 +265,11 @@ class ZoneEffect extends Unit {
       this.gameSprite.removeChild(this.healthBarSprites.textSprite);
       this.healthBarSprites.textSprite = null;
     }
-    if (this.health.current <= 0) { return; }
     var healthPct = this.timeLeft.current / Math.max(this.timeLeft.max, 1);
+    if (this.zone_icon_sprite) {
+      this.zone_icon_sprite.alpha = healthPct;
+    }
+    if (this.health.current <= 0) { return; }
     var fontSize = 14;// + Math.floor(healthPct) * 6;
     var healthBarGraphic = new PIXI.Text(
       this.timeLeft.current,

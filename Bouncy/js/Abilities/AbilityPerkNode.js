@@ -28,6 +28,15 @@ class AbilityPerkNode {
   }
 }
 
+// Perk only does something when maxxed out.
+class MaxxedAbilityPerkNode extends AbilityPerkNode {
+  createNodeHTML(level) {
+    let html = super.createNodeHTML(level);
+    html.addClass("maxOnlyPerk");
+    return html;
+  }
+}
+
 class AbilityPerkRequirement {
   constructor(perkName) {
     this.perkName = perkName;

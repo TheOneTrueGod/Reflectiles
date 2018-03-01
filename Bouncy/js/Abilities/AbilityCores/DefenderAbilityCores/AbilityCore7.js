@@ -22,16 +22,7 @@ class AbilityCore7 extends AbilityCore {
       ability_type: AbilityDef.AbilityTypes.ZONE,
       unit_interaction: {
         prevent_unit_entry: true,
-        unit_enter:[{
-          effect: "ABILITY",
-          ability_source: "BELOW_UNIT",
-          abil_def: {
-            "ability_type": AbilityDef.AbilityTypes.PROJECTILE,
-            shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
-            projectile_type: "PENETRATE",
-            "hit_effects":[{effect: ProjectileShape.HitEffects.DAMAGE, base_damage: 400}]
-          }
-        }]
+        unit_enter:[this.GetThornsAbility()]
       },
       projectile_interaction: {enemy_projectiles: {destroy: true}},
       duration: 6,
@@ -45,12 +36,31 @@ class AbilityCore7 extends AbilityCore {
     return AbilityDef.createFromJSON(rawAbil);
   }
 
+  static GetThornsAbility() {
+    const rawAbil = {
+      effect: ZoneAbilityDef.UnitEffectTypes.ABILITY,
+      ability_source: ZoneAbilityDef.AbilitySources.CENTER_ZONE,
+      abil_def: {
+        ability_type: AbilityDef.AbilityTypes.PROJECTILE,
+        shape: ProjectileAbilityDef.Shapes.TRI_SHOT,
+        projectile_type: ProjectileShape.ProjectileTypes.PENETRATE,
+        min_angle: Math.PI / 2.0,
+        max_angle: Math.PI / 2.0,
+        duration: 20,
+        num_bullets: 5,
+        speed: 4,
+        hit_effects:[{effect: ProjectileShape.HitEffects.DAMAGE, base_damage: 400}]
+      }
+    };
+    return rawAbil;
+  }
+
   static GetPerkList() {
     let perkList = [
       // Level 0
-      (new AbilityPerkNode('melee thorns',    5, [0, 1])),
+      (new MaxxedAbilityPerkNode('melee thorns',    2, [0, 1])),
       (new AbilityPerkNode('health 1',    3, [0, 3])),
-      (new AbilityPerkNode('size up 1',    3, [0, 5])),
+      (new MaxxedAbilityPerkNode('shield width 1',    3, [0, 5])),
       // Level 1
       (new AbilityPerkNode('thorns damage 1',    5, [1, 1]))
         .addRequirement(new PerkLevelRequirement('melee thorns')),
@@ -59,10 +69,10 @@ class AbilityCore7 extends AbilityCore {
           new PerkLevelRequirement('health 1'),
           new PerkLevelRequirement('melee thorns')
         ])),
-      (new AbilityPerkNode('cast range sideways',    3, [1, 4]))
+      (new MaxxedAbilityPerkNode('cast range sideways',    3, [1, 4]))
         .addRequirement(new OrPerkLevelRequirement(
           [new PerkLevelRequirement('health 1'),
-          new PerkLevelRequirement('size up 1')]
+          new PerkLevelRequirement('shield width 1')]
         )),
       // Level 2
       (new AbilityPerkNode('thorns damage 2',    5, [2, 0]))
@@ -78,13 +88,13 @@ class AbilityCore7 extends AbilityCore {
           new PerkLevelRequirement('cast range sideways'),
         ])),
       // Level 4
-      (new AbilityPerkNode('ranged thorns',    3, [4, 1]))
+      (new MaxxedAbilityPerkNode('ranged thorns',    3, [4, 1]))
         .addRequirement(new OrPerkLevelRequirement(
           [new PerkLevelRequirement('thorns damage 2'),
           new PerkLevelRequirement('thorns damage 3'),
           new PerkLevelRequirement('thorns range 1')]
         )),
-      (new AbilityPerkNode('stunning shield',    3, [4, 3]))
+      (new MaxxedAbilityPerkNode('stunning shield',    3, [4, 3]))
         .addRequirement(new PerkLevelRequirement('thorns range 1'))
         .addRequirement(new PerkLevelRequirement('shield duration')),
       (new AbilityPerkNode('shield health 2',    5, [4, 5]))
@@ -104,17 +114,17 @@ class AbilityCore7 extends AbilityCore {
         .addRequirement(new PerkLevelRequirement('stunning shield')),
 
       // Level 7
-      (new AbilityPerkNode('thorns pierce',    3, [7, 0]))
+      (new MaxxedAbilityPerkNode('thorns pierce',    3, [7, 0]))
         .addRequirement(new PerkLevelRequirement('thorns range 2'))
         .addRequirement(new PerkLevelRequirement('thorn count')),
 
-      (new AbilityPerkNode('stunning thorns',    3, [7, 2]))
+      (new MaxxedAbilityPerkNode('stunning thorns',    3, [7, 2]))
         .addRequirement(new PerkLevelRequirement('thorns range 1'))
         .addRequirement(new OrPerkLevelRequirement([
-          new PerkLevelRequirement('shield width'),
+          new PerkLevelRequirement('shield width 2'),
           new PerkLevelRequirement('shield duration 2'),
         ])),
-      (new AbilityPerkNode('shield width',    3, [7, 5]))
+      (new AbilityPerkNode('shield width 2',    3, [7, 5]))
         .addRequirement(new PerkLevelRequirement('shield health 2'))
         .addRequirement(new PerkLevelRequirement('cast range 2')),
     ];

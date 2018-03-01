@@ -212,7 +212,7 @@ class AbilityCore0 extends AbilityCore {
       (new AbilityPerkNode('damage radius5', 3, [4, 3]))
         .addRequirement(new PerkLevelRequirement('rocket count4')),
       // Level 6
-      (new AbilityPerkNode('cluster rocket', 3, [5, 1]))
+      (new MaxxedAbilityPerkNode('cluster rocket', 3, [5, 1]))
         .addRequirement(new PerkLevelRequirement('rocket count4')),
 
       // Level 7
@@ -221,7 +221,7 @@ class AbilityCore0 extends AbilityCore {
           [new PerkLevelRequirement('damage5'),
           new PerkLevelRequirement('damage radius5')]
         )),
-      (new AbilityPerkNode('incindiary', 3, [6, 5]))
+      (new MaxxedAbilityPerkNode('incendiary', 3, [6, 5]))
         .addRequirement(new PerkLevelRequirement('damage5')),
 
       // Level 8
@@ -231,15 +231,15 @@ class AbilityCore0 extends AbilityCore {
         .addRequirement(new PerkLevelRequirement('cluster rocket')),
       (new AbilityPerkNode('damage8', 3, [7, 4]))
         .addRequirement(new OrPerkLevelRequirement(
-          [new PerkLevelRequirement('incindiary'),
+          [new PerkLevelRequirement('incendiary'),
           new PerkLevelRequirement('damage6')]
         )),
       (new AbilityPerkNode('fire radius', 3, [7, 5]))
-        .addRequirement(new PerkLevelRequirement('incindiary')),
+        .addRequirement(new PerkLevelRequirement('incendiary')),
 
       // Level 9
       (new AbilityPerkNode('fire damage', 3, [7, 6]))
-        .addRequirement(new PerkLevelRequirement('incindiary')),
+        .addRequirement(new PerkLevelRequirement('incendiary')),
 
     ];
     return perkList;
