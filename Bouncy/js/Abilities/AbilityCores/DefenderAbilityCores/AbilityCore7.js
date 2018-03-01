@@ -1,9 +1,6 @@
 // Shield.
-// Each bullet deals ERROR damage on double wave
 // Perk Ideas
 // Moving shield?
-// Selectable text (experience, cooldown)
-// Clicking save when you have 0 points invested makes a call
 //
 class AbilityCore7 extends AbilityCore {
   static BuildAbility(perkList) {

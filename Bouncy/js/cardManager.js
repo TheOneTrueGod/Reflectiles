@@ -224,7 +224,10 @@ class CardManager {
   }
 
   handleSave(event) {
-    if (this.playerCard.getPerkPoints() >= this.previewPerkList.length) {
+    if (
+      this.playerCard.getPerkPoints() >= this.previewPerkList.length &&
+      this.previewPerkList.length > 0
+    ) {
       this.playerCard.addPerks(this.previewPerkList);
       this.setupForCard(this.playerCard);
       ServerCalls.SavePlayerCard(null, this.playerCard);

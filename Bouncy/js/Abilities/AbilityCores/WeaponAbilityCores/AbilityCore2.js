@@ -2,7 +2,7 @@ class AbilityCore2 extends AbilityCore {
   static BuildAbility(perkList) {
     let perkResults = this.BuildPerkDetails(perkList); let perkPcts = perkResults.perkPcts; let perkCounts = perkResults.perkCounts;
 
-    let damageMult = idx(perkPcts, 'damage', 0) * 3;
+    let damageMult = (1 + idx(perkPcts, 'damage', 0) * 3);
     let damage = Math.floor(50 * damageMult);
 
     const rawAbil = { // 1440 damage
