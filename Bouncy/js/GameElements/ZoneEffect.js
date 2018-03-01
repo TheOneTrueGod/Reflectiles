@@ -83,7 +83,7 @@ class ZoneEffect extends Unit {
 
   triggerHit(boardState, unit, intersection, projectile) {
     let interaction = this.getInteractionForProjectile(projectile);
-    if (interaction == null) {
+    if (interaction === null) {
       return;
     }
 
@@ -103,6 +103,17 @@ class ZoneEffect extends Unit {
         default:
         throw new Error("unhandled buff type: [" + interaction.buff.type + "]");
       }
+    }
+
+    if (interaction.ability && interaction.ability.initializedAbilDef) {
+      interaction.ability.initializedAbilDef.doActionOnTick(
+        this.owningPlayerID,
+        0,
+        boardState,
+        {x: this.x, y: this.y},
+        {x: this.x, y: this.y - Unit.UNIT_SIZE},
+        this
+      );
     }
   }
 

@@ -11,6 +11,13 @@ class ZoneAbilityDef extends AbilityDef {
     if (defJSON.phase_effects) {
       this.loadNestedAbilityDefs(defJSON.phase_effects);
     }
+    if (
+      defJSON.projectile_interaction &&
+      defJSON.projectile_interaction.enemy_projectiles &&
+      defJSON.projectile_interaction.enemy_projectiles.ability
+    ) {
+      this.loadNestedAbilityDefs(defJSON.projectile_interaction.enemy_projectiles.ability);
+    }
     this.MAX_RANGE = this.getOptionalParam('max_range', {left: 0, right: 0, top: 0, bottom: 0});
     this.ZONE_TYPE = this.getOptionalParam('zone_type', null);
   }
@@ -33,7 +40,7 @@ class ZoneAbilityDef extends AbilityDef {
     //console.log(castPointCoord.x - this.MAX_RANGE.left, targetCoord.x, castPointCoord.x + this.MAX_RANGE.right);
     //console.log(castPointCoord.y - this.MAX_RANGE.top, targetCoord.y, castPointCoord.y + this.MAX_RANGE.bottom);
 
-    var target = {x: targX, y: targY};
+    target = {x: targX, y: targY};
     if (!target) { return null; }
     return MainGame.boardState.sectors.getPositionFromGrid(target);
 /*    var max_range = idx(this.getOptionalParam('zone_size', {}), 'y_range', -1);

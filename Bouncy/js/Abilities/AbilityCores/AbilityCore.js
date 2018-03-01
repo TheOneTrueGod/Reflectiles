@@ -44,6 +44,10 @@ class AbilityCore {
       [null, UnitBasicSquare, UnitBasicSquare, UnitShooter, UnitBasicSquare, UnitBasicSquare]
     ];
   }
+
+  static GetDemoTurns() {
+    return 1;
+  }
 }
 
 AbilityCore.coreList = {};

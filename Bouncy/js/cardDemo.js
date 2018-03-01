@@ -22,8 +22,9 @@ class CardDemo extends MainGame {
     let core = AbilityFactory.GetAbilityCore(playerCard.cardID);
     this.unitsToSpawn = core.GetDemoUnits();
     this.abilitiesToUse = [
-      [abilDef.index, {x: 0, y: -100}]
+      [abilDef.index, {x: 0, y: -30}]
     ];
+    this.MAX_TURNS_TO_PLAY = core.GetDemoTurns();
 
     if (this.boardState) {
       this.abilityTestReset();

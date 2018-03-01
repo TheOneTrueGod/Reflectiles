@@ -26,14 +26,14 @@ class StandardProjectile extends Projectile {
 
     let throwProjectileEvent = (event) => {
       return this.throwProjectileEvent(event, boardState, unit, intersection);
-    }
+    };
 
     if (behaviour !== CollisionBehaviour.NOTHING) {
       if (
         throwProjectileEvent(ProjectileEvents.ON_HIT) &&
         !unit.readyToDelete()
       ) {
-        EffectFactory.createDamageEffect(boardState, intersection)
+        EffectFactory.createDamageEffect(boardState, intersection);
       }
     }
 
