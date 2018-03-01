@@ -95,10 +95,15 @@
   top: 95px;
 }
 
-.damageDealt {
+.damageDealt,
+.damageTaken {
   position: absolute;
   bottom: 20px;
   width: 100%;
   color: white;
   text-align: center;
+}
+
+.damageDealt {
+  bottom: 80px;
 }

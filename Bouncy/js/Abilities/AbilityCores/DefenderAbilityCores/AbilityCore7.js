@@ -17,9 +17,6 @@ class AbilityCore7 extends AbilityCore {
 
     let width_bonus = idx(perkPcts, 'shield width 1', 0) + idx(perkPcts, 'shield width 2', 0);
 
-    let width_bonus_left = idx(perkPcts, 'shield width 1', 0) === 1 ? 1 : 0;
-    let width_bonus_right = idx(perkPcts, 'shield width 2', 0) === 1 ? 1 : 0;
-
     let thornsAbility = this.GetThornsAbility(perkPcts, perkCounts);
 
     let horizontal_range = Math.floor(idx(perkPcts, 'cast range sideways', 0) * 2);
@@ -44,18 +41,17 @@ class AbilityCore7 extends AbilityCore {
       projectile_interaction: {enemy_projectiles: {destroy: true}},
       duration: health,
       zone_size: {
-        left: 1 + width_bonus_left, right: 1 + width_bonus_right,
-        top:0, bottom:0, y_range: 0
+        left: 0 + width_bonus, right: 0 + width_bonus,
+        top: 0, bottom: 0, y_range: 0
       },
       max_range: {
-        left: 4 - width_bonus_left + horizontal_range,
-        right: 4 - width_bonus_right + horizontal_range,
+        left: 4 + horizontal_range,
+        right: 4 + horizontal_range,
         top: 1 + vertical_range, bottom: 1
       },
       unit_enter_effect: {},
       zone_icon: 'zone_icon_shield',
       icon: "/Bouncy/assets/icons/icon_plain_shield.png",
-      charge: {initial_charge: -1, max_charge: 3, charge_type: "TURNS"},
     };
 
     if (thornsAbility) {
@@ -65,6 +61,11 @@ class AbilityCore7 extends AbilityCore {
         rawAbil.projectile_interaction.enemy_projectiles.ability =
           thornsAbility;
       }
+    }
+
+    let cooldown = this.getCooldown(perkList, perkCounts);
+    if (cooldown !== null) {
+      rawAbil.charge = cooldown;
     }
 
     return AbilityDef.createFromJSON(rawAbil);
@@ -135,12 +136,26 @@ class AbilityCore7 extends AbilityCore {
     return rawAbil;
   }
 
+  static getCooldown(perkList, perkCounts) {
+    let perkCount = perkList.length;
+    let cooldown = perkCount * 0.2 + 3;
+    cooldown -= idx(perkCounts, 'recharge 1', 0);
+    cooldown -= idx(perkCounts, 'recharge 2', 0);
+
+    cooldown = Math.round(cooldown);
+    if (cooldown <= 1) {
+      return null;
+    }
+
+    return {initial_charge: -1, max_charge: cooldown, charge_type: "TURNS"};
+  }
+
   static GetPerkList() {
     let perkList = [
       // Level 0
       (new MaxxedAbilityPerkNode('melee thorns',    2, [0, 1])),
       (new AbilityPerkNode('health 1',    4, [0, 3])),
-      (new MaxxedAbilityPerkNode('shield width 1',    3, [0, 5])),
+      (new MaxxedAbilityPerkNode('shield width 1',    2, [0, 5])),
       // Level 1
       (new AbilityPerkNode('thorns damage 1',    5, [1, 1]))
         .addRequirement(new PerkLevelRequirement('melee thorns')),
@@ -168,7 +183,7 @@ class AbilityCore7 extends AbilityCore {
           new PerkLevelRequirement('cast range sideways'),
         ])),
       // Level 4
-      (new MaxxedAbilityPerkNode('ranged thorns',    3, [4, 0]))
+      (new MaxxedAbilityPerkNode('ranged thorns',    6, [4, 0]))
         .addRequirement(new PerkLevelRequirement('thorns damage 2')),
       (new AbilityPerkNode('thorns damage 2',    3, [4, 1]))
         .addRequirement(new OrPerkLevelRequirement(
@@ -187,8 +202,12 @@ class AbilityCore7 extends AbilityCore {
       // Level 5
       (new AbilityPerkNode('thorns range 2',    5, [5, 0]))
         .addRequirement(new PerkLevelRequirement('thorns damage 2')),
+      (new AbilityPerkNode('recharge 1',    6, [5, 2]))
+        .addRequirement(new PerkLevelRequirement('thorns damage 2')),
       (new AbilityPerkNode('cast range 2',    5, [5, 4]))
         .addRequirement(new PerkLevelRequirement('health 4')),
+      (new AbilityPerkNode('recharge 2',    6, [5, 6]))
+        .addRequirement(new PerkLevelRequirement('health 3')),
       // Level 6
       (new MaxxedAbilityPerkNode('thorns count 2',    2,   [6, 1]))
         .addRequirement(new PerkLevelRequirement('thorns damage 2')),
@@ -207,7 +226,7 @@ class AbilityCore7 extends AbilityCore {
         .addRequirement(new PerkLevelRequirement('thorns count 2')),
 
       (new MaxxedAbilityPerkNode('stunning thorns',    3, [7, 2]))
-        .addRequirement(new PerkLevelRequirement('thorns range 1'))
+        .addRequirement(new PerkLevelRequirement('thorns count 2'))
         .addRequirement(new OrPerkLevelRequirement([
           new PerkLevelRequirement('shield width 2'),
           new PerkLevelRequirement('health 5'),

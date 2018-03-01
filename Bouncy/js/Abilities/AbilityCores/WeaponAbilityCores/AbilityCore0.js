@@ -18,7 +18,7 @@ class AbilityCore0 extends AbilityCore {
 
     let rocketCount = 1 + idx(perkCounts, 'rocket count4', 0) + idx(perkCounts, 'rocket count8', 0);
     let isClusterRocket = idx(perkPcts, 'cluster rocket') === 1;
-    let isIncindiary = idx(perkPcts, 'incindiary') === 1;
+    let isIncendiary = idx(perkPcts, 'incendiary') === 1;
 
     let damagePctIncrease =
       idx(perkPcts, 'damage1', 0) * 0.25 +
@@ -39,7 +39,7 @@ class AbilityCore0 extends AbilityCore {
 
     let explosionRadius = 40 * (1 + radiusIncrease);
     let projectileSpeed = 8;
-    let incindiaryPct = 0;
+    let incendiaryPct = 0;
 
     if (isClusterRocket) {
       rocketCount = 10 + 5 * rocketCount;
@@ -47,17 +47,17 @@ class AbilityCore0 extends AbilityCore {
       damagePctIncrease += 1;
     }
 
-    if (isIncindiary) {
-      incindiaryPct = 0.5 + idx(perkPcts, 'fire damage', 0) * 0.5;
+    if (isIncendiary) {
+      incendiaryPct = 0.5 + idx(perkPcts, 'fire damage', 0) * 0.5;
     }
 
     explosionRadius = Math.round(explosionRadius);
 
     let base_damage = Math.round(200 * (1 + damagePctIncrease) / ((rocketCount - 1) * 0.75 + 1));
     let impact_damage = Math.round(base_damage * (impactCount / 10));
-    let incindiary_damage = Math.round(base_damage * incindiaryPct);
+    let incendiary_damage = Math.round(base_damage * incendiaryPct);
     base_damage -= impact_damage / 4;
-    base_damage -= incindiary_damage / 4;
+    base_damage -= incendiary_damage / 4;
     base_damage = Math.max(Math.round(base_damage), 0);
 
     let abilityStyle = (new AbilitySheetSpriteAbilityStyleBuilder())
@@ -76,7 +76,7 @@ class AbilityCore0 extends AbilityCore {
         (rocketCount == 1 ? 'a rocket that deals ' : '[[num_bullets]] rockets that deal ') +
         (impact_damage > 0 ? '[[hit_effects[0].base_damage]] to the first unit hit, and ' : '') +
         '[[hit_effects[1].base_damage]] damage in a circle of size [[hit_effects[1].aoe_size]].' +
-        (isIncindiary ? '<br>Leaves behind a fire zone that deals [[hit_effects[2].abil_def.phase_effects[0].abil_def.hit_effects[0].base_damage]] damage per turn for [[hit_effects[2].abil_def.duration]] turns.  The fire hits <<' + fireSquaresHit + '>> square' + (fireSquaresHit > 1 ? 's' : '') + '.' : ''),
+        (isIncendiary ? '<br>Leaves behind a fire zone that deals [[hit_effects[2].abil_def.phase_effects[0].abil_def.hit_effects[0].base_damage]] damage per turn for [[hit_effects[2].abil_def.duration]] turns.  The fire hits <<' + fireSquaresHit + '>> square' + (fireSquaresHit > 1 ? 's' : '') + '.' : ''),
       card_text_description: '[[hit_effects[1].base_damage]] 3x3',
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: shape,
@@ -109,15 +109,15 @@ class AbilityCore0 extends AbilityCore {
       abilityStyle.setScale(0.75);
     }
 
-    if (isIncindiary) {
-      rawAbil.hit_effects.push(AbilityCore0.getIncindiaryEffect(
-        incindiary_damage, fire_size_upgrades
+    if (isIncendiary) {
+      rawAbil.hit_effects.push(AbilityCore0.getIncendiaryEffect(
+        incendiary_damage, fire_size_upgrades
       ));
     } else {
       rawAbil.hit_effects.push({});
     }
 
-    let cooldown = this.getCooldown(perkList);
+    let cooldown = this.getCooldown(perkList, perkCounts);
     if (cooldown !== null) {
       rawAbil.charge = cooldown;
     }
@@ -139,7 +139,7 @@ class AbilityCore0 extends AbilityCore {
     return {initial_charge: -1, max_charge: cooldown, charge_type: "TURNS"};
   }
 
-  static getIncindiaryEffect(incindiary_damage, fire_size_upgrades) {
+  static getIncendiaryEffect(incendiary_damage, fire_size_upgrades) {
     let size = AbilityCore0.getFireZoneSize(fire_size_upgrades);
     return {
       effect: PositionBasedEffect.EFFECTS.USE_ABILITY,
@@ -157,7 +157,7 @@ class AbilityCore0 extends AbilityCore {
           abil_def: {
             ability_type: AbilityDef.AbilityTypes.POSITION,
             projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
-            hit_effects:[{effect: ProjectileShape.HitEffects.DAMAGE, base_damage: incindiary_damage, aoe_type:"BOX", aoe_size: {"x":[-size[0], size[2]], y:[-size[1], size[3]]}}],
+            hit_effects:[{effect: ProjectileShape.HitEffects.DAMAGE, base_damage: incendiary_damage, aoe_type:"BOX", aoe_size: {"x":[-size[0], size[2]], y:[-size[1], size[3]]}}],
           },
         }],
         zone_size: {"left":size[0],"right":size[2],"top":size[1],"bottom":size[3],"y_range": 0},

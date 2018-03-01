@@ -125,8 +125,10 @@ class CardDemo extends MainGame {
     super.loopTicksForPhase(phase);
     for (let key in this.boardState.gameStats.playerDamage.totg) {
       let damageStat = this.boardState.gameStats.playerDamage.totg[key];
-      $(".damageDealt").html("Damage<br>" + damageStat.damage);
+      $(".damageDealt").html("Damage Dealt<br>" + damageStat.damage);
     }
+    let damageTaken = this.boardState.teamHealth[1] - this.boardState.teamHealth[0];
+    $(".damageTaken").html("Damage Taken<br>" + damageTaken);
   }
 }
 

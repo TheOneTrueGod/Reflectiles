@@ -51,7 +51,9 @@
           >
             <div id="missionActionDisplay"></div>
           </div>
-          <div class="damageDealt">
+          <div class="damageDealt noselect">
+          </div>
+          <div class="damageTaken noselect">
           </div>
         </div>
       </div>
