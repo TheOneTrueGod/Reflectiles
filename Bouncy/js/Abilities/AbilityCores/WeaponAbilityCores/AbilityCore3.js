@@ -1,5 +1,30 @@
 class AbilityCore3 extends AbilityCore {
   static BuildAbility(perkList) {
+    let perkResults = this.BuildPerkDetails(perkList); let perkPcts = perkResults.perkPcts; let perkCounts = perkResults.perkCounts;
+    let damageMod = 1 +
+      idx(perkPcts, 'damage 10', 0) * 0.20 +
+      idx(perkPcts, 'damage 30', 0) * 0.10 +
+      idx(perkPcts, 'damage 31', 0) * 0.10 +
+      idx(perkPcts, 'damage 32', 0) * 0.10 + // .5
+      idx(perkPcts, 'damage 41', 0) * 0.25 +
+      idx(perkPcts, 'damage 43', 0) * 0.25 + // 1
+      idx(perkPcts, 'damage 60', 0) * 0.33 +
+      idx(perkPcts, 'damage 61', 0) * 0.33 +
+      idx(perkPcts, 'damage 62', 0) * 0.33 + // 2
+      idx(perkPcts, 'damage 63', 0) * 0.33 +
+      idx(perkPcts, 'damage 64', 0) * 0.33 +
+      idx(perkPcts, 'damage 65', 0) * 0.33 + // 3
+      idx(perkPcts, 'damage 66', 0) * 0.33   // 3.3
+      ; // max is 3.3
+    let totalDamage = 1600 * damageMod; // Final damage won't always equal this.
+    let num_bullets = 50;
+    let num_splits = 2;
+    let per_bullet_damage = totalDamage / num_bullets;
+    let after_split_damage = per_bullet_damage / (4.0 * num_splits);
+    per_bullet_damage -= after_split_damage * num_splits;
+
+    per_bullet_damage = Math.round(per_bullet_damage);
+    after_split_damage = Math.round(after_split_damage);
     const rawAbil = { // 2250 max damage.
       name: 'Rain',
       description: 'Make it rain.<br>Fires [[num_bullets]] projectiles.<br>' +
@@ -13,7 +38,7 @@ class AbilityCore3 extends AbilityCore {
       projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
       destroy_on_wall: true,
       hit_effects: [
-        {effect: ProjectileShape.HitEffects.DAMAGE, base_damage: 20},
+        {effect: ProjectileShape.HitEffects.DAMAGE, base_damage: per_bullet_damage},
         {
           effect: ProjectileShape.HitEffects.BULLET_SPLIT,
           style: (new AbilitySheetSpriteAbilityStyleBuilder)
@@ -21,12 +46,12 @@ class AbilityCore3 extends AbilityCore {
           projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
           hit_effects: [{
             effect:ProjectileShape.HitEffects.DAMAGE,
-            base_damage: 5,
+            base_damage: after_split_damage,
           }],
-          num_bullets: 2
+          num_bullets: num_splits
         }
       ],
-      num_bullets: 50,
+      num_bullets: num_bullets,
       icon: "/Bouncy/assets/icons/icon_plain_rain.png",
       charge: {"initial_charge":-1, "max_charge": 5, "charge_type":"TURNS"},
     };
