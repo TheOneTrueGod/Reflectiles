@@ -1,3 +1,18 @@
+// No starting radius
+// Two AoE paths
+ // Explosion
+  // Increase radius to 3x3 in plus sign
+  // Increase radius to 3x3
+  // Increase radius to 5x3 in plus sign
+  // Increase radius to 5x3
+ // Spread shot drill
+  // Increase number of bullets to 3, 4, 5
+  // Bullets penetrate once, twice.
+// Increase weakness amount increase
+// Add minor poison damage
+// Increase damage
+// Increase duration
+// If an enemy affected by weakness dies, apply its weakness to enemies around it.
 class AbilityCore9 extends AbilityCore {
   static BuildAbility(perkList) {
     const rawAbil = {

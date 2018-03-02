@@ -11,6 +11,7 @@ class ProjectileShapeRainShot extends ProjectileShape {
     this.ACTIVATE_ON_TICK = 0;
     this.SHOTS_PER_TICK = this.abilityDef.getOptionalParam('shots_per_tick', 3);
     this.FINAL_TICK = this.num_bullets / this.SHOTS_PER_TICK;
+    this.speed_decay = this.abilityDef.getOptionalParam('speed_decay', {x: 0.98, y: 1});
   }
 
   appendIconDescHTML($container) {
@@ -50,10 +51,10 @@ class ProjectileShapeRainShot extends ProjectileShape {
               size: 3,
               trail_length: 3,
               gravity: {x: 0, y: -0.1},
-              speed_decay: {x: 0.98, y: 1},
-              destroy_on_wall: true
+              speed_decay: this.speed_decay,
             }
           ).addUnitHitCallback(this.unitHitCallback.bind(this))
+          .addTimeoutHitCallback(this.timeoutHitCallback.bind(this))
         );
       }
     }

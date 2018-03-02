@@ -54,6 +54,7 @@ class ProjectileShapeChainShot extends ProjectileShape {
           angle,
           this.abilityDef
         ).addUnitHitCallback(this.unitHitCallback.bind(this))
+        .addTimeoutHitCallback(this.timeoutHitCallback.bind(this))
       );
     }
   }

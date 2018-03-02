@@ -90,6 +90,7 @@ class ProjectileShapeSprayShot extends ProjectileShape {
               destroy_on_wall: this.abilityDef.getOptionalParam('destroy_on_wall', false)
             }
           ).addUnitHitCallback(this.unitHitCallback.bind(this))
+          .addTimeoutHitCallback(this.timeoutHitCallback.bind(this))
         );
       }
     }

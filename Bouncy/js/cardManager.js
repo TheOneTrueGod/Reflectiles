@@ -22,6 +22,7 @@ class CardManager {
       .on("contextmenu", ".perkNode", (event) => { this.cardClicked(event); });
 
     $(".cardControlSection .deckManagerButton").on("click", (event) => {
+      window.history.pushState('', '', '?');
       this.deckManager.updateCard(this.playerCard);
       $(".cardControlSection").addClass("hidden");
       $(".deckControlSection").removeClass("hidden");
@@ -33,6 +34,7 @@ class CardManager {
   }
 
   setupForCard(playerCard) {
+    window.history.pushState('', '', '?card=' + playerCard.card_index);
     this.previewPerkList = [];
     this.playerCard = playerCard;
 

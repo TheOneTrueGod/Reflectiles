@@ -48,6 +48,7 @@ class ProjectileShapeBulletExplosion extends ProjectileShape {
               trail_length: 4
             }
           ).addUnitHitCallback(this.unitHitCallback.bind(this))
+          .addTimeoutHitCallback(this.timeoutHitCallback.bind(this))
         );
       }
     }

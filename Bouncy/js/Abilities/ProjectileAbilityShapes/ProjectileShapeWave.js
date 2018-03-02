@@ -65,6 +65,7 @@ class ProjectileShapeWave extends ProjectileShape {
           this.abilityDef,
           {}
         ).addUnitHitCallback(this.unitHitCallback.bind(this))
+        .addTimeoutHitCallback(this.timeoutHitCallback.bind(this))
       );
     }
   }

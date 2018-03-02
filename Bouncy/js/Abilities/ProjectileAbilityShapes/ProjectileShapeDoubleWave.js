@@ -67,6 +67,7 @@ class ProjectileShapeDoubleWave extends ProjectileShape {
             playerID,
             {}
           ).addUnitHitCallback(this.unitHitCallback.bind(this))
+          .addTimeoutHitCallback(this.timeoutHitCallback.bind(this))
         );
       }
     }

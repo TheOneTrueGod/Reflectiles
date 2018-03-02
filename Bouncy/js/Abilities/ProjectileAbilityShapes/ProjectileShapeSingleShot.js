@@ -41,6 +41,7 @@ class ProjectileShapeSingleShot extends ProjectileShape {
           angle,
           this.abilityDef
         ).addUnitHitCallback(this.unitHitCallback.bind(this))
+        .addTimeoutHitCallback(this.timeoutHitCallback.bind(this))
         .addTimeoutCallback(this.timeoutCallback.bind(this))
       );
     }

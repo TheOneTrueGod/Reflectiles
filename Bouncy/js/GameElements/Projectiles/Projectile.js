@@ -48,7 +48,9 @@ class Projectile {
 
     this.behaviourTracker = {};
     this.collisionBehaviours = [];
-    if (abilityDef) {
+    if (projectileOptions && projectileOptions.collision_behaviours) {
+      this.collisionBehaviours = projectileOptions.collision_behaviours;
+    } else if (abilityDef) {
       this.collisionBehaviours = abilityDef.getCollisionBehaviours();
     }
     this.speed += 0.0000001;
@@ -62,6 +64,12 @@ class Projectile {
   addUnitHitCallback(unitHitCallback) {
     this.addProjectileEventListener(
       ProjectileEvents.ON_HIT, unitHitCallback);
+    return this;
+  }
+
+  addTimeoutHitCallback(timeoutHitCallback) {
+    this.addProjectileEventListener(
+      ProjectileEvents.ON_TIMEOUT, timeoutHitCallback);
     return this;
   }
 

@@ -91,6 +91,7 @@ class ProjectileShapeTriShot extends ProjectileShape {
             this.abilityDef,
             {'speed': lerp(8, 7, Math.abs(i) / this.bullets_per_side)}
           ).addUnitHitCallback(this.unitHitCallback.bind(this))
+          .addTimeoutHitCallback(this.timeoutHitCallback.bind(this))
         );
       }
     }

@@ -54,6 +54,7 @@ class ProjectileAbilityDef extends AbilityDef {
     this.shapeType = defJSON['shape'];
     this.projectileType = defJSON['projectile_type'];
     this.hitEffects = defJSON['hit_effects'] ? defJSON['hit_effects'] : [];
+    this.timeoutHitEffects = defJSON['timeout_hit_effects'] ? defJSON['timeout_hit_effects'] : [];
     this.timeoutEffects = defJSON['timeout_effects'] ? defJSON['timeout_effects'] : [];
 
     this.accuracy = new ProjectileAccuracy(defJSON.accuracy);
@@ -77,6 +78,10 @@ class ProjectileAbilityDef extends AbilityDef {
 
   getHitEffects() {
     return this.hitEffects;
+  }
+
+  getTimeoutHitEffects() {
+    return this.timeoutHitEffects;
   }
 
   getTimeoutEffects() {
@@ -146,12 +151,6 @@ class ProjectileAbilityDef extends AbilityDef {
       }
     }
     return this.collisionBehaviours;
-    /* Example of a complex behaviour list; [
-      {behaviour: CollisionBehaviour.PASSTHROUGH, count: 1},
-      {behaviour: CollisionBehaviour.BOUNCE, count: 2},
-      {behaviour: CollisionBehaviour.PASSTHROUGH, count: 1},
-      {behaviour: CollisionBehaviour.BOUNCE, count: 1},
-    ]*/
   }
 }
 

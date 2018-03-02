@@ -41,6 +41,7 @@ class BulletSplitHitEffect extends HitEffect {
             size: Math.floor(projectile.size * 0.75),
             trail_length: Math.floor(projectile.trailLength * 0.75),
             destroy_on_wall: true,
+            collision_behaviours: this.hitEffectDef.collision_behaviours ? this.hitEffectDef.collision_behaviours : [],
           }
         ).addUnitHitCallback(this.projectileShape.unitHitCallback.bind(this.projectileShape))
         .setStyle(this.styleDef)
