@@ -37,7 +37,7 @@ class ProjectileShapeRainShot extends ProjectileShape {
         var rand = boardState.getRandom();
         var angle = Math.PI / 2 * 3 + Math.PI / 2.0 * (rand - 0.5);
         rand = boardState.getRandom();
-        var speed = 4;
+        var speed = 4 + 2 * rand;
         boardState.addProjectile(
           Projectile.createProjectile(
             playerID,
