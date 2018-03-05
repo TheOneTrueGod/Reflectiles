@@ -59,6 +59,10 @@ class AbilityCore {
   static GetDemoTurns() {
     return 1;
   }
+
+  static GetDemoTimesToUse() {
+    return 1;
+  }
 }
 
 AbilityCore.coreList = {};

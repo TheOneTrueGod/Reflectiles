@@ -14,59 +14,64 @@ class BouncyUser extends User {
   }
 
   public function resetDeckData() {
+    $chaosDeck = '[12, 13, 20, 21, 22, 23, 6, 7, 24, 25]';
+    $damageDeck = '[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]';
+    $supportDeck = '[10, 11, 12, 13, 14, 15, 16, 17, 18, 19]';
+    $poisonDeck = '[26, 27, 28, 29, 30, 31, 32, 33, 34, 35]';
+    $turretDeck = '[36, 37, 38, 39, 40, 41, 42, 43, 44, 45]';
     if ($this->id == 'tab') {
       $this->decks = array(
-        new PlayerDeck(0, "Chaos",   '[20, 21, 22, 23, 24, 25, 26, 27, 28, 29]'),
-        new PlayerDeck(1, "Damage",  '[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]'),
-        new PlayerDeck(2, "Support", '[10, 11, 12, 13, 14, 15, 16, 17, 18, 19]'),
-        new PlayerDeck(3, "Poison",  '[30, 31, 32, 33, 34, 35, 36, 37, 38, 39]'),
-        new PlayerDeck(4, "Turrets", '[40, 41, 42, 43, 44, 45, 46, 47, 48, 49]'),
+        new PlayerDeck(0, "Chaos",   $chaosDeck),
+        new PlayerDeck(1, "Damage",  $damageDeck),
+        new PlayerDeck(2, "Support", $supportDeck),
+        new PlayerDeck(3, "Poison",  $poisonDeck),
+        new PlayerDeck(4, "Turrets", $turretDeck),
       );
       return;
     } else if ($this->id == 'chip') {
       $this->decks = array(
-        new PlayerDeck(0, "Support", '[10, 11, 12, 13, 14, 15, 16, 17, 18, 19]'),
-        new PlayerDeck(1, "Damage",  '[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]'),
-        new PlayerDeck(2, "Chaos",   '[20, 21, 22, 23, 24, 25, 26, 27, 28, 29]'),
-        new PlayerDeck(3, "Poison",  '[30, 31, 32, 33, 34, 35, 36, 37, 38, 39]'),
-        new PlayerDeck(4, "Turrets", '[40, 41, 42, 43, 44, 45, 46, 47, 48, 49]'),
+        new PlayerDeck(0, "Support", $supportDeck),
+        new PlayerDeck(1, "Damage",  $damageDeck),
+        new PlayerDeck(2, "Chaos",   $chaosDeck),
+        new PlayerDeck(3, "Poison",  $poisonDeck),
+        new PlayerDeck(4, "Turrets", $turretDeck),
       );
       return;
     } else if ($this->id == 'tj') {
       $this->decks = array(
-        new PlayerDeck(0, "Damage",  '[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]'),
-        new PlayerDeck(1, "Support", '[10, 11, 12, 13, 14, 15, 16, 17, 18, 19]'),
-        new PlayerDeck(2, "Chaos",   '[20, 21, 22, 23, 24, 25, 26, 27, 28, 29]'),
-        new PlayerDeck(3, "Poison",  '[30, 31, 32, 33, 34, 35, 36, 37, 38, 39]'),
-        new PlayerDeck(4, "Turrets", '[40, 41, 42, 43, 44, 45, 46, 47, 48, 49]'),
+        new PlayerDeck(0, "Damage",  $damageDeck),
+        new PlayerDeck(1, "Support", $supportDeck),
+        new PlayerDeck(2, "Chaos",   $chaosDeck),
+        new PlayerDeck(3, "Poison",  $poisonDeck),
+        new PlayerDeck(4, "Turrets", $turretDeck),
       );
       return;
     } else if ($this->id == 'sean') {
       $this->decks = array(
-        new PlayerDeck(0, "Poison",  '[30, 31, 32, 33, 34, 35, 36, 37, 38, 39]'),
-        new PlayerDeck(1, "Damage",  '[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]'),
-        new PlayerDeck(2, "Support", '[10, 11, 12, 13, 14, 15, 16, 17, 18, 19]'),
-        new PlayerDeck(3, "Chaos",   '[20, 21, 22, 23, 24, 25, 26, 27, 28, 29]'),
-        new PlayerDeck(4, "Turrets", '[40, 41, 42, 43, 44, 45, 46, 47, 48, 49]'),
+        new PlayerDeck(0, "Poison",  $poisonDeck),
+        new PlayerDeck(1, "Damage",  $damageDeck),
+        new PlayerDeck(2, "Support", $supportDeck),
+        new PlayerDeck(3, "Chaos",   $chaosDeck),
+        new PlayerDeck(4, "Turrets", $turretDeck),
       );
       return;
     } else if ($this->id == 'clarence') {
       $this->decks = array(
-        new PlayerDeck(0, "Turrets", '[40, 41, 42, 43, 44, 45, 46, 47, 48, 49]'),
-        new PlayerDeck(1, "Damage",  '[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]'),
-        new PlayerDeck(2, "Support", '[10, 11, 12, 13, 14, 15, 16, 17, 18, 19]'),
-        new PlayerDeck(3, "Chaos",   '[20, 21, 22, 23, 24, 25, 26, 27, 28, 29]'),
-        new PlayerDeck(4, "Poison",  '[30, 31, 32, 33, 34, 35, 36, 37, 38, 39]'),
+        new PlayerDeck(0, "Turrets", $turretDeck),
+        new PlayerDeck(1, "Damage",  $damageDeck),
+        new PlayerDeck(2, "Support", $supportDeck),
+        new PlayerDeck(3, "Chaos",   $chaosDeck),
+        new PlayerDeck(4, "Poison",  $poisonDeck),
       );
       return;
     }
 
     $this->decks = array(
-      new PlayerDeck(0, "Damage",  '[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]'),
-      new PlayerDeck(1, "Support", '[10, 11, 12, 13, 14, 15, 16, 17, 18, 19]'),
-      new PlayerDeck(2, "Chaos",   '[20, 21, 22, 23, 24, 25, 26, 27, 28, 29]'),
-      new PlayerDeck(3, "Poison",  '[30, 31, 32, 33, 34, 35, 36, 37, 38, 39]'),
-      new PlayerDeck(4, "Turrets", '[40, 41, 42, 43, 44, 45, 46, 47, 48, 49]'),
+      new PlayerDeck(0, "Damage",  $damageDeck),
+      new PlayerDeck(1, "Support", $supportDeck),
+      new PlayerDeck(2, "Chaos",   $chaosDeck),
+      new PlayerDeck(3, "Poison",  $poisonDeck),
+      new PlayerDeck(4, "Turrets", $turretDeck),
     );
   }
 
@@ -74,8 +79,10 @@ class BouncyUser extends User {
     $this->cards = [];
     $card_index = 0;
     for ($i = 0; $i < 5 * 5; $i++) {
-      array_push($this->cards, new PlayerCard($card_index++, $i));
-      array_push($this->cards, new PlayerCard($card_index++, $i));
+      if ($i !== 10 && $i !== 12) {
+        array_push($this->cards, new PlayerCard($card_index++, $i));
+        array_push($this->cards, new PlayerCard($card_index++, $i));
+      }
     }
   }
 

@@ -32,22 +32,22 @@ class PlayerDeck {
   }
 
   canAddCardToDeck(playerCard) {
-    let deckType = CardDeckTypes.NEUTRAL;
-    let cardDeckType = playerCard.getCardDeckType();
+    let deckTypes = [];
     for (var i = 0; i < this.cardList.length; i++) {
-      let cardDeckType = this.cardList[i].getCardDeckType();
-      if (cardDeckType !== CardDeckTypes.NEUTRAL) {
-        deckType = cardDeckType;
-      }
       if (this.cardList[i].card_index == playerCard.card_index) {
         return DeckReason.CARD_IN_DECK;
       }
+      let cardDeckType = this.cardList[i].getCardDeckType();
+      if (cardDeckType !== CardDeckTypes.NEUTRAL && deckTypes.indexOf(cardDeckType) === -1) {
+        deckTypes.push(cardDeckType);
+      }
     }
 
+    let newCardDeckType = playerCard.getCardDeckType();
     if (
-      cardDeckType !== CardDeckTypes.NEUTRAL &&
-      deckType !== CardDeckTypes.NEUTRAL &&
-      cardDeckType !== deckType
+      newCardDeckType !== CardDeckTypes.NEUTRAL &&
+      deckTypes.indexOf(newCardDeckType) === -1 &&
+      deckTypes.length > 1
     ) {
       return DeckReason.WRONG_TYPE;
     }

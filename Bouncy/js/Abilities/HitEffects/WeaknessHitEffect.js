@@ -3,6 +3,7 @@ class WeaknessHitEffect extends HitEffect {
     unit.addStatusEffect(
       new WeaknessStatusEffect(
         idx(this.hitEffectDef, 'duration', 1),
+        idx(this.hitEffectDef, 'amount', undefined),
       )
     );
   }

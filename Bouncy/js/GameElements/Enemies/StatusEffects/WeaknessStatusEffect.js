@@ -1,6 +1,7 @@
 class WeaknessStatusEffect extends StatusEffect {
-  constructor(duration) {
-    super(duration);
+  constructor(duration, amount) {
+    super(duration, amount);
+    this.amount = amount === undefined ? 1.5 : amount;
   }
 
   turnStart(unit) {
@@ -12,11 +13,19 @@ class WeaknessStatusEffect extends StatusEffect {
   }
 
   getDamageMultiplier() {
-    return 1.5;
+    return this.amount;
   }
 
   getEffectType() {
     return this.constructor.name;
+  }
+
+  serialize() {
+    return {
+      'effect_type': this.getEffectType(),
+      'duration': this.duration,
+      'amount': this.amount,
+    };
   }
 
   static addEffectSprite(unit) {
@@ -44,6 +53,7 @@ class WeaknessStatusEffect extends StatusEffect {
 WeaknessStatusEffect.loadFromServerData = function(server_data) {
   return new WeaknessStatusEffect(
     server_data.duration,
+    server_data.amount,
   );
 }
 

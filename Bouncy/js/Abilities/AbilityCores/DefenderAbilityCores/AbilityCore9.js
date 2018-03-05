@@ -15,20 +15,44 @@
 // If an enemy affected by weakness dies, apply its weakness to enemies around it.
 class AbilityCore9 extends AbilityCore {
   static BuildAbilityChild(perkList, perkPcts, perkCounts) {
+    let damage = lerp(
+      100,
+      1000,
+      (
+        idx(perkPcts, 'damage 1-1', 0) +
+        idx(perkPcts, 'damage 1-2', 0) +
+        idx(perkPcts, 'damage 4', 0) +
+        idx(perkPcts, 'damage 5-1', 0) +
+        idx(perkPcts, 'damage 5-2', 0)
+      ) / 4 // 1-1 and 1-2 are mutex
+    );
+
+    let weaknessAmount = lerp(
+      1.5,
+      2,
+      (
+        idx(perkPcts, 'weakness amount 1', 0) +
+        idx(perkPcts, 'weakness amount 2-1', 0) * 2 +
+        idx(perkPcts, 'weakness amount 2-2', 0) * 2 +
+        idx(perkPcts, 'weakness amount 7', 0) * 3
+      ) / 8
+    );
+    let weaknessDescription = Math.floor((weaknessAmount - 1) * 100);
     const rawAbil = {
       name: 'Mass Weaken',
-      description: 'Applies weakness to each enemy hit for [[hit_effects[1].duration]] turns, increasing the damage they take by 50%',
-      card_text_description: '100 5x3',
+      description: 'Applies weakness to each enemy hit for [[hit_effects[1].duration]] turns, increasing the damage they take by <<' + weaknessDescription + '>>%',
+      card_text_description: 'weaken',
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
       projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
       hit_effects:[{
         effect: ProjectileShape.HitEffects.DAMAGE,
-        base_damage: 100,
+        base_damage: damage,
       },
       {
         effect: ProjectileShape.HitEffects.WEAKNESS,
         duration: 2,
+        amount: weaknessAmount,
       }],
       icon: "/Bouncy/assets/icons/icon_plain_hearts.png",
       charge: {"initial_charge":-1,"max_charge":3,"charge_type":"TURNS"}
@@ -48,6 +72,10 @@ class AbilityCore9 extends AbilityCore {
           idx(perkPcts, 'radius 7-2', 0) * 2
         ) / 9
       );
+
+      rawAbil.hit_effects[0].base_damage = Math.round(
+          damage / (1 + aoeRadius / Unit.UNIT_SIZE)
+        );
 
       aoeRadius = Math.round(aoeRadius);
       rawAbil.hit_effects[0].aoe_type = aoeType;
@@ -148,6 +176,10 @@ class AbilityCore9 extends AbilityCore {
 
   static GetCardDeckType() {
     return CardDeckTypes.DEFENDER;
+  }
+
+  static GetDemoTimesToUse() {
+    return 2;
   }
 }
 

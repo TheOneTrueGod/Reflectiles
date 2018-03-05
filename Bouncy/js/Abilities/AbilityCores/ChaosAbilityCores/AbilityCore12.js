@@ -1,7 +1,7 @@
 class AbilityCore12 extends AbilityCore {
   static BuildAbilityChild(perkList, perkPcts, perkCounts) {
     const rawAbil = {
-      name: 'Rain',
+      name: 'ERROR:  NOT IN USE',
       description: 'Make it rain.<br>Fires [[num_bullets]] projectiles.<br>' +
         'Each one deals [[hit_effects[0].base_damage]] damage, and then splits into [[hit_effects[1].num_bullets]] projectiles that deal [[hit_effects[1].hit_effects[0].base_damage]] damage.<br>' +
         'Can\'t be aimed.',

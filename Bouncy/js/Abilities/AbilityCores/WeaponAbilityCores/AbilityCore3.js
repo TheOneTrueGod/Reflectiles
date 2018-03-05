@@ -246,7 +246,7 @@ class AbilityCore3 extends AbilityCore {
   }
 
   static GetCardDeckType() {
-    return CardDeckTypes.WEAPON;
+    return CardDeckTypes.CHAOS;
   }
 
   static GetDemoUnits() {

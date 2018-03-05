@@ -1,7 +1,7 @@
 class AbilityCore10 extends AbilityCore {
   static BuildAbilityChild(perkList, perkPcts, perkCounts) {
     const rawAbil = {
-      name: 'Drill Shot',
+      name: 'ERROR:  NOT IN USE',
       description: 'Shoots a projectile that passes through enemies.<br>' +
         'It deals [[hit_effects[0].base_damage]] damage to up to [[num_hits]] targets.',
       card_text_description: '[[num_hits]] X [[hit_effects[0].base_damage]]',
