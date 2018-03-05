@@ -1,5 +1,5 @@
 class AbilityCore10 extends AbilityCore {
-  static BuildAbility(perkList) {
+  static BuildAbilityChild(perkList, perkPcts, perkCounts) {
     const rawAbil = {
       name: 'Drill Shot',
       description: 'Shoots a projectile that passes through enemies.<br>' +

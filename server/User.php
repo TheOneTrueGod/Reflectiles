@@ -82,9 +82,9 @@ User::$all_users = array(
   array('sean', "Zahken", 'cromat', 'bbcbxziuqerwperiut'),
   array('mitch', "QQCanasian", 'qqcanasian', 'tupqwepribjfjeiwerb'),
   array('clarence', "Vauss", 'lilly', 'gbcbzxcvdsfqwerqwer'),
-  array('test2', "test2", 'test', 'test2'),
-  array('test3', "test3", 'test', 'test3'),
-  array('test4', "test4", 'test', 'test4')
+  array('test2', "test2", 'test2', 'test2'),
+  array('test3', "test3", 'test3', 'test3'),
+  array('test4', "test4", 'test4', 'test4')
 );
 
 User::$all_users[999999999] = array('test_user', "test_user", "test_user", "test_user");

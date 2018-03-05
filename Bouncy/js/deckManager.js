@@ -48,7 +48,10 @@ class DeckManager {
     var url = new URL(url_string);
     var autoSelect = url.searchParams.get("card");
     if (autoSelect !== null) {
-      $('.abilityCard[data-index=' + autoSelect + ']').first().click();
+      $('.abilityCard[data-index=' + autoSelect + ']').first().trigger({
+          type: 'contextmenu',
+          button: 2
+      });
     }
   }
 
@@ -58,11 +61,11 @@ class DeckManager {
       clickTarget = clickTarget.closest(".abilityCard");
     }
     if (event.button == 2 || event.shiftKey) {
+      this.showCardManager(clickTarget.data("playerCard"));
+    } else {
       this.removeCardFromDeck(clickTarget.data("playerCard"));
       this.markDeckDirty();
       this.updateCardStatus();
-    } else {
-      this.showCardManager(clickTarget.data("playerCard"));
     }
 
     event.preventDefault();
@@ -78,6 +81,8 @@ class DeckManager {
     let playerCard = clickTarget.data("playerCard");
 
     if (event.button == 2 || event.shiftKey) {
+      this.showCardManager(playerCard);
+    } else {
       if (playerCard) {
         let cardAbility = this.selectedDeck.addCard(playerCard);
         if (cardAbility) {
@@ -86,8 +91,6 @@ class DeckManager {
           this.updateCardStatus();
         }
       }
-    } else {
-      this.showCardManager(playerCard);
     }
     event.preventDefault();
     return false;

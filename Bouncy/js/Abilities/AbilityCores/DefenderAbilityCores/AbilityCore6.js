@@ -1,5 +1,5 @@
 class AbilityCore6 extends AbilityCore {
-  static BuildAbility(perkList) {
+  static BuildAbilityChild(perkList, perkPcts, perkCounts) {
     const rawAbil = {
       name: 'Drill Shot',
       description: 'Shoots a projectile that passes through enemies.<br>' +
@@ -31,7 +31,7 @@ class AbilityCore6 extends AbilityCore {
   }
 
   static GetCardDeckType() {
-    return CardDeckTypes.DEFENDER;
+    return CardDeckTypes.NEUTRAL;
   }
 }
 

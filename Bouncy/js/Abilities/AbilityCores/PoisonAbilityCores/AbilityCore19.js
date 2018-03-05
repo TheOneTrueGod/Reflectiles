@@ -1,5 +1,5 @@
 class AbilityCore19 extends AbilityCore {
-  static BuildAbility(perkList) {
+  static BuildAbilityChild(perkList, perkPcts, perkCounts) {
     const rawAbil = {
       name: 'Poison Explosion',
       description: 'Fires a single bullet, poisoning all enemies in a 5x3 area<br>' +

@@ -1,6 +1,5 @@
 class AbilityCore5 extends AbilityCore {
-  static BuildAbility(perkList) {
-    let perkResults = this.BuildPerkDetails(perkList); let perkPcts = perkResults.perkPcts; let perkCounts = perkResults.perkCounts;
+  static BuildAbilityChild(perkList, perkPcts, perkCounts) {
     let bullet_bonus = idx(perkCounts, 'num_bullets', 0);
     const rawAbil = {
       name: 'Spread Shot',
@@ -28,7 +27,7 @@ class AbilityCore5 extends AbilityCore {
   }
 
   static GetCardDeckType() {
-    return CardDeckTypes.DEFENDER;
+    return CardDeckTypes.NEUTRAL;
   }
 }
 

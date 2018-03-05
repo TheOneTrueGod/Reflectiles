@@ -3,9 +3,7 @@
 // Moving shield?
 //
 class AbilityCore7 extends AbilityCore {
-  static BuildAbility(perkList) {
-    let perkResults = this.BuildPerkDetails(perkList); let perkPcts = perkResults.perkPcts; let perkCounts = perkResults.perkCounts;
-
+  static BuildAbilityChild(perkList, perkPcts, perkCounts) {
     let health = 6;
     health += Math.floor(idx(perkPcts, 'health 1', 0) * 4);
     health += Math.floor(idx(perkPcts, 'health 2', 0) * 4);
@@ -13,7 +11,7 @@ class AbilityCore7 extends AbilityCore {
     health += Math.floor(idx(perkPcts, 'health 4', 0) * 4);
     health += Math.floor(idx(perkPcts, 'health 5', 0) * 4);
 
-    let has_pierce = idx(perkPcts, 'thorns pierce', 0) === 1;
+    let has_pierce = this.hasPerk(perkPcts, 'thorns pierce');
 
     let width_bonus = idx(perkPcts, 'shield width 1', 0) + idx(perkPcts, 'shield width 2', 0);
 
@@ -21,7 +19,11 @@ class AbilityCore7 extends AbilityCore {
 
     let horizontal_range = Math.floor(idx(perkPcts, 'cast range sideways', 0) * 2);
     let vertical_range = Math.floor(idx(perkPcts, 'cast range 2', 0) * 2);
-    let has_ranged_thorns = idx(perkPcts, 'ranged thorns', 0) === 1;
+    let has_ranged_thorns = this.hasPerk(perkPcts, 'ranged thorns');
+
+    if (has_ranged_thorns) {
+      health = Math.round(health / 2);
+    }
 
     const rawAbil = {
       name: 'Shield',
@@ -72,14 +74,14 @@ class AbilityCore7 extends AbilityCore {
   }
 
   static GetThornsAbility(perkPcts, perkCounts) {
-    if (idx(perkPcts, 'melee thorns', 0) !== 1) {
+    if (!this.hasPerk(perkPcts, 'melee thorns')) {
       return null;
     }
 
-    let has_pierce = idx(perkPcts, 'thorns pierce', 0) === 1;
-    let has_stun = idx(perkPcts, 'stunning thorns', 0) === 1;
+    let has_pierce = this.hasPerk(perkPcts, 'thorns pierce');
+    let has_stun = this.hasPerk(perkPcts, 'stunning thorns');
 
-    let has_ranged_thorns = idx(perkPcts, 'ranged thorns', 0) === 1;
+    let has_ranged_thorns = this.hasPerk(perkPcts, 'ranged thorns');
 
     let damageMod = 1 +
       idx(perkPcts, 'thorns damage 1', 0) * 0.5 +
@@ -102,7 +104,7 @@ class AbilityCore7 extends AbilityCore {
     );
 
     let angles = Math.PI / 2.0;
-    if (idx(perkPcts, 'thorn angle', 0) === 1) {
+    if (this.hasPerk(perkPcts, 'thorn angle')) {
       angles = Math.PI / 3.0;
     }
 

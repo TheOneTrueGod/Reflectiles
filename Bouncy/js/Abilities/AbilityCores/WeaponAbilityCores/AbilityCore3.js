@@ -1,7 +1,5 @@
 class AbilityCore3 extends AbilityCore {
-  static BuildAbility(perkList) {
-    let perkResults = this.BuildPerkDetails(perkList); let perkPcts = perkResults.perkPcts; let perkCounts = perkResults.perkCounts;
-
+  static BuildAbilityChild(perkList, perkPcts, perkCounts) {
     let damageMod = 1 +
       idx(perkPcts, 'damage 10', 0) * 0.20 +
       idx(perkPcts, 'damage 30', 0) * 0.10 +
@@ -27,20 +25,20 @@ class AbilityCore3 extends AbilityCore {
     num_bullets = Math.round(num_bullets);
 
     let per_bullet_damage = totalDamage / (num_bullets * 0.8);
-    let penetrates = idx(perkPcts, 'penetrate 20', 0) === 1;
+    let penetrates = this.hasPerk(perkPcts, 'penetrate 20');
     if (penetrates) {
       per_bullet_damage *= 0.6;
     }
 
     let destroy_on_wall = true;
-    if (idx(perkPcts, 'wall bounce', 0) === 1) {
+    if (this.hasPerk(perkPcts, 'wall bounce')) {
       destroy_on_wall = [BorderWallLine.TOP];
     }
 
     let timeoutEffects = [];
 
-    let splits = idx(perkPcts, 'bullets split', 0) === 1;
-    let num_splits = 2 + (idx(perkPcts, 'more splits 56', 0) === 1 ? 2 : 0);
+    let splits = this.hasPerk(perkPcts, 'bullets split');
+    let num_splits = 2 + (this.hasPerk(perkPcts, 'more splits 56') ? 2 : 0);
     if (splits) {
       let after_split_damage = per_bullet_damage / (5.0 * num_splits);
       after_split_damage *= 1 + idx(perkPcts, 'split damage 54', 0);
@@ -62,8 +60,8 @@ class AbilityCore3 extends AbilityCore {
     }
 
     let collisionBehaviours = [];
-    let bounces = idx(perkPcts, 'enemy bounce', 0) === 1;
-    let bounces_twice = idx(perkPcts, 'one more bounce', 0) === 1;
+    let bounces = this.hasPerk(perkPcts, 'enemy bounce');
+    let bounces_twice = this.hasPerk(perkPcts, 'one more bounce');
     if (bounces) {
       collisionBehaviours.push(
         {behaviour: CollisionBehaviour.BOUNCE, count: 1}

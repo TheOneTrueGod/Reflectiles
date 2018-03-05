@@ -1,5 +1,5 @@
 class AbilityCore8 extends AbilityCore {
-  static BuildAbility(perkList) {
+  static BuildAbilityChild(perkList, perkPcts, perkCounts) {
     const rawAbil = {
       name: 'Freeze',
       description: 'Freezes a 3x3 square of enemies for [[hit_effects[1].duration]] turns',

@@ -1,5 +1,5 @@
 class AbilityCore18 extends AbilityCore {
-  static BuildAbility(perkList) {
+  static BuildAbilityChild(perkList, perkPcts, perkCounts) {
     const rawAbil = {
       name: 'Ghost Shot',
       description: 'Launches a projectile that doesn\'t do anything until ' +

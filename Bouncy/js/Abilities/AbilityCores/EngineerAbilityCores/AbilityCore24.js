@@ -1,5 +1,5 @@
 class AbilityCore24 extends AbilityCore {
-  static BuildAbility(perkList) {
+  static BuildAbilityChild(perkList, perkPcts, perkCounts) {
     const rawAbil = {
       name: 'Molotov',
       description: 'Throws a molotov that explodes into a fireball.<br>' +

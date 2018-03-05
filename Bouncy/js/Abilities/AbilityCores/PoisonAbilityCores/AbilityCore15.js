@@ -1,5 +1,5 @@
 class AbilityCore15 extends AbilityCore {
-  static BuildAbility(perkList) {
+  static BuildAbilityChild(perkList, perkPcts, perkCounts) {
     const rawAbil = { // 1000 damage.  500 more per turn
       name: 'Poison Drill',
       description: 'Shoots a projectile that passes through enemies.<br>' +

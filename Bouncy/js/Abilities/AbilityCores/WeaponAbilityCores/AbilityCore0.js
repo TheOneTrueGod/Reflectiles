@@ -11,14 +11,12 @@
 // Path 2; Splash radius increases, rocket becomes larger
 // Path 3; MIRV -- When the rocket explodes, it releases a cluster of grenades.
 class AbilityCore0 extends AbilityCore {
-  static BuildAbility(perkList) {
-    let perkResults = this.BuildPerkDetails(perkList); let perkPcts = perkResults.perkPcts; let perkCounts = perkResults.perkCounts;
-
+  static BuildAbilityChild(perkList, perkPcts, perkCounts) {
     let shape = ProjectileAbilityDef.Shapes.CHAIN_SHOT;
 
-    let rocketCount = 1 + idx(perkCounts, 'rocket count4', 0) + idx(perkCounts, 'rocket count8', 0);
-    let isClusterRocket = idx(perkPcts, 'cluster rocket') === 1;
-    let isIncendiary = idx(perkPcts, 'incendiary') === 1;
+    let rocketCount = 1 + idx(perkCounts, 'rocket count4', 0) + idx(perkCounts, 'rocket count8', 0) + idx(perkCounts, 'more dakka', 0) / 2;
+    let isClusterRocket = this.hasPerk(perkPcts, 'cluster rocket');
+    let isIncendiary = this.hasPerk(perkPcts, 'incendiary');
 
     let damagePctIncrease =
       idx(perkPcts, 'damage1', 0) * 0.25 +
@@ -70,6 +68,7 @@ class AbilityCore0 extends AbilityCore {
     let fire_size_upgrades = idx(perkCounts, 'fire radius', 0);
     let fireSquaresHit = AbilityCore0.getFireZoneSize(fire_size_upgrades);
     fireSquaresHit = (1 + fireSquaresHit[0] + fireSquaresHit[2]) * (1 + fireSquaresHit[1] + fireSquaresHit[3]);
+    rocketCount = Math.floor(rocketCount);
     const rawAbil = {
       name: 'Explosion',
       description: 'Fires ' +
@@ -206,17 +205,16 @@ class AbilityCore0 extends AbilityCore {
       (new AbilityPerkNode('damage4', 6, [3, 4]))
         .addRequirement(new PerkLevelRequirement('damage3')),
       // Level 5
-      (new AbilityPerkNode('impact5',      5, [4, 0]))
-        .addRequirement(new PerkLevelRequirement('rocket count4')),
       (new AbilityPerkNode('damage5', 3, [4, 5]))
         .addRequirement(new PerkLevelRequirement('radius2')),
       (new AbilityPerkNode('damage radius5', 3, [4, 3]))
         .addRequirement(new PerkLevelRequirement('rocket count4')),
       // Level 6
-      (new MaxxedAbilityPerkNode('cluster rocket', 3, [5, 1]))
+      (new AbilityPerkNode('more dakka',      12, [5, 2]))
         .addRequirement(new PerkLevelRequirement('rocket count4')),
-
       // Level 7
+      (new MaxxedAbilityPerkNode('cluster rocket', 3, [6, 1]))
+        .addRequirement(new PerkLevelRequirement('rocket count4')),
       (new AbilityPerkNode('damage6', 3, [6, 3]))
         .addRequirement(new OrPerkLevelRequirement(
           [new PerkLevelRequirement('damage5'),
@@ -227,6 +225,8 @@ class AbilityCore0 extends AbilityCore {
 
       // Level 8
       (new AbilityPerkNode('damage82', 3, [7, 2]))
+        .addRequirement(new PerkLevelRequirement('cluster rocket')),
+      (new AbilityPerkNode('impact5',      5, [7, 1]))
         .addRequirement(new PerkLevelRequirement('cluster rocket')),
       (new AbilityPerkNode('rocket count8', 3, [7, 0]))
         .addRequirement(new PerkLevelRequirement('cluster rocket')),

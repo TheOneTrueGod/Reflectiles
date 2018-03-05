@@ -1,5 +1,5 @@
 class AbilityCore16 extends AbilityCore {
-  static BuildAbility(perkList) {
+  static BuildAbilityChild(perkList, perkPcts, perkCounts) {
     const rawAbil = { // 3000 damage max
       name: 'Infect',
       description: 'Shoots a projectile that hits a single enemy.<br>' +

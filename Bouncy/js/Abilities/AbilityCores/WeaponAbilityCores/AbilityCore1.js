@@ -1,7 +1,5 @@
 class AbilityCore1 extends AbilityCore {
-  static BuildAbility(perkList) {
-    let perkResults = this.BuildPerkDetails(perkList); let perkPcts = perkResults.perkPcts; let perkCounts = perkResults.perkCounts;
-
+  static BuildAbilityChild(perkList, perkPcts, perkCounts) {
     let damageMult = 1 + idx(perkPcts, 'damage', 0) * 3;
     let damage = Math.floor(120 * damageMult);
 

@@ -1,5 +1,5 @@
 class AbilityCore20 extends AbilityCore {
-  static BuildAbility(perkList) {
+  static BuildAbilityChild(perkList, perkPcts, perkCounts) {
     const rawAbil = {
       name: 'Gun Turret',
       description: 'Create a turret.<br>' +

@@ -1,5 +1,5 @@
 class AbilityCore13 extends AbilityCore {
-  static BuildAbility(perkList) {
+  static BuildAbilityChild(perkList, perkPcts, perkCounts) {
     const rawAbil = {
       name: 'Chaos Orb',
       description: 'Shoots an orb that rapidly decays.<br>' +

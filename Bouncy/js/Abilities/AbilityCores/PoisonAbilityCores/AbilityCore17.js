@@ -1,5 +1,5 @@
 class AbilityCore17 extends AbilityCore {
-  static BuildAbility(perkList) {
+  static BuildAbilityChild(perkList, perkPcts, perkCounts) {
     const rawAbil = { // 2440 damage max.  Actually dealing less than that
       name: 'Shoot \'em up',
       description: 'Shoots a wild spray of bullets.<br>' +

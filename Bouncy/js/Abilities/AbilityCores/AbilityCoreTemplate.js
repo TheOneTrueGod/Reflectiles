@@ -1,5 +1,5 @@
 class AbilityCoreNUMBER extends AbilityCore {
-  static BuildAbility(perkList) {
+  static BuildAbilityChild(perkList, perkPcts, perkCounts) {
     const rawAbil = ;
     return AbilityDef.createFromJSON(rawAbil);
   }

@@ -1,5 +1,5 @@
 class AbilityCore4 extends AbilityCore {
-  static BuildAbility(perkList) {
+  static BuildAbilityChild(perkList, perkPcts, perkCounts) {
     const rawAbil = {
       name: 'Rage',
       description: 'Creates a zone around you that lasts [[duration]] turns.<br>' +

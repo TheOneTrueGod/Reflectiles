@@ -85,7 +85,7 @@ class PerkLevelRequirement extends AbilityPerkRequirement {
 
   isRequirementMet(perkCounts, perkTree) {
     let childPerk = perkTree[this.perkName];
-    return perkCounts[this.perkName] >= childPerk.levels;
+    return perkCounts[this.perkName] >= (this.level === 'max' ? childPerk.levels : this.level);
   }
 }
 
@@ -123,5 +123,28 @@ class OrPerkLevelRequirement extends AbilityPerkRequirement {
       lines = lines.concat(requirement.getSVGLines($otherPerk, $thisPerk, "blue"));
     }
     return lines;
+  }
+}
+
+class NotPerkLevelRequirement extends AbilityPerkRequirement {
+  constructor(requirement) {
+    super(null);
+    this.requirement = requirement;
+  }
+
+  getPerkKeys() {
+    return this.requirement.getPerkKeys();
+  }
+
+  hasPerkAsRequirement(perkKey) {
+    return this.requirement.hasPerkAsRequirement(perkKey);
+  }
+
+  isRequirementMet(perkCounts, perkTree) {
+    return !this.requirement.isRequirementMet(perkCounts, perkTree);
+  }
+
+  getSVGLines($otherPerk, $thisPerk, colorOverride) {
+    return [];
   }
 }

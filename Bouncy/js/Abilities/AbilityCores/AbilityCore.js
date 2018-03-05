@@ -10,8 +10,19 @@ class AbilityCore {
     return {perkCounts, perkPcts};
   }
 
+  static hasPerk(perkPcts, perkName) {
+    return idx(perkPcts, perkName, 0) === 1;
+  }
+
   static BuildAbility(perkList) {
-    throw new Error("You must override BuildAbility in a child of AbilityCore.");
+    let perkResults = this.BuildPerkDetails(perkList);
+    let perkPcts = perkResults.perkPcts;
+    let perkCounts = perkResults.perkCounts;
+    return this.BuildAbilityChild(perkList, perkPcts, perkCounts);
+  }
+
+  static BuildAbilityChild(perkList, perkPcts, perkCounts) {
+    throw new Error("You must override BuildAbilityCore in a child of AbilityCore.");
   }
 
   static GetPerkList() {

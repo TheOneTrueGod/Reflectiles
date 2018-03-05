@@ -1,5 +1,5 @@
 class AbilityCore22 extends AbilityCore {
-  static BuildAbility(perkList) {
+  static BuildAbilityChild(perkList, perkPcts, perkCounts) {
     const rawAbil = {
       name: 'Focused Fire',
       description: 'Shoots a shot, and commands all of your turrets to fire at your target.  This reduces their cooldowns if they are unable to fire.<br>' +

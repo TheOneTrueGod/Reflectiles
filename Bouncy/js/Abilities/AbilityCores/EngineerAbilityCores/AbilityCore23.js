@@ -1,5 +1,5 @@
 class AbilityCore23 extends AbilityCore {
-  static BuildAbility(perkList) {
+  static BuildAbilityChild(perkList, perkPcts, perkCounts) {
     const rawAbil = {
       name: 'Landmines',
       description: 'Creates [[unit_count]] landmines<br>' +

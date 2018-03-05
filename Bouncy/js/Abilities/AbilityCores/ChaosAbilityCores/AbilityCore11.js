@@ -1,5 +1,5 @@
 class AbilityCore11 extends AbilityCore {
-  static BuildAbility(perkList) {
+  static BuildAbilityChild(perkList, perkPcts, perkCounts) {
     const rawAbil = {
       name: 'Fireworks',
       description: 'Launches a projectile.<br>' +
