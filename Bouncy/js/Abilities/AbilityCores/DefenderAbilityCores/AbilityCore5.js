@@ -11,7 +11,7 @@ class AbilityCore5 extends AbilityCore {
       style: (new AbilitySheetSpriteAbilityStyleBuilder)
         .setSheet('bullet_sheet').setCoordNums(275, 69, 294, 78).setRotation(0).build(),
       projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
-      num_bullets: 5 + bullet_bonus,
+      num_bullets: 6 + bullet_bonus,
       hit_effects:[{effect: ProjectileShape.HitEffects.DAMAGE, base_damage: 180}],
       icon: "/Bouncy/assets/icons/spread_shot.png",
     };

@@ -37,6 +37,8 @@ class AbilityCore9 extends AbilityCore {
         idx(perkPcts, 'weakness amount 7', 0) * 3
       ) / 8
     );
+
+    let duration = 2 + this.hasPerk(perkPcts, 'duration 3') - this.hasPerk(perkPcts, 'spreading affliction');
     let weaknessDescription = Math.floor((weaknessAmount - 1) * 100);
     const rawAbil = {
       name: 'Mass Weaken',
@@ -51,12 +53,17 @@ class AbilityCore9 extends AbilityCore {
       },
       {
         effect: ProjectileShape.HitEffects.WEAKNESS,
-        duration: 2,
+        duration: duration,
         amount: weaknessAmount,
       }],
       icon: "/Bouncy/assets/icons/icon_plain_hearts.png",
       charge: {"initial_charge":-1,"max_charge":3,"charge_type":"TURNS"}
     };
+
+    let abilityStyle = (new AbilitySheetSpriteAbilityStyleBuilder())
+      .setSheet('bullet_sheet')
+      .setCoordNums(263, 157, 263 + 11, 157 + 11);
+
     if (this.hasPerk(perkPcts, 'exploding 0')) {
       let aoeType = ProjectileShape.AOE_TYPES.CIRCLE;
       let aoeRadius = lerp(
@@ -83,19 +90,50 @@ class AbilityCore9 extends AbilityCore {
       rawAbil.hit_effects[1].aoe_type = aoeType;
       rawAbil.hit_effects[1].aoe_size = aoeRadius;
 
-      rawAbil.style = (new AbilitySheetSpriteAbilityStyleBuilder())
-        .setSheet('bullet_sheet')
-        .setCoordNums(263, 157, 263 + 11, 157 + 11)
-        .setExplosion(AbilityStyle.getExplosionPrefab(
+      abilityStyle.setExplosion(AbilityStyle.getExplosionPrefab(
           AbilityStyle.EXPLOSION_PREFABS.WHITE, aoeRadius
-        )).build();
+        ));
 
         rawAbil.description = 'Deals [[hit_effects[0].base_damage]] damage to each enemy in a [[hit_effects[0].aoe_size]] radius.<br>' +
           rawAbil.description;
+    } else if (this.hasPerk(perkPcts, 'piercing 0')) {
+      rawAbil.shape = ProjectileAbilityDef.Shapes.TRI_SHOT;
+      let num_bullets = 1 +
+        (this.hasPerk(perkPcts, 'num shots 1') ? 1 : 0) +
+        (this.hasPerk(perkPcts, 'num shots 3') ? 1 : 0) +
+        (this.hasPerk(perkPcts, 'num shots 4') ? 1 : 0) +
+        (this.hasPerk(perkPcts, 'num shots 7') ? 1 : 0)
+        ;
+      rawAbil.num_bullets = num_bullets;
+
+      let pierceCount = 1 +
+        (this.hasPerk(perkPcts, 'pierce 2')) +
+        (this.hasPerk(perkPcts, 'pierce 5')) +
+        (this.hasPerk(perkPcts, 'pierce 7'));
+
+      rawAbil.collision_behaviours = [
+        {
+          behaviour: CollisionBehaviour.PASSTHROUGH,
+          count: pierceCount
+        }];
+
+      rawAbil.hit_effects[0].base_damage = Math.round(
+        damage / (1 +
+          lerp(0, 1, (num_bullets - 1) / 4) +
+          lerp(0, 1, (pierceCount - 1) / 3)
+        )
+      );
+
+      rawAbil.description = 'Shoots ' +
+        (num_bullets > 1 ? '<<' + num_bullets + '>> projectiles' : 'a projectile') +
+        ' that pierces <<' + pierceCount + '>> time' + (pierceCount > 1 ? 's' : '') + ', dealing [[hit_effects[0].base_damage]] damage.<br>' +
+        rawAbil.description;
     } else {
       rawAbil.description = 'Deals [[hit_effects[0].base_damage]] damage.<br>' +
         rawAbil.description;
     }
+
+    rawAbil.style = abilityStyle.build();
 
     return AbilityDef.createFromJSON(rawAbil);
   }

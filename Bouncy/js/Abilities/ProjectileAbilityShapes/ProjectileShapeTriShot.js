@@ -5,15 +5,9 @@ class ProjectileShapeTriShot extends ProjectileShape {
   constructor(abilityDef) {
     super(abilityDef);
     this.ACTIVATE_ON_TICK = 0;
-    this.bullets_per_side = Math.floor(
-      (abilityDef.getOptionalParam('num_bullets', 1) - 1) / 2
-    );
     this.min_angle = abilityDef.getOptionalParam('min_angle', Math.PI / 16.0);
     this.max_angle = abilityDef.getOptionalParam('max_angle', Math.PI / 6.0);
-    if (this.num_bullets % 2 == 0) {
-      this.num_bullets -= 1;
-      console.warn("ProjectileShapeTriShot doesn't support even numbers yet");
-    }
+    this.num_bullets = abilityDef.getOptionalParam('num_bullets', 1);
   }
 
   calculateSpread(startPos, endPos) {
@@ -30,21 +24,20 @@ class ProjectileShapeTriShot extends ProjectileShape {
      );
   }
 
-  getSpreadOffset() {
-    /*if (this.num_bullets % 2 == 0) {
-      return this.calculateSpread(startPos, endPos) * i / this.bullets_per_side / 2;
-    }*/
-    return 0;
-  }
-
   createTargettingGraphic(startPos, endPos, color) {
     // Create a new Graphics object and add it to the scene
     var lineGraphic = new PIXI.Graphics();
     const circleSize = 8;
-    for (var i = -this.bullets_per_side; i <= this.bullets_per_side; i++) {
-      var angle = Math.atan2(endPos.y - startPos.y, endPos.x - startPos.x) +
-        this.calculateSpread(startPos, endPos) * i / this.bullets_per_side +
-        this.getSpreadOffset();
+    let targetPoint = endPos;
+    let castPoint = startPos;
+    for (var i = 0; i < this.num_bullets; i++) {
+      let pctOn = 0;
+      if (this.num_bullets > 1) {
+        pctOn = (i / (this.num_bullets - 1) * 2 - 1);
+      }
+      var angle = Math.atan2(
+        targetPoint.y - castPoint.y, targetPoint.x - castPoint.x
+      ) + this.calculateSpread(castPoint, targetPoint) * pctOn;
       var dist = ((endPos.x - startPos.x) ** 2 + (endPos.y - startPos.y) ** 2) ** 0.5;
       dist = 250;
       dist -= circleSize;
@@ -68,7 +61,7 @@ class ProjectileShapeTriShot extends ProjectileShape {
     var hitEffects = this.abilityDef.getHitEffects();
     for (var i = 0; i < hitEffects.length; i++) {
       if (hitEffects[i].effect == ProjectileShape.HitEffects.DAMAGE) {
-        return (this.bullets_per_side * 2 + 1) + " X " + idx(hitEffects[i], 'base_damage', 0);
+        return this.num_bullets + " X " + idx(hitEffects[i], 'base_damage', 0);
       }
     }
     return 0;
@@ -76,11 +69,16 @@ class ProjectileShapeTriShot extends ProjectileShape {
 
   doActionOnTick(playerID, tick, boardState, castPoint, targetPoint) {
     if (tick == this.ACTIVATE_ON_TICK) {
-      for (var i = -this.bullets_per_side; i <= this.bullets_per_side; i++) {
+      for (var i = 0; i < this.num_bullets; i++) {
+        let pctOn = 0;
+        if (this.num_bullets > 1) {
+          pctOn = (i / (this.num_bullets - 1) * 2 - 1);
+        }
+
         var angle = Math.atan2(
           targetPoint.y - castPoint.y, targetPoint.x - castPoint.x
-        ) + this.calculateSpread(castPoint, targetPoint) * i / this.bullets_per_side +
-          this.getSpreadOffset();
+        ) + this.calculateSpread(castPoint, targetPoint) * pctOn;
+
         boardState.addProjectile(
           Projectile.createProjectile(
             playerID,
@@ -89,7 +87,7 @@ class ProjectileShapeTriShot extends ProjectileShape {
             null,
             angle,
             this.abilityDef,
-            {'speed': lerp(8, 7, Math.abs(i) / this.bullets_per_side)}
+            {'speed': lerp(8, 7, Math.abs(pctOn))}
           ).addUnitHitCallback(this.unitHitCallback.bind(this))
           .addTimeoutHitCallback(this.timeoutHitCallback.bind(this))
         );

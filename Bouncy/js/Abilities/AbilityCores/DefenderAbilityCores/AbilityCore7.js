@@ -91,7 +91,6 @@ class AbilityCore7 extends AbilityCore {
 
     if (has_pierce) { damageMod /= 2; }
     if (has_ranged_thorns) { damageMod = damageMod * 2 / 3; }
-    let damage = Math.floor(200 * damageMod);
 
     let durationMod =
       (1 + idx(perkPcts, 'thorns range 1', 0) * 1) *
@@ -99,14 +98,20 @@ class AbilityCore7 extends AbilityCore {
     let duration = 20 * durationMod;
 
     let bullet_count = Math.floor(
-      5 + Math.floor(idx(perkPcts, 'thorns count 2', 0)) * 2 +
-      Math.floor(idx(perkPcts, 'thorns count 1', 0)) * 2
+      5 + Math.floor(
+        idx(perkPcts, 'thorns count 2', 0) * 2 +
+        idx(perkPcts, 'thorns count 1', 0) * 2
+      )
     );
+
+    damageMod = damageMod * 5 / bullet_count;
 
     let angles = Math.PI / 2.0;
     if (this.hasPerk(perkPcts, 'thorn angle')) {
       angles = Math.PI / 3.0;
     }
+
+    let damage = Math.floor(200 * damageMod);
 
     const rawAbil = {
       effect: ZoneAbilityDef.UnitEffectTypes.ABILITY,
@@ -126,7 +131,7 @@ class AbilityCore7 extends AbilityCore {
 
     if (has_pierce) {
       rawAbil.abil_def.collision_behaviours = [
-        {behaviour: CollisionBehaviour.PASSTHROUGH, count: 3},
+        {behaviour: CollisionBehaviour.PASSTHROUGH, count: 2},
       ];
     }
 
@@ -172,7 +177,7 @@ class AbilityCore7 extends AbilityCore {
           new PerkLevelRequirement('shield width 1')]
         )),
       // Level 2
-      (new MaxxedAbilityPerkNode('thorns count 1',    2, [2, 0]))
+      (new MaxxedAbilityPerkNode('thorns count 1',    4, [2, 0]))
         .addRequirement(new PerkLevelRequirement('thorns damage 1')),
       (new AbilityPerkNode('thorns damage 3',    3, [2, 1]))
         .addRequirement(new PerkLevelRequirement('thorns damage 1')),
@@ -211,7 +216,7 @@ class AbilityCore7 extends AbilityCore {
       (new AbilityPerkNode('recharge 2',    6, [5, 6]))
         .addRequirement(new PerkLevelRequirement('health 3')),
       // Level 6
-      (new MaxxedAbilityPerkNode('thorns count 2',    2,   [6, 1]))
+      (new MaxxedAbilityPerkNode('thorns count 2',    4,   [6, 1]))
         .addRequirement(new PerkLevelRequirement('thorns damage 2')),
       (new AbilityPerkNode('health 5',    4, [6, 3]))
         .addRequirement(new PerkLevelRequirement('thorn angle')),
