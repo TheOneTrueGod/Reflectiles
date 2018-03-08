@@ -2,7 +2,7 @@ class PlayerCard {
   constructor(cardData) {
     if (cardData instanceof PlayerCard) {
       // index refers to the card in the player's collection
-      this.card_index = cardData.card_index
+      this.card_index = cardData.card_index;
       // cardID refers to the id of the ability def
       this.cardID = cardData.cardID;
       this.cardPerks = cardData.cardPerks;
@@ -11,7 +11,7 @@ class PlayerCard {
       if (cardData.card_id === null) {
         throw new Error("invalid card data");
       }
-      this.card_index = cardData.card_index
+      this.card_index = cardData.card_index;
       this.cardID = cardData.card_id;
       this.cardPerks = cardData.card_perks;
       this.cardExperience = cardData.card_experience;
@@ -48,7 +48,7 @@ class PlayerCard {
   }
 
   getCardLevel() {
-    return Math.floor(this.cardExperience / 5000) + 1;
+    return Math.floor(this.cardExperience / 2000) + 1;
   }
 
   getLeftoverExperience() {
@@ -56,7 +56,7 @@ class PlayerCard {
   }
 
   getExperienceForLevel(level) {
-    return 5000 * (level - 1);
+    return 2000 * (level - 1);
   }
 
   getExperiencePercent() {
