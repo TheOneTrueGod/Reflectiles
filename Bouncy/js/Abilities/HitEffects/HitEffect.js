@@ -18,7 +18,7 @@ class HitEffect {
           var targetPos = {
             x: unit.x + x * Unit.UNIT_SIZE,
             y: unit.y + y * Unit.UNIT_SIZE
-          }
+          };
           if (source && source instanceof Projectile) {
             source.createExplosionEffect(boardState, targetPos);
           } else if (this.abilityDef) {

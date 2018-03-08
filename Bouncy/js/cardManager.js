@@ -29,6 +29,19 @@ class CardManager {
     });
   }
 
+  DEBUGpreviewAllSkills() {
+    let perkTree = AbilityFactory.GetPerkTree(
+      this.playerCard.cardID
+    );
+    for (let key in perkTree) {
+      for (var i = 0; i < perkTree[key].levels; i++) {
+        this.previewPerkList.push(key);
+      }
+    }
+    this.buildPerkTree();
+    this.updateCardDetails();
+  }
+
   setDeckManager(deckManager) {
     this.deckManager = deckManager;
   }

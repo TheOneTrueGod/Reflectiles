@@ -141,13 +141,13 @@ class ProjectileAbilityDef extends AbilityDef {
 
   getCollisionBehaviours() {
     let max_bounces = this.getOptionalParam('max_bounces');
-    if (this.collisionBehaviours == null) {
+    if (this.collisionBehaviours === null || this.collisionBehaviours === undefined) {
       if (max_bounces) {
-        return [
+        this.collisionBehaviours = [
           {behaviour: CollisionBehaviour.BOUNCE, count: max_bounces}
         ];
       } else {
-        return [];
+        this.collisionBehaviours = [];
       }
     }
     return this.collisionBehaviours;
@@ -163,4 +163,5 @@ ProjectileAbilityDef.Shapes = {
   BULLET_EXPLOSION: 'BULLET_EXPLOSION',
   WAVE: 'WAVE',
   DOUBLE_WAVE: 'DOUBLE_WAVE',
+  INSTANT_AOE: 'INSTANT_AOE',
 };

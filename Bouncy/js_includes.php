@@ -68,6 +68,7 @@
 <script src="/Bouncy/js/Abilities/ProjectileAbilityShapes/ProjectileShapeBulletExplosion.js"></script>
 <script src="/Bouncy/js/Abilities/ProjectileAbilityShapes/ProjectileShapeWave.js"></script>
 <script src="/Bouncy/js/Abilities/ProjectileAbilityShapes/ProjectileShapeDoubleWave.js"></script>
+<script src="/Bouncy/js/Abilities/ProjectileAbilityShapes/ProjectileShapeInstantAoE.js"></script>
 <script src="/Bouncy/js/GameElements/Projectiles/StandardProjectile.js"></script>
 <script src="/Bouncy/js/GameElements/Projectiles/PenetrateProjectile.js"></script>
 <script src="/Bouncy/js/GameElements/Projectiles/TimeoutProjectile.js"></script>

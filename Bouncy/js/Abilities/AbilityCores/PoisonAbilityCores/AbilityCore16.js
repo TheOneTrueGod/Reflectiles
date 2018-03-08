@@ -7,7 +7,7 @@ class AbilityCore16 extends AbilityCore {
         'turns, they explode into [[hit_effects[0].abil_def.num_bullets]] bullets, ' +
         'each one dealing [[hit_effects[0].abil_def.hit_effects[0].base_damage]] damage',
       card_text_description: '[[hit_effects[0].abil_def.num_bullets]] X [[hit_effects[0].abil_def.hit_effects[0].base_damage]]',
-      style: (new AbilitySheetSpriteAbilityStyleBuilder)
+      style: (new AbilitySheetSpriteAbilityStyleBuilder())
         .setSheet('bullet_sheet').setCoordNums(393, 157, 406, 171).setRotation(0).fixRotation(true).build(),
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,

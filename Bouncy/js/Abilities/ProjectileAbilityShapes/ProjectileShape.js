@@ -100,6 +100,8 @@ ProjectileShape.getProjectileShape = function(shapeType, abilityDef) {
       return new ProjectileShapeRainShot(abilityDef);
     case ProjectileAbilityDef.Shapes.BULLET_EXPLOSION:
       return new ProjectileShapeBulletExplosion(abilityDef);
+    case ProjectileAbilityDef.Shapes.INSTANT_AOE:
+      return new ProjectileShapeInstantAoE(abilityDef);
     case ProjectileAbilityDef.Shapes.WAVE:
       return new ProjectileShapeWave(abilityDef);
     case ProjectileAbilityDef.Shapes.DOUBLE_WAVE:

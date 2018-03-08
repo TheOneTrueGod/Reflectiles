@@ -60,6 +60,27 @@ class AbilityCore9 extends AbilityCore {
       charge: {"initial_charge":-1,"max_charge":3,"charge_type":"TURNS"}
     };
 
+    if (this.hasPerk(perkPcts, 'spreading affliction')) {
+      rawAbil.hit_effects.push({
+        effect: ProjectileShape.HitEffects.INFECT,
+        duration: duration,
+        abil_def: {
+          ability_type: AbilityDef.AbilityTypes.PROJECTILE,
+          projectile_type: 1,
+          shape: ProjectileAbilityDef.Shapes.INSTANT_AOE,
+          hit_effects: [{
+            effect: ProjectileShape.HitEffects.WEAKNESS,
+            duration: duration,
+            amount: weaknessAmount,
+            aoe_type: ProjectileShape.AOE_TYPES.BOX,
+            aoe_size: {x:[-1, 1], y:[-1, 1]}
+          }],
+        }
+      });
+
+      rawAbil.description = rawAbil.description + "<br>If a unit afflicted by this skill dies, all adjacent units are Weakened for [[hit_effects[2].duration]] turns.";
+    }
+
     let abilityStyle = (new AbilitySheetSpriteAbilityStyleBuilder())
       .setSheet('bullet_sheet')
       .setCoordNums(263, 157, 263 + 11, 157 + 11);
@@ -89,6 +110,11 @@ class AbilityCore9 extends AbilityCore {
       rawAbil.hit_effects[0].aoe_size = aoeRadius;
       rawAbil.hit_effects[1].aoe_type = aoeType;
       rawAbil.hit_effects[1].aoe_size = aoeRadius;
+
+      if (rawAbil.hit_effects[2]) {
+        rawAbil.hit_effects[2].aoe_type = aoeType;
+        rawAbil.hit_effects[2].aoe_size = aoeRadius;
+      }
 
       abilityStyle.setExplosion(AbilityStyle.getExplosionPrefab(
           AbilityStyle.EXPLOSION_PREFABS.WHITE, aoeRadius

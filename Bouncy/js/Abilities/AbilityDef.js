@@ -34,6 +34,16 @@ class AbilityDef {
     this.rawJSON = defJSON;
   }
 
+  createExplosionEffect(boardState, targetPos) {
+    var style = this.getStyle();
+    if (style) {
+      style.createExplosion(boardState, targetPos, this);
+    } else {
+      var AOESprite = 'sprite_explosion';
+      EffectFactory.createExplosionSpriteAtUnit(boardState, targetPos, AOESprite);
+    }
+  }
+
   getOptionalParam(param, defaultValue) {
     if (param in this.rawDef) {
       return this.rawDef[param];

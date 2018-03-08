@@ -7,14 +7,4 @@ class PositionBasedAbilityDef extends AbilityDef {
       damageDealt += hitEffect.doHitEffect(boardState, targetPoint, null, source);
     }
   }
-
-  createExplosionEffect(boardState, targetPos) {
-    var style = this.getStyle();
-    if (style) {
-      style.createExplosion(boardState, targetPos, this);
-    } else {
-      var AOESprite = 'sprite_explosion';
-      EffectFactory.createExplosionSpriteAtUnit(boardState, targetPos, AOESprite);
-    }
-  }
 }
