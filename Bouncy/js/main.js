@@ -1,26 +1,18 @@
 /*
  * TODO;
- *** Card Upgrade System Ideas ***
- * Each card is its own instance
- * You can have up to 4 of any given card
- * Whenever you use a card, it gains experience.
- * Whenever you gain a duplicate of a card, all of your copies of that card gain experience,
-    and you get a bit of spendable XP.
- * Each card has a mini skill tree that will do some minor modifications to that card.
-    - Example; +10% damage, cooldown, minor AoE.
- * Each skill in the tree can have multiple points put into it.
- * Each card has a max level
- * If a card is at max level and it gains XP, you instead gain more spendable XP.
- * You can respec an individual card at any time for free
- * Some cards can be transformed.  This requires they be at some level, and then you spend some XP on it.
- * Transforming a card turns it into a new one entirely.  The old one is lost
- * Player level is based on the highest levelled card in their deck (? maybe sum of card levels ?)
-   - Each card also has a 'base level' that is used in this calculation.
-
+ *  Shield has a bunch of ERRORs.  In the card, and in the zone's description.
+    Might be a bug with sean's passthrough ability
+    You can still change your selected ability after the round has ended
+    If you save your stat changes, it doesn't update in the deck selector on the right
+    rage leaves them at a float amount of health
+    You can't move into the rage
+    Give everyone a single deck
+    chaos orb bounces off of rage
+    make poison work with weaken
+    split freeze into two status ailments -- stun and immobilize
+    Something's wrong with how turrets interact with bullets
+    Put the icon of the planned skill near the person's name
  ***************************
- * Change how shots interact with the world.  They should have num_bounces, num_passthroughs, and events like on_hit, on_bounce, and on_passthrough
- * Add circular AoEs
- * Add player progression
  * Add Minor Actions
  * Actions should be able to move you
  * Attribute bonus damage back the buff creator
