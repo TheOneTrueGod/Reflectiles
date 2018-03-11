@@ -136,10 +136,31 @@ class Unit {
   }
 
   dealDamage(boardState, amount, source) {
+    let abilID = null;
+    let playerID = null;
+    if (source instanceof Projectile) {
+      abilID = AbilityDef.findAbsoluteParent(source.abilityDef.index);
+      playerID = source.playerID;
+    } else if (source instanceof StatusEffect) {
+      abilID = AbilityDef.findAbsoluteParent(source.abilityID);
+      playerID = source.playerID;
+    } else if (source instanceof ZoneEffect && source.owningPlayerID) {
+      abilID = AbilityDef.findAbsoluteParent(source.creatorAbility.index);
+      playerID = source.owningPlayerID;
+    }
+
+    let owningPlayer = boardState.getPlayerUnit(playerID);
+
     let damageDealt = 0;
     var damageMult = 1;
     for (var key in this.statusEffects) {
       damageMult *= this.statusEffects[key].getDamageMultiplier()
+    }
+    if (owningPlayer) {
+      let damageStatusEffect = owningPlayer.getStatusEffect(PlayerDamageStatusEffect);
+      if (damageStatusEffect) {
+        damageMult *= damageStatusEffect.amount;
+      }
     }
     var maxDamageDealt = this.health.current;
     var damageToDeal = Math.max(amount * damageMult, 0);
@@ -192,18 +213,6 @@ class Unit {
     this.setHealth(this.health.current - Math.floor(Math.max(damageToDeal, 0)));
     if (amount > 0) {
       boardState.resetNoActionKillSwitch();
-    }
-    let abilID = null;
-    let playerID = null;
-    if (source instanceof Projectile) {
-      abilID = AbilityDef.findAbsoluteParent(source.abilityDef.index);
-      playerID = source.playerID;
-    } else if (source instanceof StatusEffect) {
-      abilID = AbilityDef.findAbsoluteParent(source.abilityID);
-      playerID = source.playerID;
-    } else if (source instanceof ZoneEffect && source.owningPlayerID) {
-      abilID = AbilityDef.findAbsoluteParent(source.creatorAbility.index);
-      playerID = source.owningPlayerID;
     }
 
     if (!abilID) {

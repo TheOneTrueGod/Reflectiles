@@ -56,10 +56,28 @@ class AbilityCore2 extends AbilityCore {
         {behaviour: CollisionBehaviour.BOUNCE, count: 1}
       );
     }
+    let hitEffects = [{effect: ProjectileShape.HitEffects.DAMAGE, base_damage: damage}];
+    let rageDescription = '';
+    if (this.hasPerk(perkPcts, 'rage buff 3')) {
+      let rageEffect = {
+        effect: ProjectileShape.HitEffects.SHOOTER_BUFF,
+        effect_max: 1.1 + (this.hasPerk(perkPcts, 'rage amount 4') ? 0.1 : 0),
+        effect_gain: 0.002,
+        effect_base: 1,
+        duration: 1 + (this.hasPerk(perkPcts, 'rage duration 4') ? 1 : 0),
+      };
+      hitEffects.push(rageEffect);
+      rageDescription = "Every bullet that hits an enemy increases your damage by " +
+        "<<" + (rageEffect.effect_gain * 100) + ">>% up to a maximum of <<" + Math.floor(rageEffect.effect_max * 100 - 100) + ">>% " +
+        "for the next <<" + rageEffect.duration + ">> turn" + (rageEffect.duration > 1 ? "s" : '') +
+        "<br>";
+    }
+
     const rawAbil = { // 1440 damage
       name: 'Double Wave',
       description: 'Sprays [[child_abilities[0].num_bullets]] bullets that deal [[child_abilities[0].hit_effects[0].base_damage]] damage in two waves.<br>' +
-        (this.hasPerk(perkPcts, 'center wave') ? 'Also shoots [[child_abilities[1].num_bullets]] bullets in <<' + CENTER_WAVES + '>> waves down the center.' : ''),
+        (this.hasPerk(perkPcts, 'center wave') ? 'Also shoots [[child_abilities[1].num_bullets]] bullets in <<' + CENTER_WAVES + '>> waves down the center.<br>' : '') +
+        rageDescription,
       card_text_description: '[[child_abilities[0].num_bullets]] X [[child_abilities[0].hit_effects[0].base_damage]]',
       ability_type: AbilityDef.AbilityTypes.MULTIPART,
       icon: "/Bouncy/assets/icons/icon_plain_wave.png",
@@ -73,10 +91,7 @@ class AbilityCore2 extends AbilityCore {
           num_bullets: num_bullets,
           return_num_bullets: 0,
           destroy_on_wall: destroy_on_wall,
-          hit_effects: [{
-            effect: ProjectileShape.HitEffects.DAMAGE,
-            base_damage: damage,
-          }],
+          hit_effects: hitEffects,
           angle_spread: angle_spread,
           angle_offset: angle_offset,
           shot_delay: shot_delay,
@@ -96,7 +111,7 @@ class AbilityCore2 extends AbilityCore {
           min_angle: Math.PI / 16.0,
           max_angle: Math.PI / 16.0,
           collision_behaviours: collisionBehaviours,
-          hit_effects:[{effect: ProjectileShape.HitEffects.DAMAGE, base_damage: damage}],
+          hit_effects: hitEffects,
         }
         rawAbil.child_abilities.push(centerShot);
       }
@@ -141,9 +156,9 @@ class AbilityCore2 extends AbilityCore {
       (new AbilityPerkNode('center bullets 3',      3, [3, 6]))
         .addRequirement(new PerkLevelRequirement('center wave')),
       // Level 4
-      (new AbilityPerkNode('rage duration 4',       3, [4, 2]))
+      (new MaxxedAbilityPerkNode('rage duration 4', 2, [4, 2]))
         .addRequirement(new PerkLevelRequirement('rage buff 3')),
-      (new AbilityPerkNode('rage amount 4',         3, [4, 4]))
+      (new MaxxedAbilityPerkNode('rage amount 4',   2, [4, 4]))
         .addRequirement(new PerkLevelRequirement('rage buff 3')),
       // Level 5
       (new AbilityPerkNode('more bullets 5',        3, [5, 1]))

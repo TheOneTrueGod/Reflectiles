@@ -128,6 +128,7 @@ ProjectileShape.HitEffects = {
   BULLET_SPLIT: 'BULLET_SPLIT',
   INFECT: 'INFECT',
   USE_ABILITY: 'USE_ABILITY',
+  SHOOTER_BUFF: 'SHOOTER_BUFF',
 };
 
 ProjectileShape.AOE_TYPES = {
