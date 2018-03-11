@@ -79,7 +79,6 @@ class DeckManager {
       clickTarget = clickTarget.closest(".abilityCard");
     }
     let playerCard = clickTarget.data("playerCard");
-
     if (event.button == 2 || event.shiftKey) {
       this.showCardManager(playerCard);
     } else {

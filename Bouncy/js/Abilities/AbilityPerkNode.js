@@ -85,6 +85,10 @@ class PerkLevelRequirement extends AbilityPerkRequirement {
 
   isRequirementMet(perkCounts, perkTree) {
     let childPerk = perkTree[this.perkName];
+    if (childPerk === undefined) {
+      console.warn("ERROR: Trying to get perk [" + this.perkName + "] from perkTree:", perkTree);
+      return false;
+    }
     return perkCounts[this.perkName] >= (this.level === 'max' ? childPerk.levels : this.level);
   }
 }

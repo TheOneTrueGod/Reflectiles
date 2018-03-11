@@ -60,8 +60,10 @@ class PlayerCommand {
       {x: this.x, y: this.y},
       color
     );
+    if (this.aimIndicator) {
+      stage.addChild(this.aimIndicator);
+    }
 
-    stage.addChild(this.aimIndicator);
     return this.aimIndicator;
   }
 

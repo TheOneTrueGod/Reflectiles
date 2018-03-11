@@ -60,6 +60,7 @@
 <script src="/Bouncy/js/Abilities/PositionBasedAbilityDef.js"></script>
 <script src="/Bouncy/js/Abilities/ZoneAbilityDef.js"></script>
 <script src="/Bouncy/js/Abilities/SummonUnitAbilityDef.js"></script>
+<script src="/Bouncy/js/Abilities/MultipartAbilityDef.js"></script>
 <script src="/Bouncy/js/Abilities/ProjectileAbilityShapes/ProjectileShapeSingleShot.js"></script>
 <script src="/Bouncy/js/Abilities/ProjectileAbilityShapes/ProjectileShapeTriShot.js"></script>
 <script src="/Bouncy/js/Abilities/ProjectileAbilityShapes/ProjectileShapeChainShot.js"></script>

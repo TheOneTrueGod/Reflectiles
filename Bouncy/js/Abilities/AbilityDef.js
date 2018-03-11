@@ -17,7 +17,7 @@ class AbilityDef {
       throw new Error("Ability Defs need an abilityType");
     }
     this.abilityType = defJSON['ability_type'];
-    this.ACTIVATE_ON_TICK = 1;
+    this.TIMING_OFFSET = idx(defJSON, 'timing_offset', 0);
 
     var chargeData = idx(defJSON, 'charge', {});
     this.chargeType = idx(defJSON['charge'], 'charge_type', AbilityDef.CHARGE_TYPES.TURNS);
@@ -56,7 +56,8 @@ class AbilityDef {
   }
 
   loadNestedAbilityDefs(nestedList) {
-    for (var i = 0; i < nestedList.length; i++) {
+    for (let i = 0; i < nestedList.length; i++) {
+      let newAbil = null;
       if (((
           nestedList[i].effect && (
             nestedList[i].effect == ZoneAbilityDef.UnitEffectTypes.ABILITY ||
@@ -67,7 +68,14 @@ class AbilityDef {
         nestedList[i].abil_def) &&
         !nestedList[i].initializedDef
       ) {
-        var newAbil = AbilityDef.createFromJSON(nestedList[i].abil_def, true);
+        newAbil = AbilityDef.createFromJSON(nestedList[i].abil_def, true);
+      }
+
+      if (nestedList[i].ability_type) {
+        newAbil = AbilityDef.createFromJSON(nestedList[i], true);
+      }
+
+      if (newAbil) {
         nestedList[i].initializedAbilDef = newAbil;
         newAbil.parentAbilIndex = this.index;
         if (newAbil.abilityStyle === AbilityStyle.FALLBACK_STYLE) {
@@ -294,6 +302,7 @@ AbilityDef.AbilityTypes = {
   ZONE: 'ZONE',
   CREATE_UNIT: 'CREATE_UNIT',
   POSITION: 'POSITION',
+  MULTIPART: 'MULTIPART',
   LASER: 'LASER',
   SPECIAL: 'SPECIAL'
 };
@@ -324,6 +333,8 @@ AbilityDef.createFromJSON = function(defJSON, subAbility) {
       return new SummonUnitAbilityDef(defJSON, subAbility);
     case AbilityDef.AbilityTypes.POSITION:
       return new PositionBasedAbilityDef(defJSON, subAbility);
+    case AbilityDef.AbilityTypes.MULTIPART:
+      return new MultipartAbilityDef(defJSON, subAbility);
     default:
       throw new Error("[" + defJSON['abilityType'] + "] not handled");
   }

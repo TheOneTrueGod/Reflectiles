@@ -47,7 +47,12 @@ class CardManager {
   }
 
   setupForCard(playerCard) {
-    window.history.pushState('', '', '?card=' + playerCard.card_index);
+    let historyText = '?card=' + playerCard.card_index;
+    if ($('#gameContainer').attr('playerid') === 'totg') {
+      historyText += '&core_id=' + playerCard.cardID;
+    }
+
+    window.history.pushState('', '',  historyText);
     this.previewPerkList = [];
     this.playerCard = playerCard;
 

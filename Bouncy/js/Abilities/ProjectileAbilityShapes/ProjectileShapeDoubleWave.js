@@ -8,7 +8,7 @@ class ProjectileShapeDoubleWave extends ProjectileShape {
   constructor(abilityDef) {
     super(abilityDef);
     this.ACTIVATE_ON_TICK = 0;
-    this.SHOT_DELAY = this.abilityDef.getOptionalParam('shots_delay', 3);
+    this.SHOT_DELAY = this.abilityDef.getOptionalParam('shot_delay', 3);
     this.NUM_BULLETS = this.abilityDef.getOptionalParam('num_bullets', 20) / 2;
     this.RETURN_NUM_BULLETS = this.abilityDef.getOptionalParam('return_num_bullets', 6) / 2;
     this.RETURN_SHOT_DELAY = this.abilityDef.getOptionalParam('return_shot_delay', 15);
@@ -35,7 +35,7 @@ class ProjectileShapeDoubleWave extends ProjectileShape {
   doActionOnTick(playerID, tick, boardState, castPoint, targetPoint) {
     var tick = tick - this.ACTIVATE_ON_TICK;
     var lastTick = tick - 1;
-    if (!(tick >= 0 && tick <= this.FINAL_TICK)) {
+    if (!(tick >= 0 && tick < this.FINAL_TICK)) {
       return;
     }
     var shot_delay = this.SHOT_DELAY;

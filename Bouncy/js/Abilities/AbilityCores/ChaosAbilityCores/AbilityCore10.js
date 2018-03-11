@@ -1,26 +1,60 @@
+// MULTIPART EXAMPLE;
 class AbilityCore10 extends AbilityCore {
   static BuildAbilityChild(perkList, perkPcts, perkCounts) {
-    const rawAbil = {
-      name: 'ERROR:  NOT IN USE',
-      description: 'Shoots a projectile that passes through enemies.<br>' +
-        'It deals [[hit_effects[0].base_damage]] damage to up to [[num_hits]] targets.',
-      card_text_description: '[[num_hits]] X [[hit_effects[0].base_damage]]',
-      style: (new AbilitySheetSpriteAbilityStyleBuilder)
-        .setSheet('bullet_sheet').setCoordNums(65, 301, 73, 320).build(),
+    const rawAbil1 = {
+      name: 'Spread Shot',
+      description: 'Shoot [[num_bullets]] projectiles.<br>' +
+        'Each one deals [[hit_effects[0].base_damage]] damage.',
+      card_text_description: '[[num_bullets]] X [[hit_effects[0].base_damage]]',
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
-      shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
+      shape: ProjectileAbilityDef.Shapes.TRI_SHOT,
+      style: (new AbilitySheetSpriteAbilityStyleBuilder)
+        .setSheet('bullet_sheet').setCoordNums(275, 69, 294, 78).setRotation(0).build(),
       projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
-      collision_behaviours: [
-        {behaviour: CollisionBehaviour.PASSTHROUGH, count: 6},
-      ],
-      num_hits: 7,
-      icon: "/Bouncy/assets/icons/icon_plain_drill.png",
+      num_bullets: 6 + bullet_bonus,
+      hit_effects:[{effect: ProjectileShape.HitEffects.DAMAGE, base_damage: 180}],
+      icon: "/Bouncy/assets/icons/spread_shot.png",
+    };
+
+    let rawAbil2 = { // 2440 damage max.  Actually dealing less than that
+      name: 'Shoot \'em up',
+      description: 'Shoots a wild spray of bullets.<br>' +
+        '[[num_bullets]] bullets deal [[hit_effects[0].base_damage]] damage',
+      card_text_description: '[[num_bullets]] X [[hit_effects[0].base_damage]]',
+      style: (new AbilitySheetSpriteAbilityStyleBuilder)
+        .setSheet('bullet_sheet').setCoordNums(29, 301, 37, 320).setRotation(Math.PI / 2).build(),
+      ability_type: AbilityDef.AbilityTypes.PROJECTILE,
+      shape: ProjectileAbilityDef.Shapes.CHAIN_SHOT,
+      projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
+      destroy_on_wall: true,
+      num_bullets: 25,
+      bullet_wave_delay: 3,
+      accuracy_decay: Math.PI / 128.0,
+      icon: "/Bouncy/assets/icons/bullets.png",
       hit_effects: [{
         effect: ProjectileShape.HitEffects.DAMAGE,
-        base_damage: 150
+        base_damage: 35
+      },
+      {
+        effect: ProjectileShape.HitEffects.POISON,
+        damage: 10,
+        duration: 2
       }],
-      charge:{initial_charge: -1, max_charge: 3, charge_type: AbilityDef.CHARGE_TYPES.TURNS}
     };
+
+    rawAbil1.timing_offset = MultipartAbilityDef.TIMING_OFFSET.AFTER;
+
+    const rawAbil = {
+      name: 'Multipart Test',
+      description: 'do the thing',
+      ability_type: AbilityDef.AbilityTypes.MULTIPART,
+      card_text_description: 'test',
+      child_abilities: [
+        rawAbil2,
+        rawAbil1
+      ],
+      icon: "/Bouncy/assets/icons/spread_shot.png",
+    }
     return AbilityDef.createFromJSON(rawAbil);
   }
 

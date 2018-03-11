@@ -8,7 +8,7 @@ class ProjectileShapeWave extends ProjectileShape {
   constructor(abilityDef) {
     super(abilityDef);
     this.ACTIVATE_ON_TICK = 0;
-    this.SHOT_DELAY = this.abilityDef.getOptionalParam('shots_delay', 3);
+    this.SHOT_DELAY = this.abilityDef.getOptionalParam('shot_delay', 3);
     this.NUM_BULLETS = this.abilityDef.getOptionalParam('num_bullets', 20);
     this.RETURN_NUM_BULLETS = this.abilityDef.getOptionalParam('return_num_bullets', 5);
     this.RETURN_SHOT_DELAY = this.abilityDef.getOptionalParam('return_shot_delay', 15);
