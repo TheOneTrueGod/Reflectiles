@@ -135,9 +135,12 @@ class Unit {
     return toRet;
   }
 
-  dealDamage(boardState, amount, source) {
+  dealDamage(boardState, amount, source, damageType) {
     let abilID = null;
     let playerID = null;
+    if (damageType === undefined) {
+      console.warn("DamageType not provided to dealDamage");
+    }
     if (source instanceof Projectile) {
       abilID = AbilityDef.findAbsoluteParent(source.abilityDef.index);
       playerID = source.playerID;
@@ -195,7 +198,7 @@ class Unit {
       }
     }
 
-    if (this.armour.current > 0) {
+    if (this.armour.current > 0 && damageType !== Unit.DAMAGE_TYPE.POISON) {
       maxDamageDealt += this.armour.current;
       if (this.armour.current >= damageToDeal) {
         damageDealt += damageToDeal;
@@ -587,4 +590,9 @@ Unit.AddToTypeMap = function() {
 Unit.UNIT_TRAITS = {
   FROST_IMMUNE: 'frost_immune',
   RESILIANT: 'resiliant',
+}
+
+Unit.DAMAGE_TYPE = {
+  NORMAL: "NORMAL",
+  POISON: "POISON",
 }

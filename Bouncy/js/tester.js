@@ -1,5 +1,9 @@
 class Tester extends MainGame {
   start() {
+
+    $('.unitDetailsContainer')
+      .append($("<div>", {class: 'damageDealt noselect'}))
+      .append($("<div>", {class: 'damageTaken noselect'}))
     this.unitType = UnitBomber;
     this.loadImages(this.testAbility.bind(this));
     UnitBasic.createAbilityDefs();
@@ -8,7 +12,7 @@ class Tester extends MainGame {
     this.unitsToSpawn = [
       [null, UnitBasicSquare, UnitShooter, UnitBasicSquare],
       [],
-      [null, UnitBasicSquare, UnitShooter, UnitBasicSquare]
+      [null, UnitBasicSquare, UnitKnight, UnitBasicSquare]
     ];
     /*this.unitsToSpawn =
     [
@@ -50,8 +54,8 @@ class Tester extends MainGame {
     // SET COMMANDS HERE
     this.abilitiesToUse = [
       //[TestAbils[3].index, {x: -100, y: -50}],
-      [this.buildAbility(AbilityCore0).index, {x: 0, y: -100}],
-      [this.buildAbility(AbilityCore0).index, {x: 0, y: -100}],
+      //[this.buildAbility(AbilityCore9).index, {x: 0, y: -100}],
+      [this.buildAbility(AbilityCore19).index, {x: 0, y: -100}],
       null,
       null,
       null,
@@ -146,6 +150,16 @@ class Tester extends MainGame {
       'totg'
     );
     this.boardState.addUnit(newCore);
+  }
+
+  loopTicksForPhase(phase) {
+    super.loopTicksForPhase(phase);
+    for (let key in this.boardState.gameStats.playerDamage.totg) {
+      let damageStat = this.boardState.gameStats.playerDamage.totg[key];
+      $(".damageDealt").html("Damage Dealt<br>" + damageStat.damage);
+    }
+    let damageTaken = this.boardState.teamHealth[1] - this.boardState.teamHealth[0];
+    $(".damageTaken").html("Damage Taken<br>" + damageTaken);
   }
 }
 

@@ -22,56 +22,32 @@ class BouncyUser extends User {
     if ($this->id == 'tab') {
       $this->decks = array(
         new PlayerDeck(0, "Chaos",   $chaosDeck),
-        new PlayerDeck(1, "Damage",  $damageDeck),
-        new PlayerDeck(2, "Support", $supportDeck),
-        new PlayerDeck(3, "Poison",  $poisonDeck),
-        new PlayerDeck(4, "Turrets", $turretDeck),
       );
       return;
     } else if ($this->id == 'chip') {
       $this->decks = array(
         new PlayerDeck(0, "Support", $supportDeck),
-        new PlayerDeck(1, "Damage",  $damageDeck),
-        new PlayerDeck(2, "Chaos",   $chaosDeck),
-        new PlayerDeck(3, "Poison",  $poisonDeck),
-        new PlayerDeck(4, "Turrets", $turretDeck),
       );
       return;
     } else if ($this->id == 'tj') {
       $this->decks = array(
         new PlayerDeck(0, "Damage",  $damageDeck),
-        new PlayerDeck(1, "Support", $supportDeck),
-        new PlayerDeck(2, "Chaos",   $chaosDeck),
-        new PlayerDeck(3, "Poison",  $poisonDeck),
-        new PlayerDeck(4, "Turrets", $turretDeck),
       );
       return;
     } else if ($this->id == 'sean') {
       $this->decks = array(
         new PlayerDeck(0, "Poison",  $poisonDeck),
-        new PlayerDeck(1, "Damage",  $damageDeck),
-        new PlayerDeck(2, "Support", $supportDeck),
-        new PlayerDeck(3, "Chaos",   $chaosDeck),
-        new PlayerDeck(4, "Turrets", $turretDeck),
       );
       return;
     } else if ($this->id == 'clarence') {
       $this->decks = array(
         new PlayerDeck(0, "Turrets", $turretDeck),
-        new PlayerDeck(1, "Damage",  $damageDeck),
-        new PlayerDeck(2, "Support", $supportDeck),
-        new PlayerDeck(3, "Chaos",   $chaosDeck),
-        new PlayerDeck(4, "Poison",  $poisonDeck),
       );
       return;
     }
 
     $this->decks = array(
       new PlayerDeck(0, "Damage",  $damageDeck),
-      new PlayerDeck(1, "Support", $supportDeck),
-      new PlayerDeck(2, "Chaos",   $chaosDeck),
-      new PlayerDeck(3, "Poison",  $poisonDeck),
-      new PlayerDeck(4, "Turrets", $turretDeck),
     );
   }
 

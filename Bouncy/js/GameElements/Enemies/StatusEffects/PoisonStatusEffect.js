@@ -9,7 +9,7 @@ class PoisonStatusEffect extends StatusEffect {
 
   turnStart(boardState, unit) {
     if (this.getDamageMultiplier() != 0) {
-      unit.dealDamage(boardState, this.damage / this.getDamageMultiplier(), this);
+      unit.dealDamage(boardState, this.damage / this.getDamageMultiplier(), this, Unit.DAMAGE_TYPE.POISON);
     }
     this.duration -= 1;
   }

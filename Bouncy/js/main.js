@@ -1,12 +1,7 @@
 /*
  * TODO;
- *  Shield has a bunch of ERRORs.  In the card, and in the zone's description.
     You can still change your selected ability after the round has ended
-    If you save your stat changes, it doesn't update in the deck selector on the right
-    Give everyone a single deck
-    make poison work with weaken
     split freeze into two status ailments -- stun and immobilize
-    Poison should damage through armor
  ***************************
  * Add Minor Actions
  * Actions should be able to move you

@@ -48,7 +48,7 @@ class PlayerCard {
   }
 
   getCardLevel() {
-    return Math.floor(this.cardExperience / 2000) + 1;
+    return Math.floor(this.cardExperience / 2000) + 1 + 20;
   }
 
   getLeftoverExperience() {

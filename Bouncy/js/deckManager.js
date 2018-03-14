@@ -160,6 +160,8 @@ class DeckManager {
   updateCard(playerCard) {
     let displayCard = this.createDisplayCard(playerCard);
     $('.cardsSection [data-index="' + playerCard.card_index + '"]').replaceWith(displayCard);
+    displayCard = this.createDisplayCard(playerCard);
+    $('.deckContentsSection [data-index="' + playerCard.card_index + '"]').replaceWith(displayCard);
     this.updateCardStatus();
   }
 

@@ -138,7 +138,7 @@ class ZoneAbilityDef extends AbilityDef {
     idx(unitInteraction, 'unit_enter', []).forEach((enterEffect) => {
       switch (enterEffect.effect) {
         case ZoneAbilityDef.UnitEffectTypes.DAMAGE:
-          unit.dealDamage(boardState, idx(enterEffect, 'damage', 100));
+          unit.dealDamage(boardState, idx(enterEffect, 'damage', 100), undefined, Unit.DAMAGE_TYPE.NORMAL);
           break;
         case ZoneAbilityDef.UnitEffectTypes.ABILITY:
           var abilitySource = idx(enterEffect, 'ability_source', ZoneAbilityDef.AbilitySources.CENTER_ZONE);

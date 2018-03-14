@@ -27,7 +27,7 @@ class DamageHitEffect extends HitEffect {
 
     var finalDamage = base_damage * damageMod;
 
-    var damageDealt = unit.dealDamage(boardState, finalDamage, projectile);
+    var damageDealt = unit.dealDamage(boardState, finalDamage, projectile, Unit.DAMAGE_TYPE.NORMAL);
     if (is_penetrate && (!unit.readyToDelete() || Math.floor(finalDamage) == Math.floor(damageDealt))) {
       projectile.delete();
     }

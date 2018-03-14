@@ -31,11 +31,11 @@ class AbilityCore7 extends AbilityCore {
         'It loses one health per turn, or when it defends.<br>' +
         (thornsAbility ? 'Whenever a unit tries to enter, ' + (has_ranged_thorns ? 'or you defend against a bullet, ' : '') + 'retaliate for [[unit_interaction.unit_enter[0].abil_def.hit_effects[0].base_damage]] damage.<br>' : '') +
         (has_pierce ? 'These thorns pierce up to <<3>> enemies.' : ''),
-      card_text_description: '[[unit_interaction.unit_enter[0].abil_def.hit_effects[0].base_damage]]',
+      card_text_description: '[[duration]]',
       zone_tooltip_name: 'Shield',
-      zone_tooltip_description: 'Protects from bullets.  If an enemy would enter, the shield will retaliate with ' +
+      zone_tooltip_description: 'Protects from bullets.' + (thornsAbility ? '  If an enemy would enter' + (has_ranged_thorns ? ', or the shield would be shot' : '') + ', the shield will retaliate with ' +
         '[[unit_interaction.unit_enter[0].abil_def.num_bullets]] thorns for ' +
-        '[[unit_interaction.unit_enter[0].abil_def.hit_effects[0].base_damage]] damage each.',
+        '[[unit_interaction.unit_enter[0].abil_def.hit_effects[0].base_damage]] damage each.' : ''),
       ability_type: AbilityDef.AbilityTypes.ZONE,
       unit_interaction: {
         prevent_unit_entry: true,

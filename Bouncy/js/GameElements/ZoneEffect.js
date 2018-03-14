@@ -34,9 +34,9 @@ class ZoneEffect extends Unit {
     this.shield.max = shield;
   }
 
-  dealDamage(boardState, amount, source) {
+  dealDamage(boardState, amount, source, damageType) {
     if (this.creatorAbility.ZONE_TYPE == ZoneAbilityDef.ZoneTypes.KNIGHT_SHIELD) {
-      return super.dealDamage(boardState, amount, source);
+      return super.dealDamage(boardState, amount, source, damageType);
     }
     return;
   }
