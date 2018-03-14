@@ -179,10 +179,17 @@ class UIListeners {
 
   updatePlayerCommands(player_commands, players) {
     $('.playerStatus .statusIndicator').removeClass('ready');
+    $('.playerStatus').css('background-image', 'none');
     for (var key in players) {
       var player = players[key];
       if (player_commands[player.getUserID()] !== undefined) {
-        $('.playerStatus.' + player.getUserID() + ' .statusIndicator').addClass('ready');
+        for (let command of player_commands[player.getUserID()]) {
+          if (command.commandEndsTurn()) {
+            let iconURL = AbilityCardBuilder.getIconURL(command.abilityDef);
+            $('.playerStatus.' + player.getUserID() + ' .statusIndicator').addClass('ready');
+            $('.playerStatus.' + player.getUserID()).css('background-image', "url(" + iconURL + ")");
+          }
+        }
       }
     }
   }

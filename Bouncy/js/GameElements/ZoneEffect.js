@@ -321,6 +321,9 @@ class ZoneEffect extends Unit {
   }
 
   preventsUnitEntry(unit) {
+    if (unit instanceof UnitCore) {
+      return idx(this.creatorAbility.getOptionalParam('unit_interaction', {}), 'prevent_player_entry', false);
+    }
     return false;
   }
 

@@ -1,6 +1,6 @@
 class AbilityCore5 extends AbilityCore {
   static BuildAbilityChild(perkList, perkPcts, perkCounts) {
-    let bullet_bonus = idx(perkCounts, 'num_bullets', 0);
+    let bullet_bonus = lerp(0, 6, idx(perkPcts, 'num_bullets', 0));
     const rawAbil1 = {
       name: 'Spread Shot',
       description: 'Shoot [[num_bullets]] projectiles.<br>' +
@@ -55,7 +55,7 @@ class AbilityCore5 extends AbilityCore {
       ],
       icon: "/Bouncy/assets/icons/spread_shot.png",
     }
-    return AbilityDef.createFromJSON(rawAbil);
+    return AbilityDef.createFromJSON(rawAbil1);
   }
 
   static GetPerkList() {

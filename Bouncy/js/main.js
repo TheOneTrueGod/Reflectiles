@@ -1,17 +1,12 @@
 /*
  * TODO;
  *  Shield has a bunch of ERRORs.  In the card, and in the zone's description.
-    Might be a bug with sean's passthrough ability
     You can still change your selected ability after the round has ended
     If you save your stat changes, it doesn't update in the deck selector on the right
-    rage leaves them at a float amount of health
-    You can't move into the rage
     Give everyone a single deck
-    chaos orb bounces off of rage
     make poison work with weaken
     split freeze into two status ailments -- stun and immobilize
-    Something's wrong with how turrets interact with bullets
-    Put the icon of the planned skill near the person's name
+    Poison should damage through armor
  ***************************
  * Add Minor Actions
  * Actions should be able to move you
@@ -203,7 +198,7 @@ class MainGame {
 
     this.checkForAutoEndTurn();
 
-    UIListeners.updatePlayerCommands(player_command_list, this.players);
+    UIListeners.updatePlayerCommands(this.playerCommands, this.players);
   }
 
   checkForAutoEndTurn() {

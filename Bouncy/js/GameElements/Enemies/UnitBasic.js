@@ -84,7 +84,7 @@ class UnitBasic extends Unit {
     }
     if (this.health.current <= 0) { return; }
     var colour = 0xFFFFFF;
-    var text = this.health.current + this.getShield().current + this.getArmour().current;
+    var text = Math.ceil(this.health.current + this.getShield().current + this.getArmour().current);
     if (this.getShield().current > 0) {
       colour = 0xc119b9;
     } else if (this.getArmour().current > 0) {

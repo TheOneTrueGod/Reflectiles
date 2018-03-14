@@ -65,7 +65,7 @@ class FrozenOrbProjectile extends StandardProjectile {
     }
   }
 
-  shouldBounceOffLine(line) {
-    return true;
+  determineNextIntersectionBehaviour(intersection) {
+    return CollisionBehaviour.BOUNCE;
   }
 }

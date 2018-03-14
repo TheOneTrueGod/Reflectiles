@@ -6,11 +6,11 @@ class PlayerCommandUseAbility extends PlayerCommand {
   ) {
     var abil = AbilityDef.abilityDefList[abilityID];
     super(x, y, abilityID);
-    
+
     this.playerID = playerID;
     var target = abil.getValidTarget({x: x, y: y}, playerID);
     if (!target) {
-      throw new Exception("No valid targets!");
+      throw new Error("No valid targets!");
     }
     this.x = target.x;
     this.y = target.y;

@@ -239,7 +239,10 @@ class Unit {
 
   getCollisionBox() {
     if (this.readyToDelete()) { return []; }
-    if (this.memoizedCollisionBox) {
+    if (!this.collisionBox || this.collisionBox.length === 0) {
+      this.createCollisionBox();
+    }
+    if (this.memoizedCollisionBox && this.memoizedCollisionBox.length > 0) {
       return this.memoizedCollisionBox;
     }
     var self = this;

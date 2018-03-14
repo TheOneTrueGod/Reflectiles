@@ -527,6 +527,10 @@
   margin-top: 4px;
   padding: 0 4px;
   overflow: hidden;
+
+  background-repeat: no-repeat;
+  background-size: 20px;
+  background-position: 2px;
 }
 
 .statusIndicator {
@@ -535,16 +539,17 @@
   display: inline-block;
   width: 10px;
   height: 10px;
-  margin-right: 4px;
+  margin-right: 6px;
+  margin-left: 3px;
 }
 
 .statusIndicator.ready {
-  background: green;
+  background: none;
 }
 
 .playerName {
   display: inline-block;
-  width: 132px;
+  width: 127px;
 }
 
 #warningMessageBox {

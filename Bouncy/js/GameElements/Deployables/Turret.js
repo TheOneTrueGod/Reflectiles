@@ -53,8 +53,8 @@ class Turret extends ZoneEffect {
       }
 
       var angle = Math.atan2(this.aimTarget.y - this.y, this.aimTarget.x - this.x);
-      var angX = Math.cos(angle) * 22;
-      var angY = Math.sin(angle) * 22;
+      var angX = Math.cos(angle) * 19;
+      var angY = Math.sin(angle) * 19;
       var castPoint = new Victor(
         this.x + angX,
         this.y + angY
@@ -111,6 +111,10 @@ class Turret extends ZoneEffect {
     serialized.aim_target = this.aimTarget;
 
     return serialized;
+  }
+
+  preventsUnitEntry(unit) {
+    return unit instanceof UnitCore;
   }
 
   loadSerializedData(data) {

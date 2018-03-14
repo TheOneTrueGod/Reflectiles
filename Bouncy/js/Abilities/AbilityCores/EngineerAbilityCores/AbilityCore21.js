@@ -23,7 +23,7 @@ class AbilityCore21 extends AbilityCore {
           destroy_on_wall: [BorderWallLine.TOP],
           speed: 8,
           hit_effects:[{effect: ProjectileShape.HitEffects.DAMAGE, base_damage: 100, aoe_type:"BOX"}],
-          charge: {initial_charge: -1, max_charge: 4, charge_type: AbilityDef.CHARGE_TYPES.TURNS},
+          charge: {initial_charge: -1, max_charge: 2, charge_type: AbilityDef.CHARGE_TYPES.TURNS},
         }
       }],
       max_range: {top: 2, bottom: -1, left: 2, right: 2},

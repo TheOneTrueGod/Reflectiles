@@ -56,8 +56,7 @@ class PlayerCommandMove extends PlayerCommand {
       (
         Math.abs(unitCoord.y - targetCoord.y) + Math.abs(unitCoord.x - targetCoord.x) == 1 ||
         Math.abs(unitCoord.y - targetCoord.y) + Math.abs(unitCoord.x - targetCoord.x) == 2
-      ) &&
-      boardState.sectors.getUnitsAtGridSquare(targetCoord.x, targetCoord.y).length == 0
+      )
     ) {
       var playerUnits = boardState.getPlayerUnitsAtPosition(pos);
 
