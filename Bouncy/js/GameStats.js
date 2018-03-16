@@ -29,12 +29,14 @@ class GameStats {
 
   getExperienceEarned() {
     let damageDealt = 0;
+    let playerCount = 0;
     for (let playerID in this.playerDamage) {
       for (let ability in this.playerDamage[playerID]) {
         damageDealt += this.playerDamage[playerID][ability].damage;
       }
+      playerCount += 1;
     }
-    return Math.floor(damageDealt / 10);
+    return Math.floor(damageDealt / 10) / Math.max(playerCount, 1);
   }
 
   serialize() {

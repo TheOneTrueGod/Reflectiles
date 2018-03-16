@@ -57,6 +57,7 @@
       <div id="inMissionScreen">
         <div id="missionControlsActionBox">
           <div id="missionActionDisplay">
+            <div id="errorBox"></div>
             <div id="warningMessageBox" class="noselect" style="display: none;"></div>
             <div id="gameOverBox" class="noselect" style="display: none;">
               <div id="title"></div>

@@ -3,6 +3,7 @@ class ServerCalls {
     this.gameID = $('#gameBoard').attr('data-gameID');
     this.userToken = UserManagement.getUserToken();
     this.loadingMetadata = false;
+    this.commands = [];
   }
 
   SavePlayerDecks(callback, playerDecks) {
@@ -156,7 +157,7 @@ class ServerCalls {
       },
     }).done(function(data) {
       if (!data) {
-        throw new Error("Error Finalizing tern on server");
+        throw new Error("Error Finalizing turn on server");
         return;
       }
       var parsedData = $.parseJSON(data);
@@ -180,8 +181,8 @@ class ServerCalls {
     });
   }
 
-  SavePlayerCommands(boardStateObj, playerCommands) {
-    $.get({
+  SavePlayerCommands(boardStateObj, playerCommands, context, callback) {
+    var command = $.get({
       url: "../gamelogic/" + this.gameID,
       data: {
         action: ServerCalls.SERVER_ACTIONS.SUBMIT_PLAYER_COMMANDS,
@@ -189,7 +190,32 @@ class ServerCalls {
         userToken: this.userToken,
         playerCommands: playerCommands
       },
+    }).done((data) => {
+      if (!data) {
+        throw new Error("Error saving player commands on server");
+        return;
+      }
+      var parsedData = $.parseJSON(data);
+      if (parsedData['error']) {
+        alert(parsedData['error_message']);
+        return;
+      }
+      if (callback) {
+        callback.call(context, parsedData.response);
+      }
     });
+    command.callIndex = ServerCalls.prototype.CALL_INDEX ++;
+    this.OverwriteExistingCommand('SavePlayerCommands', command);
+  }
+
+  OverwriteExistingCommand(commandName, command) {
+    if (
+      this.commands[commandName] &&
+      this.commands[commandName].state !== "resolved"
+    ) {
+      this.commands[commandName].abort();
+    }
+    this.commands[commandName] = command;
   }
 }
 
@@ -218,5 +244,7 @@ ServerCalls.prototype.SLOT_ACTIONS = {
   SET_LEVEL: 'set_level',
   SET_DIFFICULTY: 'set_difficulty',
 };
+
+ServerCalls.prototype.CALL_INDEX = 0;
 
 ServerCalls = new ServerCalls();

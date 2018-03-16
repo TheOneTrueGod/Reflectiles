@@ -47,6 +47,7 @@
 <script src="/Bouncy/js/GameElements/GameLines.js"></script>
 <script src="/Bouncy/js/GameElements/Effects/EffectFactory.js"></script>
 <script src="/Bouncy/js/GameElements/Projectiles/ProjectileBuffs/ProjectileDamageBuff.js"></script>
+<script src="/Bouncy/js/Errors/Errors.js"></script>
 
 <!-- Extends the above -->
 <script src="/Bouncy/js/GameElements/Enemies/UnitBasic.js"></script>

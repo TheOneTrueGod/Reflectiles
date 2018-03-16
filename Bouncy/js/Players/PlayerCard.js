@@ -47,16 +47,29 @@ class PlayerCard {
     return this.getCardLevel() - this.cardPerks.length - 1;
   }
 
-  getCardLevel() {
-    return Math.floor(this.cardExperience / 2000) + 1 + 20;
-  }
-
   getLeftoverExperience() {
     return this.cardExperience - this.getExperienceForLevel(this.getCardLevel());
   }
 
+  getCardLevel() {
+    // L = (-b + (b * b - 4ac) ^ (1/2)) / 2a
+    let a = 100; let b = 1000; let c = 0 - this.cardExperience;
+
+    return Math.floor(
+      (-b + (Math.pow(b * b - 4 * a * c, 1 / 2)))
+      /
+      (2 * a)
+    ) + 1;
+  }
+
   getExperienceForLevel(level) {
-    return 2000 * (level - 1);
+    // E = a * L ^ 2 + b * L + c
+    // a = 200, b = 1000, c = -200
+    if (level <= 1) {
+      return 0;
+    }
+    let a = 100; let b = 1000; let c = 0;
+    return Math.ceil(a * Math.pow(level - 1, 2) + b * (level - 1) + c);
   }
 
   getExperiencePercent() {

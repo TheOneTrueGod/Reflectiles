@@ -11,7 +11,6 @@
  * Invulnerable enemies that deal no damage as a wall
  * New enemy type -- infected.  When it dies, it explodes into a bunch of smaller minions.
  * Have the knight throw up his shield to the left and right if the front is full.
- * Fix the projectile bug on the shield ability
  * Add a back button
  * Background of a person in a square
  * Make freeze spread across all shields.  They take double damage
@@ -158,7 +157,7 @@ class MainGame {
       let desyncReason = this.boardState.checkForDesync(lastBoardState);
       if (desyncReason) {
         console.log(this.boardState.turn, lastBoardState.turn);
-        alert("Desync.  Reason: " + desyncReason);
+        Errors.show("Desync.  Reason: " + desyncReason)
         console.log("--------my board state--------", lastBoardState);
         console.log("--------server board state--------", this.boardState);
       }
@@ -169,17 +168,18 @@ class MainGame {
     return true;
   }
 
-  deserializePlayerCommands(player_command_list, ignoreSelf = false) {
+  deserializePlayerCommands(player_command_list, ignoreSelf = false, checkForTurnEnd = true) {
     this.removeAllPlayerCommands();
+    let previousPlayerCommands = [];
+    if (ignoreSelf && this.playerCommands[this.playerID]) {
+      previousPlayerCommands = this.playerCommands[this.playerID]
+    }
     this.playerCommands = [];
     var self = this;
     for (var player_id in player_command_list) {
       if (
         player_command_list.hasOwnProperty(player_id) &&
-        (!ignoreSelf ||
-          player_id != this.playerID ||
-          !this.playerCommands[player_id]
-        )
+        (!ignoreSelf || player_id != this.playerID)
       ) {
         var command_list = player_command_list[player_id];
         command_list.forEach(function(commandJSON) {
@@ -190,14 +190,23 @@ class MainGame {
         });
       }
     }
+    if (checkForTurnEnd) {
+      this.checkForAutoEndTurn();
+    }
 
-    this.checkForAutoEndTurn();
+    if (ignoreSelf) {
+      this.playerCommands[this.playerID] = previousPlayerCommands;
+      var commands = this.playerCommands[this.playerID];
+      commands.forEach(function(command) {
+        self.setPlayerCommand(command, false);
+      });
+    }
 
     UIListeners.updatePlayerCommands(this.playerCommands, this.players);
   }
 
   checkForAutoEndTurn() {
-    if (!this.gameStarted || this.playingOutTurn || !this.isHost) { return; }
+    if (!this.gameStarted || this.playingOutTurn || !this.isHost || this.isFinalizing || this.isFinalized) { return; }
     var allPlayersHaveCommand = true;
     for (var key in this.players) {
       var playerHasCommand = false;
@@ -298,7 +307,7 @@ class MainGame {
     }
 
     var player_command_list = JSON.parse(turnData.player_commands);
-    this.deserializePlayerCommands(player_command_list);
+    this.deserializePlayerCommands(player_command_list, true);
     this.isFinalized = turnData.finalized;
     if (
       turnData.finalized &&
@@ -312,15 +321,19 @@ class MainGame {
   }
 
   finalizeTurn() {
+    this.isFinalizing = true;
     this.boardState.loadState();
     $('#missionEndTurnButton').prop("disabled", true);
     ServerCalls.FinalizeTurn(this.boardState.turn, this, this.turnFinalizedOnServer);
   }
 
   turnFinalizedOnServer(data) {
+    this.isFinalizing = false;
     if (data.error || !data.player_commands) { return; }
     this.deserializePlayerCommands(
-      $.parseJSON(data.player_commands)
+      $.parseJSON(data.player_commands),
+      false,
+      false
     );
     // phases
     this.playOutTurn();
@@ -451,7 +464,20 @@ class MainGame {
           function(playerCommand) {
             return playerCommand.serialize();
           }
-        )
+        ),
+        this,
+        this.playerCommandsSaved
+      );
+    }
+  }
+
+  playerCommandsSaved(data) {
+    let parsed = $.parseJSON(data.player_commands)
+    this.deserializePlayerCommands(parsed);
+    if (parsed[this.playerID]) {
+      this.setPlayerCommand(
+        PlayerCommand.FromServerData(parsed[this.playerID]),
+        false
       );
     }
   }
@@ -509,6 +535,7 @@ class MainGame {
     this.removeAllPlayerCommands();
     this.playerCommands = [];
     this.isFinalized = false;
+    this.isFinalizing = false;
     this.playingOutTurn = false;
 
     UIListeners.updatePlayerCommands(this.playerCommands, this.players);

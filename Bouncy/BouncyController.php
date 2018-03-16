@@ -158,6 +158,9 @@ class BouncyController {
       $this->request->param('playerCommands')
     );
     $this->gameObject->save();
+    return array(
+      'player_commands' => $this->gameObject->getPlayerCommands()
+    );
   }
 
   private function getPlayerSlotFromRequest() {

@@ -32,12 +32,14 @@ class PlayerCommand {
   }
 
   removeAimIndicator(stage) {
+    //console.log("removing aim indicator");
     if (this.aimIndicator && this.aimIndicator.parent) {
        this.aimIndicator.parent.removeChild(this.aimIndicator);
     }
   }
 
   addAimIndicator(boardState, stage, players) {
+    //console.log("adding aim indicator");
     if (this.aimIndicator) {
       this.removeAimIndicator(stage);
     }

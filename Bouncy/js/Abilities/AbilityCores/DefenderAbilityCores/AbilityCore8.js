@@ -2,13 +2,13 @@ class AbilityCore8 extends AbilityCore {
   static BuildAbilityChild(perkList, perkPcts, perkCounts) {
     const rawAbil = {
       name: 'Freeze',
-      description: 'Freezes a 3x3 square of enemies for [[hit_effects[1].duration]] turns',
+      description: 'Freezes a 3x1 square of enemies for [[hit_effects[1].duration]] turns',
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
       projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
       hit_effects: [
-        {effect: ProjectileShape.HitEffects.DAMAGE, base_damage: 100, aoe_type: "BOX"},
-        {effect: ProjectileShape.HitEffects.FREEZE, duration: 3, aoe_type: "BOX"}
+        {effect: ProjectileShape.HitEffects.DAMAGE, base_damage: 100, aoe_type: "BOX", aoe_size: {x: [-1, 1], y: [0, 0]}},
+        {effect: ProjectileShape.HitEffects.FREEZE, duration: 3, aoe_type: "BOX", aoe_size: {x: [-1, 1], y: [0, 0]}}
       ],
       icon: "/Bouncy/assets/icons/icon_plain_frost.png",
       charge: {"initial_charge":-1,"max_charge":3,"charge_type":"TURNS"}

@@ -56,8 +56,14 @@ class CardManager {
     this.previewPerkList = [];
     this.playerCard = playerCard;
 
+    let currLevel = this.playerCard.getCardLevel();
+    let currXP = this.playerCard.getExperienceForLevel(currLevel);
+    let nextXP = this.playerCard.getExperienceForLevel(currLevel + 1);
+
     $(".cardControlSection .saveButton").addClass("disabled");
-    $(".cardControlSection .cardExperienceNumber").text(this.playerCard.getLeftoverExperience());
+    $(".cardControlSection .cardExperienceNumber").text(
+      this.playerCard.getLeftoverExperience() + "/" + (nextXP - currXP)
+    );
     let expPercent = Math.floor(this.playerCard.getExperiencePercent() * 100);
     $(".cardControlSection .cardExperienceBar").css("width", expPercent + "%");
 

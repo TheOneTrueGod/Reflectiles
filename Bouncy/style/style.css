@@ -912,3 +912,19 @@
 .hidden {
   display: none;
 }
+
+#errorBox {
+  position: absolute;
+  top: 0;
+  left: 10px;
+  right: 10px;
+  height: 2em;
+  z-index: 1;
+  background: black;
+  color: red;
+  display: none;
+}
+
+#gameBoard {
+  position: relative;
+}
