@@ -63,6 +63,10 @@ class AbilityCore {
   static GetDemoTimesToUse() {
     return 1;
   }
+
+  static GetAimOffsets() {
+    return {x: 0, y: -30};
+  }
 }
 
 AbilityCore.DAMAGE_MULTIPLIERS = {

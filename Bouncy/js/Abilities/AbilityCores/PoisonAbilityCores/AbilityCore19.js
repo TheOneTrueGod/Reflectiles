@@ -3,6 +3,7 @@ class AbilityCore19 extends AbilityCore {
     let damagePerkPct = (
       idx(perkPcts, 'damage 0-1', 0) +
       idx(perkPcts, 'damage 0-2', 0) +
+      idx(perkPcts, 'damage 3', 0) +
       idx(perkPcts, 'damage 2-1', 0) * 2 +
       idx(perkPcts, 'damage 2-2', 0) * 2 +
       // First branch
@@ -21,7 +22,7 @@ class AbilityCore19 extends AbilityCore {
       this.hasPerk(perkPcts, 'duration up 4' , 0) * 0.5 +
       this.hasPerk(perkPcts, 'duration down 1-1', 0) * 0.5 +
       this.hasPerk(perkPcts, 'duration down 5' , 0) * 0.5
-    ) / (9 + 3);
+    ) / (10 + 3);
 
     let base_duration = 4; // min: 2, max: 8
     let max_duration = 8;
@@ -43,15 +44,80 @@ class AbilityCore19 extends AbilityCore {
     if (this.hasPerk(perkPcts, 'intense poison')) {
       AoE.x[0] += 1; AoE.x[1] -= 1;
       AoE.y[0] += 1; AoE.y[1] -= 1;
-      totalDamage *= 2;
+      duration += 1;
+      if (this.hasPerk(perkPcts, 'AoE up 2')) {
+        totalDamage *= 1.5;
+      } else {
+        totalDamage *= 2;
+      }
+    }
+    let damageEffects = [];
+    if (this.hasPerk(perkPcts, 'giant cloud')) {
+      AoE.x[0] -= 1; AoE.x[1] += 1; AoE.y[0] -= 1;
+      totalDamage /= 2;
+    }
+
+    if (this.hasPerk(perkPcts, 'bouncing bullets')) {
+      AoE = {x: [-1, 1], y:[-1, this.hasPerk(perkPcts, 'AoE up 2') ? 1 : 0]};
+    }
+
+    let impactPct = lerp(0, 0.3, (
+      idx(perkPcts, 'impact damage') +
+      idx(perkPcts, 'impact damage 5')
+    ) / 2);
+
+    if (impactPct > 0) {
+      var impactDamage = Math.round(totalDamage * impactPct);
+      totalDamage -= impactDamage;
+      damageEffects.push({
+        damage: impactDamage,
+        effect:ProjectileShape.HitEffects.DAMAGE,
+        aoe_type: "BOX",
+        aoe_size: AoE,
+      });
     }
 
     let damagePerTurn = Math.round(totalDamage / duration);
 
+    damageEffects.push({
+      damage: damagePerTurn,
+      duration: duration,
+      effect:ProjectileShape.HitEffects.POISON,
+      aoe_type: "BOX",
+      aoe_size: AoE,
+    });
+
+    if (this.hasPerk(perkPcts, 'toxic fumes')) {
+      damageEffects.unshift({
+        damage: damagePerTurn / 2,
+        duration: duration - 1,
+        effect: ProjectileShape.HitEffects.POISON,
+        aoe_type: "BOX",
+        aoe_size: {x: [AoE.x[0] - 1, AoE.x[1] + 1], y: [AoE.y[0] - 1, AoE.y[1] + 1]},
+      });
+    }
+
+    let sizeX = AoE.x[1] - AoE.x[0] + 1;
+    let sizeY = AoE.y[1] - AoE.y[0] + 1;
+
+    // description
+    let description = 'Fires a poison shot, poisoning all enemies in a <<' + sizeX + '>>x<<' + sizeY + '>> area<br>';
+    if (impactPct > 0) {
+      description += 'Deals <<' + impactDamage + '>> damage, and ';
+    } else {
+      description += 'Deals ';
+    }
+    description += '<<' + damagePerTurn + '>> poison damage per turn for <<' + duration + '>> turns.<br>';
+    if (this.hasPerk(perkPcts, 'toxic fumes')) {
+      description += 'Also poisons enemies in a <<' + (sizeX + 2) + '>>x<<' + (sizeY + 2) + '>> area for half the damage and one less turn<br>';
+    }
+    if (this.hasPerk(perkPcts, 'bouncing bullets')) {
+      description += 'The shot also bounces <<' + (this.hasPerk(perkPcts, 'another bounce') ? 'twice' : 'once') + '>>.<br>';
+    }
+
     const rawAbil = {
       name: 'Poison Explosion',
-      description: 'Fires a single bullet, poisoning all enemies in a 5x3 area<br>' +
-        'Deals [[hit_effects[0].damage]] damage per turn for [[hit_effects[0].duration]] turns.',
+      description: description,
       card_text_description: '[[hit_effects[0].damage]] 5x3',
       style: (new AbilitySheetSpriteAbilityStyleBuilder)
         .setSheet('poison_sheet')
@@ -62,22 +128,28 @@ class AbilityCore19 extends AbilityCore {
       shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
       projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
       hit_effects: [],
-      timeout_hit_effects:[{
-        damage: damagePerTurn,
-        duration: duration,
-        effect:ProjectileShape.HitEffects.POISON,
-        aoe_type: "BOX",
-        aoe_size: AoE,
-      }],
+      timeout_hit_effects:[],
       icon: "/Bouncy/assets/icons/poison-gas.png",
       charge: this.getCooldown(perkList, perkPcts),
     };
+
+    if (this.hasPerk(perkPcts, 'bouncing bullets')) {
+      rawAbil.hit_effects = rawAbil.hit_effects.concat(damageEffects);
+      rawAbil.collision_behaviours = [{
+        behaviour: CollisionBehaviour.BOUNCE,
+        count: this.hasPerk(perkPcts, 'another bounce') ? 2 : 1,
+      }];
+    } else {
+      rawAbil.timeout_hit_effects = rawAbil.timeout_hit_effects.concat(damageEffects);
+    }
 
     if (this.hasPerk(perkPcts, 'passthrough')) {
       rawAbil.collision_behaviours = [
         {behaviour: CollisionBehaviour.PASSTHROUGH, count: 1},
       ];
     }
+
+    rawAbil.description = description;
 
     return AbilityDef.createFromJSON(rawAbil);
   }
@@ -135,7 +207,7 @@ class AbilityCore19 extends AbilityCore {
       // Level 4
       (new MaxxedAbilityPerkNode('duration up 3',    3, [4, 0]))
         .addRequirement(new PerkLevelRequirement('damage 3')),
-      (new MaxxedAbilityPerkNode('impact damage', 3, [4, 2]))
+      (new AbilityPerkNode('impact damage', 3, [4, 2]))
         .addRequirement(new OrPerkLevelRequirement(
           [new PerkLevelRequirement('cooldown 3'),
           new PerkLevelRequirement('damage 3')]
@@ -143,7 +215,7 @@ class AbilityCore19 extends AbilityCore {
       (new MaxxedAbilityPerkNode('duration up 4',    3, [4, 4]))
         .addRequirement(new PerkLevelRequirement('damage 2')),
       // Level 5
-      (new MaxxedAbilityPerkNode('poison cloud',     3, [5, 1]))
+      (new MaxxedAbilityPerkNode('giant cloud',     3, [5, 1]))
         .addRequirement(new PerkLevelRequirement('damage 3'))
         .addRequirement(new NotPerkLevelRequirement(new PerkLevelRequirement('intense poison', 1)))
         .addRequirement(new NotPerkLevelRequirement(new PerkLevelRequirement('bouncing bullets', 1))),
@@ -153,8 +225,8 @@ class AbilityCore19 extends AbilityCore {
           new PerkLevelRequirement('cooldown 3')]
         ))
         .addRequirement(new NotPerkLevelRequirement(new PerkLevelRequirement('intense poison', 1)))
-        .addRequirement(new NotPerkLevelRequirement(new PerkLevelRequirement('poison cloud', 1))),
-      (new MaxxedAbilityPerkNode('impact damage 5', 3, [6, 4]))
+        .addRequirement(new NotPerkLevelRequirement(new PerkLevelRequirement('giant cloud', 1))),
+      (new AbilityPerkNode('impact damage 5', 3, [6, 4]))
         .addRequirement(new PerkLevelRequirement('duration up 4')),
       (new MaxxedAbilityPerkNode('intense poison', 3, [5, 5]))
         .addRequirement(new OrPerkLevelRequirement(
@@ -162,12 +234,12 @@ class AbilityCore19 extends AbilityCore {
           new PerkLevelRequirement('cooldown 3-2')]
         ))
         .addRequirement(new NotPerkLevelRequirement(new PerkLevelRequirement('bouncing bullets', 1)))
-        .addRequirement(new NotPerkLevelRequirement(new PerkLevelRequirement('poison cloud', 1))),
+        .addRequirement(new NotPerkLevelRequirement(new PerkLevelRequirement('giant cloud', 1))),
       // Level 6
       (new AbilityPerkNode('damage 6-1',    5, [6, 0]))
-        .addRequirement(new PerkLevelRequirement('poison cloud')),
+        .addRequirement(new PerkLevelRequirement('giant cloud')),
       (new AbilityPerkNode('damage 6-2',    5, [6, 1]))
-        .addRequirement(new PerkLevelRequirement('poison cloud')),
+        .addRequirement(new PerkLevelRequirement('giant cloud')),
       (new MaxxedAbilityPerkNode('another bounce',    5, [6, 2]))
         .addRequirement(new PerkLevelRequirement('bouncing bullets')),
       (new AbilityPerkNode('damage 6-3',    5, [6, 3]))
@@ -179,7 +251,7 @@ class AbilityCore19 extends AbilityCore {
       // Level 7
       (new AbilityPerkNode('range 7',    5, [7, 0]))
         .addRequirement(new PerkLevelRequirement('damage 6-2')),
-      (new MaxxedAbilityPerkNode('poison fumes',    5, [7, 1]))
+      (new MaxxedAbilityPerkNode('toxic fumes',    5, [7, 1]))
         .addRequirement(new PerkLevelRequirement('damage 6-2')),
       (new AbilityPerkNode('damage 7-1',            5, [7, 2]))
         .addRequirement(new PerkLevelRequirement('another bounce')),
@@ -200,6 +272,10 @@ class AbilityCore19 extends AbilityCore {
 
   static GetDemoTurns() {
     return 5;
+  }
+
+  static GetAimOffsets() {
+    return {x: 30, y: -30};
   }
 }
 

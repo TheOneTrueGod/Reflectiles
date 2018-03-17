@@ -24,7 +24,7 @@ class CardDemo extends MainGame {
     let timesToUse = core.GetDemoTimesToUse();
     this.abilitiesToUse = [];
     for (let i = 0; i < timesToUse; i++) {
-      this.abilitiesToUse.push([abilDef.index, {x: 0, y: -30}]);
+      this.abilitiesToUse.push([abilDef.index, core.GetAimOffsets()]);
     }
     this.MAX_TURNS_TO_PLAY = core.GetDemoTurns();
 
