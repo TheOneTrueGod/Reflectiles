@@ -1,4 +1,3 @@
-const MAX_WALLS_HIT = 3;
 class Projectile {
   constructor(playerID, startPoint, targetPoint, angle, abilityDef, projectileOptions) {
     this.playerID = playerID;
@@ -9,10 +8,12 @@ class Projectile {
     this.gravity = idx(projectileOptions, 'gravity', null);
     this.speedDecay = idx(projectileOptions, 'speed_decay', null);
     this.speedDecayDelay = 0;
+    this.wallBounces = 2;
     if (abilityDef) {
       this.speed = abilityDef.getOptionalParam('speed', this.speed);
       this.gravity = abilityDef.getOptionalParam('gravity', this.gravity);
       this.speedDecay = abilityDef.getOptionalParam('speed_decay', this.speedDecay);
+      this.wallBounces = abilityDef.getOptionalParam('wall_bounces', this.wallBounces);
     }
     if (this.gravity) { this.gravity = Victor(this.gravity.x, this.gravity.y); }
     if (this.speedDecay) { this.speedDecayDelay = idx(this.speedDecay, 'delay', 0); }
@@ -292,7 +293,6 @@ class Projectile {
   }
 
   hitUnit(boardState, unit, intersection) {
-    this.wallsHit = 0;
     this.lastCollisionPoint = intersection;
   }
 
@@ -315,6 +315,9 @@ class Projectile {
     }
     this.lastCollisionPoint = intersection;
     this.wallsHit += 1;
+    if (this.wallsHit > this.wallBounces && this.timeoutCallback) {
+      this.timeoutCallback(boardState, this);
+    }
   }
 
   delete() {
@@ -322,7 +325,7 @@ class Projectile {
   }
 
   readyToDelete() {
-    return this.readyToDel || this.wallsHit > MAX_WALLS_HIT;
+    return this.readyToDel || this.wallsHit > this.wallBounces;
   }
 
   getStyle() {

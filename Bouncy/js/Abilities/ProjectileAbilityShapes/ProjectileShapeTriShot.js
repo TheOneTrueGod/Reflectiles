@@ -90,6 +90,7 @@ class ProjectileShapeTriShot extends ProjectileShape {
             {'speed': lerp(8, 7, Math.abs(pctOn))}
           ).addUnitHitCallback(this.unitHitCallback.bind(this))
           .addTimeoutHitCallback(this.timeoutHitCallback.bind(this))
+          .addTimeoutCallback(this.timeoutCallback.bind(this))
         );
       }
     }

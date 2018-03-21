@@ -65,6 +65,10 @@ class ProjectileAbilityDef extends AbilityDef {
       this.loadNestedAbilityDefs(defJSON.timeout_effects);
     }
 
+    if (defJSON.timeout_hit_effects) {
+      this.loadNestedAbilityDefs(defJSON.timeout_hit_effects);
+    }
+
     for (var i = 0; i < defJSON.hit_effects.length; i++) {
       if (defJSON.hit_effects[i].abil_def) {
         this.loadNestedAbilityDefs([defJSON.hit_effects[i]]);

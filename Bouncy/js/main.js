@@ -2,6 +2,11 @@
  * TODO;
     You can still change your selected ability after the round has ended
     split freeze into two status ailments -- stun and immobilize
+ ******
+ * New enemies
+ * After taking X damage in a turn, it doesn't take any more damage for the rest of the turn.
+ * Causes all nearby basic enemies to turn into weak bombers
+ * All players target this enemy
  ***************************
  * Add Minor Actions
  * Actions should be able to move you
@@ -15,7 +20,7 @@
  * Background of a person in a square
  * Make freeze spread across all shields.  They take double damage
  */
-DEBUG_MODE = false;
+const DEBUG_MODE = false;
 
 class MainGame {
   constructor() {

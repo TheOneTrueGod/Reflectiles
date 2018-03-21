@@ -135,6 +135,21 @@ class Unit {
     return toRet;
   }
 
+  getDamageTypeModifier(damageType, healthType) {
+    switch (damageType) {
+      case Unit.DAMAGE_TYPE.NORMAL:
+        return 1;
+      case Unit.DAMAGE_TYPE.POISON:
+        if (healthType == 'armor') { return 0; }
+        return 1;
+      case Unit.DAMAGE_TYPE.CORROSIVE:
+        if (healthType == 'armor') { return 2; }
+        if (healthType == 'shield') { return 1; }
+        return 0;
+    }
+    return 1;
+  }
+
   dealDamage(boardState, amount, source, damageType) {
     let abilID = null;
     let playerID = null;
@@ -173,47 +188,53 @@ class Unit {
       damageToDeal = Math.min(damageToDeal, resiliantValue);
     }
 
-    if (this.hasStatusEffect(ShieldStatusEffect)) {
+    let shieldDamageMod = this.getDamageTypeModifier(damageType, 'shield');
+    if (this.hasStatusEffect(ShieldStatusEffect) && shieldDamageMod > 0) {
       var shieldEffect = this.statusEffects[ShieldStatusEffect.getEffectType()];
       maxDamageDealt += shieldEffect.health.current;
-      let shieldDamage = shieldEffect.dealDamage(Math.floor(Math.max(damageToDeal, 0)));
+      let shieldDamage = shieldEffect.dealDamage(Math.floor(Math.max(damageToDeal * shieldDamageMod, 0)));
       damageDealt += shieldDamage;
-      damageToDeal -= shieldDamage;
+      damageToDeal -= shieldDamage / shieldDamageMod;
 
       if (shieldEffect.readyToDelete()) {
         this.removeStatusEffect(shieldEffect.getEffectType());
       }
     }
 
-    if (this.shield.current > 0) {
+    if (this.shield.current > 0 && shieldDamageMod > 0) {
       maxDamageDealt += this.shield.current;
-      if (this.shield.current >= damageToDeal) {
-        this.shield.current -= damageToDeal;
-        damageDealt += damageToDeal;
+      if (this.shield.current >= damageToDeal * shieldDamageMod) {
+        this.shield.current -= damageToDeal * shieldDamageMod;
+        damageDealt += damageToDeal * shieldDamageMod;
         damageToDeal = 0;
       } else {
         damageDealt += this.shield.current;
-        damageToDeal -= this.shield.current;
+        damageToDeal -= this.shield.current / shieldDamageMod;
         this.shield.current = 0;
       }
     }
 
-    if (this.armour.current > 0 && damageType !== Unit.DAMAGE_TYPE.POISON) {
+    let armorDamageMod = this.getDamageTypeModifier(damageType, 'armor');
+    if (this.armour.current > 0 && armorDamageMod > 0) {
       maxDamageDealt += this.armour.current;
-      if (this.armour.current >= damageToDeal) {
-        damageDealt += damageToDeal;
-        this.armour.current -= damageToDeal;
+      if (this.armour.current >= damageToDeal * armorDamageMod) {
+        damageDealt += damageToDeal * armorDamageMod;
+        this.armour.current -= damageToDeal * armorDamageMod;
         damageToDeal = 0;
       } else {
         damageDealt += this.armour.current;
-        damageToDeal -= this.armour.current;
+        damageToDeal -= this.armour.current / armorDamageMod;
         this.armour.current = 0;
       }
     }
 
-    maxDamageDealt = maxDamageDealt / Math.max(damageMult, 0.00001);
-    damageDealt += Math.min(this.health.current, Math.floor(damageToDeal));
-    this.setHealth(this.health.current - Math.floor(Math.max(damageToDeal, 0)));
+    let healthDamageMod = this.getDamageTypeModifier(damageType, 'health');
+    if (healthDamageMod > 0) {
+      maxDamageDealt = maxDamageDealt / Math.max(damageMult, 0.00001);
+      damageDealt += Math.min(this.health.current, Math.floor(damageToDeal * healthDamageMod));
+      this.setHealth(this.health.current - Math.floor(Math.max(damageToDeal * healthDamageMod, 0)));
+    }
+
     if (amount > 0) {
       boardState.resetNoActionKillSwitch();
     }
@@ -595,4 +616,5 @@ Unit.UNIT_TRAITS = {
 Unit.DAMAGE_TYPE = {
   NORMAL: "NORMAL",
   POISON: "POISON",
-}
+  CORROSIVE: "CORROSIVE",
+};

@@ -4,7 +4,7 @@ class DamageHitEffect extends HitEffect {
     if (this.abilityDef && this.abilityDef.getProjectileType) {
       is_penetrate = this.abilityDef.getProjectileType() == ProjectileShape.ProjectileTypes.PENETRATE;
     }
-
+    var damageType = idx(this.hitEffectDef, 'damage_type', Unit.DAMAGE_TYPE.NORMAL);
     var base_damage = idx(this.hitEffectDef, 'base_damage', 100);
     var pctBased = false;
     if (typeof base_damage == "string" && base_damage.substring(base_damage.length - 1) === "%") {
@@ -27,7 +27,7 @@ class DamageHitEffect extends HitEffect {
 
     var finalDamage = base_damage * damageMod;
 
-    var damageDealt = unit.dealDamage(boardState, finalDamage, projectile, Unit.DAMAGE_TYPE.NORMAL);
+    var damageDealt = unit.dealDamage(boardState, finalDamage, projectile, damageType);
     if (is_penetrate && (!unit.readyToDelete() || Math.floor(finalDamage) == Math.floor(damageDealt))) {
       projectile.delete();
     }
