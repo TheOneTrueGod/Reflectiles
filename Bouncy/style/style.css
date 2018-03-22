@@ -137,6 +137,24 @@
   display: inherit;
 }
 
+.deckStatusContainer {
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  right: 2px;
+  bottom: 0;
+  width: 40px;
+}
+
+.drawPile, .discardPile {
+  background: tan;
+  padding: 2px;
+  width: 40px;
+  height: 40px;
+  border: 1px solid black;
+  margin-top: 2px;
+}
+
 .abilityContainer {
   display: inline-block;
   padding: 8px 2px;

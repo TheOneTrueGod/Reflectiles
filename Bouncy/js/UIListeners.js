@@ -2,6 +2,8 @@ class UIListeners {
   contructor() {
     this.otherDecks = [];
     this.deliberatelyQuit = false;
+    this.drawPile = null;
+    this.discardPile = null;
   }
 
   createPlayerStatus(players) {
@@ -13,7 +15,7 @@ class UIListeners {
           "player-index=" + player.player_index +
         ">" +
         "<div class='statusIndicator'></div>" +
-        "<div class='playerName noselect'>" + player.getUserName() + "</div>"
+        "<div class='playerName noselect'>" + player.getUserName() + "</div>" +
         "</div>";
       $('#missionControlsDisplay .playerStatusContainer').append(playerControls);
     }
@@ -33,6 +35,47 @@ class UIListeners {
       parent.removeChild(status);
       parent.append(status);*/
     }
+
+    var playerID = $('#gameContainer').attr('playerid');
+    for (i = 0; i < players.length; i++) {
+      if (players[i].user_id === playerID) {
+        this.updateDeckAndDiscardTooltips(players[i]);
+      }
+    }
+  }
+
+  getTooltipListingCards(player, cardList, title) {
+    let tooltip = $("<div>", {"class": "tooltip"});
+    tooltip.append(
+      $("<div class='cardTooltipName'>" + title + "</div>", {"class": "tooltipName"})
+    );
+    for (let i = 0; i < cardList.length; i++) {
+      let ability = player.abilityDeck.abilities[cardList[i]];
+      let cooldownNumber = ability.getCooldownNumber();
+      tooltip.append(
+        $("<div class='cardTooltipDescription'>" + (cooldownNumber > 0 ? "[" + cooldownNumber + "] " : '') + ability.getName() + "</div>", {"class": "tooltipText"})
+      );
+    }
+    return tooltip;
+  }
+
+  updateDeckAndDiscardTooltips(player) {
+    let tooltip = this.getTooltipListingCards(player, player.deck, "Deck");
+
+    this.drawPile.attr("data-toggle", "tooltip");
+    this.drawPile.attr("title", tooltip.html());
+    this.drawPile.tooltip({
+      constraints: [{'to':'scrollParent','pin':true}],
+      html: true
+    });
+
+    tooltip = this.getTooltipListingCards(player, player.discard, "Discard");
+    this.discardPile.attr("data-toggle", "tooltip");
+    this.discardPile.attr("title", tooltip.html());
+    this.discardPile.tooltip({
+      constraints: [{'to':'scrollParent','pin':true}],
+      html: true
+    });
   }
 
   createAbilityDisplay(players) {
@@ -65,6 +108,15 @@ class UIListeners {
     $div.append(this.getCancelAbilityHTML());
     $div.append(this.getMoveAbilityHTML());
     $('#missionProgramDisplay').append($div);
+
+    let $deckStatusDiv = $("<div>", {class: "deckStatusContainer"});
+    this.drawPile = $("<img>", {class: "drawPile", "src": "../Bouncy/assets/icons/card-draw.png"});
+    $deckStatusDiv.append(this.drawPile);
+
+    this.discardPile = $("<img>", {class: "discardPile", "src": "../Bouncy/assets/icons/card-discard.png"});
+    $deckStatusDiv.append(this.discardPile);
+
+    $('#missionProgramDisplay').append($deckStatusDiv);
   }
 
   getCancelAbilityHTML() {

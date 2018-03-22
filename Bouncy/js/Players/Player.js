@@ -29,7 +29,7 @@ class Player {
   }
 
   drawCard(boardState) {
-    if (this.deck.length == 0 || this.hand.length >= HAND_SIZE) {
+    if (this.deck.length === 0 || this.hand.length >= HAND_SIZE) {
       return;
     }
 

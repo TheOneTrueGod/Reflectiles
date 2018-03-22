@@ -44,7 +44,7 @@ class MainGame {
     let canvasWidth = Math.floor(mad.width() / Unit.UNIT_SIZE) * Unit.UNIT_SIZE;
     let canvasHeight = Math.floor(mad.height() / Unit.UNIT_SIZE) * Unit.UNIT_SIZE;
 
-    this.boardSize = {width: canvasWidth, height: canvasHeight}
+    this.boardSize = {width: canvasWidth, height: canvasHeight};
     this.renderer = PIXI.autoDetectRenderer(canvasWidth, canvasHeight);
     this.stage = new PIXI.Container();
 

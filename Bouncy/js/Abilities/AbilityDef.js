@@ -13,7 +13,7 @@ class AbilityDef {
     }
     AbilityDef.abilityDefList[this.index] = this;
 
-    if (!defJSON['ability_type']) {
+    if (!defJSON.ability_type) {
       throw new Error("Ability Defs need an abilityType");
     }
     this.abilityType = defJSON['ability_type'];
@@ -106,6 +106,10 @@ class AbilityDef {
 
   canBeUsed() {
     return this.charge >= this.maxCharge;
+  }
+
+  getCooldownNumber() {
+    return this.maxCharge - this.charge;
   }
 
   serializeData() {
