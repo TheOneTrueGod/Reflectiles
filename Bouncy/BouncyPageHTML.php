@@ -88,8 +88,8 @@
       <div class="gameSetupLevelSelect">
         <div class="difficultySelect centerText">
           <div class="button medium" data-difficulty="easy">Easy</div>
-          <div class="button medium" data-difficulty="medium">Medium</div>
-          <div class="button medium selected" data-difficulty="hard">Hard</div>
+          <div class="button medium selected" data-difficulty="medium">Medium</div>
+          <div class="button medium" data-difficulty="hard">Hard</div>
           <div class="button medium" data-difficulty="nightmare">Nightmare</div>
         </div>
         <?php for ($i = 1; $i <= 5; $i++) { addWorld($i); } ?>

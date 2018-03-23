@@ -7,7 +7,7 @@
 class LevelDefsWorld3 {
   static getStageDef(stage) {
     let __ = null;
-    let A = UnitBasicSquare;
+    let AA = UnitBasicSquare;
     let B = UnitBasicDiamond;
     let C = UnitShover;
     let D = UnitHeavy;
@@ -17,6 +17,8 @@ class LevelDefsWorld3 {
     let SL = UnitSlime;
     let BL = UnitBlocker;
     let SK = UnitSkeleton;
+    let NC = UnitNecromancer;
+    let DE = UnitDefensive;
 
     if (stage == 1) {
       // Hard level.  15 waves,
@@ -47,21 +49,23 @@ class LevelDefsWorld3 {
         return new LevelDef({
           'waveCount': 2,
           'initialSpawn':[
-            [SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL],
-            [__, SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL, __],
-            [SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL],
-            [__, SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL, __],
-            [__, __, BL, __, __, __, __, __, __, __, __, __, BL, __, __],
-            [BL, __, __, __, __, __, __, __, __, __, __, __, __, __, BL],
+            [__, __, __, __, __, __, __, __, __, __, __, __, __, __, __],
+            [__, __, NC, __, __, __, __, __, __, __, __, __, NC, __, __],
+            [AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA],
+            [AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA],
+            [BL, __, __, __, __, BL, __, __, __, BL, __, __, __, __, BL],
+            [AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA],
           ],
           'waves':[
             {'type': WAVE_TYPES.FORMATION, units: [
-              [SL, SL, SH, __, __, __, __, __, __, __, __, __, SH, SL, SL],
-              [SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL],
+              [__, __, __, NC, __, __, __, __, __, __, __, NC, __, __, __],
+              [__, __, __, __, __, __, __, __, __, __, __, __, __, __, __],
+              [AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA],
             ]},
             {'type': WAVE_TYPES.FORMATION, units: [
-              [SL, SL, SL, SL, SH, SL, BO, BO, SL, SH, SL, SL, SL, SL, SL],
-              [__, __, __, SL, SL, SL, SL, SL, SL, SL, SL, SL, __, __, __],
+              [__, __, __, NC, __, __, __, __, __, __, __, NC, __, __, __],
+              [AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA],
+              [AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA],
             ]},
           ]
         });
@@ -69,33 +73,32 @@ class LevelDefsWorld3 {
       return new LevelDef({
         'waveCount': 2,
         'initialSpawn':[
-          [SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL],
-          [__, SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL, __],
-          [SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL],
-          [__, SL, BO, SL, __, SL, __, SL, __, SL, __, SL, BO, SL, __],
-          [__, KN, BL, KN, __, __, __, __, __, __, __, KN, BL, KN, __],
-          [BL, __, __, __, __, __, __, __, __, __, __, __, __, __, BL],
+          [__, __, NC, __, __, __, __, __, __, __, __, __, NC, __, __],
+          [__, DE, BO, DE, __, __, __, __, __, __, __, DE, BO, DE, __],
+          [__, KN, DE, KN, __, __, __, __, __, __, __, KN, DE, KN, __],
         ],
         'waves':[
           {'type': WAVE_TYPES.FORMATION, units: [
-            [__, SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL, __],
+            [__, __, __, __, NC, __, __, __, __, __, NC, __, __, __, __],
+            [__, __, __, DE, BO, DE, __, __, __, DE, BO, DE, __, __, __],
+            [__, __, __, KN, DE, KN, __, __, __, KN, DE, KN, __, __, __],
+            [__, __, __, __, __, __, __, __, __, __, __, __, __, __, __],
           ]},
           {'type': WAVE_TYPES.FORMATION, units: [
-            [SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL],
+            [__, __, __, NC, __, __, __, __, __, __, __, NC, __, __, __],
+            [AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA],
+            [AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA],
+            [AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA],
+          ]},
+
+          {'type': WAVE_TYPES.FORMATION, units: [
+            [SK, __, SK, __, SK, __, SK, __, SK, __, SK, __, SK, __, SK],
           ]},
           {'type': WAVE_TYPES.FORMATION, units: [
-            [__, SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL, __],
+            [__, SK, __, SK, __, SK, __, SK, __, SK, __, SK, __, SK, __],
           ]},
           {'type': WAVE_TYPES.FORMATION, units: [
-            [SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL, __, SL],
-          ]},
-          {'type': WAVE_TYPES.FORMATION, units: [
-            [SL, SL, SH, __, __, __, __, __, __, __, __, __, SH, SL, SL],
-            [SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL],
-          ]},
-          {'type': WAVE_TYPES.FORMATION, units: [
-            [SL, SL, SL, SL, SH, SL, BO, BO, SL, SH, SL, SL, SL, SL, SL],
-            [__, __, __, SL, SL, SL, SL, SL, SL, SL, SL, SL, __, __, __],
+            [SK, __, SK, __, SK, __, SK, __, SK, __, SK, __, SK, __, SK],
           ]},
         ]
       });

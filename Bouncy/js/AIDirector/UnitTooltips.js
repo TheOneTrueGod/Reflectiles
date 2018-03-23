@@ -240,6 +240,8 @@ class UnitTooltips {
         return 'Bomber';
       case 'UnitKnight':
         return 'Knight';
+      case 'UnitDefensive':
+        return 'Defender';
       case 'UnitProtector':
         return 'Protector';
       case 'UnitShooter':
@@ -254,6 +256,8 @@ class UnitTooltips {
         return 'Giant Slime';
       case 'UnitSkeleton':
         return 'Skeleton';
+      case 'UnitNecromancer':
+        return 'Necromancer';
     }
     console.warn('no unit name for [' + unit.constructor.name + ']');
     return '<' + unit.constructor.name + '>';
@@ -275,6 +279,9 @@ class UnitTooltips {
       case 'UnitKnight':
         return 'Every turn, the knight creates three shields in front of itself.' +
           '  Each shield has ' + NumbersBalancer.getUnitAbilityNumber(unit, NumbersBalancer.UNIT_ABILITIES.KNIGHT_SHIELD) + ' health.';
+      case 'UnitDefensive':
+        let maxDamage = NumbersBalancer.getUnitAbilityNumber(unit, NumbersBalancer.UNIT_ABILITIES.DEFENSIVE_MAX_DAMAGE);
+        return 'If it takes more than ' + maxDamage + ' damage in a single turn, it puts up its shields and blocks all further damage in that turn.';
       case 'UnitProtector':
         let numTargets = NumbersBalancer.getUnitAbilityNumber(unit, NumbersBalancer.UNIT_ABILITIES.PROTECTOR_SHIELD_NUM_TARGETS);
         let shieldVal = NumbersBalancer.getUnitAbilityNumber(unit, NumbersBalancer.UNIT_ABILITIES.PROTECTOR_SHIELD);
@@ -299,6 +306,10 @@ class UnitTooltips {
         return 'Whenever this slime takes ' + splitThreshold + ' damage, it releases a smaller slime nearby.'
       case 'UnitSkeleton':
         return '';
+      case 'UnitNecromancer':
+        let range = NumbersBalancer.getUnitAbilityNumber(unit, NumbersBalancer.UNIT_ABILITIES.NECROMANCER_RANGE);
+        let maxSkeletons = NumbersBalancer.getUnitAbilityNumber(unit, NumbersBalancer.UNIT_ABILITIES.NECROMANCER_MAX_SKELETONS_PER_TURN);
+        return 'If a unit dies within ' + range + ' squares, the necromancer reanimates it as a skeleton.  It can only reanimate up to ' + maxSkeletons + ' skeletons per turn.';
     }
     console.warn('no description for [' + unit.constructor.name + ']');
     return '<no description>';

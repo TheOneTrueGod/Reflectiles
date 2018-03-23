@@ -269,7 +269,7 @@ class MainGame {
   gameNotStartedCallback(metaData) {
     this.updatePlayerData(metaData.player_data);
     UIListeners.setOtherDecks(metaData.other_decks);
-    NumbersBalancer.setDifficulty(metaData.difficulty ? metaData.difficulty : NumbersBalancer.DIFFICULTIES.HARD);
+    NumbersBalancer.setDifficulty(metaData.difficulty ? metaData.difficulty : NumbersBalancer.DIFFICULTIES.MEDIUM);
     AIDirector.setLevel(metaData.level);
     UIListeners.updateGameSetupScreen(this.players, metaData.difficulty, metaData.level);
   }
@@ -479,11 +479,15 @@ class MainGame {
   playerCommandsSaved(data) {
     let parsed = $.parseJSON(data.player_commands)
     this.deserializePlayerCommands(parsed);
+    let self = this;
     if (parsed[this.playerID]) {
-      this.setPlayerCommand(
-        PlayerCommand.FromServerData(parsed[this.playerID]),
-        false
-      );
+      var command_list = parsed[this.playerID];
+      command_list.forEach(function(commandJSON) {
+        self.setPlayerCommand(
+          PlayerCommand.FromServerData(commandJSON),
+          false
+        );
+      });
     }
   }
 

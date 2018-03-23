@@ -1,7 +1,7 @@
 class NumbersBalancer {
   constructor() {
     this.num_players = 4;
-    this.difficulty = this.DIFFICULTIES.HARD;
+    this.difficulty = this.DIFFICULTIES.MEDIUM;
   }
 
   setNumPlayers(num_players) {
@@ -42,11 +42,11 @@ class NumbersBalancer {
       case this.DIFFICULTIES.EASY:
         return 0.5;
       case this.DIFFICULTIES.MEDIUM:
-        return 0.75;
-      case this.DIFFICULTIES.HARD:
         return 1;
+      case this.DIFFICULTIES.HARD:
+        return 5;
       case this.DIFFICULTIES.NIGHTMARE:
-        return 1.5;
+        return 15;
     }
     throw new Error("Unknown difficulty");
   }
@@ -176,6 +176,8 @@ class NumbersBalancer {
         return Math.ceil(health / (4 * playerMult * difficultyMult));
       case this.UNIT_ABILITIES.NECROMANCER_MAX_SKELETONS_PER_TURN:
         return 3;
+      case this.UNIT_ABILITIES.NECROMANCER_RANGE:
+        return 3;
     }
     throw new Exception("Failure");
   }
@@ -200,6 +202,7 @@ NumbersBalancer.prototype.UNIT_ABILITIES = {
   SKELETON_HITS_TO_KILL: 'SKELETON_HITS_TO_KILL',
   DEFENSIVE_MAX_DAMAGE: 'DEFENSIVE_MAX_DAMAGE',
   NECROMANCER_MAX_SKELETONS_PER_TURN: 'NECROMANCER_MAX_SKELETONS_PER_TURN',
+  NECROMANCER_RANGE: 'NECROMANCER_RANGE',
 }
 
 NumbersBalancer.prototype.DIFFICULTIES = {

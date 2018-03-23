@@ -4,7 +4,7 @@ class Metadata {
     $this->player_data = [null, null, null, null];
     $this->game_started = false;
     $this->level = "1-1";
-    $this->difficulty = "hard";
+    $this->difficulty = "medium";
     if ($json) {
       $decoded = json_decode($json);
       $this->game_started = ($decoded->game_started == "true");

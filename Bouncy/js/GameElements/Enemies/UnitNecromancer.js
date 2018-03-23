@@ -6,6 +6,7 @@ class UnitNecromancer extends UnitBasic {
       this,
       NumbersBalancer.UNIT_ABILITIES.NECROMANCER_MAX_SKELETONS_PER_TURN
     );
+    this.reincarnateRange = 3;
   }
 
   createCollisionBox() {
@@ -32,12 +33,15 @@ class UnitNecromancer extends UnitBasic {
     if (
       this.unitsReincarnated < this.unitsToReincarnate &&
       !(dyingUnit instanceof UnitSkeleton) &&
-      dyingUnit.getHealth().current <= 0
+      dyingUnit.getHealth().current <= 0 &&
+      dyingUnit instanceof UnitBasic &&
+      Math.abs((this.x - dyingUnit.x) / Unit.UNIT_SIZE) <= this.reincarnateRange &&
+      Math.abs((this.y - dyingUnit.y) / Unit.UNIT_SIZE) <= this.reincarnateRange
     ) {
       this.unitsReincarnated += 1;
       let newUnit = new UnitSkeleton(dyingUnit.x, dyingUnit.y, this.owner);
       boardState.addUnit(newUnit);
-      newUnit.playSpawnEffect(boardState, dyingUnit, 20);
+      newUnit.playSpawnEffect(boardState, this, 20);
       return false;
     }
     return super.onUnitDying(boardState, dyingUnit);
