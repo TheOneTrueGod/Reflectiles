@@ -16,6 +16,8 @@ class ImageLoader {
         .add("enemy_slime",  "/Bouncy/assets/enemies/enemy_slime.png")
         .add("enemy_skeleton",  "/Bouncy/assets/enemies/enemy_skeleton.png")
         .add("enemy_warlock",  "/Bouncy/assets/enemies/enemy_warlock.png")
+        .add("enemy_damage_limit",  "/Bouncy/assets/enemies/enemy_damage_limit.png")
+        .add("enemy_damage_limit_2",  "/Bouncy/assets/enemies/enemy_damage_limit_2.png")
         .add("enemy_necromancer",  "/Bouncy/assets/enemies/enemy_necromancer.png")
         .add("enemy_bone_wall",  "/Bouncy/assets/enemies/enemy_bone_wall.png")
         .add("enemy_boss_slime",  "/Bouncy/assets/enemies/enemy_boss_slime.png")

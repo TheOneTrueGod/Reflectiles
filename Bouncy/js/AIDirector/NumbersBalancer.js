@@ -96,6 +96,9 @@ class NumbersBalancer {
         healthVal = 100;
         armorVal = 200;
         break;
+      case "UnitDefensive":
+        healthVal = 500;
+        break;
       case "UnitProtector":
         healthVal = 200;
         shieldVal = 100;
@@ -117,6 +120,9 @@ class NumbersBalancer {
       case "UnitSkeleton":
         healthVal = 100;
         break;
+      case "UnitNecromancer":
+        healthVal = 400;
+        shieldVal = 100;
     }
     return {
       health: Math.floor(healthVal * healthMultiplier),
@@ -138,17 +144,19 @@ class NumbersBalancer {
   }
 
   getUnitAbilityNumber(unit, ability) {
-    var playerMult =
-      this.getDifficultyMultiplier() * this.getPlayerCountMultiplier();
+    var playerMult = this.getPlayerCountMultiplier();
+    var difficultyMult = this.getDifficultyMultiplier();
     switch (ability) {
       case this.UNIT_ABILITIES.PROTECTOR_SHIELD:
-        return 50 + 50 * playerMult;
+        return 50 + 50 * playerMult * difficultyMult;
       case this.UNIT_ABILITIES.PROTECTOR_SHIELD_NUM_TARGETS:
         return 2;
       case this.UNIT_ABILITIES.PROTECTOR_SHIELD_RANGE:
         return 2;
       case this.UNIT_ABILITIES.KNIGHT_SHIELD:
-        return 50 * playerMult;
+        return 50 * playerMult * difficultyMult;
+      case this.UNIT_ABILITIES.DEFENSIVE_MAX_DAMAGE:
+        return 200 * playerMult;
       case this.UNIT_ABILITIES.SHOOTER_DAMAGE:
         return 1;
       case this.UNIT_ABILITIES.BOMBER_EXPLOSION_DAMAGE:
@@ -160,12 +168,14 @@ class NumbersBalancer {
       case this.UNIT_ABILITIES.UNIT_BOSS_HEALER_NUM_TARGETS:
         return 4;
       case this.UNIT_ABILITIES.UNIT_BOSS_HEALER_AMOUNT:
-        return 50 * playerMult;
+        return 50 * playerMult * difficultyMult;
       case this.UNIT_ABILITIES.BOSS_SLIME_SPLIT_THRESHOLD:
-        return 50 * playerMult;
+        return 50 * playerMult * difficultyMult;
       case this.UNIT_ABILITIES.SKELETON_MAX_DAMAGE:
         let health = this.getUnitHealth(unit);
-        return Math.ceil(health / (4 * playerMult));
+        return Math.ceil(health / (4 * playerMult * difficultyMult));
+      case this.UNIT_ABILITIES.NECROMANCER_MAX_SKELETONS_PER_TURN:
+        return 3;
     }
     throw new Exception("Failure");
   }
@@ -188,6 +198,8 @@ NumbersBalancer.prototype.UNIT_ABILITIES = {
   UNIT_BOSS_HEALER_AMOUNT: 'UNIT_BOSS_HEALER_AMOUNT',
   BOSS_SLIME_SPLIT_THRESHOLD: 'BOSS_SLIME_SPLIT_THRESHOLD',
   SKELETON_HITS_TO_KILL: 'SKELETON_HITS_TO_KILL',
+  DEFENSIVE_MAX_DAMAGE: 'DEFENSIVE_MAX_DAMAGE',
+  NECROMANCER_MAX_SKELETONS_PER_TURN: 'NECROMANCER_MAX_SKELETONS_PER_TURN',
 }
 
 NumbersBalancer.prototype.DIFFICULTIES = {

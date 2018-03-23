@@ -1,6 +1,6 @@
 class Tester extends MainGame {
   start() {
-
+    NumbersBalancer.setNumPlayers(1);
     $('.unitDetailsContainer')
       .append($("<div>", {class: 'damageDealt noselect'}))
       .append($("<div>", {class: 'damageTaken noselect'}))
@@ -10,9 +10,11 @@ class Tester extends MainGame {
     this.cachedAbilities = {};
 
     this.unitsToSpawn = [
-      [null, UnitBasicSquare, UnitShooter, UnitBasicSquare],
+      [null, null, UnitNecromancer, null],
       [],
-      [null, UnitBasicSquare, UnitKnight, UnitBasicSquare]
+      [null, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare],
+      [null, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare],
+      [null, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare]
     ];
     /*this.unitsToSpawn =
     [
@@ -55,7 +57,9 @@ class Tester extends MainGame {
     this.abilitiesToUse = [
       //[TestAbils[3].index, {x: -100, y: -50}],
       //[this.buildAbility(AbilityCore9).index, {x: 0, y: -100}],
-      [this.buildAbility(AbilityCore19).index, {x: 0, y: -100}],
+      [this.buildAbility(AbilityCore0, ['damage1', 'damage1', 'damage1', 'rocket count4', 'rocket count4', 'rocket count4']).index, {x: 0, y: -100}],
+      //[this.buildAbility(AbilityCore0, ['damage1', 'damage1', 'damage1', 'rocket count4', 'rocket count4', 'rocket count4']).index, {x: 0, y: -100}],
+      //[this.buildAbility(AbilityCore0, ['damage1', 'damage1', 'damage1', 'rocket count4', 'rocket count4', 'rocket count4']).index, {x: 0, y: -100}],
       null,
       null,
       null,

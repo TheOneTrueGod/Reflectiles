@@ -364,7 +364,7 @@ class MainGame {
     }
     var phase = !!currPhase ?
       TurnPhasesEnum.getNextPhase(currPhase) :
-      TurnPhasesEnum.PLAYER_ACTION_1;
+      TurnPhasesEnum.START_TURN;
 
     this.startOfPhase(phase);
 
@@ -521,9 +521,7 @@ class MainGame {
         });
       }
       player.endOfTurn();
-      for (var i = 0; i < discardedCards; i++) {
-        player.drawCard(this.boardState);
-      }
+      player.drawCard(this.boardState);
     });
 
     UIListeners.createAbilityDisplay(this.players);

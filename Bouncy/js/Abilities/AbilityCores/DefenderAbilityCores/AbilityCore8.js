@@ -1,3 +1,9 @@
+// Fire some ice shards when shooting.  The ice shards deal damage
+//   - Ice shards pierce once
+// Create an ice block in squares in AoE that have no enemies
+//   - Increase ice block health
+// Create 3x1 wall of ice blocks in front of yourself
+// Increase stun time by 1 turn
 class AbilityCore8 extends AbilityCore {
   static BuildAbilityChild(perkList, perkPcts, perkCounts) {
     const rawAbil = {

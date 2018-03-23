@@ -129,6 +129,31 @@ class UnitBasic extends Unit {
     return sprite;
   }
 
+  createSpriteListFromResourceList(resources) {
+    this.sprites = {};
+    let container = new PIXI.Container();
+    let onFirst = true;
+    for (let res of resources) {
+      this.sprites[res] = new PIXI.Sprite(
+        PIXI.loader.resources[res].texture
+      );
+      this.sprites[res].anchor.set(0.5);
+      if (!onFirst) {
+        this.sprites[res].visible = false;
+      } else {
+        onFirst = false;
+      }
+
+      container.addChild(this.sprites[res]);
+    }
+
+    this.createHealthBarSprite(container);
+
+    container.width = this.physicsWidth;
+    container.height = this.physicsHeight;
+    return container;
+  }
+
   createSprite() {
     this.createSpriteFromResource('byte_diamond_red');
   }
@@ -228,6 +253,17 @@ class UnitBasic extends Unit {
         this.y + this.physicsHeight / 2.0,
       );
     }
+  }
+
+  getShatterSprite() {
+    if (this.sprites) {
+      for (var key in this.sprites) {
+        if (this.sprites[key].visible) {
+          return this.sprites[key];
+        }
+      }
+    }
+    return this.createSprite();
   }
 }
 

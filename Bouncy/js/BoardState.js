@@ -393,7 +393,13 @@ class BoardState {
         if (this.isEnemyUnit(this.units[i])) {
           this.enemyUnitCount -= 1;
         }
+        let dyingUnit = this.units[i];
         this.units.splice(i, 1);
+        for (var j = 0; j < this.units.length; j++) {
+          if (!this.units[j].onUnitDying(this, dyingUnit)) {
+            break;
+          }
+        }
       } else {
         i ++;
       }

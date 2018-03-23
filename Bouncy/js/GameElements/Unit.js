@@ -530,6 +530,10 @@ class Unit {
     }
   }
 
+  onUnitDying(boardState, dyingUnit) {
+    return true;
+  }
+
   otherUnitEntering(boardState, unit) {
     return true;
   }

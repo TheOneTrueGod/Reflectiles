@@ -122,6 +122,7 @@
 <script src="/Bouncy/js/GameElements/Enemies/UnitBasicSquare.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/UnitBomber.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/UnitKnight.js"></script>
+<script src="/Bouncy/js/GameElements/Enemies/UnitDefensive.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/UnitProtector.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/UnitBossHealer.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/UnitBasicDiamond.js"></script>
@@ -132,6 +133,7 @@
 <script src="/Bouncy/js/GameElements/Enemies/UnitBlocker.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/UnitSlime.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/UnitSkeleton.js"></script>
+<script src="/Bouncy/js/GameElements/Enemies/UnitNecromancer.js"></script>
 
 <script src="/Bouncy/js/GameElements/Enemies/UnitBossSlime.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/UnitMovementEffects.js"></script>

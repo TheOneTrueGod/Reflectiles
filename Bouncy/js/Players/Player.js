@@ -13,6 +13,7 @@ class Player {
     this.hand = [];
     this.deck = [];
     this.discard = [];
+    this.lostCards = [];
 
     if (!playerData.hand && !playerData.deck && !playerData.discard) {
       let length = this.getAllAbilities().length;

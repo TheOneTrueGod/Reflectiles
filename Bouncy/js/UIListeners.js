@@ -4,6 +4,7 @@ class UIListeners {
     this.deliberatelyQuit = false;
     this.drawPile = null;
     this.discardPile = null;
+    this.lostCardsPile = null;
   }
 
   createPlayerStatus(players) {
@@ -76,6 +77,14 @@ class UIListeners {
       constraints: [{'to':'scrollParent','pin':true}],
       html: true
     });
+
+    tooltip = this.getTooltipListingCards(player, player.lostCards, "Lost");
+    this.lostCardsPile.attr("data-toggle", "tooltip");
+    this.lostCardsPile.attr("title", tooltip.html());
+    this.lostCardsPile.tooltip({
+      constraints: [{'to':'scrollParent','pin':true}],
+      html: true
+    });
   }
 
   createAbilityDisplay(players) {
@@ -113,8 +122,11 @@ class UIListeners {
     this.drawPile = $("<img>", {class: "drawPile", "src": "../Bouncy/assets/icons/card-draw.png"});
     $deckStatusDiv.append(this.drawPile);
 
-    this.discardPile = $("<img>", {class: "discardPile", "src": "../Bouncy/assets/icons/card-discard.png"});
+    this.discardPile = $("<img>", {class: "discardPile", "src": "../Bouncy/assets/icons/card-burn.png"});
     $deckStatusDiv.append(this.discardPile);
+
+    this.lostCardsPile = $("<img>", {class: "lostCardsPile", "src": "../Bouncy/assets/icons/card-discard.png"});
+    $deckStatusDiv.append(this.lostCardsPile);
 
     $('#missionProgramDisplay').append($deckStatusDiv);
   }
