@@ -32,7 +32,18 @@ class EnemyProjectile extends Projectile {
 
   runTick(boardState, boardWidth, boardHeight) {
     super.runTick(boardState, boardWidth, boardHeight);
+    let playerUnits = boardState.getPlayerUnitsAtPosition(this);
+    let hitSomething = false;
+    for (let playerUnit of playerUnits) {
+      if (distSqr(this, playerUnit) <= Math.pow(Unit.UNIT_SIZE / 2, 2)) {
+        this.delete();
+        playerUnit.hitByEnemyProjectile(boardState, this);
+        hitSomething = true;
+      }
+    }
+
     if (this.y > boardState.boardSize.height) {
+      hitSomething = true;
       this.delete();
       boardState.dealDamage(this.DAMAGE);
       EffectFactory.createDamagePlayersEffect(

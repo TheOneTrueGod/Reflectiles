@@ -18,7 +18,7 @@ class UnitCore extends Unit {
 
     sprite.addChild(graphics);
     sprite.anchor.set(0.5);
-    
+
     if (this.owner == $('#gameContainer').attr('playerID')) {
       if (!UnitCore.OUTLINE_FILTER_RED) {
         UnitCore.OUTLINE_FILTER_RED = new PIXI.filters.OutlineFilter(2, 0xff4000);
@@ -36,14 +36,31 @@ class UnitCore extends Unit {
   }
 
   touchedByEnemy(boardState, unit) {
-    if (unit.damage && this.y < boardState.getUnitThreshold()) {
+    if (unit.damage) {
       boardState.dealDamage(unit.damage);
-      this.knockback();
+      EffectFactory.createDamagePlayersEffect(
+        boardState,
+        this.x,
+        this.y
+      );
+      this.knockback(boardState);
     }
   }
-  
-  knockback() {
-    this.y = this.y + Unit.UNIT_SIZE;
+
+  hitByEnemyProjectile(boardState, projectile) {
+    boardState.dealDamage(projectile.DAMAGE);
+    EffectFactory.createDamagePlayersEffect(
+      boardState,
+      this.x,
+      this.y
+    );
+    this.knockback(boardState);
+  }
+
+  knockback(boardState) {
+    if (this.y < boardState.getUnitThreshold()) {
+      this.y = this.y + Unit.UNIT_SIZE;
+    }
   }
 
   getMoveSpeed() {

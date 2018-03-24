@@ -8,9 +8,9 @@ class LevelDefsWorld3 {
   static getStageDef(stage) {
     let __ = null;
     let AA = UnitBasicSquare;
-    let B = UnitBasicDiamond;
-    let C = UnitShover;
-    let D = UnitHeavy;
+    let BB = UnitBasicDiamond;
+    let CC = UnitShover;
+    let DD = UnitHeavy;
     let SH = UnitShooter;
     let KN = UnitKnight;
     let BO = UnitBomber;
@@ -47,7 +47,6 @@ class LevelDefsWorld3 {
     } else if (stage == 2) {
         // Hard level.  15 waves,
         return new LevelDef({
-          'waveCount': 2,
           'initialSpawn':[
             [__, __, __, __, __, __, __, __, __, __, __, __, __, __, __],
             [__, __, NC, __, __, __, __, __, __, __, __, __, NC, __, __],
@@ -71,7 +70,6 @@ class LevelDefsWorld3 {
         });
     } else if (stage == 3) {
       return new LevelDef({
-        'waveCount': 2,
         'initialSpawn':[
           [__, __, NC, __, __, __, __, __, __, __, __, __, NC, __, __],
           [__, DE, BO, DE, __, __, __, __, __, __, __, DE, BO, DE, __],
@@ -107,24 +105,42 @@ class LevelDefsWorld3 {
       return new LevelDef({
         'waveCount': 12,
         'initialSpawn':[
-          [SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL],
-          [SL, SL, SL, SL, SL, SL, __, __, __, SL, SL, SL, SL, SL, SL],
-          [SL, SL, SL, __, __, SL, SL, SL, SL, SL, __, __, SL, SL, SL],
-          [__, __, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, __, __],
-          [SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL],
+          [__, __, DD, DD, DD, __, __, __, __, __, DD, DD, DD, __, __],
+          [__, __, DD, NC, DD, __, __, __, __, __, DD, NC, DD, __, __],
+          [__, __, SK, SK, SK, __, __, __, __, __, SK, SK, SK, __, __],
+          [__, SK, SK, SK, SK, SK, __, __, __, SK, SK, SK, SK, SK, __],
         ],
         'waves':[
+          {'type': WAVE_TYPES.SKIP},
           {'type': WAVE_TYPES.FORMATION, units: [
-            [null, null, null],
-            [null, UnitBossSlime, null],
-            [null, null, null],
+            [DD, SH, DD],
+            [DD, NC, DD],
+            [DD, DD, DD],
           ]},
-          {'type': WAVE_TYPES.UNIT_LIST, 'units':[{'unit': UnitSlime, 'count': 4}]},
-          {'type': WAVE_TYPES.GOTO, 'offset': -1, 'until': {'condition': WAVE_CONDITION.BOSS_HEALTH, 'health_percent': 0.6}},
-          {'type': WAVE_TYPES.UNIT_LIST, 'units':[{'unit': UnitSlime, 'count': 5}]},
-          {'type': WAVE_TYPES.GOTO, 'offset': -1, 'until': {'condition': WAVE_CONDITION.BOSS_HEALTH, 'health_percent': 0.3}},
-          {'type': WAVE_TYPES.UNIT_LIST, 'units':[{'unit': UnitSlime, 'count': 6}]},
-          {'type': WAVE_TYPES.GOTO, 'offset': -1, 'until': {'condition': WAVE_CONDITION.BOSS_HEALTH, 'health_percent': 0}},
+          {'type': WAVE_TYPES.SKIP},
+          {'type': WAVE_TYPES.FORMATION, units: [
+            [DD, SH, DD],
+            [DD, NC, DD],
+            [DD, DD, DD],
+          ]},
+          {'type': WAVE_TYPES.SKIP},
+          {'type': WAVE_TYPES.FORMATION, units: [
+            [DD, SH, DD],
+            [DD, NC, DD],
+            [DD, DD, DD],
+          ]},
+          {'type': WAVE_TYPES.SKIP},
+          {'type': WAVE_TYPES.FORMATION, units: [
+            [DD, SH, DD],
+            [DD, NC, DD],
+            [DD, DD, DD],
+          ]},
+          {'type': WAVE_TYPES.SKIP},
+          {'type': WAVE_TYPES.FORMATION, units: [
+            [DD, SH, DD],
+            [DD, NC, DD],
+            [DD, DD, DD],
+          ]},
         ]
       })
     }

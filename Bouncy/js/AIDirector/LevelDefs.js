@@ -24,12 +24,12 @@ class LevelDefs {
   isLevelAvailable(level) {
     let world = this.extractWorld(level);
     let stage = this.extractStage(level);
-    if (world <= 2) {
+    if (world <= 3) {
       return true;
     }
-    if (world == 3) {
+    /*if (world == 3) {
       return stage != 'boss';
-    }
+    }*/
     return false;
   }
 }
@@ -65,7 +65,7 @@ class LevelDef {
       case WAVE_TYPES.FORMATION:
         return new UnitFormationSpawnFormation(boardState, wave.units);
       case WAVE_TYPES.SKIP:
-        return null;
+        return new SkipSpawnFormation(boardState, this.totalWaves);
       case WAVE_TYPES.GOTO:
         this.doGoto(boardState, wave);
         if (boardState.getWavesSpawned() === wavesSpawned) {

@@ -2,6 +2,7 @@ class AbilityCore1 extends AbilityCore {
   static BuildAbilityChild(perkList, perkPcts, perkCounts) {
     let damageMult = 1 + idx(perkPcts, 'damage', 0) * 3;
     let damage = Math.floor(120 * damageMult);
+    let num_bullets = 10;
 
     const rawAbil = { // 1200 max damage
       name: 'Shotgun',
@@ -14,7 +15,7 @@ class AbilityCore1 extends AbilityCore {
       shape: ProjectileAbilityDef.Shapes.SPRAY_SHOT,
       projectile_type: ProjectileShape.ProjectileTypes.PENETRATE,
       hit_effects: [{base_damage: damage, effect: ProjectileShape.HitEffects.DAMAGE}],
-      num_bullets: 10,
+      num_bullets: num_bullets,
       icon: "/Bouncy/assets/icons/shotgun.png",
       charge: {initial_charge: -1, max_charge: 2, charge_type: "TURNS"},
     };

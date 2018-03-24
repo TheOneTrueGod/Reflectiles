@@ -119,6 +119,10 @@ class UnitTooltips {
     return tooltipContainer;
   }
 
+  static getUnitAttack(unit) {
+    return 2;
+  }
+
   static getHealthBars(unit) {
     let healthContainer = $('<div class="healthBarContainer">');
     let numHealthBars = 0;
@@ -264,6 +268,7 @@ class UnitTooltips {
   }
 
   static getDescription(unit) {
+    let maxDamage;
     switch (unit.constructor.name) {
       case 'UnitBasicSquare':
       case 'UnitBasicDiamond':
@@ -280,7 +285,7 @@ class UnitTooltips {
         return 'Every turn, the knight creates three shields in front of itself.' +
           '  Each shield has ' + NumbersBalancer.getUnitAbilityNumber(unit, NumbersBalancer.UNIT_ABILITIES.KNIGHT_SHIELD) + ' health.';
       case 'UnitDefensive':
-        let maxDamage = NumbersBalancer.getUnitAbilityNumber(unit, NumbersBalancer.UNIT_ABILITIES.DEFENSIVE_MAX_DAMAGE);
+        maxDamage = NumbersBalancer.getUnitAbilityNumber(unit, NumbersBalancer.UNIT_ABILITIES.DEFENSIVE_MAX_DAMAGE);
         return 'If it takes more than ' + maxDamage + ' damage in a single turn, it puts up its shields and blocks all further damage in that turn.';
       case 'UnitProtector':
         let numTargets = NumbersBalancer.getUnitAbilityNumber(unit, NumbersBalancer.UNIT_ABILITIES.PROTECTOR_SHIELD_NUM_TARGETS);

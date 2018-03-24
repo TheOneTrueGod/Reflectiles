@@ -42,6 +42,10 @@ class AIDirector {
 
     var formation = this.getFormationForTurn(boardState);
     if (formation === null) { return; }
+    if (formation instanceof SkipSpawnFormation) {
+      boardState.incrementWavesSpawned(this);
+      return;
+    }
     if (boardState.turn < boardState.lastSpawnTurn + formation.getSpawnDelay()) {
       return;
     }

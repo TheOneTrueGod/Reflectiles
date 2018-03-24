@@ -37,7 +37,6 @@ class SpawnFormation {
   }
 
   getSpawnDelay() {
-    console.log(this);
     return 1;
   }
 }
@@ -298,6 +297,10 @@ class KnightAndShooterSpawnFormation extends SpawnFormation {
   getSpawnDelay() {
     return 2;
   }
+}
+
+class SkipSpawnFormation extends SpawnFormation {
+  
 }
 
 class SpawnFormationUtils {

@@ -10,11 +10,11 @@ class Tester extends MainGame {
     this.cachedAbilities = {};
 
     this.unitsToSpawn = [
-      [null, null, UnitNecromancer, null],
+      [null, null, UnitShooter, null],
       [],
-      [null, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare],
-      [null, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare],
-      [null, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare]
+      [null, UnitSkeleton, UnitSkeleton, UnitSkeleton],
+      [null, UnitSkeleton, UnitSkeleton, UnitSkeleton],
+      [null, UnitSkeleton, UnitSkeleton, UnitSkeleton]
     ];
     /*this.unitsToSpawn =
     [
@@ -56,8 +56,8 @@ class Tester extends MainGame {
     // SET COMMANDS HERE
     this.abilitiesToUse = [
       //[TestAbils[3].index, {x: -100, y: -50}],
-      //[this.buildAbility(AbilityCore9).index, {x: 0, y: -100}],
-      [this.buildAbility(AbilityCore0, ['damage1', 'damage1', 'damage1', 'rocket count4', 'rocket count4', 'rocket count4']).index, {x: 0, y: -100}],
+      [this.buildAbility(AbilityCore1).index, {x: 0, y: -100}],
+      //[this.buildAbility(AbilityCore0, ['damage1', 'damage1', 'damage1', 'rocket count4', 'rocket count4', 'rocket count4']).index, {x: 0, y: -100}],
       //[this.buildAbility(AbilityCore0, ['damage1', 'damage1', 'damage1', 'rocket count4', 'rocket count4', 'rocket count4']).index, {x: 0, y: -100}],
       //[this.buildAbility(AbilityCore0, ['damage1', 'damage1', 'damage1', 'rocket count4', 'rocket count4', 'rocket count4']).index, {x: 0, y: -100}],
       null,

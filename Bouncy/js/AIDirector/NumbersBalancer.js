@@ -22,10 +22,15 @@ class NumbersBalancer {
 
   getUnitDamage(unit) {
     var damage = 1;
+    if (this.difficulty == this.DIFFICULTIES.HARD) {
+      damage *= 2;
+    } else if (this.difficulty === this.DIFFICULTIES.NIGHTMARE) {
+      damage *= 3;
+    }
     if (unit.constructor.name == "UnitBossHealer") { damage = 30; }
     if (unit.constructor.name == "UnitBossSlime") { damage = 30; }
     if (unit.constructor.name == "UnitBomber") { damage = 10; }
-    // if (unit.constructor.name == "UnitFast") { damage = 2; }
+
     return damage;
   }
 
@@ -44,9 +49,9 @@ class NumbersBalancer {
       case this.DIFFICULTIES.MEDIUM:
         return 1;
       case this.DIFFICULTIES.HARD:
-        return 5;
+        return 4;
       case this.DIFFICULTIES.NIGHTMARE:
-        return 15;
+        return 16;
     }
     throw new Error("Unknown difficulty");
   }
@@ -199,7 +204,7 @@ NumbersBalancer.prototype.UNIT_ABILITIES = {
   UNIT_BOSS_HEALER_NUM_TARGETS: 'UNIT_BOSS_HEALER_NUM_TARGETS',
   UNIT_BOSS_HEALER_AMOUNT: 'UNIT_BOSS_HEALER_AMOUNT',
   BOSS_SLIME_SPLIT_THRESHOLD: 'BOSS_SLIME_SPLIT_THRESHOLD',
-  SKELETON_HITS_TO_KILL: 'SKELETON_HITS_TO_KILL',
+  SKELETON_MAX_DAMAGE: 'SKELETON_MAX_DAMAGE',
   DEFENSIVE_MAX_DAMAGE: 'DEFENSIVE_MAX_DAMAGE',
   NECROMANCER_MAX_SKELETONS_PER_TURN: 'NECROMANCER_MAX_SKELETONS_PER_TURN',
   NECROMANCER_RANGE: 'NECROMANCER_RANGE',
