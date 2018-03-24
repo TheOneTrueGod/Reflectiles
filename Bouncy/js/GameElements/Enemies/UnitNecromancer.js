@@ -6,7 +6,10 @@ class UnitNecromancer extends UnitBasic {
       this,
       NumbersBalancer.UNIT_ABILITIES.NECROMANCER_MAX_SKELETONS_PER_TURN
     );
-    this.reincarnateRange = 3;
+    this.reincarnateRange = NumbersBalancer.getUnitAbilityNumber(
+      this,
+      NumbersBalancer.UNIT_ABILITIES.NECROMANCER_RANGE
+    );
   }
 
   createCollisionBox() {

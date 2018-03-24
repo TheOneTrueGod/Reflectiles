@@ -23,7 +23,7 @@ class LevelDefsWorld1 {
             [_, _, _, _, _, _, S, _, S, _, _, _, _, _, _]
           ]},
         ]
-      })
+      });
     } else if (stage == 2) {
       // Introduction to advanced units.  Throw a few of 'em in there, scattered around
       return new LevelDef({
@@ -40,7 +40,7 @@ class LevelDefsWorld1 {
           {'type': WAVE_TYPES.ADVANCED_WAVE, 'count': 10, 'advanced': [null, null]},
           {'type': WAVE_TYPES.ADVANCED_WAVE, 'count': 10, 'advanced': [null, null]},
         ]
-      })
+      });
     } else if (stage == 3) {
       // Introduction to a formation.  6 waves, and then a "boss" wave of a formation
       return new LevelDef({
@@ -60,7 +60,7 @@ class LevelDefsWorld1 {
             [UnitShover, UnitKnight, UnitKnight, UnitKnight, UnitShover]
           ]},
         ]
-      })
+      });
     } else if (stage == 'boss') {
       // Hard level.  15 waves,
       return new LevelDef({
@@ -91,7 +91,7 @@ class LevelDefsWorld1 {
           {'type': WAVE_TYPES.UNIT_LIST, 'units':[{'unit': UnitBasicSquare, 'count': 3}, {'unit': UnitHeavy, 'count': 2}, {'unit': UnitBomber, 'count': 1}]},
           {'type': WAVE_TYPES.GOTO, 'offset': -1, 'until': {'condition': WAVE_CONDITION.BOSS_HEALTH, 'health_percent': 0}},
         ]
-      })
+      });
     }
     return new LevelDef();
   }

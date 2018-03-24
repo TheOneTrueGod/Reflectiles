@@ -3,18 +3,19 @@ class Tester extends MainGame {
     NumbersBalancer.setNumPlayers(1);
     $('.unitDetailsContainer')
       .append($("<div>", {class: 'damageDealt noselect'}))
-      .append($("<div>", {class: 'damageTaken noselect'}))
+      .append($("<div>", {class: 'damageTaken noselect'}));
     this.unitType = UnitBomber;
     this.loadImages(this.testAbility.bind(this));
     UnitBasic.createAbilityDefs();
     this.cachedAbilities = {};
 
     this.unitsToSpawn = [
-      [null, null, UnitShooter, null],
       [],
-      [null, UnitSkeleton, UnitSkeleton, UnitSkeleton],
-      [null, UnitSkeleton, UnitSkeleton, UnitSkeleton],
-      [null, UnitSkeleton, UnitSkeleton, UnitSkeleton]
+      [null, null, UnitBossWarlock, null],
+      [],
+      [null, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare],
+      [null, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare],
+      [null, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare]
     ];
     /*this.unitsToSpawn =
     [

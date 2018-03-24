@@ -125,6 +125,7 @@
 <script src="/Bouncy/js/GameElements/Enemies/UnitDefensive.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/UnitProtector.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/UnitBossHealer.js"></script>
+<script src="/Bouncy/js/GameElements/Enemies/UnitBossWarlock.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/UnitBasicDiamond.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/UnitFast.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/UnitHeavy.js"></script>

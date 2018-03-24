@@ -128,6 +128,10 @@ class NumbersBalancer {
       case "UnitNecromancer":
         healthVal = 400;
         shieldVal = 100;
+        break;
+      case "UnitBossWarlock":
+        healthVal = 5000;
+        shieldVal = 2000;
     }
     return {
       health: Math.floor(healthVal * healthMultiplier),
@@ -183,6 +187,12 @@ class NumbersBalancer {
         return 3;
       case this.UNIT_ABILITIES.NECROMANCER_RANGE:
         return 3;
+      case this.UNIT_ABILITIES.WARLOCK_MAX_SKELETONS_PER_TURN:
+        return 10;
+      case this.UNIT_ABILITIES.WARLOCK_RANGE:
+        return 5;
+      case this.UNIT_ABILITIES.WARLOCK_SHIELD:
+        return 50 * playerMult * difficultyMult;
     }
     throw new Exception("Failure");
   }
@@ -190,7 +200,7 @@ class NumbersBalancer {
 
 NumbersBalancer.prototype.PLAYER_STATS = {
   PLAYER_HEALTH: 'player_health'
-}
+};
 
 NumbersBalancer.prototype.UNIT_ABILITIES = {
   PROTECTOR_SHIELD: 'protector_shield',
@@ -208,13 +218,15 @@ NumbersBalancer.prototype.UNIT_ABILITIES = {
   DEFENSIVE_MAX_DAMAGE: 'DEFENSIVE_MAX_DAMAGE',
   NECROMANCER_MAX_SKELETONS_PER_TURN: 'NECROMANCER_MAX_SKELETONS_PER_TURN',
   NECROMANCER_RANGE: 'NECROMANCER_RANGE',
-}
+  WARLOCK_MAX_SKELETONS_PER_TURN: 'WARLOCK_MAX_SKELETONS_PER_TURN',
+  WARLOCK_RANGE: 'WARLOCK_RANGE',
+};
 
 NumbersBalancer.prototype.DIFFICULTIES = {
   EASY: 'easy',
   MEDIUM: 'medium',
   HARD: 'hard',
   NIGHTMARE: 'nightmare',
-}
+};
 
 NumbersBalancer = new NumbersBalancer();

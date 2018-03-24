@@ -45,7 +45,7 @@ class LevelDefsWorld2 {
             [SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL, SL],
           ]},
         ]
-      })
+      });
     } else if (stage == 2) {
         // Hard level.  15 waves,
         return new LevelDef({
@@ -127,7 +127,7 @@ class LevelDefsWorld2 {
           {'type': WAVE_TYPES.UNIT_LIST, 'units':[{'unit': UnitSlime, 'count': 6}]},
           {'type': WAVE_TYPES.GOTO, 'offset': -1, 'until': {'condition': WAVE_CONDITION.BOSS_HEALTH, 'health_percent': 0}},
         ]
-      })
+      });
     }
     console.warn("No level def for World 2, stage " + stage);
     return new LevelDef();
