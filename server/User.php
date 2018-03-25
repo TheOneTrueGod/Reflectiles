@@ -82,6 +82,7 @@ User::$all_users = array(
   array('sean', "Zahken", 'cromat', 'bbcbxziuqerwperiut'),
   array('mitch', "QQCanasian", 'qqcanasian', 'tupqwepribjfjeiwerb'),
   array('clarence', "Vauss", 'lilly', 'gbcbzxcvdsfqwerqwer'),
+  array('taison', "Toyboat", 'lobut', 'bbzxchvufdhqowerasdf'),
   array('test2', "test2", 'test2', 'test2'),
   array('test3', "test3", 'test3', 'test3'),
   array('test4', "test4", 'test4', 'test4')
