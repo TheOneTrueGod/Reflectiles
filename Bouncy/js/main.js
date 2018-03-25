@@ -5,6 +5,7 @@
     Poison explosion does ERROR damage
     It's not auto-going
     Skeletons are too hard in multiplayer
+    shield is a floating point width
  ******
  * New enemies
  * After taking X damage in a turn, it doesn't take any more damage for the rest of the turn.
