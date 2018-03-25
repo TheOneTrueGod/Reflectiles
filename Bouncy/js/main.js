@@ -2,6 +2,9 @@
  * TODO;
     You can still change your selected ability after the round has ended
     split freeze into two status ailments -- stun and immobilize
+    Poison explosion does ERROR damage
+    It's not auto-going
+    Skeletons are too hard in multiplayer
  ******
  * New enemies
  * After taking X damage in a turn, it doesn't take any more damage for the rest of the turn.
@@ -195,9 +198,6 @@ class MainGame {
         });
       }
     }
-    if (checkForTurnEnd) {
-      this.checkForAutoEndTurn();
-    }
 
     if (ignoreSelf) {
       this.playerCommands[this.playerID] = previousPlayerCommands;
@@ -205,6 +205,10 @@ class MainGame {
       commands.forEach(function(command) {
         self.setPlayerCommand(command, false);
       });
+    }
+
+    if (checkForTurnEnd) {
+      this.checkForAutoEndTurn();
     }
 
     UIListeners.updatePlayerCommands(this.playerCommands, this.players);

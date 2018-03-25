@@ -182,7 +182,7 @@ class NumbersBalancer {
         return 50 * playerMult * difficultyMult;
       case this.UNIT_ABILITIES.SKELETON_MAX_DAMAGE:
         let health = this.getUnitHealth(unit);
-        return Math.ceil(health / (4 * playerMult * difficultyMult));
+        return Math.ceil(health / 4);
       case this.UNIT_ABILITIES.NECROMANCER_MAX_SKELETONS_PER_TURN:
         return 3;
       case this.UNIT_ABILITIES.NECROMANCER_RANGE:
