@@ -106,7 +106,7 @@ class AbilityCardBuilder {
 
       $textDesc.append($textContainer);
     } else {
-      ability.shape.appendTextDescHTML($textDesc);
+      //ability.shape.appendTextDescHTML($textDesc);
     }
 
     return $textDesc;

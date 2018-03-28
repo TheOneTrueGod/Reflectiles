@@ -164,18 +164,33 @@ class UnitBasic extends Unit {
 
   moveForward(boardState) {
     while (this.movementCredits >= 1) {
-      var currPos = this.getCurrentPosition();
-      var targetPos = {x: currPos.x, y: currPos.y + Unit.UNIT_SIZE};
-      var canEnter =
-        boardState.sectors.canUnitEnter(boardState, this, targetPos) &&
-        boardState.unitEntering(this, targetPos);
-
-      if (canEnter) {
-        boardState.sectors.removeUnit(this);
-        this.setMoveTarget(targetPos.x, targetPos.y);
-        boardState.sectors.addUnit(this);
-        this.movementCredits -= 1;
+      let squares = [0];
+      /*if (boardState.getRandom() > 0.5) {
+        squares.push(-1);
+        squares.push(1);
       } else {
+        squares.push(1);
+        squares.push(-1);
+      }*/
+      let enteredSquare = false;
+      for (let index in squares) {
+        let dx = squares[index];
+        var currPos = this.getCurrentPosition();
+        var targetPos = {x: currPos.x + dx * Unit.UNIT_SIZE, y: currPos.y + Unit.UNIT_SIZE};
+        var canEnter =
+          boardState.sectors.canUnitEnter(boardState, this, targetPos) &&
+          boardState.unitEntering(this, targetPos);
+
+        if (canEnter) {
+          boardState.sectors.removeUnit(this);
+          this.setMoveTarget(targetPos.x, targetPos.y);
+          boardState.sectors.addUnit(this);
+          this.movementCredits -= 1;
+          enteredSquare = true;
+          break;
+        }
+      }
+      if (!enteredSquare) {
         this.movementCredits = Math.min(Math.max(0, 1 - this.movementSpeed), this.movementCredits);
       }
     }

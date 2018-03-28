@@ -54,6 +54,7 @@ class ProjectileAbilityDef extends AbilityDef {
     this.shapeType = defJSON['shape'];
     this.projectileType = defJSON['projectile_type'];
     this.hitEffects = defJSON['hit_effects'] ? defJSON['hit_effects'] : [];
+    this.collisionEffects = defJSON['collision_effects'] ? defJSON['collision_effects'] : [];
     this.timeoutHitEffects = defJSON['timeout_hit_effects'] ? defJSON['timeout_hit_effects'] : [];
     this.timeoutEffects = defJSON['timeout_effects'] ? defJSON['timeout_effects'] : [];
 
@@ -69,9 +70,15 @@ class ProjectileAbilityDef extends AbilityDef {
       this.loadNestedAbilityDefs(defJSON.timeout_hit_effects);
     }
 
-    for (var i = 0; i < defJSON.hit_effects.length; i++) {
-      if (defJSON.hit_effects[i].abil_def) {
-        this.loadNestedAbilityDefs([defJSON.hit_effects[i]]);
+    if (defJSON.collision_effects) {
+      this.loadNestedAbilityDefs(defJSON.collision_effects);
+    }
+
+    if (defJSON.hit_effects) {
+      for (var i = 0; i < defJSON.hit_effects.length; i++) {
+        if (defJSON.hit_effects[i].abil_def) {
+          this.loadNestedAbilityDefs([defJSON.hit_effects[i]]);
+        }
       }
     }
   }
@@ -79,15 +86,19 @@ class ProjectileAbilityDef extends AbilityDef {
   getAccuracy() {
     return this.accuracy;
   }
-
+  // Happens every time this projectile hits something, including on the final hit.
   getHitEffects() {
     return this.hitEffects;
   }
-
+  // Happens on each collision, but not on the "timeout hit" one.
+  getCollisionEffects() {
+    return this.collisionEffects;
+  }
+  // Happens on the final hit
   getTimeoutHitEffects() {
     return this.timeoutHitEffects;
   }
-
+  // Happens when the projectile runs out of time.
   getTimeoutEffects() {
     return this.timeoutEffects;
   }

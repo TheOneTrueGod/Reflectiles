@@ -31,6 +31,7 @@ class AbilityDef {
     if (this.charge == -1) {
       this.charge = this.maxCharge;
     }
+    this.specialEffects = idx(defJSON, 'special_effects', {});
     this.rawJSON = defJSON;
   }
 
@@ -87,9 +88,14 @@ class AbilityDef {
 
   endOfTurn() {
     if (this.chargeType == AbilityDef.CHARGE_TYPES.TURNS) {
-      this.charge = Math.min(this.maxCharge, this.charge + 1);
-      this.chargeUpdated();
+      this.addCharge();
     }
+  }
+
+  addCharge(amount) {
+    if (!amount) { amount = 1; }
+    this.charge = Math.min(this.maxCharge, this.charge + amount);
+    this.chargeUpdated();
   }
 
   chargeUpdated() {
@@ -285,6 +291,16 @@ class AbilityDef {
       $cooldownText.text(cooldownTime);
       $cooldownIcon.append($cooldownText);
       return $cooldownIcon;
+    }
+  }
+
+  onStatusEffectUnitDying(boardState, unit, effect) {
+    if (this.parentAbilIndex) {
+      var parentAbility = AbilityDef.abilityDefList[this.parentAbilIndex];
+      parentAbility.onStatusEffectUnitDying(boardState, unit, effect);
+    }
+    if (this.specialEffects['status_effect_death_recharge']) {
+      this.addCharge(this.specialEffects['status_effect_death_recharge'])
     }
   }
 

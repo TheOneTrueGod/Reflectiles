@@ -23,6 +23,7 @@ class ProjectileShapeGrenade extends ProjectileShape {
         ).addUnitHitCallback(this.unitHitCallback.bind(this))
         .addTimeoutHitCallback(this.timeoutHitCallback.bind(this))
         .addTimeoutCallback(this.timeoutCallback.bind(this))
+        .addCollisionHitCallback(this.collisionHitCallback.bind(this))
       );
     }
   }

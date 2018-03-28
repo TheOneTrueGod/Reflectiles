@@ -68,6 +68,12 @@ class Projectile {
     return this;
   }
 
+  addCollisionHitCallback(collisionHitCallback) {
+    this.addProjectileEventListener(
+      ProjectileEvents.ON_COLLIDE, collisionHitCallback);
+    return this;
+  }
+
   addTimeoutHitCallback(timeoutHitCallback) {
     this.addProjectileEventListener(
       ProjectileEvents.ON_TIMEOUT, timeoutHitCallback);
@@ -395,4 +401,5 @@ ProjectileEvents = {
   ON_TIMEOUT: 'ON_TIMEOUT',
   ON_BOUNCE: 'ON_BOUNCE',
   ON_PASSTHROUGH: 'ON_PASSTHROUGH',
+  ON_COLLIDE: 'ON_COLLIDE',
 };

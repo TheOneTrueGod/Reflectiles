@@ -1,6 +1,7 @@
 class StatusEffect {
-  constructor(duration) {
+  constructor(duration, abilityID) {
     this.duration = duration;
+    this.abilityID = abilityID;
   }
 
   startOfPhase(boardState, phase, unit) {
@@ -23,13 +24,20 @@ class StatusEffect {
   }
 
   onUnitDeleting(boardState, unit) {
-
+    if (!unit.isAlive() && this.abilityID) {
+      var abilityDef = AbilityDef.abilityDefList[this.abilityID];
+      if (abilityDef) {
+        abilityDef.onStatusEffectUnitDying(boardState, unit, this);
+      }
+    }
   }
 
   serialize() {
     return {
       'effect_type': this.getEffectType(),
-      'duration': this.duration
+      'ability_id': this.abilityID,
+      'duration': this.duration,
+      'ability_id': this.abilityID,
     };
   }
 }

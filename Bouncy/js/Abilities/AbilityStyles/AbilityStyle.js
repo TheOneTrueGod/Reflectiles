@@ -1,5 +1,7 @@
 class AbilityStyle {
   constructor(defJSON) {
+    this.projectileColor = defJSON.color ? defJSON.color : 0xffffff
+    //this.color = defJSON.
     this.explosionDef = defJSON.explosion;
     if (this.explosionDef) {
       this.explosionStyleList = [];
@@ -14,7 +16,7 @@ class AbilityStyle {
   createProjectileSprite(projectile) {
     var sprite = new PIXI.Graphics();
     sprite.position.set(projectile.x, projectile.y);
-    sprite.beginFill(0xffffff);
+    sprite.beginFill(this.projectileColor);
     sprite.drawCircle(0, 0, projectile.size);
     return sprite;
   }

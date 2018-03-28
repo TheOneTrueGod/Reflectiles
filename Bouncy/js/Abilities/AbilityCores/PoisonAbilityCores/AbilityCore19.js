@@ -118,7 +118,6 @@ class AbilityCore19 extends AbilityCore {
     const rawAbil = {
       name: 'Poison Explosion',
       description: description,
-      card_text_description: '[[hit_effects[0].damage]] 5x3',
       style: (new AbilitySheetSpriteAbilityStyleBuilder)
         .setSheet('poison_sheet')
         .setCoords({left: 53, top: 85, right: 72, bottom: 93})

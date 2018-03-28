@@ -39,8 +39,10 @@ class StandardProjectile extends Projectile {
 
     if (behaviour === CollisionBehaviour.BOUNCE) {
       throwProjectileEvent(ProjectileEvents.ON_BOUNCE);
+      throwProjectileEvent(ProjectileEvents.ON_COLLIDE);
     } else if (behaviour === CollisionBehaviour.PASSTHROUGH) {
-      throwProjectileEvent(ProjectileEvents.PASSTHROUGH)
+      throwProjectileEvent(ProjectileEvents.PASSTHROUGH);
+      throwProjectileEvent(ProjectileEvents.ON_COLLIDE);
     } else if (behaviour === CollisionBehaviour.TIMEOUT) {
       throwProjectileEvent(ProjectileEvents.ON_TIMEOUT);
       this.delete();
