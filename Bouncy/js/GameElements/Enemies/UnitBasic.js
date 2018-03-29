@@ -265,7 +265,7 @@ class UnitBasic extends Unit {
       EffectFactory.createDamagePlayersEffect(
         boardState,
         this.x,
-        this.y + this.physicsHeight / 2.0,
+        this.y + this.physicsHeight / 2.0
       );
     }
   }
@@ -284,12 +284,13 @@ class UnitBasic extends Unit {
 
 UnitBasic.loadFromServerData = function(serverData) {
   return Unit.loadFromServerData(serverData);
-}
+};
 
 UnitBasic.createAbilityDefs = function() {
   UnitKnight.createAbilityDef();
   UnitBlocker.createAbilityDef();
   UnitProtector.createAbilityDef();
-}
+  UnitBossWarlock.createAbilityDef();
+};
 
 UnitBasic.AddToTypeMap();

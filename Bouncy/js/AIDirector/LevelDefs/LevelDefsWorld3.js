@@ -43,7 +43,7 @@ class LevelDefsWorld3 {
             [SK, SK, SK, SK, SK, __, __, __, __, __, SK, SK, SK, SK, SK],
           ]},
         ]
-      })
+      });
     } else if (stage == 2) {
         // Hard level.  15 waves,
         return new LevelDef({
@@ -119,7 +119,7 @@ class LevelDefsWorld3 {
           ]},
           {'type': WAVE_TYPES.SKIP},
           {'type': WAVE_TYPES.FORMATION, units: [
-            [DD, SH, DD],
+            [DD, DD, DD],
             [DD, NC, DD],
             [DD, DD, DD],
           ]},
@@ -137,12 +137,17 @@ class LevelDefsWorld3 {
           ]},
           {'type': WAVE_TYPES.SKIP},
           {'type': WAVE_TYPES.FORMATION, units: [
-            [DD, SH, DD],
-            [DD, NC, DD],
-            [DD, DD, DD],
+            [null, null, null],
+            [null, null, null],
+            [null, UnitBossWarlock, null],
+            [null, null, null],
           ]},
+          {'type': WAVE_TYPES.UNIT_LIST, 'units':[{'unit': UnitBasicSquare, 'count': 8}]},
+          {'type': WAVE_TYPES.UNIT_LIST, 'units':[{'unit': UnitBasicSquare, 'count': 8}]},
+          {'type': WAVE_TYPES.ADVANCED_WAVE, 'count': 10, 'advanced': [null, null]},
+          {'type': WAVE_TYPES.GOTO, 'offset': -1, 'until': {'condition': WAVE_CONDITION.BOSS_HEALTH, 'health_percent': 0}},
         ]
-      })
+      });
     }
     console.warn("No level def for World 2, stage " + stage);
     return new LevelDef();

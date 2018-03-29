@@ -57,6 +57,7 @@ class UnitKnight extends UnitBasic {
             (
               intersectUnit instanceof ZoneEffect && (
               intersectUnit.creatorAbility.ZONE_TYPE === ZoneAbilityDef.ZoneTypes.KNIGHT_SHIELD ||
+              intersectUnit.creatorAbility.ZONE_TYPE === ZoneAbilityDef.ZoneTypes.WARLOCK_SHIELD ||
               intersectUnit.creatorAbility.ZONE_TYPE === ZoneAbilityDef.ZoneTypes.BLOCKER_BARRIER
             ))
           ) {
@@ -87,7 +88,7 @@ class UnitKnight extends UnitBasic {
 
 UnitKnight.loadFromServerData = function(serverData) {
   return UnitBasic.loadFromServerData(serverData);
-}
+};
 
 UnitKnight.createAbilityDef = function() {
   UnitKnight.abilityDef = AbilityDef.createFromJSON({

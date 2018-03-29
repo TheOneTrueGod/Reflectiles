@@ -1,6 +1,6 @@
 class AbilityCore5 extends AbilityCore {
   static BuildAbilityChild(perkList, perkPcts, perkCounts) {
-    let bullet_bonus = lerp(0, 6, idx(perkPcts, 'num_bullets', 0));
+    let bullet_bonus = Math.round(lerp(0, 6, idx(perkPcts, 'num_bullets', 0)));
     const rawAbil1 = {
       name: 'Spread Shot',
       description: 'Shoot [[num_bullets]] projectiles.<br>' +
@@ -8,7 +8,7 @@ class AbilityCore5 extends AbilityCore {
       card_text_description: '[[num_bullets]] X [[hit_effects[0].base_damage]]',
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.TRI_SHOT,
-      style: (new AbilitySheetSpriteAbilityStyleBuilder)
+      style: (new AbilitySheetSpriteAbilityStyleBuilder())
         .setSheet('bullet_sheet').setCoordNums(275, 69, 294, 78).setRotation(0).build(),
       projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
       num_bullets: 6 + bullet_bonus,
@@ -21,7 +21,7 @@ class AbilityCore5 extends AbilityCore {
       description: 'Shoots a wild spray of bullets.<br>' +
         '[[num_bullets]] bullets deal [[hit_effects[0].base_damage]] damage',
       card_text_description: '[[num_bullets]] X [[hit_effects[0].base_damage]]',
-      style: (new AbilitySheetSpriteAbilityStyleBuilder)
+      style: (new AbilitySheetSpriteAbilityStyleBuilder())
         .setSheet('bullet_sheet').setCoordNums(29, 301, 37, 320).setRotation(Math.PI / 2).build(),
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.CHAIN_SHOT,

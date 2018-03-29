@@ -13,7 +13,7 @@ class AbilityCore7 extends AbilityCore {
 
     let has_pierce = this.hasPerk(perkPcts, 'thorns pierce');
 
-    let width_bonus = idx(perkPcts, 'shield width 1', 0) + idx(perkPcts, 'shield width 2', 0);
+    let width_bonus = (this.hasPerk(perkPcts, 'shield width 1') ? 1 : 0) + (this.hasPerk(perkPcts, 'shield width 2') ? 1 : 0);
 
     let thornsAbility = this.GetThornsAbility(perkPcts, perkCounts);
 
@@ -160,9 +160,9 @@ class AbilityCore7 extends AbilityCore {
   static GetPerkList() {
     let perkList = [
       // Level 0
-      (new MaxxedAbilityPerkNode('melee thorns',    2, [0, 1])),
+      (new MaxxedAbilityPerkNode('melee thorns',    1, [0, 1])),
       (new AbilityPerkNode('health 1',    4, [0, 3])),
-      (new MaxxedAbilityPerkNode('shield width 1',    2, [0, 5])),
+      (new MaxxedAbilityPerkNode('shield width 1',    1, [0, 5])),
       // Level 1
       (new AbilityPerkNode('thorns damage 1',    5, [1, 1]))
         .addRequirement(new PerkLevelRequirement('melee thorns')),

@@ -262,6 +262,8 @@ class UnitTooltips {
         return 'Skeleton';
       case 'UnitNecromancer':
         return 'Necromancer';
+      case 'UnitBossWarlock':
+        return 'Warlock';
     }
     console.warn('no unit name for [' + unit.constructor.name + ']');
     return '<' + unit.constructor.name + '>';
@@ -269,6 +271,8 @@ class UnitTooltips {
 
   static getDescription(unit) {
     let maxDamage;
+    let range;
+    let maxSkeletons;
     switch (unit.constructor.name) {
       case 'UnitBasicSquare':
       case 'UnitBasicDiamond':
@@ -308,13 +312,20 @@ class UnitTooltips {
       case 'UnitBossSlime':
         let splitThreshold = NumbersBalancer.getUnitAbilityNumber(unit,
           NumbersBalancer.UNIT_ABILITIES.BOSS_SLIME_SPLIT_THRESHOLD);
-        return 'Whenever this slime takes ' + splitThreshold + ' damage, it releases a smaller slime nearby.'
+        return 'Whenever this slime takes ' + splitThreshold + ' damage, it releases a smaller slime nearby.';
       case 'UnitSkeleton':
         return '';
       case 'UnitNecromancer':
-        let range = NumbersBalancer.getUnitAbilityNumber(unit, NumbersBalancer.UNIT_ABILITIES.NECROMANCER_RANGE);
-        let maxSkeletons = NumbersBalancer.getUnitAbilityNumber(unit, NumbersBalancer.UNIT_ABILITIES.NECROMANCER_MAX_SKELETONS_PER_TURN);
+        range = NumbersBalancer.getUnitAbilityNumber(unit, NumbersBalancer.UNIT_ABILITIES.NECROMANCER_RANGE);
+        maxSkeletons = NumbersBalancer.getUnitAbilityNumber(unit, NumbersBalancer.UNIT_ABILITIES.NECROMANCER_MAX_SKELETONS_PER_TURN);
         return 'If a unit dies within ' + range + ' squares, the necromancer reanimates it as a skeleton.  It can only reanimate up to ' + maxSkeletons + ' skeletons per turn.';
+      case 'UnitBossWarlock':
+        range = NumbersBalancer.getUnitAbilityNumber(unit, NumbersBalancer.UNIT_ABILITIES.NECROMANCER_RANGE);
+        maxSkeletons = NumbersBalancer.getUnitAbilityNumber(unit, NumbersBalancer.UNIT_ABILITIES.NECROMANCER_MAX_SKELETONS_PER_TURN);
+        let boneWallHealth = NumbersBalancer.getUnitAbilityNumber(unit, NumbersBalancer.UNIT_ABILITIES.WARLOCK_SHIELD);
+      return 'If a unit dies within ' + range + ' squares, the warlock reanimates it as a skeleton.  It can only reanimate up to ' + maxSkeletons + ' skeletons per turn.<br>' +
+        'Also creates a bone wall with ' + boneWallHealth + ' around itself.';
+
     }
     console.warn('no description for [' + unit.constructor.name + ']');
     return '<no description>';

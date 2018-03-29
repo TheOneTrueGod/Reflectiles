@@ -167,9 +167,9 @@ class AbilityCore9 extends AbilityCore {
   static GetPerkList() {
     let perkList = [
       // Level 0
-      (new MaxxedAbilityPerkNode('exploding 0',    2, [0, 0]))
+      (new MaxxedAbilityPerkNode('exploding 0',    1, [0, 0]))
         .addRequirement(new NotPerkLevelRequirement(new PerkLevelRequirement('piercing 0', 1))),
-      (new MaxxedAbilityPerkNode('piercing 0',    2, [0, 6]))
+      (new MaxxedAbilityPerkNode('piercing 0',    1, [0, 6]))
         .addRequirement(new NotPerkLevelRequirement(new PerkLevelRequirement('exploding 0', 1))),
       // Level 1
       (new AbilityPerkNode('radius 1',    3, [1, 0]))
