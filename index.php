@@ -9,6 +9,7 @@ require_once('server/User.php');
 require_once('Bouncy/server/Users/BouncyUser.php');
 require_once('server/GameLogicController.php');
 require_once('Bouncy/server/Users/BouncyUserController.php');
+require_once('server/DebugController.php');
 require_once('server/KleinUtils.php');
 require_once('server/TestController.php');
 require_once('./testing_utils/TestingUtils.php');
@@ -31,6 +32,8 @@ KleinUtils::addHTMLResponder($klein, LoginController, GameDeletionController, 'G
 KleinUtils::addHTMLResponder($klein, LoginController, GameDeletionController, 'POST');
 KleinUtils::addHTMLResponder($klein, LoginController, BouncyUserController, 'GET');
 KleinUtils::addLogicResponder($klein, LoginController, BouncyUserController, 'POST');
+KleinUtils::addHTMLResponder($klein, LoginController, DebugController, 'GET');
+KleinUtils::addHTMLResponder($klein, LoginController, DebugController, 'POST');
 
 $klein->respond('GET', '/logout', function($request, $response) {
   $_SESSION['user_token'] = null;

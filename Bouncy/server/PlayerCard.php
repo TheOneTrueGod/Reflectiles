@@ -15,6 +15,16 @@ class PlayerCard {
     }
   }
 
+  function getExperienceForLevel($level) {
+    // E = a * L ^ 2 + b * L + c
+    // a = 200, b = 1000, c = -200
+    if ($level <= 1) {
+      return 0;
+    }
+    $a = 100; $b = 1000; $c = 0;
+    return ceil($a * pow($level - 1, 2) + $b * ($level - 1) + $c);
+  }
+
   function addExperience($experience) {
     if (is_int($experience) && $experience > 0) {
       $this->card_experience += $experience;
