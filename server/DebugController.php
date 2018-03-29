@@ -7,6 +7,9 @@ class DebugController {
   }
 
   function getResponse($request, $user) {
+    if (!$user->isAdmin()) {
+      return "You're not supposed to be here.";
+    }
     $message = null;
     ob_start();
     if ($request->set_level) {
