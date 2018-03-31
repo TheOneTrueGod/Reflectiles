@@ -55,23 +55,6 @@ class PlayerDeck {
   public static function getDeckForPlayer($user, $index) {
     if ($index === null) {
       $index = 0;
-      switch ($user->getUserName()) {
-        case "Jabberwookie":
-          $index = 0;
-          break;
-        case "ILoveTheLag":
-          $index = 1;
-          break;
-        case "Tabitha":
-          $index = 2;
-          break;
-        case "Sean":
-          $index = 3;
-          break;
-        case "Clarence":
-          $index = 4;
-          break;
-      }
     }
     $all_decks = self::getAllDecksForPlayer($user);
     if (!(0 <= $index && $index < count($all_decks))) {
