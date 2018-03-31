@@ -29,6 +29,15 @@ class ProjectileShape {
     return damageDealt;
   }
 
+  collisionHitCallback(boardState, unit, intersection, projectile) {
+    let collisionEffects = this.abilityDef.getCollisionEffects();
+    var damageDealt = 0;
+    for (var i = 0; i < collisionEffects.length; i++) {
+      var hitEffect = HitEffect.getHitEffectFromType(collisionEffects[i], this.abilityDef, this);
+      damageDealt += hitEffect.doHitEffect(boardState, unit, intersection, projectile);
+    }
+  }
+
   timeoutHitCallback(boardState, unit, intersection, projectile) {
     let timeoutHitEffects = this.abilityDef.getTimeoutHitEffects();
     var damageDealt = 0;

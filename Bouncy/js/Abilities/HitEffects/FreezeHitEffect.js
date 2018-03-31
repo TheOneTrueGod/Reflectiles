@@ -3,6 +3,7 @@ class FreezeHitEffect extends HitEffect {
     unit.addStatusEffect(
       new FreezeStatusEffect(
         idx(this.hitEffectDef, 'duration', 1),
+        projectile.abilityDef.index
       )
     );
   }

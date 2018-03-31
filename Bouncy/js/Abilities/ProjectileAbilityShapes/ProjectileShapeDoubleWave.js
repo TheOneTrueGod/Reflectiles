@@ -68,6 +68,7 @@ class ProjectileShapeDoubleWave extends ProjectileShape {
             {}
           ).addUnitHitCallback(this.unitHitCallback.bind(this))
           .addTimeoutHitCallback(this.timeoutHitCallback.bind(this))
+          .addCollisionHitCallback(this.collisionHitCallback.bind(this))
         );
       }
     }

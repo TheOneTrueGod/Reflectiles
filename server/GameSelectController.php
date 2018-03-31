@@ -11,6 +11,9 @@ class GameSelectController {
     ob_start(); ?>
       <div class="pageBorder">
         <div class="titleArea">
+          <?php if ($user->isAdmin()) { ?>
+            <div class="backLink"><a href="/debug">Debug</a></div>
+          <?php } ?>
           <h2> Game Select </h2>
           <a href="<?php echo BouncyUserController::getURLPath()?>" class="username">
             <?php echo $user->getUserName(); ?>

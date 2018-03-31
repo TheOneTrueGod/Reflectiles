@@ -1,6 +1,6 @@
 class FreezeStatusEffect extends StatusEffect {
-  constructor(duration) {
-    super(duration);
+  constructor(duration, abilityID) {
+    super(duration, abilityID);
   }
 
   turnStart(unit) {
@@ -41,6 +41,7 @@ class FreezeStatusEffect extends StatusEffect {
 FreezeStatusEffect.loadFromServerData = function(server_data) {
   return new FreezeStatusEffect(
     server_data.duration,
+    server_data.ability_id,
   );
 }
 

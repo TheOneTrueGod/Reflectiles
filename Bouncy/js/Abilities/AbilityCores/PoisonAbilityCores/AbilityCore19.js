@@ -5,6 +5,7 @@ class AbilityCore19 extends AbilityCore {
       idx(perkPcts, 'damage 0-2', 0) +
       idx(perkPcts, 'damage 3', 0) +
       idx(perkPcts, 'damage 2-1', 0) * 2 +
+      idx(perkPcts, 'damage 2', 0) +
       idx(perkPcts, 'damage 2-2', 0) * 2 +
       // First branch
       idx(perkPcts, 'damage 6-1', 0) * 2 +
@@ -22,7 +23,7 @@ class AbilityCore19 extends AbilityCore {
       this.hasPerk(perkPcts, 'duration up 4' , 0) * 0.5 +
       this.hasPerk(perkPcts, 'duration down 1-1', 0) * 0.5 +
       this.hasPerk(perkPcts, 'duration down 5' , 0) * 0.5
-    ) / (10 + 3);
+    ) / (11 + 3);
 
     let base_duration = 4; // min: 2, max: 8
     let max_duration = 8;
@@ -36,7 +37,7 @@ class AbilityCore19 extends AbilityCore {
       (this.hasPerk(perkPcts, 'duration down 5') ? -1 : 0);
 
     let AoE = this.hasPerk(perkPcts, 'AoE up 2') ? {x:[-2,2],y:[-1,1]} : {x:[-1,1],y:[-1,1]};
-    let totalDamage = lerp(300, 1200, damagePerkPct);
+    let totalDamage = lerp(300, 4000, damagePerkPct);
     if (duration < base_duration) {
       totalDamage *= lerp(0.8, 1, (duration - 2) / (base_duration - 2));
     }
@@ -118,7 +119,6 @@ class AbilityCore19 extends AbilityCore {
     const rawAbil = {
       name: 'Poison Explosion',
       description: description,
-      card_text_description: '[[hit_effects[0].damage]] 5x3',
       style: (new AbilitySheetSpriteAbilityStyleBuilder)
         .setSheet('poison_sheet')
         .setCoords({left: 53, top: 85, right: 72, bottom: 93})
@@ -133,12 +133,15 @@ class AbilityCore19 extends AbilityCore {
       charge: this.getCooldown(perkList, perkPcts),
     };
 
+    let numBounces = this.hasPerk(perkPcts, 'bouncing bullets') + this.hasPerk(perkPcts, 'another bounce');
+
     if (this.hasPerk(perkPcts, 'bouncing bullets')) {
       rawAbil.hit_effects = rawAbil.hit_effects.concat(damageEffects);
       rawAbil.collision_behaviours = [{
         behaviour: CollisionBehaviour.BOUNCE,
-        count: this.hasPerk(perkPcts, 'another bounce') ? 2 : 1,
+        count: numBounces,
       }];
+      rawAbil.wall_bounces = 3 + numBounces;
     } else {
       rawAbil.timeout_hit_effects = rawAbil.timeout_hit_effects.concat(damageEffects);
     }
@@ -244,7 +247,7 @@ class AbilityCore19 extends AbilityCore {
         .addRequirement(new PerkLevelRequirement('bouncing bullets')),
       (new AbilityPerkNode('damage 6-3',    5, [6, 3]))
         .addRequirement(new PerkLevelRequirement('bouncing bullets')),
-      (new AbilityPerkNode('duration down 5',    5, [6, 6]))
+      (new MaxxedAbilityPerkNode('duration down 5',    5, [6, 6]))
         .addRequirement(new PerkLevelRequirement('intense poison')),
       (new AbilityPerkNode('damage 6-4',    5, [6, 5]))
         .addRequirement(new PerkLevelRequirement('intense poison')),

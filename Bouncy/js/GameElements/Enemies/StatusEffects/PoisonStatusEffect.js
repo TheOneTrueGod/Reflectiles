@@ -1,10 +1,9 @@
 class PoisonStatusEffect extends StatusEffect {
   constructor(duration, damage, effect, playerID, abilityID) {
-    super(duration);
+    super(duration, abilityID);
     this.damage = damage;
     this.effect = effect;
     this.playerID = playerID;
-    this.abilityID = abilityID;
   }
 
   turnStart(boardState, unit) {

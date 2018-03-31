@@ -25,9 +25,13 @@ class UnitNecromancer extends UnitBasic {
 
     this.collisionBox = [
       new UnitLine(0, -this.physicsHeight / 2, this.physicsWidth / 2, 0, this), // Top Right
-      new UnitLine(r, t - offset, r, b + offset, this), // Right
-      new UnitLine(r + offset, b, l - offset, b, this), // Bottom
-      new UnitLine(l, b + offset, l, t - offset, this), // Left
+      new UnitLine(r, t - offset, r, s / 2, this), // Right
+
+      new UnitLine(s, s / 2, s / 2, s, this), // BR
+      new UnitLine(s / 2, s, -s / 2, s, this), // Bottom
+      new UnitLine(-s / 2, s, -s, s / 2, this), // BL
+
+      new UnitLine(l, s / 2, l, t - offset, this), // Left
       new UnitLine(-this.physicsWidth / 2, 0, 0, -this.physicsHeight / 2, this), // Top Left
     ];
   }
