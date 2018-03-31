@@ -4,8 +4,10 @@
     split freeze into two status ailments -- stun and immobilize
     Poison explosion does ERROR damage
     It's not auto-going
-    Skeletons are too hard in multiplayer
-    shield is a floating point width
+
+    stand in center of rage, try and rain
+    shot broke through shield.
+
  ******
  * New enemies
  * After taking X damage in a turn, it doesn't take any more damage for the rest of the turn.

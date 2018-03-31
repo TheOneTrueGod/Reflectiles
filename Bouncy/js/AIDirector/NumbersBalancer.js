@@ -184,11 +184,11 @@ class NumbersBalancer {
         let health = this.getUnitHealth(unit);
         return Math.ceil(health / 4);
       case this.UNIT_ABILITIES.NECROMANCER_MAX_SKELETONS_PER_TURN:
-        return 3;
+        return 1;
       case this.UNIT_ABILITIES.NECROMANCER_RANGE:
         return 3;
       case this.UNIT_ABILITIES.WARLOCK_MAX_SKELETONS_PER_TURN:
-        return 10;
+        return 5;
       case this.UNIT_ABILITIES.WARLOCK_RANGE:
         return 5;
       case this.UNIT_ABILITIES.WARLOCK_SHIELD:

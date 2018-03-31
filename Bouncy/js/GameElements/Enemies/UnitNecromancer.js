@@ -34,6 +34,7 @@ class UnitNecromancer extends UnitBasic {
 
   onUnitDying(boardState, dyingUnit) {
     if (
+      this.canUseAbilities() &&
       this.unitsReincarnated < this.unitsToReincarnate &&
       !(dyingUnit instanceof UnitSkeleton) &&
       dyingUnit.getHealth().current <= 0 &&

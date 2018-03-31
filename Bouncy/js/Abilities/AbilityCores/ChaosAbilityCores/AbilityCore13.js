@@ -6,9 +6,9 @@ class AbilityCore13 extends AbilityCore {
         'It fires [[num_bullets]] projectiles that deal [[hit_effects[0].base_damage]] damage<br>' +
         'Afterwards, it explodes into another [[timeout_effects[0].abil_def.num_bullets]] projectiles',
       card_text_description: '61 X [[hit_effects[0].base_damage]]',
-      style: (new AbilitySheetSpriteAbilityStyleBuilder)
+      style: (new AbilitySheetSpriteAbilityStyleBuilder())
         .setSheet('bullet_sheet').setCoordNums(166, 296, 184, 314).setRotation(0).fixRotation(true).build(),
-      shard_style: (new AbilitySheetSpriteAbilityStyleBuilder)
+      shard_style: (new AbilitySheetSpriteAbilityStyleBuilder())
         .setSheet('bullet_sheet').setCoordNums(36, 139, 44, 147).setRotation(0).fixRotation(true).build(),
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
@@ -26,7 +26,7 @@ class AbilityCore13 extends AbilityCore {
         {
           effect: PositionBasedEffect.EFFECTS.USE_ABILITY,
           abil_def: {
-            style: (new AbilitySheetSpriteAbilityStyleBuilder)
+            style: (new AbilitySheetSpriteAbilityStyleBuilder())
               .setSheet('bullet_sheet').setCoordNums(36, 139, 44, 147).setRotation(0).fixRotation(true).build(),
             ability_type: AbilityDef.AbilityTypes.PROJECTILE,
             shape: ProjectileAbilityDef.Shapes.BULLET_EXPLOSION,
