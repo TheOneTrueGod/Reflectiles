@@ -120,7 +120,7 @@ class AbilityCore13 extends AbilityCore {
           new PerkLevelRequirement('more shatter 5'),
           new PerkLevelRequirement('bigger boom 5')
         ])),
-      (new AbilityPerkNode('cooldown 3',                3, [6, 3]))
+      (new AbilityPerkNode('cooldown 6',                3, [6, 3]))
         .addRequirement(new OrPerkLevelRequirement([
           new PerkLevelRequirement('bigger boom 5'),
           new PerkLevelRequirement('shoot up 5')
