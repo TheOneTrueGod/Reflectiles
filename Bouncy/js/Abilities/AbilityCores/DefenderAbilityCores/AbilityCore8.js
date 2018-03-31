@@ -152,10 +152,10 @@ class AbilityCore8 extends AbilityCore {
           new PerkLevelRequirement('shard damage 1')
         ])),
       (new AbilityPerkNode('cooldown 3',                  10, [3, 2]))
-        .addRequirement(new PerkLevelRequirement('core damage 1', 3))
+        .addRequirement(new PerkLevelRequirement('core damage 1'))
         .addRequirement(new PerkLevelRequirement('more shards 2')),
       (new AbilityPerkNode('cooldown 3-2',                10, [3, 4]))
-        .addRequirement(new PerkLevelRequirement('core damage 1', 3))
+        .addRequirement(new PerkLevelRequirement('core damage 1'))
         .addRequirement(new PerkLevelRequirement('core damage 2')),
       (new AbilityPerkNode('bouncing damage 3',           4, [3, 5]))
         .addRequirement(new OrPerkLevelRequirement([

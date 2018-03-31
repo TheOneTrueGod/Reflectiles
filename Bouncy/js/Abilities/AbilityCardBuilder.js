@@ -90,14 +90,15 @@ class AbilityCardBuilder {
   static getTextDescription(ability) {
     var $textDesc = $("<div>", {"class": "abilityCardTextDesc"});
 
-    var abilDefCardDescription = ability.getOptionalParam('card_text_description');
+    //var abilDefCardDescription = ability.getOptionalParam('card_text_description');
+    var abilDefCardDescription = ability.getOptionalParam('name');
     if (abilDefCardDescription) {
       abilDefCardDescription = ability.replaceSmartTooltipText(abilDefCardDescription, false);
       var className = "textDescText noselect";
 
-      /*if (abilDefCardDescription.length >= 10) {
+      if (abilDefCardDescription.length >= 10) {
         className += " longDesc";
-      }*/
+      }
       var $textContainer =
         $("<div>", {
           "class": className,

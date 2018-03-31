@@ -45,10 +45,11 @@ class AbilityCore15 extends AbilityCore {
       this.hasPerk(perkPcts, 'poison duration 6') +
       this.hasPerk(perkPcts, 'poison duration 7');
 
-    let wall_bounces = 2 +
-      this.hasPerk(perkPcts, 'wall bounces 5-1') +
-      this.hasPerk(perkPcts, 'wall bounces 5-2')
-      ;
+    let wall_bounces = Math.floor(2 +
+      this.hasPerk(perkPcts, 'wall bounces 5-1') * 1.5 +
+      this.hasPerk(perkPcts, 'wall bounces 5-2') * 1.5 +
+      (numTargets - 5) / 2
+    );
 
     let bulletBonus = (this.hasPerk(perkPcts, 'double shot 4') ? 1 : 0);
     totalDamage *= lerp(1, 0.75, bulletBonus / 1);
@@ -141,12 +142,12 @@ class AbilityCore15 extends AbilityCore {
       (new AbilityPerkNode('corrosive damage 0',        5, [0, 3])),
       (new AbilityPerkNode('impact damage 0',           5, [0, 6])),
       // Level 1
-      (new MaxxedAbilityPerkNode('more pen 1-1',        4, [1, 2]))
+      (new AbilityPerkNode('more pen 1-1',        4, [1, 2]))
         .addRequirement(new OrPerkLevelRequirement(
           [new PerkLevelRequirement('corrosive damage 0'),
           new PerkLevelRequirement('poison damage 0')]
         )),
-      (new MaxxedAbilityPerkNode('more pen 1-2',        4, [1, 4]))
+      (new AbilityPerkNode('more pen 1-2',        4, [1, 4]))
         .addRequirement(new OrPerkLevelRequirement(
           [new PerkLevelRequirement('impact damage 0'),
           new PerkLevelRequirement('corrosive damage 0')]
@@ -200,7 +201,7 @@ class AbilityCore15 extends AbilityCore {
         )),
       (new AbilityPerkNode('poison damage 6',           5, [6, 5]))
         .addRequirement(new PerkLevelRequirement('double shot 4')),
-      (new MaxxedAbilityPerkNode('more pen 6',          4, [6, 6]))
+      (new AbilityPerkNode('more pen 6',          4, [6, 6]))
         .addRequirement(new PerkLevelRequirement('double shot 4')),
       // Level 7
       (new MaxxedAbilityPerkNode('shrapnel count 7',    5, [7, 0]))
@@ -211,7 +212,7 @@ class AbilityCore15 extends AbilityCore {
         .addRequirement(new PerkLevelRequirement('poison duration 6')),
       (new AbilityPerkNode('poison damage 7',           5, [7, 5]))
         .addRequirement(new PerkLevelRequirement('poison damage 6')),
-      (new MaxxedAbilityPerkNode('more pen 7',          6, [7, 6]))
+      (new AbilityPerkNode('more pen 7',          6, [7, 6]))
         .addRequirement(new PerkLevelRequirement('more pen 6')),
     ];
     return perkList;

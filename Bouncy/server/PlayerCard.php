@@ -21,7 +21,7 @@ class PlayerCard {
     if ($level <= 1) {
       return 0;
     }
-    $a = 100; $b = 1000; $c = 0;
+    $a = 50; $b = 350; $c = 0;
     return ceil($a * pow($level - 1, 2) + $b * ($level - 1) + $c);
   }
 

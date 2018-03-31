@@ -53,7 +53,7 @@ class PlayerCard {
 
   getCardLevel() {
     // L = (-b + (b * b - 4ac) ^ (1/2)) / 2a
-    let a = 100; let b = 1000; let c = 0 - this.cardExperience;
+    let a = 50; let b = 350; let c = 0 - this.cardExperience;
 
     return Math.floor(
       (-b + (Math.pow(b * b - 4 * a * c, 1 / 2)))
@@ -68,7 +68,7 @@ class PlayerCard {
     if (level <= 1) {
       return 0;
     }
-    let a = 100; let b = 1000; let c = 0;
+    let a = 50; let b = 350; let c = 0;
     return Math.ceil(a * Math.pow(level - 1, 2) + b * (level - 1) + c);
   }
 

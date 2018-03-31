@@ -62,7 +62,7 @@ class AbilityPerkRequirement {
 class PerkLevelRequirement extends AbilityPerkRequirement {
   constructor(perkName, level) {
     super(perkName);
-    this.level = level === undefined ? 'max' : level;
+    this.level = level === undefined ? 3 : level;
   }
 
   hasPerkAsRequirement(perkKey) {
@@ -89,7 +89,7 @@ class PerkLevelRequirement extends AbilityPerkRequirement {
       console.warn("ERROR: Trying to get perk [" + this.perkName + "] from perkTree:", perkTree);
       return false;
     }
-    return perkCounts[this.perkName] >= (this.level === 'max' ? childPerk.levels : this.level);
+    return perkCounts[this.perkName] >= Math.min(childPerk.levels, (this.level === 'max' ? childPerk.levels : this.level));
   }
 }
 
