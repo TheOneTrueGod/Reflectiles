@@ -90,6 +90,7 @@
 <script src="/Bouncy/js/Abilities/HitEffects/WeaknessHitEffect.js"></script>
 <script src="/Bouncy/js/Abilities/HitEffects/DamageHitEffect.js"></script>
 <script src="/Bouncy/js/Abilities/HitEffects/BulletSplitHitEffect.js"></script>
+<script src="/Bouncy/js/Abilities/HitEffects/CooldownReductionHitEffect.js"></script>
 <script src="/Bouncy/js/Abilities/HitEffects/ShooterBuffEffect.js"></script>
 <script src="/Bouncy/js/Abilities/PositionBasedEffects/BulletExplosionEffect.js"></script>
 <script src="/Bouncy/js/Abilities/PositionBasedEffects/UseAbilityEffect.js"></script>
@@ -97,6 +98,7 @@
 <script src="/Bouncy/js/Abilities/AbilityStyles/BulletSheetAbilityStyle.js"></script>
 <script src="/Bouncy/js/Abilities/AbilityStyles/AbilitySheetAbilityStyle.js"></script>
 <script src="/Bouncy/js/Abilities/AbilityStyles/ColorizedAbilityStyle.js"></script>
+<script src="/Bouncy/js/Abilities/AbilityCores/AbilityConstants.js"></script>
 <?php
   for ($i = 0; $i < 5; $i++) {
 ?>

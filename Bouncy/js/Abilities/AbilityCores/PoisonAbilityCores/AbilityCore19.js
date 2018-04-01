@@ -141,7 +141,7 @@ class AbilityCore19 extends AbilityCore {
         behaviour: CollisionBehaviour.BOUNCE,
         count: numBounces,
       }];
-      rawAbil.wall_bounces = 3 + numBounces;
+      rawAbil.wall_bounces = AbilityConstants.MAJOR_WALL_BOUNCES + numBounces;
     } else {
       rawAbil.timeout_hit_effects = rawAbil.timeout_hit_effects.concat(damageEffects);
     }

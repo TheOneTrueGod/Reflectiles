@@ -1,0 +1,6 @@
+AbilityConstants = {
+  MINOR_WALL_BOUNCES: 2,
+  MAJOR_WALL_BOUNCES: 3,
+
+  BOUNCE_DAMAGE_PENALTY: 0.8,
+}

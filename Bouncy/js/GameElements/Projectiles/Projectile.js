@@ -68,6 +68,12 @@ class Projectile {
     return this;
   }
 
+  addOnKillCallback(onKillCallback) {
+    this.addProjectileEventListener(
+      ProjectileEvents.ON_KILL, onKillCallback);
+    return this;
+  }
+
   addCollisionHitCallback(collisionHitCallback) {
     this.addProjectileEventListener(
       ProjectileEvents.ON_COLLIDE, collisionHitCallback);
@@ -402,4 +408,5 @@ ProjectileEvents = {
   ON_BOUNCE: 'ON_BOUNCE',
   ON_PASSTHROUGH: 'ON_PASSTHROUGH',
   ON_COLLIDE: 'ON_COLLIDE',
+  ON_KILL: 'ON_KILL',
 };

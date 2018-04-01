@@ -4,9 +4,12 @@ class FrozenOrbProjectile extends StandardProjectile {
     var targetVec = Victor(targetPoint.x - startPoint.x, targetPoint.y - startPoint.y);
     this.num_bullets = abilityDef.getOptionalParam('num_bullets', 50);
     this.shot_gap = abilityDef.getOptionalParam('shot_gap', 4);
+    this.startAngle = abilityDef.getOptionalParam('start_angle', 0);
+    this.endAngle = abilityDef.getOptionalParam('end_angle', Math.PI * 2);
 
     this.shot_start_tick = abilityDef.getOptionalParam('shot_start_tick', 20);
     this.speedDecayDelay = targetVec.length() / this.speed;
+    this.gravity = null;
 
     this.speedDecay = this.speed / this.speedDecayDelay / 3;
 
@@ -38,8 +41,11 @@ class FrozenOrbProjectile extends StandardProjectile {
       lastTick / this.shot_gap - Math.floor(lastTick / this.shot_gap) < 1 &&
       thisTick / this.shot_gap - Math.floor(lastTick / this.shot_gap) >= 1
     ) {
-      var angle = (boardState.tick / this.shot_gap) / (this.shot_duration / this.shot_gap)
-        * Math.PI * 2 * 7
+      let deltaAngle = this.endAngle - this.startAngle;
+      var angle = (
+        (boardState.tick / this.shot_gap) / (this.shot_duration / this.shot_gap)
+        * deltaAngle
+      ) * 7 % deltaAngle + this.startAngle;
       var target = {x: this.x + Math.cos(angle), y: this.y + Math.sin(angle)};
 
       boardState.addProjectile(

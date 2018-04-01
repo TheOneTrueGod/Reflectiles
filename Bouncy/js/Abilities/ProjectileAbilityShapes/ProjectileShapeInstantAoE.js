@@ -22,7 +22,7 @@ class ProjectileShapeInstantAoE extends ProjectileShape {
       const hitEffects = this.abilityDef.getHitEffects();
       for (let i = 0; i < hitEffects.length; i++) {
         const hitEffect = HitEffect.getHitEffectFromType(hitEffects[i], this.abilityDef, this);
-        hitEffect.doHitEffect(boardState, targetPoint, null, null);
+        hitEffect.doHitEffect(boardState, targetPoint, null, targetPoint);
       }
     }
   }

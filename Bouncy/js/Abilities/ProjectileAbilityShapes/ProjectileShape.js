@@ -29,6 +29,15 @@ class ProjectileShape {
     return damageDealt;
   }
 
+  onKillCallback(boardState, unit, intersection, projectile) {
+    let killEffects = this.abilityDef.getOnKillEffects();
+    var damageDealt = 0;
+    for (var i = 0; i < killEffects.length; i++) {
+      var hitEffect = HitEffect.getHitEffectFromType(killEffects[i], this.abilityDef, this);
+      damageDealt += hitEffect.doHitEffect(boardState, unit, intersection, projectile);
+    }
+  }
+
   collisionHitCallback(boardState, unit, intersection, projectile) {
     let collisionEffects = this.abilityDef.getCollisionEffects();
     var damageDealt = 0;
@@ -138,6 +147,7 @@ ProjectileShape.HitEffects = {
   INFECT: 'INFECT',
   USE_ABILITY: 'USE_ABILITY',
   SHOOTER_BUFF: 'SHOOTER_BUFF',
+  COOLDOWN_REDUCTION: 'COOLDOWN_REDUCTION',
 };
 
 ProjectileShape.AOE_TYPES = {

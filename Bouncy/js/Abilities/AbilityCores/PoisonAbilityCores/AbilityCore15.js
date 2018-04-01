@@ -45,7 +45,7 @@ class AbilityCore15 extends AbilityCore {
       this.hasPerk(perkPcts, 'poison duration 6') +
       this.hasPerk(perkPcts, 'poison duration 7');
 
-    let wall_bounces = Math.floor(2 +
+    let wall_bounces = Math.floor(AbilityConstants.MINOR_WALL_BOUNCES +
       this.hasPerk(perkPcts, 'wall bounces 5-1') * 1.5 +
       this.hasPerk(perkPcts, 'wall bounces 5-2') * 1.5 +
       (numTargets - 5) / 2

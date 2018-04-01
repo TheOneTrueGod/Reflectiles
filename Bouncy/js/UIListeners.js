@@ -52,7 +52,7 @@ class UIListeners {
     );
     for (let i = 0; i < cardList.length; i++) {
       let ability = player.abilityDeck.abilities[cardList[i]];
-      let cooldownNumber = ability.getCooldownNumber();
+      let cooldownNumber = Math.ceil(ability.getCooldownNumber());
       tooltip.append(
         $("<div class='cardTooltipDescription'>" + (cooldownNumber > 0 ? "[" + cooldownNumber + "] " : '') + ability.getName() + "</div>", {"class": "tooltipText"})
       );

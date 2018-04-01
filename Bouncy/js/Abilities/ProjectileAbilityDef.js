@@ -57,6 +57,7 @@ class ProjectileAbilityDef extends AbilityDef {
     this.collisionEffects = defJSON['collision_effects'] ? defJSON['collision_effects'] : [];
     this.timeoutHitEffects = defJSON['timeout_hit_effects'] ? defJSON['timeout_hit_effects'] : [];
     this.timeoutEffects = defJSON['timeout_effects'] ? defJSON['timeout_effects'] : [];
+    this.onKillEffects = defJSON['on_kill_effects'] ? defJSON['on_kill_effects'] : [];
 
     this.accuracy = new ProjectileAccuracy(defJSON.accuracy);
     this.shape = ProjectileShape.getProjectileShape(defJSON['shape'], this);
@@ -72,6 +73,10 @@ class ProjectileAbilityDef extends AbilityDef {
 
     if (defJSON.collision_effects) {
       this.loadNestedAbilityDefs(defJSON.collision_effects);
+    }
+
+    if (defJSON.on_kill_effects) {
+      this.loadNestedAbilityDefs(this.onKillEffects);
     }
 
     if (defJSON.hit_effects) {
@@ -101,6 +106,9 @@ class ProjectileAbilityDef extends AbilityDef {
   // Happens when the projectile runs out of time.
   getTimeoutEffects() {
     return this.timeoutEffects;
+  }
+  getOnKillEffects() {
+    return this.onKillEffects;
   }
 
   getProjectileType() {

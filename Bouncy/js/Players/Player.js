@@ -68,6 +68,13 @@ class Player {
     }
   }
 
+  reduceCooldowns(amount) {
+    var abilities = this.getAllAbilities();
+    for (var i = 0; i < abilities.length; i++) {
+      abilities[i].reduceCooldown(amount);
+    }
+  }
+
   serializeData() {
     var player_data = {
       abilities:[],

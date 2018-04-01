@@ -10,11 +10,16 @@ class PenetrateProjectile extends Projectile {
       this.lastUnitHit = null;
       return;
     }
+    let wasAlive = unit.isAlive();
     this.lastUnitHit = unit;
     super.hitUnit(boardState, unit, intersection);
     EffectFactory.createDamageEntireUnitEffect(boardState, unit);
 
     var damageDealt = this.throwProjectileEvent(ProjectileEvents.ON_HIT, boardState, unit, intersection);
+
+    if (wasAlive && !unit.isAlive()) {
+      this.throwProjectileEvent(ProjectileEvents.ON_KILL, boardState, unit, intersection);
+    }
 
     this.damageDealt += damageDealt;
   }

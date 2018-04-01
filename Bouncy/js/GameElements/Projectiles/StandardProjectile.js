@@ -17,6 +17,7 @@ class StandardProjectile extends Projectile {
   hitUnit(boardState, unit, intersection) {
     super.hitUnit(boardState, unit, intersection);
     let behaviour = null;
+    let wasAlive = unit.isAlive();
     if (intersection.line.forcePassthrough(this)) {
       behaviour = CollisionBehaviour.PASSTHROUGH;
     } else {
@@ -46,6 +47,10 @@ class StandardProjectile extends Projectile {
     } else if (behaviour === CollisionBehaviour.TIMEOUT) {
       throwProjectileEvent(ProjectileEvents.ON_TIMEOUT);
       this.delete();
+    }
+
+    if (wasAlive && !unit.isAlive()) {
+      this.throwProjectileEvent(ProjectileEvents.ON_KILL, boardState, unit, intersection);
     }
   }
 }

@@ -86,6 +86,8 @@ HitEffect.getHitEffectFromType = function(hitEffectDef, abilityDef, projectileSh
       return new UseAbilityEffect(hitEffectDef, abilityDef, projectileShape);
     case ProjectileShape.HitEffects.SHOOTER_BUFF:
       return new ShooterBuffEffect(hitEffectDef, abilityDef, projectileShape);
+    case ProjectileShape.HitEffects.COOLDOWN_REDUCTION:
+      return new CooldownReductionHitEffect(hitEffectDef, abilityDef, projectileShape);
   }
   return new HitEffect(hitEffectDef, abilityDef);
 }

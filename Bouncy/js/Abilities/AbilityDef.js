@@ -92,6 +92,12 @@ class AbilityDef {
     }
   }
 
+  reduceCooldown(amount) {
+    if (this.chargeType == AbilityDef.CHARGE_TYPES.TURNS) {
+      this.addCharge(amount);
+    }
+  }
+
   addCharge(amount) {
     if (!amount) { amount = 1; }
     this.charge = Math.min(this.maxCharge, this.charge + amount);
