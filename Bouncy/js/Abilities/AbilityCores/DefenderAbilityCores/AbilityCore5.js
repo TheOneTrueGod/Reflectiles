@@ -60,8 +60,78 @@ class AbilityCore5 extends AbilityCore {
 
   static GetPerkList() {
     let perkList = [
-      (new AbilityPerkNode('damage',    20, [0, 0])),
-      (new AbilityPerkNode('num_bullets',    20, [0, 0])),
+      // Tier 1
+      // Increase damage to single target
+      (new AbilityPerkNode('focus fire 1',      3, [2, 2]))
+        .addRequirement(new NotPerkLevelRequirement(new PerkLevelRequirement('damage 1', 1))),
+      (new AbilityPerkNode('bouncing 1',        3, [2, 3]))
+        .addRequirement(new NotPerkLevelRequirement(new PerkLevelRequirement('point blank 1', 1))),
+      (new AbilityPerkNode('curving 1',         3, [2, 4]))
+        .addRequirement(new NotPerkLevelRequirement(new PerkLevelRequirement('more bullets 1', 1))),
+      (new AbilityPerkNode('damage 1',          3, [4, 4]))
+        .addRequirement(new NotPerkLevelRequirement(new PerkLevelRequirement('focus fire 1', 1))),
+      (new AbilityPerkNode('point blank 1',     3, [4, 3]))
+        .addRequirement(new NotPerkLevelRequirement(new PerkLevelRequirement('bouncing 1', 1))),
+      (new AbilityPerkNode('more bullets 1',    3, [4, 2]))
+        .addRequirement(new NotPerkLevelRequirement(new PerkLevelRequirement('curving 1', 1))),
+
+      // Tier 2
+      (new AbilityPerkNode('damage on status 2',        10, [1, 1]))
+        .addRequirement(new PerkLevelRequirement('focus fire 1'))
+        .addRequirement(new OrPerkLevelRequirement([
+          new PerkLevelRequirement('bouncing 1'),
+          new PerkLevelRequirement('more bullets 1')
+        ])),
+      (new AbilityPerkNode('bounce damage 2',           10, [1, 3]))
+        .addRequirement(new PerkLevelRequirement('bouncing 1'))
+        .addRequirement(new OrPerkLevelRequirement([
+          new PerkLevelRequirement('focus fire 1'),
+          new PerkLevelRequirement('curving 1')
+        ])),
+      (new AbilityPerkNode('increase range 2',          10, [1, 5]))
+        .addRequirement(new PerkLevelRequirement('curving 1'))
+        .addRequirement(new OrPerkLevelRequirement([
+          new PerkLevelRequirement('bouncing 1'),
+          new PerkLevelRequirement('damage 1')
+        ])),
+      (new AbilityPerkNode('fire damage 2',             10, [5, 5]))
+        .addRequirement(new PerkLevelRequirement('damage 1'))
+        .addRequirement(new OrPerkLevelRequirement([
+          new PerkLevelRequirement('curving 1'),
+          new PerkLevelRequirement('point blank 1')
+        ])),
+      (new AbilityPerkNode('penetration 2',             10, [5, 3]))
+        .addRequirement(new PerkLevelRequirement('point blank 1'))
+        .addRequirement(new OrPerkLevelRequirement([
+          new PerkLevelRequirement('damage 1'),
+          new PerkLevelRequirement('more bullets 1')
+        ])),
+      (new AbilityPerkNode('kills explode 2',           10, [5, 1]))
+        .addRequirement(new PerkLevelRequirement('more bullets 1'))
+        .addRequirement(new OrPerkLevelRequirement([
+          new PerkLevelRequirement('point blank 1'),
+          new PerkLevelRequirement('focus fire 1')
+        ])),
+
+      // Tier 3
+      (new AbilityPerkNode('damageup shotsdown 3',           20, [3, 0]))
+        .addRequirement(new PerkLevelRequirement('damage on status 2'))
+        .addRequirement(new PerkLevelRequirement('kills explode 2')),
+      (new AbilityPerkNode('damagedown shotsup 3',           20, [6, 2]))
+        .addRequirement(new PerkLevelRequirement('kills explode 2'))
+        .addRequirement(new PerkLevelRequirement('penetration 2')),
+      (new AbilityPerkNode('wider spread 3',                 20, [6, 4]))
+        .addRequirement(new PerkLevelRequirement('penetration 2'))
+        .addRequirement(new PerkLevelRequirement('fire damage 2')),
+      (new AbilityPerkNode('more shots 3',                   20, [3, 6]))
+        .addRequirement(new PerkLevelRequirement('fire damage 2'))
+        .addRequirement(new PerkLevelRequirement('increase range 2')),
+      (new AbilityPerkNode('bounce explosion 3',             20, [0, 4]))
+        .addRequirement(new PerkLevelRequirement('bounce damage 2'))
+        .addRequirement(new PerkLevelRequirement('increase range 2')),
+      (new AbilityPerkNode('increase status duration 3',     20, [0, 2]))
+        .addRequirement(new PerkLevelRequirement('bounce damage 2'))
+        .addRequirement(new PerkLevelRequirement('damage on status 2')),
     ];
     return perkList;
   }
