@@ -19,7 +19,12 @@ class CardManager {
 
     $(".cardControlSection .cardTree")
       .on("click", ".perkNode", (event) => { this.cardClicked(event); })
-      .on("contextmenu", ".perkNode", (event) => { this.cardClicked(event); });
+      .on("contextmenu", ".perkNode", (event) => { this.cardClicked(event); })
+      .on("click", (event) => {
+        if (event.button == 2) { return false; }
+      }).on("contextmenu", (event) => {
+        if (event.button == 2) { return false; }
+      });
 
     $(".cardControlSection .deckManagerButton").on("click", (event) => {
       window.history.pushState('', '', '?');

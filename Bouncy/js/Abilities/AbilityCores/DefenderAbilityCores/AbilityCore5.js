@@ -1,7 +1,14 @@
 class AbilityCore5 extends AbilityCore {
   static BuildAbilityChild(perkList, perkPcts, perkCounts) {
-    let bullet_bonus = Math.round(lerp(0, 6, idx(perkPcts, 'num_bullets', 0)));
-    const rawAbil1 = {
+    let num_bullets = Math.floor(lerp(6, 16,
+      (
+        idx(perkPcts, 'more bullets 1', 0) * 2 +
+        idx(perkPcts, 'more shots 3-2', 0) * 8 +
+        // Mutually exclusive
+        idx(perkPcts, 'more shots 3', 0) * 8
+      ) / 10
+    ));
+    const rawAbil = {
       name: 'Spread Shot',
       description: 'Shoot [[num_bullets]] projectiles.<br>' +
         'Each one deals [[hit_effects[0].base_damage]] damage.',
@@ -11,68 +18,29 @@ class AbilityCore5 extends AbilityCore {
       style: (new AbilitySheetSpriteAbilityStyleBuilder())
         .setSheet('bullet_sheet').setCoordNums(275, 69, 294, 78).setRotation(0).build(),
       projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
-      num_bullets: 6 + bullet_bonus,
+      num_bullets: num_bullets,
       hit_effects:[{effect: ProjectileShape.HitEffects.DAMAGE, base_damage: 180}],
       icon: "/Bouncy/assets/icons/spread_shot.png",
     };
 
-    let rawAbil2 = { // 2440 damage max.  Actually dealing less than that
-      name: 'Shoot \'em up',
-      description: 'Shoots a wild spray of bullets.<br>' +
-        '[[num_bullets]] bullets deal [[hit_effects[0].base_damage]] damage',
-      card_text_description: '[[num_bullets]] X [[hit_effects[0].base_damage]]',
-      style: (new AbilitySheetSpriteAbilityStyleBuilder())
-        .setSheet('bullet_sheet').setCoordNums(29, 301, 37, 320).setRotation(Math.PI / 2).build(),
-      ability_type: AbilityDef.AbilityTypes.PROJECTILE,
-      shape: ProjectileAbilityDef.Shapes.CHAIN_SHOT,
-      projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
-      destroy_on_wall: true,
-      num_bullets: 25,
-      bullet_wave_delay: 3,
-      accuracy_decay: Math.PI / 128.0,
-      icon: "/Bouncy/assets/icons/bullets.png",
-      hit_effects: [{
-        effect: ProjectileShape.HitEffects.DAMAGE,
-        base_damage: 35
-      },
-      {
-        effect: ProjectileShape.HitEffects.POISON,
-        damage: 10,
-        duration: 2
-      }],
-    };
-
-    rawAbil1.timing_offset = MultipartAbilityDef.TIMING_OFFSET.AFTER;
-
-    const rawAbil = {
-      name: 'Multipart Test',
-      description: 'do the thing',
-      ability_type: AbilityDef.AbilityTypes.MULTIPART,
-      card_text_description: 'test',
-      child_abilities: [
-        rawAbil2,
-        rawAbil1
-      ],
-      icon: "/Bouncy/assets/icons/spread_shot.png",
-    }
-    return AbilityDef.createFromJSON(rawAbil1);
+    return AbilityDef.createFromJSON(rawAbil);
   }
 
   static GetPerkList() {
     let perkList = [
       // Tier 1
       // Increase damage to single target
-      (new AbilityPerkNode('focus fire 1',      3, [2, 2]))
+      (new MaxxedAbilityPerkNode('focus fire 1',      3, [2, 2]))
         .addRequirement(new NotPerkLevelRequirement(new PerkLevelRequirement('damage 1', 1))),
-      (new AbilityPerkNode('bouncing 1',        3, [2, 3]))
+      (new MaxxedAbilityPerkNode('bouncing 1',        3, [2, 3]))
         .addRequirement(new NotPerkLevelRequirement(new PerkLevelRequirement('point blank 1', 1))),
-      (new AbilityPerkNode('curving 1',         3, [2, 4]))
+      (new MaxxedAbilityPerkNode('curving 1',         3, [2, 4]))
         .addRequirement(new NotPerkLevelRequirement(new PerkLevelRequirement('more bullets 1', 1))),
-      (new AbilityPerkNode('damage 1',          3, [4, 4]))
+      (new MaxxedAbilityPerkNode('damage 1',          3, [4, 4]))
         .addRequirement(new NotPerkLevelRequirement(new PerkLevelRequirement('focus fire 1', 1))),
-      (new AbilityPerkNode('point blank 1',     3, [4, 3]))
+      (new MaxxedAbilityPerkNode('point blank 1',     3, [4, 3]))
         .addRequirement(new NotPerkLevelRequirement(new PerkLevelRequirement('bouncing 1', 1))),
-      (new AbilityPerkNode('more bullets 1',    3, [4, 2]))
+      (new MaxxedAbilityPerkNode('more bullets 1',    3, [4, 2]))
         .addRequirement(new NotPerkLevelRequirement(new PerkLevelRequirement('curving 1', 1))),
 
       // Tier 2
@@ -114,10 +82,10 @@ class AbilityCore5 extends AbilityCore {
         ])),
 
       // Tier 3
-      (new AbilityPerkNode('damageup shotsdown 3',           20, [3, 0]))
+      (new AbilityPerkNode('fewer shots 3',           20, [3, 0]))
         .addRequirement(new PerkLevelRequirement('damage on status 2'))
         .addRequirement(new PerkLevelRequirement('kills explode 2')),
-      (new AbilityPerkNode('damagedown shotsup 3',           20, [6, 2]))
+      (new AbilityPerkNode('more shots 3-2',           20, [6, 2]))
         .addRequirement(new PerkLevelRequirement('kills explode 2'))
         .addRequirement(new PerkLevelRequirement('penetration 2')),
       (new AbilityPerkNode('wider spread 3',                 20, [6, 4]))
