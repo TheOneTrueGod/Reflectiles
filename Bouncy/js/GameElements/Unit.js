@@ -83,6 +83,23 @@ class Unit {
     return effect.getEffectType() in this.statusEffects;
   }
 
+  hasNegativeCondition() {
+    for (let key in this.statusEffects) {
+      if (this.statusEffects[key].isNegative()) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  increaseConditionDuration(amount) {
+    for (let key in this.statusEffects) {
+      if (this.statusEffects[key].isNegative()) {
+        this.statusEffects[key].increaseDuration(amount);
+      }
+    }
+  }
+
   isAlive() {
     return this.health.current > 0;
   }
@@ -143,9 +160,14 @@ class Unit {
         if (healthType == 'armor') { return 0; }
         return 1;
       case Unit.DAMAGE_TYPE.CORROSIVE:
-        if (healthType == 'armor') { return 2; }
+        if (healthType == 'armor') { return 1.2; }
         if (healthType == 'shield') { return 1; }
+        if (healthType == 'health') { return 0.5; }
         return 0;
+      case Unit.DAMAGE_TYPE.FIRE:
+        if (healthType == 'armor') { return 0.5; }
+        if (healthType == 'shield') { return 0.5; }
+        if (healthType == 'health') { return 1.2; }
     }
     return 1;
   }
@@ -621,4 +643,5 @@ Unit.DAMAGE_TYPE = {
   NORMAL: "NORMAL",
   POISON: "POISON",
   CORROSIVE: "CORROSIVE",
+  FIRE: "FIRE",
 };

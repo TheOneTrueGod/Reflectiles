@@ -6,8 +6,10 @@ class ShieldStatusEffect extends StatusEffect {
     } else {
       this.health = {current: health, max: health};
     }
-
   }
+
+  isPositive() { return true; }
+  isNegative() { return false; }
 
   dealDamage(amount) {
     if (amount >= this.health.current) {

@@ -131,6 +131,7 @@ ProjectileShape.getProjectileShape = function(shapeType, abilityDef) {
 
 ProjectileShape.ProjectileTypes = {
   STANDARD: 'STANDARD',
+  CURVING: 'CURVING',
   PENETRATE: 'PENETRATE', // Carries on through until all of its damage is spent
   TIMEOUT: 'TIMEOUT',
   FROZEN_ORB: 'FROZEN_ORB',
@@ -148,6 +149,7 @@ ProjectileShape.HitEffects = {
   USE_ABILITY: 'USE_ABILITY',
   SHOOTER_BUFF: 'SHOOTER_BUFF',
   COOLDOWN_REDUCTION: 'COOLDOWN_REDUCTION',
+  NEGATIVE_CONDITION_TIME_MODIFICATION: 'NEGATIVE_CONDITION_TIME_MODIFICATION',
 };
 
 ProjectileShape.AOE_TYPES = {

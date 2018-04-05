@@ -7,6 +7,9 @@ class Projectile {
     this.speed = idx(projectileOptions, 'speed', 8);
     this.gravity = idx(projectileOptions, 'gravity', null);
     this.speedDecay = idx(projectileOptions, 'speed_decay', null);
+    this.curveAmount = idx(projectileOptions, 'curve_amount', 0);
+    this.curveTime = idx(projectileOptions, 'curve_time', 0);
+    this.curveDelay = idx(projectileOptions, 'curve_delay', 0);
     this.speedDecayDelay = 0;
     this.wallBounces = 2;
     if (abilityDef) {
@@ -186,6 +189,11 @@ class Projectile {
       }
     }
 
+    let curveTick = boardState.tick - this.startTick - this.curveDelay;
+    if (0 <= curveTick && curveTick < this.curveTime) {
+      this.angle += this.curveAmount;
+    }
+
     var speed = Victor(Math.cos(this.angle) * this.speed, Math.sin(this.angle) * this.speed);
     if (
       this.speedDecay instanceof Victor &&
@@ -239,6 +247,7 @@ class Projectile {
     this.x = endPoint.x2;
     this.y = endPoint.y2;
     this.angle = endPoint.getVector().horizontalAngle();
+
 
     this.gameSprite.x = this.x;
     this.gameSprite.y = this.y;

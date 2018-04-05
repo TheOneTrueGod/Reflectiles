@@ -2,9 +2,18 @@ class StatusEffect {
   constructor(duration, abilityID) {
     this.duration = duration;
     this.abilityID = abilityID;
+    this.durationIncreased = 0;
   }
 
   startOfPhase(boardState, phase, unit) {
+  }
+
+  increaseDuration(amount) {
+    if (amount > this.durationIncreased) {
+      let amountToIncrease = amount - this.durationIncreased;
+      this.durationIncreased = amountToIncrease;
+      this.duration += amountToIncrease;
+    }
   }
 
   readyToDelete() {
@@ -23,6 +32,16 @@ class StatusEffect {
 
   }
 
+  isPositive() {
+    console.warn("Status effect didn't override isPositive.", this);
+    return false;
+  }
+
+  isNegative() {
+    console.warn("Status effect didn't override isNegative.", this);
+    return false;
+  }
+
   onUnitDeleting(boardState, unit) {
     if (!unit.isAlive() && this.abilityID) {
       var abilityDef = AbilityDef.abilityDefList[this.abilityID];
@@ -38,6 +57,7 @@ class StatusEffect {
       'ability_id': this.abilityID,
       'duration': this.duration,
       'ability_id': this.abilityID,
+      'duration_increased': this.durationIncreased,
     };
   }
 }
@@ -55,7 +75,9 @@ StatusEffect.fromServerData = function(serverData) {
       EffectClass = StatusEffect.StatusEffectTypeMap[serverData.effect_type];
     }
     if (EffectClass) {
-      return EffectClass.loadFromServerData(serverData);
+      let newEffect = EffectClass.loadFromServerData(serverData);
+      newEffect.durationIncreased = serverData.duration_increased;
+      return newEffect;
     }
   }
   throw new Error("No effect type when creating status effect.  No idea what to do.");

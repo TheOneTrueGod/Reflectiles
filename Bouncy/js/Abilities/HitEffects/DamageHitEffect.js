@@ -1,5 +1,9 @@
 class DamageHitEffect extends HitEffect {
   doHitEffectOnUnit(boardState, unit, intersection, projectile) {
+    if (!this.meetsCondition(boardState, unit, intersection, projectile)) {
+      return 0;
+    }
+
     var is_penetrate = false;
     if (this.abilityDef && this.abilityDef.getProjectileType) {
       is_penetrate = this.abilityDef.getProjectileType() == ProjectileShape.ProjectileTypes.PENETRATE;
@@ -34,6 +38,13 @@ class DamageHitEffect extends HitEffect {
 
     return damageDealt / damageMod;
   }
+}
+
+DamageHitConditions = {
+  NONE: 'NONE',
+  HAS_NEGATIVE_CONDITION: 'HAS_NEGATIVE_CONDITION',
+  LIFETIME_BELOW: 'LIFETIME_BELOW',
+  LIFETIME_ABOVE: 'LIFETIME_ABOVE',
 }
 
 DamageHitEffect.createJSON = function(

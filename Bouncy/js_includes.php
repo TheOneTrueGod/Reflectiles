@@ -92,6 +92,7 @@
 <script src="/Bouncy/js/Abilities/HitEffects/BulletSplitHitEffect.js"></script>
 <script src="/Bouncy/js/Abilities/HitEffects/CooldownReductionHitEffect.js"></script>
 <script src="/Bouncy/js/Abilities/HitEffects/ShooterBuffEffect.js"></script>
+<script src="/Bouncy/js/Abilities/HitEffects/NegativeConditionModifierHitEffect.js"></script>
 <script src="/Bouncy/js/Abilities/PositionBasedEffects/BulletExplosionEffect.js"></script>
 <script src="/Bouncy/js/Abilities/PositionBasedEffects/UseAbilityEffect.js"></script>
 <script src="/Bouncy/js/Abilities/AbilityStyles/SpriteAbilityStyle.js"></script>

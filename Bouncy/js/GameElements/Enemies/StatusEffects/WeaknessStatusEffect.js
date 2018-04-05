@@ -4,6 +4,9 @@ class WeaknessStatusEffect extends StatusEffect {
     this.amount = amount === undefined ? 1.5 : amount;
   }
 
+  isPositive() { return false; }
+  isNegative() { return true; }
+
   turnStart(unit) {
 
   }

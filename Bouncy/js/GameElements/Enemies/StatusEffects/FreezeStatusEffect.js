@@ -3,6 +3,9 @@ class FreezeStatusEffect extends StatusEffect {
     super(duration, abilityID);
   }
 
+  isPositive() { return false; }
+  isNegative() { return true; }
+
   turnStart(unit) {
 
   }

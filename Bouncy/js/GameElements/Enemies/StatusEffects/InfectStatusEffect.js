@@ -5,6 +5,9 @@ class InfectStatusEffect extends StatusEffect {
     this.playerID = playerID;
   }
 
+  isPositive() { return false; }
+  isNegative() { return true; }
+
   getEffectType() {
     return this.constructor.name;
   }

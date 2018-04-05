@@ -30,7 +30,7 @@ class AbilityCore2 extends AbilityCore {
 
     let totalDamage = lerp(1500, 6000, (damagePerkPct * 3 + bulletCountPerkPct) / 4);
     if (this.hasPerk(perkPcts, 'enemy bounce 3')) {
-      totalDamage *= AbilityCore.DAMAGE_MULTIPLIERS.ENEMY_BOUNCE;
+      totalDamage *= AbilityConstants.BOUNCE_DAMAGE_PENALTY;
     }
     let num_bullets = Math.floor(lerp(10, 45, bulletCountPerkPct)) * 2;
     let damageDivisor = num_bullets;
@@ -51,7 +51,7 @@ class AbilityCore2 extends AbilityCore {
 
     let collisionBehaviours = [];
     if (this.hasPerk(perkPcts, 'enemy bounce 3')) {
-      totalDamage *= AbilityCore.DAMAGE_MULTIPLIERS.ENEMY_BOUNCE;
+      totalDamage *= AbilityConstants.BOUNCE_DAMAGE_PENALTY;
       collisionBehaviours.push(
         {behaviour: CollisionBehaviour.BOUNCE, count: 1}
       );

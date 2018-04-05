@@ -4,6 +4,9 @@ class PlayerDamageStatusEffect extends StatusEffect {
     this.amount = amount;
   }
 
+  isPositive() { return true; }
+  isNegative() { return false; }
+
   turnStart(unit) {
 
   }

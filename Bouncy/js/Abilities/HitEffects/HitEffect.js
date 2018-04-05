@@ -5,6 +5,13 @@ class HitEffect {
     this.abilityDef = abilityDef;
   }
 
+  getOptionalParam(param, defaultValue) {
+    if (param in this.hitEffectDef) {
+      return this.hitEffectDef[param];
+    }
+    return defaultValue;
+  }
+
   doHitEffect(boardState, unit, intersection, source) {
     var AOEType = idx(this.hitEffectDef, 'aoe_type', ProjectileShape.AOE_TYPES.NONE);
     var aoeUnitsToHit = [];
@@ -66,6 +73,29 @@ class HitEffect {
   doHitEffectOnUnit(boardState, unit, intersection, projectile) {
     return 0;
   }
+
+  meetsCondition(boardState, unit, intersection, projectile) {
+    let damageCondition = this.getOptionalParam('condition', DamageHitConditions.NONE);
+    let time;
+    // Use this later maybe
+    //let conditionParam = this.getOptionalParam('condition_parameter', null);
+    if (damageCondition === DamageHitConditions.NONE) {
+      return true;
+    }
+
+    switch (damageCondition) {
+      case DamageHitConditions.HAS_NEGATIVE_CONDITION:
+        return unit.hasNegativeCondition();
+      case DamageHitConditions.LIFETIME_ABOVE:
+        time = this.getOptionalParam('condition_amount', 0);
+        return projectile && boardState.tick - projectile.startTick >= time;
+      case DamageHitConditions.LIFETIME_BELOW:
+        time = this.getOptionalParam('condition_amount', 0);
+        return projectile && boardState.tick - projectile.startTick <= time;
+      default:
+        return false;
+    }
+  }
 }
 
 HitEffect.getHitEffectFromType = function(hitEffectDef, abilityDef, projectileShape) {
@@ -88,6 +118,8 @@ HitEffect.getHitEffectFromType = function(hitEffectDef, abilityDef, projectileSh
       return new ShooterBuffEffect(hitEffectDef, abilityDef, projectileShape);
     case ProjectileShape.HitEffects.COOLDOWN_REDUCTION:
       return new CooldownReductionHitEffect(hitEffectDef, abilityDef, projectileShape);
+    case ProjectileShape.HitEffects.NEGATIVE_CONDITION_TIME_MODIFICATION:
+      return new NegativeConditionModifierHitEffect(hitEffectDef, abilityDef, projectileShape);
   }
   return new HitEffect(hitEffectDef, abilityDef);
 }

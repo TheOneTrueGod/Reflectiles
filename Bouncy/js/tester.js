@@ -1,6 +1,7 @@
 class Tester extends MainGame {
   start() {
     NumbersBalancer.setNumPlayers(1);
+    //NumbersBalancer.setDifficulty(NumbersBalancer.DIFFICULTIES.NIGHTMARE);
     $('.unitDetailsContainer')
       .append($("<div>", {class: 'damageDealt noselect'}))
       .append($("<div>", {class: 'damageTaken noselect'}));
@@ -10,12 +11,12 @@ class Tester extends MainGame {
     this.cachedAbilities = {};
 
     this.unitsToSpawn = [
-      [],
-      [null, null, UnitBossWarlock, null],
-      [],
-      [null, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare],
-      [null, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare],
-      [null, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare]
+      [UnitBasicSquare, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare],
+      [UnitBasicSquare, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare],
+      [UnitBasicSquare, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare],
+      [UnitBasicSquare, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare],
+      [UnitBasicSquare, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare],
+      [UnitBasicSquare, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare]
     ];
     /*this.unitsToSpawn =
     [
@@ -57,7 +58,20 @@ class Tester extends MainGame {
     // SET COMMANDS HERE
     this.abilitiesToUse = [
       //[TestAbils[3].index, {x: -100, y: -50}],
-      [this.buildAbility(AbilityCore1).index, {x: 0, y: -100}],
+      //[this.buildAbility(AbilityCore8).index, {x: 0, y: -100}],
+      [this.buildAbility(AbilityCore5,
+        ["pass through 1", "pass through 1", "pass through 1", "damage 1", "damage 1",
+        "damage 1", "pass through damage 2", "pass through damage 2", "pass through damage 2",
+        "fire damage 2", "fire damage 2", "fire damage 2", "kills explode 3", "kills explode 3",
+        "kills explode 3", "kills explode 3", "kills explode 3", "kills explode 3", "kills explode 3",
+        "kills explode 3", "kills explode 3", "kills explode 3", "kills explode 3", "kills explode 3",
+        "kills explode 3", "kills explode 3", "kills explode 3", "kills explode 3", "kills explode 3",
+        "kills explode 3", "kills explode 3", "kills explode 3", "curving 1", "curving 1", "curving 1",
+        "damage to far", "damage to far", "damage to far", "damage to far", "damage to far", "damage to far",
+        "damage to far", "damage to far", "damage to far", "damage to far", "damage to far", "damage to far",
+        "damage to far", "damage to far", "damage to far", "damage to far", "damage to far", "damage to far",
+        "damage to far", "damage to far"]
+      ).index, {x: 0, y: -100}],
       //[this.buildAbility(AbilityCore0, ['damage1', 'damage1', 'damage1', 'rocket count4', 'rocket count4', 'rocket count4']).index, {x: 0, y: -100}],
       //[this.buildAbility(AbilityCore0, ['damage1', 'damage1', 'damage1', 'rocket count4', 'rocket count4', 'rocket count4']).index, {x: 0, y: -100}],
       //[this.buildAbility(AbilityCore0, ['damage1', 'damage1', 'damage1', 'rocket count4', 'rocket count4', 'rocket count4']).index, {x: 0, y: -100}],

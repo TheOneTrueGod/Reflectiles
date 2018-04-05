@@ -69,8 +69,4 @@ class AbilityCore {
   }
 }
 
-AbilityCore.DAMAGE_MULTIPLIERS = {
-  ENEMY_BOUNCE: 0.75,
-}
-
 AbilityCore.coreList = {};

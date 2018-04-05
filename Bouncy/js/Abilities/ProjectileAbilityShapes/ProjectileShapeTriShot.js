@@ -8,6 +8,9 @@ class ProjectileShapeTriShot extends ProjectileShape {
     this.min_angle = abilityDef.getOptionalParam('min_angle', Math.PI / 16.0);
     this.max_angle = abilityDef.getOptionalParam('max_angle', Math.PI / 6.0);
     this.num_bullets = abilityDef.getOptionalParam('num_bullets', 1);
+    this.curve_time = abilityDef.getOptionalParam('curve_time', 0);
+    this.curve_delay = abilityDef.getOptionalParam('curve_delay', 0);
+    this.max_curve = abilityDef.getOptionalParam('curve_amount', 0);
   }
 
   calculateSpread(startPos, endPos) {
@@ -79,6 +82,11 @@ class ProjectileShapeTriShot extends ProjectileShape {
           targetPoint.y - castPoint.y, targetPoint.x - castPoint.x
         ) + this.calculateSpread(castPoint, targetPoint) * pctOn;
 
+        let curveAmount = 0;
+        if (this.curve_time > 0) {
+          curveAmount = this.max_curve / this.curve_time * pctOn;
+        }
+
         boardState.addProjectile(
           Projectile.createProjectile(
             playerID,
@@ -87,7 +95,12 @@ class ProjectileShapeTriShot extends ProjectileShape {
             null,
             angle,
             this.abilityDef,
-            {'speed': lerp(8, 7, Math.abs(pctOn))}
+            {
+              speed: lerp(8, 7, Math.abs(pctOn)),
+              curve_time: this.curve_time,
+              curve_delay: this.curve_delay,
+              curve_amount: curveAmount,
+            }
           ).addUnitHitCallback(this.unitHitCallback.bind(this))
           .addTimeoutHitCallback(this.timeoutHitCallback.bind(this))
           .addTimeoutCallback(this.timeoutCallback.bind(this))

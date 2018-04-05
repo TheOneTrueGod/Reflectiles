@@ -93,7 +93,7 @@ class AbilityCore19 extends AbilityCore {
         damage: damagePerTurn / 2,
         duration: duration - 1,
         effect: ProjectileShape.HitEffects.POISON,
-        aoe_type: "BOX",
+        aoe_type: ProjectileShape.AOE_TYPES.BOX,
         aoe_size: {x: [AoE.x[0] - 1, AoE.x[1] + 1], y: [AoE.y[0] - 1, AoE.y[1] + 1]},
       });
     }
