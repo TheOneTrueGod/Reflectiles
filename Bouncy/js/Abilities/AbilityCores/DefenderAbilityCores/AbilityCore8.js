@@ -92,7 +92,7 @@ class AbilityCore8 extends AbilityCore {
         shape: ProjectileAbilityDef.Shapes.TRI_SHOT,
         style: (new AbilitySheetSpriteAbilityStyleBuilder())
           .setSheet('weapons_sheet')
-          .setCoordNums(27, 1, 51, 23)
+          .setCoordNums(28, 2, 50, 23)
           .setScale(0.75).build(),
         speed: 6,
         projectile_type: ProjectileShape.ProjectileTypes.STANDARD,

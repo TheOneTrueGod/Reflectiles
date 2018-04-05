@@ -148,7 +148,7 @@ class AbilityCore5 extends AbilityCore {
     if (damageType == Unit.DAMAGE_TYPE.FIRE) {
       descriptionBehaviours.push('deal <<Fire>> damage');
     }
-    let description = 'Shoot <<' + num_bullets + '>> projectiles';
+    let description = 'Throw <<' + num_bullets + '>> knives';
     if (descriptionBehaviours.length > 0) {
       description += ' that ';
       description += this.turnListIntoEnglish(descriptionBehaviours);
@@ -200,13 +200,17 @@ class AbilityCore5 extends AbilityCore {
     }
 
     const rawAbil = {
-      name: 'Spread Shot',
+      name: 'Knife Toss',
       description,
       card_text_description: '[[num_bullets]] X <<' + shotDamage + '>>',
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.TRI_SHOT,
       style: projectileStyle.build(),
       projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
+      style: (new AbilitySheetSpriteAbilityStyleBuilder())
+        .setSheet('weapons_sheet')
+        .setCoordNums(54, 2, 75, 23)
+        .build(),
       num_bullets: num_bullets,
       collision_behaviours: collisionBehaviours,
       wall_bounces: wallBounces,
@@ -215,7 +219,7 @@ class AbilityCore5 extends AbilityCore {
       collision_effects: firstHit,
       on_kill_effects: killEffects,
       timeout_hit_effects: finalHit,
-      icon: "/Bouncy/assets/icons/spread_shot.png",
+      icon: "/Bouncy/assets/icons/thrown-daggers.png",
     };
 
     if (this.hasPerk(perkPcts, 'curving 1')) {
@@ -324,7 +328,7 @@ class AbilityCore5 extends AbilityCore {
   }
 
   static GetCardDeckType() {
-    return CardDeckTypes.NEUTRAL;
+    return CardDeckTypes.DEFENDER;
   }
 
   static GetAimOffsets() {
