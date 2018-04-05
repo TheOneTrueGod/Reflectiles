@@ -3,13 +3,13 @@ class AbilityCore5 extends AbilityCore {
     let num_bullets = Math.floor(lerp(6, 14,
       (
         this.hasPerk(perkPcts, 'more bullets 1') * 1 +
-        idx(perkPcts, 'more bullets 3-2', 0) * 7
+        idx(perkPcts, 'more bullets 3', 0) * 7
       ) / 8
     ));
 
     let totalDamage = lerp(1200, 1800, (
       this.hasPerk(perkPcts, 'damage 1', 0) +
-      idx(perkPcts, 'more bullets 3-2', 0) +
+      idx(perkPcts, 'more bullets 3', 0) +
       idx(perkPcts, 'fire damage 2', 0) * 4
     ) / 6);
     let damageType = idx(perkPcts, 'fire damage 2', 0) > 0 ?
@@ -222,6 +222,11 @@ class AbilityCore5 extends AbilityCore {
       icon: "/Bouncy/assets/icons/thrown-daggers.png",
     };
 
+    let cooldown = this.getCooldown(perkList, perkPcts);
+    if (cooldown !== null) {
+      rawAbil.charge = cooldown;
+    }
+
     if (this.hasPerk(perkPcts, 'curving 1')) {
       rawAbil.curve_delay = Math.floor(duration / 8);
       rawAbil.curve_time = Math.floor(duration / 4);
@@ -229,6 +234,24 @@ class AbilityCore5 extends AbilityCore {
     }
 
     return AbilityDef.createFromJSON(rawAbil);
+  }
+
+  static getCooldown(perkList, perkPcts) {
+    let cooldown =
+      idx(perkPcts, 'increase status duration 3', 0) * 4 +
+      idx(perkPcts, 'damage to near', 0) * 2 +
+      idx(perkPcts, 'damage to far', 0) * 2 +
+      idx(perkPcts, 'bounce explosion 3', 0) * 3 +
+      idx(perkPcts, 'kills explode 3', 0) * 3 +
+      idx(perkPcts, 'more bullets 3', 0) * 2
+      ;
+
+    cooldown = Math.round(cooldown);
+    if (cooldown <= 1) {
+      return null;
+    }
+
+    return {initial_charge: -1, max_charge: cooldown, charge_type: "TURNS"};
   }
 
   static turnListIntoEnglish(list, includeAnd) {
@@ -308,7 +331,7 @@ class AbilityCore5 extends AbilityCore {
       (new AbilityPerkNode('damage to near',           20, [3, 0]))
         .addRequirement(new PerkLevelRequirement('damage on status 2'))
         .addRequirement(new PerkLevelRequirement('wider spread 2')),
-      (new AbilityPerkNode('more bullets 3-2',           20, [6, 2]))
+      (new AbilityPerkNode('more bullets 3',           20, [6, 2]))
         .addRequirement(new PerkLevelRequirement('wider spread 2'))
         .addRequirement(new PerkLevelRequirement('pass through damage 2')),
       (new AbilityPerkNode('kills explode 3',                 20, [6, 4]))
