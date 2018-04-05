@@ -24,13 +24,13 @@ class User {
   }
 
   public function isAdmin() {
-    return $this->userName == "TheOneTrueGod";
+    return $this->userName == "TheOneTrueGod" || $this->userName == "ILoveTheLag";
   }
 
   public function hasPermission($permission) {
     switch ($permission) {
       case 'CREATE_NEW_GAME':
-        return $this->userName == "TheOneTrueGod";
+        return true;
       case 'DELETE_GAME':
         return $this->userName == "TheOneTrueGod";
     }

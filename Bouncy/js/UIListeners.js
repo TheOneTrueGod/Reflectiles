@@ -405,7 +405,7 @@ class UIListeners {
         $section.find(".abilityDeckName").off();
         if (player.getUserID() == loggedInPlayerID) {
           $section.find(".quitButton").show();
-          if (player.getUserID() == "totg") {
+          if (i === 0) {
             $section.find(".startButton").show();
           }
           $section.find(".abilityDeckName")

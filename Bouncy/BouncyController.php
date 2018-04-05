@@ -43,17 +43,17 @@ class BouncyController {
       case BOUNCY_SERVER_ACTIONS['GET_TURN_STATUS']:
         return $this->getTurnStatus();
       case BOUNCY_SERVER_ACTIONS['SET_BOARD_AT_TURN_START']:
-        if (!$this->user->isHost()) {
+        if (!$this->gameObject->isUserHost($this->user)) {
           throw new Exception("Only the host can do this action");
         }
         return $this->setBoardAtTurnStart();
       case BOUNCY_SERVER_ACTIONS['FINALIZE_TURN']:
-        if (!$this->user->isHost()) {
+        if (!$this->gameObject->isUserHost($this->user)) {
           throw new Exception("Only the host can do this action");
         }
         return $this->finalizeTurn();
       case BOUNCY_SERVER_ACTIONS['FINISH_GAME']:
-        if (!$this->user->isHost()) {
+        if (!$this->gameObject->isUserHost($this->user)) {
           throw new Exception("Only the host can do this action");
         }
         return $this->finishGame();
@@ -68,7 +68,7 @@ class BouncyController {
   }
 
   private function getGameHTML($user) {
-    $is_host = $this->user->isHost();
+    $is_host = $this->gameObject->isUserHost($this->user);
     $turn = $this->gameObject->getCurrentTurn();
     $game_id = $this->gameObject->getID();
 
@@ -105,7 +105,7 @@ class BouncyController {
   }
 
   private function setBoardAtTurnStart() {
-    if (!$this->user->isHost()) {
+    if (!$this->gameObject->isUserHost($this->user)) {
       throw new Exception("You're not the host");
     }
 
@@ -174,11 +174,11 @@ class BouncyController {
   private function updatePreGameState() {
     switch ($this->request->param('slot_action')) {
       case SLOT_ACTIONS['START']:
-        if ($this->user->isAdmin()) {
+        if ($this->gameObject->isUserHost($this->user)) {
           $this->gameObject->startGame();
           return $this->getGameMetaData();
         }
-        throw new Exception("Only an admin can start the game");
+        throw new Exception("Only the host can start the game");
       case SLOT_ACTIONS['QUIT']:
         $this->gameObject->removePlayer($this->getPlayerSlotFromRequest(), $this->user);
         return $this->getGameMetaData();
@@ -193,19 +193,19 @@ class BouncyController {
         );
         return $this->getGameMetaData();
       case SLOT_ACTIONS['SET_LEVEL']:
-        if ($this->user->isAdmin()) {
+        if ($this->gameObject->isUserHost($this->user)) {
           $this->gameObject->getMetadata()->setLevel($this->request->param('level'));
           $this->gameObject->saveMetadata();
           return $this->getGameMetaData();
         }
-        throw new Exception("Only an admin can start the game");
+        throw new Exception("Only the host can change the level");
       case SLOT_ACTIONS['SET_DIFFICULTY']:
-        if ($this->user->isAdmin()) {
+        if ($this->gameObject->isUserHost($this->user)) {
           $this->gameObject->getMetadata()->setDifficulty($this->request->param('difficulty'));
           $this->gameObject->saveMetadata();
           return $this->getGameMetaData();
         }
-        throw new Exception("Only an admin can start the game");
+        throw new Exception("Only the host can set the difficulty");
       default:
         throw new Exception("Unhandled slot action [" . $this->request->param('slot_action') . "]");
         break;

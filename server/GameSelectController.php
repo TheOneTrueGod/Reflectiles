@@ -79,7 +79,7 @@ class GameSelectController {
       <?php if (!$game_over) { ?>
         <a href="<?php echo GameController::buildURL($game->getID()); ?>">Join</a>
       <?php } ?>
-      <?php if ($game_over || $user && $user->isAdmin()) { ?>
+      <?php if ($game_over || $user && $user->isAdmin() || $game->isUserHost($user)) { ?>
         <?php if(!$game_over) { ?>
           |
         <?php } ?>
