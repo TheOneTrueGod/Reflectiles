@@ -931,7 +931,7 @@
   display: none;
 }
 
-#errorBox {
+#errorBox, #hintBox {
   position: absolute;
   top: 0;
   left: 10px;
@@ -941,6 +941,18 @@
   background: black;
   color: red;
   display: none;
+}
+
+#hintBox {
+  border: 4px solid white;
+  color: white;
+  margin-top: -1em;
+  text-align: center;
+  top: 50%;
+}
+
+#hintBox.noText {
+  display: none !important;
 }
 
 #gameBoard {

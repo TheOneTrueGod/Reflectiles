@@ -1,11 +1,7 @@
 const TurnPhasesEnum = {
   START_TURN: 'start_turn',
-  PLAYER_ACTION_1: 'player_action_1',
-  PLAYER_ACTION_2: 'player_action_2',
-  PLAYER_ACTION_3: 'player_action_3',
-  PLAYER_ACTION_4: 'player_action_4',
   PLAYER_ACTION: 'player_action',
-  PLAYER_MOVE: 'player_move',
+  PLAYER_MINOR: 'player_minor',
 
   ALLY_ACTION: 'ally_action',
   ALLY_MOVE: 'ally_move',
@@ -20,20 +16,11 @@ const TurnPhasesEnum = {
 TurnPhasesEnum.getNextPhase = function(currentPhase) {
   switch (currentPhase) {
     case TurnPhasesEnum.START_TURN:
-      return TurnPhasesEnum.PLAYER_ACTION_1;
-    case TurnPhasesEnum.PLAYER_ACTION_1:
-      if (DO_TURNS_SIMULTANEOUSLY) {
-        return TurnPhasesEnum.PLAYER_MOVE;
-      }
-      return TurnPhasesEnum.PLAYER_ACTION_2;
-    case TurnPhasesEnum.PLAYER_ACTION_2:
-      return TurnPhasesEnum.PLAYER_ACTION_3;
-    case TurnPhasesEnum.PLAYER_ACTION_3:
-      return TurnPhasesEnum.PLAYER_ACTION_4;
-    case TurnPhasesEnum.PLAYER_ACTION_4:
-      return TurnPhasesEnum.PLAYER_MOVE;
+      return TurnPhasesEnum.PLAYER_ACTION;
+    case TurnPhasesEnum.PLAYER_ACTION:
+      return TurnPhasesEnum.PLAYER_MINOR;
 
-    case TurnPhasesEnum.PLAYER_MOVE:
+    case TurnPhasesEnum.PLAYER_MINOR:
       return TurnPhasesEnum.ALLY_ACTION;
 
     case TurnPhasesEnum.ALLY_ACTION:
@@ -53,10 +40,6 @@ TurnPhasesEnum.getNextPhase = function(currentPhase) {
 }
 
 TurnPhasesEnum.isPlayerCommandPhase = function(phase) {
-  return phase == TurnPhasesEnum.PLAYER_ACTION_1 ||
-    phase == TurnPhasesEnum.PLAYER_ACTION_2 ||
-    phase == TurnPhasesEnum.PLAYER_ACTION_3 ||
-    phase == TurnPhasesEnum.PLAYER_ACTION_4 ||
-    phase == TurnPhasesEnum.PLAYER_ACTION ||
-    phase == TurnPhasesEnum.PLAYER_MOVE;
+  return phase == TurnPhasesEnum.PLAYER_ACTION ||
+    phase == TurnPhasesEnum.PLAYER_MINOR;
 }

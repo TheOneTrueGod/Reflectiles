@@ -21,6 +21,8 @@ class PlayerInput {
     ) {
       this.selectedAbility = abilityID;
     }
+
+    MainGame.updateActionHint();
   }
 
   selectUnit(unit) {

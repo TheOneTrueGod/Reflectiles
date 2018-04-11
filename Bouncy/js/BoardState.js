@@ -315,7 +315,7 @@ class BoardState {
   }
 
   getSimultaneousDelay(phase) {
-    if (phase == TurnPhasesEnum.PLAYER_MOVE) {
+    if (phase == TurnPhasesEnum.PLAYER_MINOR) {
       return 20;
     }
 
@@ -323,14 +323,10 @@ class BoardState {
   }
 
   getOffsetTickForPlayer(phase, commands, playerID, players) {
-    if (DO_TURNS_SIMULTANEOUSLY) {
-      var playerTurns = this.getTurnOrderByPlayerIDs(commands, playerID, players)
-      if (playerID in playerTurns) {
-        return this.tick - playerTurns[playerID] * this.getSimultaneousDelay(phase);
-      }
-      return this.tick;
+    var playerTurns = this.getTurnOrderByPlayerIDs(commands, playerID, players)
+    if (playerID in playerTurns) {
+      return this.tick - playerTurns[playerID] * this.getSimultaneousDelay(phase);
     }
-
     return this.tick;
   }
 
@@ -489,39 +485,17 @@ class BoardState {
   }
 
   getPlayerActionsInPhase(players, playerCommands, phase) {
-    if (phase == TurnPhasesEnum.PLAYER_MOVE) {
+    if (phase == TurnPhasesEnum.PLAYER_MINOR) {
       return this.getAllPlayerActions(players, playerCommands, (command) => {
-        return command.getCommandPhase() == TurnPhasesEnum.PLAYER_MOVE;
+        return command.getCommandPhase() == TurnPhasesEnum.PLAYER_MINOR;
       });
     }
-    if (DO_TURNS_SIMULTANEOUSLY && phase === TurnPhasesEnum.PLAYER_ACTION_1) {
+    if (phase === TurnPhasesEnum.PLAYER_ACTION) {
       return this.getAllPlayerActions(players, playerCommands, (command) => {
         return command.getCommandPhase() == TurnPhasesEnum.PLAYER_ACTION;
       });
     }
-
-    var turnOrder = this.getTurnOrder(players);
-    var currPlayer = null;
-    switch (phase) {
-      case TurnPhasesEnum.PLAYER_ACTION_1:
-        currPlayer = players[turnOrder[0]];
-        break;
-      case TurnPhasesEnum.PLAYER_ACTION_2:
-        currPlayer = players[turnOrder[1]];
-        break;
-      case TurnPhasesEnum.PLAYER_ACTION_3:
-      currPlayer = players[turnOrder[2]];
-        break;
-      case TurnPhasesEnum.PLAYER_ACTION_4:
-        currPlayer = players[turnOrder[3]];
-        break;
-    }
-    if (!currPlayer) {
-      return null;
-    }
-    var commands = playerCommands[currPlayer.getUserID()];
-
-    return commands;
+    return null;
   }
 
   getTurnOrderByPlayerIDs(playerCommands, playerID, players) {

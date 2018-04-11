@@ -190,7 +190,7 @@ class MainGame {
     for (var player_id in player_command_list) {
       if (
         player_command_list.hasOwnProperty(player_id) &&
-        (!ignoreSelf || player_id != this.playerID)
+        (!ignoreSelf || player_id != this.playerID || !previousPlayerCommands.length)
       ) {
         var command_list = player_command_list[player_id];
         command_list.forEach(function(commandJSON) {
@@ -202,7 +202,7 @@ class MainGame {
       }
     }
 
-    if (ignoreSelf) {
+    if (ignoreSelf && previousPlayerCommands.length > 0) {
       this.playerCommands[this.playerID] = previousPlayerCommands;
       var commands = this.playerCommands[this.playerID];
       commands.forEach(function(command) {
@@ -224,10 +224,14 @@ class MainGame {
       var playerHasCommand = false;
       if (this.playerCommands[this.players[key].getUserID()]) {
         var pc = this.playerCommands[this.players[key].getUserID()];
+        let hasMinor = false;
+        let hasMajor = false;
         for (var i = 0; i < pc.length; i++) {
-          if (pc[i].commandEndsTurn()) {
-            playerHasCommand = true;
-          }
+          if (pc[i].isMajorAction()) { hasMajor = true; }
+          if (pc[i].isMinorAction()) { hasMinor = true; }
+        }
+        if ((true || hasMinor) && hasMajor) {
+          playerHasCommand = true;
         }
       }
       if (!playerHasCommand) {
@@ -283,6 +287,8 @@ class MainGame {
 
   gameReadyToBegin(finalized) {
     UIListeners.updatePlayerStatus(this.boardState, this.players);
+    UIListeners.updateTeamHealth(this.boardState.teamHealth[0], this.boardState.teamHealth[1]);
+    this.updateActionHint();
     UIListeners.showGameBoard();
     this.boardState.saveState();
     this.boardState.updateWavesSpawnedUI(AIDirector);
@@ -435,6 +441,46 @@ class MainGame {
     }
   }
 
+  getHintState() {
+    if (PlayerInput.selectedAbility) {
+      return "abilityselected";
+    } else if (
+      !this.playerCommands[this.playerID] ||
+      this.playerCommands[this.playerID].length == 0
+    ) {
+      return "nomajor";
+    } else {
+      let hasMajor = false;
+      let hasMinor = false;
+      for (let command of this.playerCommands[this.playerID]) {
+        if (command.isMajorAction()) {
+          hasMajor = true;
+        }
+        if (command.isMinorAction()) {
+          hasMinor = true;
+        }
+      }
+      if (!hasMajor) { return "nomajor"; }
+      if (!hasMinor) { return "nominor"; }
+    }
+    return 'done';
+  }
+
+  getActionHint() {
+    let state = this.getHintState();
+    switch (state) {
+      case 'nomajor':
+        return "Select an action card below";
+      case 'nominor':
+        return "Select a minor action card below";
+      case 'abilityselected':
+        return "Click on the game area to use the selected ability";
+      case 'done':
+      default:
+        return "";
+    }
+  }
+
   setPlayerCommand(playerCommand, saveCommand) {
     var pID = playerCommand.getPlayerID();
     if (!this.playerCommands[pID]) {
@@ -481,6 +527,14 @@ class MainGame {
         this.playerCommandsSaved
       );
     }
+
+    if (pID == this.playerID) {
+      this.updateActionHint();
+    }
+  }
+
+  updateActionHint() {
+    UIListeners.updateActionHint(this.getActionHint());
   }
 
   playerCommandsSaved(data) {
@@ -554,6 +608,7 @@ class MainGame {
 
     UIListeners.updatePlayerCommands(this.playerCommands, this.players);
     this.getTurnStatus();
+    this.updateActionHint();
   }
 
   debugSpeed() {

@@ -5,6 +5,8 @@ class UIListeners {
     this.drawPile = null;
     this.discardPile = null;
     this.lostCardsPile = null;
+    this.inactionTimer = null;
+    this.inactionTimerFadingIn = false;
   }
 
   createPlayerStatus(players) {
@@ -200,6 +202,15 @@ class UIListeners {
     }
   }
 
+  updateActionHint(newText) {
+    if (!newText) {
+      $('#hintBox').addClass("noText");
+    } else {
+      $('#hintBox').removeClass("noText");
+    }
+    $('#hintBox').text(newText);
+  }
+
   setupUIListeners() {
     $('#missionEndTurnButton').on('click', function() {
       TurnControls.setPlayState(false);
@@ -231,6 +242,26 @@ class UIListeners {
       event.preventDefault();
       return false;
     });
+
+    var invokeTimeout = () => {
+      this.inactionTimer = window.setTimeout(() => {
+        $("#hintBox").fadeIn(2000);
+        this.inactionTimerFadingIn = true;
+      }, 2000);
+    }
+
+    invokeTimeout();
+    var windowMoveCallback = () => {
+      if (this.inactionTimerFadingIn) {
+        $("#hintBox").stop().fadeOut();
+        this.inactionTimerFadingIn = false;
+      }
+
+      window.clearTimeout(this.inactionTimer);
+      invokeTimeout();
+    };
+
+    $(window).on('mousemove', windowMoveCallback);
   }
 
   updateSelectedAbility() {
@@ -263,7 +294,6 @@ class UIListeners {
     var pct = healthPct * 100;
     $('.healthbar_progress').css('width', pct + '%');
     $('.healthbar_text').text(currHealth);
-
   }
 
   showGameOverScreen(playersWon, gameStats) {

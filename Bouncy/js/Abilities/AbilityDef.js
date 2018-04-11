@@ -112,7 +112,7 @@ class AbilityDef {
       $('[ability-id=' + this.index + ']')
         .addClass("disabled")
         .find('.chargeNumber')
-        .text(this.maxCharge - this.charge);
+        .text(Math.ceil(this.maxCharge - this.charge));
     }
   }
 

@@ -4,7 +4,7 @@ class PlayerCommandMove extends PlayerCommand {
   }
 
   getCommandPhase() {
-    return TurnPhasesEnum.PLAYER_MOVE;
+    return TurnPhasesEnum.PLAYER_MINOR;
   }
 
   static findValidMove(boardState, playerID, x, y) {

@@ -114,7 +114,7 @@ class AbilityCore3 extends AbilityCore {
       ],
       timeout_hit_effects: timeoutEffects,
       collision_behaviours: collisionBehaviours,
-      speed_decay: {x: speed_decay, y: 1},
+      speed_decay: {x: speed_decay, y: speed_decay},
       num_bullets: num_bullets,
       icon: "/Bouncy/assets/icons/icon_plain_rain.png",
     };

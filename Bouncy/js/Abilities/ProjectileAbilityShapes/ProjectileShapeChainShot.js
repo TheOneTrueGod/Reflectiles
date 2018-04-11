@@ -41,10 +41,10 @@ class ProjectileShapeChainShot extends ProjectileShape {
         Math.PI / 2.0
       );
 
-      var angle = Math.atan2(
+      var aimAngle = Math.atan2(
         targetPoint.y - castPoint.y, targetPoint.x - castPoint.x
       );
-      angle += (boardState.getRandom() - 0.5) * 2 * accuracyForShot;
+      let angle = aimAngle + (boardState.getRandom() - 0.5) * 2 * accuracyForShot;
       boardState.addProjectile(
         Projectile.createProjectile(
           playerID,

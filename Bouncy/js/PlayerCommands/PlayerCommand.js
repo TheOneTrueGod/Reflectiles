@@ -14,6 +14,14 @@ class PlayerCommand {
     return TurnPhasesEnum.PLAYER_ACTION;
   }
 
+  isMajorAction() {
+    return this.getCommandPhase() == TurnPhasesEnum.PLAYER_ACTION;
+  }
+
+  isMinorAction() {
+    return this.getCommandPhase() == TurnPhasesEnum.PLAYER_MINOR;
+  }
+
   commandEndsTurn() {
     return true;
   }
