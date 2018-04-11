@@ -1,6 +1,7 @@
 class PlayerInput {
   constructor() {
     this.selectedAbility = null;
+    this.selectedCommand = null;
     this.selectedUnit = null;
     this.unitDetailsContainer = $('.unitDetailsContainer');
   }
@@ -23,6 +24,10 @@ class PlayerInput {
     }
 
     MainGame.updateActionHint();
+    let command = this.getCommandForEvent({offsetX: 0, offsetY: 0});
+    if (command) {
+      MainGame.setAimPreview(null, null, null, command.getCommandPhase());
+    }
   }
 
   selectUnit(unit) {
@@ -36,45 +41,53 @@ class PlayerInput {
     }
   }
 
+  getCommandForEvent(event) {
+    if (this.selectedAbility === null) { return null; }
+    if (this.selectedAbility == "move") {
+      var validMove = PlayerCommandMove.findValidMove(
+        MainGame.boardState,
+        $('#gameContainer').attr('playerID'),
+        event.offsetX,
+        event.offsetY
+      );
+      if (validMove) {
+        return new PlayerCommandMove(validMove.x, validMove.y);
+      }
+    } else {
+      return new PlayerCommandUseAbility(
+        event.offsetX,
+        event.offsetY,
+        this.selectedAbility,
+        $('#gameContainer').attr('playerID')
+      );
+    }
+    return null;
+  }
+
   handleClick(target, event) {
     if (
       this.selectedAbility &&
       event.button == 0
     ) {
-      MainGame.setAimPreview(null, null, null);
-      if (this.selectedAbility == "move") {
-        var validMove = PlayerCommandMove.findValidMove(
-          MainGame.boardState,
-          $('#gameContainer').attr('playerID'),
-          event.offsetX,
-          event.offsetY
-        );
-        if (validMove) {
-          MainGame.setPlayerCommand(
-            new PlayerCommandMove(validMove.x, validMove.y)
-          );
-        }
-      } else {
-        MainGame.setPlayerCommand(
-          new PlayerCommandUseAbility(
-            event.offsetX,
-            event.offsetY,
-            this.selectedAbility,
-            $('#gameContainer').attr('playerID')
-          )
-        );
+      let command = this.getCommandForEvent(event);
+      if (command) {
+        MainGame.setPlayerCommand(command);
+        MainGame.setAimPreview(null, null, null, command.getCommandPhase());
       }
 
+      this.selectedCommand = null;
       this.setSelectedAbility(null);
       UIListeners.updateSelectedAbility();
     }
   }
 
   handleMouseMotion(event) {
-    if (this.selectedAbility) {
+    let command = this.getCommandForEvent(event);
+    if (command) {
       MainGame.setAimPreview(
         event.offsetX, event.offsetY,
-        this.selectedAbility
+        this.selectedAbility,
+        command.getCommandPhase()
       );
     }
 

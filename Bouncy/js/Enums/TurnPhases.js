@@ -17,6 +17,7 @@ TurnPhasesEnum.getNextPhase = function(currentPhase) {
   switch (currentPhase) {
     case TurnPhasesEnum.START_TURN:
       return TurnPhasesEnum.PLAYER_ACTION;
+
     case TurnPhasesEnum.PLAYER_ACTION:
       return TurnPhasesEnum.PLAYER_MINOR;
 

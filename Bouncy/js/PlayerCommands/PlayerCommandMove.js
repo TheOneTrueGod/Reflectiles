@@ -13,6 +13,7 @@ class PlayerCommandMove extends PlayerCommand {
     var targetCoord = boardState.sectors.getGridCoord({x, y});
 
     var targets = [
+      {x: 0, y: 0},
       {x: 0, y: 1}, {x: 0, y: -1}, {x: 1, y: 0}, {x: -1, y: 0},
       {x: 1, y: 1}, {x: 1, y: -1}, {x: 1, y: 1}, {x: -1, y: 1},
       {x: -1, y: 1}, {x: -1, y: -1}, {x: 1, y: -1}, {x: -1, y: -1},
@@ -47,6 +48,9 @@ class PlayerCommandMove extends PlayerCommand {
   }
 
   static isValidMove(boardState, unit, unitCoord, targetCoord) {
+    if (unitCoord.x === targetCoord.x && unitCoord.y === targetCoord.y) {
+      return true;
+    }
     var pos = boardState.sectors.getPositionFromGrid(targetCoord);
     if (
       boardState.sectors.canUnitEnter(boardState, unit, pos) &&
@@ -79,12 +83,19 @@ class PlayerCommandMove extends PlayerCommand {
     }
   }
 
+  getPlayerCastPointAfterCommand(castPoint) {
+    return {x: this.x, y: this.y};
+  }
+
   addAimIndicator(boardState, stage, players) {
     if (this.aimIndicator) {
       this.removeAimIndicator(stage);
     }
 
-    var castPoint = boardState.getPlayerCastPoint(this.playerID);
+    var castPoint = boardState.getPlayerCastPoint(this.playerID, this.getCommandPhase());
+    if (castPoint.x == this.x && castPoint.y == this.y) {
+      return null;
+    }
     var color = 0x666666;
     if ($('#gameContainer').attr('playerID') == this.playerID) {
       color = 0xAAAAAA;

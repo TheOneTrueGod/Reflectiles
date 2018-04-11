@@ -22,7 +22,7 @@ class PlayerCommandUseAbility extends PlayerCommand {
   }
 
   doActionOnTick(tick, boardState) {
-    var castPoint = boardState.getPlayerCastPoint(this.playerID);
+    var castPoint = boardState.getPlayerCastPoint(this.playerID, this.getCommandPhase());
     this.abilityDef.doActionOnTick(
       this.playerID,
       tick, boardState, castPoint, {x: this.x, y: this.y}

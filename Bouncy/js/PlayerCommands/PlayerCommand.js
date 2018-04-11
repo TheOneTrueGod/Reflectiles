@@ -10,6 +10,10 @@ class PlayerCommand {
     this.aimIndicator = null;
   }
 
+  getPlayerCastPointAfterCommand(castPoint) {
+    return castPoint;
+  }
+
   getCommandPhase() {
     return TurnPhasesEnum.PLAYER_ACTION;
   }
@@ -52,7 +56,7 @@ class PlayerCommand {
       this.removeAimIndicator(stage);
     }
 
-    var castPoint = boardState.getPlayerCastPoint(this.playerID);
+    var castPoint = boardState.getPlayerCastPoint(this.playerID, this.getCommandPhase());
     var color = 0x666666;
     if ($('#gameContainer').attr('playerID') == this.playerID) {
       color = 0xAAAAAA;

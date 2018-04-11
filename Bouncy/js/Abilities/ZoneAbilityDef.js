@@ -23,7 +23,7 @@ class ZoneAbilityDef extends AbilityDef {
   }
 
   getValidTarget(target, playerID) {
-    var castPoint = MainGame.boardState.getPlayerCastPoint(playerID);
+    var castPoint = MainGame.boardState.getPlayerCastPoint(playerID, TurnPhasesEnum.PLAYER_ACTION);
     // TODO: Pass in boardState.  Too lazy right now.
     var castPointCoord = MainGame.boardState.sectors.getGridCoord(castPoint);
     var targetCoord = MainGame.boardState.sectors.getGridCoord(target);

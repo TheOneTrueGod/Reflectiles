@@ -299,12 +299,24 @@ class BoardState {
     }
   }
 
-  getPlayerCastPoint(playerID) {
+  getPlayerCastPoint(playerID, turnPhase) {
     if (playerID in this.playerCastPoints) {
-      return {
+      let castPoint = {
         x: this.playerCastPoints[playerID].x,
         y: this.playerCastPoints[playerID].y
       };
+      if (
+        turnPhase == TurnPhasesEnum.PLAYER_MINOR &&
+        MainGame.playerCommands[playerID] &&
+        MainGame.playerCommands[playerID].length > 0
+      ) {
+        for (let command of MainGame.playerCommands[playerID]) {
+          if (command.getCommandPhase() === TurnPhasesEnum.PLAYER_ACTION) {
+            return command.getPlayerCastPointAfterCommand(castPoint);
+          }
+        }
+      }
+      return castPoint;
     }
 
     throw new Error(

@@ -39,7 +39,7 @@ class MainGame {
     this.isFinalized = false;
     this.playingOutTurn = false;
 
-    this.aimPreview = null;
+    this.aimPreviews = {};// <-- adding this
     this.gameStarted = false;
 
     this.tickLoopTimeout = null;
@@ -419,9 +419,9 @@ class MainGame {
     return this.boardState.atEndOfPhase(this.players, this.playerCommands, phase);
   }
 
-  setAimPreview(x, y, abilityIndex) {
-    if (this.aimPreview) {
-      this.aimPreview.removeAimIndicator();
+  setAimPreview(x, y, abilityIndex, commandTurn) {
+    if (this.aimPreviews[commandTurn]) {
+      this.aimPreviews[commandTurn].removeAimIndicator();
     }
     if (abilityIndex == "move") {
       var validMove = PlayerCommandMove.findValidMove(
@@ -431,14 +431,14 @@ class MainGame {
         event.offsetY
       );
       if (validMove) {
-        this.aimPreview = new PlayerCommandMove(validMove.x, validMove.y);
-        this.aimPreview.addAimIndicator(this.boardState, this.stage, this.players);
+        this.aimPreviews[commandTurn] = new PlayerCommandMove(validMove.x, validMove.y);
+        this.aimPreviews[commandTurn].addAimIndicator(this.boardState, this.stage, this.players);
       }
     } else if (abilityIndex !== null) {
-      this.aimPreview = new PlayerCommandUseAbility(x, y, abilityIndex, $('#gameContainer').attr('playerID'));
-      this.aimPreview.addAimIndicator(this.boardState, this.stage, this.players);
+      this.aimPreviews[commandTurn] = new PlayerCommandUseAbility(x, y, abilityIndex, $('#gameContainer').attr('playerID'));
+      this.aimPreviews[commandTurn].addAimIndicator(this.boardState, this.stage, this.players);
     } else {
-      this.aimPreview = null;
+      this.aimPreviews[commandTurn] = null;
     }
   }
 
@@ -493,7 +493,7 @@ class MainGame {
     }
     var replaced = false;
     for (var i = 0; i < this.playerCommands[pID].length; i++) {
-      if (this.playerCommands[pID][i].constructor.name === playerCommand.constructor.name) {
+      if (this.playerCommands[pID][i].getCommandPhase() === playerCommand.getCommandPhase()) {
         this.playerCommands[pID][i] = playerCommand;
         replaced = true;
       }
@@ -503,13 +503,14 @@ class MainGame {
     }
 
     if (!$('#gameContainer').hasClass("turnPlaying")) {
-      if (pID !== this.playerID || !this.aimPreview) {
-        this.playerCommands[pID].forEach((command) => {
+      this.playerCommands[pID].forEach((command) => {
+        let aimPreview = this.aimPreviews[command.getCommandPhase()];
+        if (pID !== this.playerID || !aimPreview) {
           command.addAimIndicator(this.boardState, this.stage, this.players);
-        });
-      } else if (pID == this.playerID && this.aimPreview) {
-        this.aimPreview.addAimIndicator(this.boardState, this.stage, this.players);
-      }
+        } else if (pID == this.playerID && aimPreview) {
+          aimPreview.addAimIndicator(this.boardState, this.stage, this.players);
+        }
+      });
     }
 
     if (
@@ -532,6 +533,7 @@ class MainGame {
     if (pID == this.playerID) {
       this.updateActionHint();
     }
+    return playerCommand;
   }
 
   updateActionHint() {
