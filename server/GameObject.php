@@ -33,8 +33,13 @@ abstract class GameObject {
       'turn_id' => $this->getCurrentTurn(),
       'name' => $this->getName(),
       'game_type_id' => $this::getGameTypeID(),
-      'game_data' => $this->getSerializableData()
+      'game_data' => $this->getSerializableData(),
+      'creator_id' => $this->getCreatorID()
     ]);
+  }
+
+  protected function getCreatorID() {
+    return null;
   }
 
   protected abstract function getSerializableData();
@@ -57,7 +62,8 @@ abstract class GameObject {
           $decoded->name,
           $decoded->turn_id,
           $decoded->game_data,
-          $metadata
+          $metadata,
+          $decoded->creator_id
         );
       break;
     }

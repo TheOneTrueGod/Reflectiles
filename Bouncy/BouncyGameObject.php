@@ -6,7 +6,7 @@ require_once('Bouncy/server/Metadata.php');
 require_once('./testing_utils/TestingUtils.php');
 
 class BouncyGameObject extends GameObject {
-  function __construct($id, $name, $turn_id = 1, $game_data, $metadata) {
+  function __construct($id, $name, $turn_id = 1, $game_data, $metadata, $creator_id) {
     GameObject::__construct($id, $name, $turn_id);
     $this->board_state = $game_data->board_state;
     $this->player_commands = $game_data->player_commands ?
@@ -15,6 +15,7 @@ class BouncyGameObject extends GameObject {
     $this->finalized = $game_data->finalized === "true";
     $this->game_over = $game_data->game_over === "true";
     $this->players_won = $game_data->players_won === "true";
+    $this->creator_id = $creator_id;
     $this->metadata = new Metadata($metadata);
   }
 
@@ -24,8 +25,12 @@ class BouncyGameObject extends GameObject {
       'player_commands' => $this->player_commands,
       'finalized' => $this->finalized ? "true" : "false",
       'game_over' => $this->game_over ? "true" : "false",
-      'players_won' => $this->players_won ? "true" : "false",
+      'players_won' => $this->players_won ? "true" : "false"
     ];
+  }
+
+  public function isUserHost($user) {
+    return $this->creator_id == $user->getID();
   }
 
   public static function getGameTypeID() {
@@ -59,6 +64,10 @@ class BouncyGameObject extends GameObject {
   public function createInitialMetadata() {
     $this->metadata = new Metadata();
     $this->saveMetadata();
+  }
+
+  protected function getCreatorID() {
+    return $this->creator_id;
   }
 
   public function saveMetadata() {
@@ -148,7 +157,7 @@ if (strpos(__FILE__, $_SERVER['SCRIPT_NAME']) !== false) {
   $GAME_ID = 999999999;
 
   runTest("Creating Game", function() {
-    $gameObj = new BouncyGameObject($GAME_ID, "Created Reflectiles Game", 1, [], []);
+    $gameObj = new BouncyGameObject($GAME_ID, "Created Reflectiles Game", 1, [], [], $USER_ID);
     $gameObj->createInitialMetadata();
     $gameObj->save();
     $gameObj->savePlayerData();

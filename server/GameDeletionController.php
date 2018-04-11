@@ -14,7 +14,7 @@ class GameDeletionController {
     }
 
     $game = GameObject::loadFromFile($request->id);
-    if (!$game->isGameOver() && !$user->isAdmin()) {
+    if (!$game->isGameOver() && !$game->isUserHost($this->user)) {
       throw new Exception("Don't delete a game in progress");
     }
 

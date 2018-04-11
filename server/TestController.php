@@ -6,7 +6,7 @@ class TestController {
   }
   function getResponse($request, $user) {
     $this->user = $user;
-    $is_host = $user->isHost();
+    $is_host = true;
     $turn = 1;
     $game_id = 0;
 
