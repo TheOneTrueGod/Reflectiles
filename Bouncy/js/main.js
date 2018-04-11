@@ -372,6 +372,7 @@ class MainGame {
     }
 
     this.playingOutTurn = true;
+    this.updateActionHint();
     if (currPhase) {
       this.boardState.endOfPhase(this.players, currPhase);
     }
@@ -534,7 +535,11 @@ class MainGame {
   }
 
   updateActionHint() {
-    UIListeners.updateActionHint(this.getActionHint());
+    if (this.playingOutTurn) {
+      UIListeners.updateActionHint("");
+    } else {
+      UIListeners.updateActionHint(this.getActionHint());
+    }
   }
 
   playerCommandsSaved(data) {

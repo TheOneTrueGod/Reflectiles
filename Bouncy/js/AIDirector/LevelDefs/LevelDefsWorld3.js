@@ -144,7 +144,7 @@ class LevelDefsWorld3 {
           ]},
           {'type': WAVE_TYPES.UNIT_LIST, 'units':[{'unit': UnitBasicSquare, 'count': 6}]},
           {'type': WAVE_TYPES.UNIT_LIST, 'units':[{'unit': UnitBasicSquare, 'count': 6}]},
-          {'type': WAVE_TYPES.ADVANCED_WAVE, 'count': 8, 'advanced': [ null]},
+          {'type': WAVE_TYPES.UNIT_LIST, 'units':[{'unit': UnitBasicSquare, 'count': 8}]},
           {'type': WAVE_TYPES.GOTO, 'offset': -3, 'until': {'condition': WAVE_CONDITION.BOSS_HEALTH, 'health_percent': 0}},
         ]
       });
