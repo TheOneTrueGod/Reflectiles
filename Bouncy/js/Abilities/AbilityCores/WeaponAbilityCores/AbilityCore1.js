@@ -18,8 +18,10 @@ class AbilityCore1 extends AbilityCore {
 
       if (numGrenades > 1) {
         grenadeDamage *= Math.pow(AbilityConstants.MULTISHOT_DAMAGE_PENALTY, numGrenades - 1);
+        grenadeRadius *= Math.pow(AbilityConstants.MULTISHOT_RADIUS_PENALTY, numGrenades - 1);
       }
       grenadeDamage = Math.floor(grenadeDamage);
+      grenadeRadius = Math.floor(grenadeRadius);
 
       let grenadeText = "a grenade";
       if (numGrenades > 1) {
