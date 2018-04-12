@@ -128,7 +128,7 @@ class UnitTooltips {
     let numHealthBars = 0;
 
     let shieldPct = unit.getShield().current / unit.getShield().max * 100;
-    let currShield = unit.getShield().current;
+    let currShield = Math.ceil(unit.getShield().current);
     let maxShield = unit.getShield().max;
     if (maxShield > 0) {
       numHealthBars += 1;
@@ -143,7 +143,7 @@ class UnitTooltips {
     }
 
     let armourPct = unit.getArmour().current / unit.getArmour().max * 100;
-    let currArmour = unit.getArmour().current;
+    let currArmour = Math.ceil(unit.getArmour().current);
     let maxArmour = unit.getArmour().max;
     if (maxArmour > 0) {
       numHealthBars += 1;
@@ -160,7 +160,7 @@ class UnitTooltips {
     let healthPct = unit.health.current / unit.health.max * 100;
     if (healthPct > 0 || numHealthBars == 0) {
       let healthDisplayPct = healthPct;
-      let healthDisplayValue = unit.health.current;
+      let healthDisplayValue = Math.ceil(unit.health.current);
       if (numHealthBars == 0 && unit.health.max == 0 && unit instanceof ZoneEffect) {
         healthDisplayPct = unit.timeLeft.current / unit.timeLeft.max * 100;
         healthDisplayValue = unit.timeLeft.current;

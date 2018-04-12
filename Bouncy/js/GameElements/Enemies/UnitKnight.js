@@ -110,6 +110,7 @@ UnitKnight.createAbilityDef = function() {
       'prevent_unit_entry': true,
       'prevent_player_entry': true,
     },
+    "can_players_damage": true,
     "projectile_interaction": {
       'player_projectiles': {}
     }

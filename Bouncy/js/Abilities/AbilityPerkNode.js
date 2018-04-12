@@ -152,3 +152,25 @@ class NotPerkLevelRequirement extends AbilityPerkRequirement {
     return [];
   }
 }
+
+class PerksSpentRequirement extends AbilityPerkRequirement {
+  constructor(level) {
+    super(null);
+    this.level = level;
+    if (!level) {
+      throw new Error("PerksSpentRequirement needs a level passed in.")
+    }
+  }
+
+  hasPerkAsRequirement(perkKey) {
+    return false;
+  }
+
+  isRequirementMet(perkCounts, perkTree) {
+    let perksGained = 0;
+    for (let key in perkCounts) {
+      perksGained += perkCounts[key];
+    }
+    return perksGained >= this.level;
+  }
+}

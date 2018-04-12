@@ -8,6 +8,8 @@ class ProjectileShapeSprayShot extends ProjectileShape {
   constructor(abilityDef) {
     super(abilityDef);
     this.num_bullets = this.abilityDef.getOptionalParam('num_bullets', 5);
+    this.MIN_ANGLE = this.abilityDef.getOptionalParam('min_angle', Math.PI / 10.0);
+    this.MAX_ANGLE = this.abilityDef.getOptionalParam('max_angle', Math.PI / 6.0);
     this.ACTIVATE_ON_TICK = 0;
   }
 
@@ -29,12 +31,10 @@ class ProjectileShapeSprayShot extends ProjectileShape {
     const MIN_DIST = 20;
     const MAX_DIST = 300;
 
-    const MIN_ANGLE = Math.PI / 10.0;
-    const MAX_ANGLE = Math.PI / 6.0;
     var dist = Victor(endPos.x - startPos.x, endPos.y - startPos.y).length();
 
     return lerp(
-      MAX_ANGLE, MIN_ANGLE,
+      this.MAX_ANGLE, this.MIN_ANGLE,
       Math.min((dist - MIN_DIST) / MAX_DIST, 1)
      );
   }
@@ -74,7 +74,7 @@ class ProjectileShapeSprayShot extends ProjectileShape {
           targetPoint.y - castPoint.y, targetPoint.x - castPoint.x
         ) + spread * (rand * 2 - 1);
         rand = boardState.getRandom();
-        var speed = lerp(6, 7, i / this.num_bullets);
+        var speed = lerp(6, 8, i / this.num_bullets);
         boardState.addProjectile(
           Projectile.createProjectile(
             playerID,

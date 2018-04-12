@@ -12,7 +12,7 @@ class UseAbilityEffect extends PositionBasedEffect {
       };*/
       this.positionEffectDef.initializedAbilDef.doActionOnTick(
         projectile.playerID,
-        0, boardState, projectile, projectile);
+        0, boardState, projectile, projectile, projectile);
     }
   }
 }

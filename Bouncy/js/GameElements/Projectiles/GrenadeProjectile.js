@@ -2,11 +2,9 @@ class GrenadeProjectile extends Projectile {
   constructor(playerID, startPoint, targetPoint, angle, abilityDef) {
     super(playerID, startPoint, targetPoint, angle, abilityDef, {});
     this.hitEnemy = false;
-    this.ghost_time = abilityDef.getOptionalParam('duration', 10);
-    this.start_ghost_time = this.ghost_time;
 
     var targetVec = Victor(targetPoint.x - startPoint.x, targetPoint.y - startPoint.y);
-    this.maxDuration = Math.max(targetVec.length(), 100) / this.speed;
+    this.maxDuration = abilityDef.getOptionalParam('duration', Math.max(targetVec.length(), 100) / this.speed);
     this.duration = this.maxDuration;
   }
 

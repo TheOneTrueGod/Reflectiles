@@ -130,7 +130,7 @@ class NumbersBalancer {
         shieldVal = 100;
         break;
       case "UnitBossWarlock":
-        healthVal = 5000;
+        healthVal = 2000;
         shieldVal = 2000;
     }
     return {
@@ -188,7 +188,7 @@ class NumbersBalancer {
       case this.UNIT_ABILITIES.NECROMANCER_RANGE:
         return 3;
       case this.UNIT_ABILITIES.WARLOCK_MAX_SKELETONS_PER_TURN:
-        return 5;
+        return 3;
       case this.UNIT_ABILITIES.WARLOCK_RANGE:
         return 5;
       case this.UNIT_ABILITIES.WARLOCK_SHIELD:

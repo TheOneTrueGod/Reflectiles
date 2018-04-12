@@ -20,6 +20,7 @@ class ZoneAbilityDef extends AbilityDef {
     }
     this.MAX_RANGE = this.getOptionalParam('max_range', {left: 0, right: 0, top: 0, bottom: 0});
     this.ZONE_TYPE = this.getOptionalParam('zone_type', null);
+    this.CAN_PLAYERS_DAMAGE = this.getOptionalParam('can_players_damage', null);
   }
 
   getValidTarget(target, playerID) {
@@ -52,6 +53,10 @@ class ZoneAbilityDef extends AbilityDef {
     var y = target.y;
     y = Math.max(y, maxY);
     return {x: target.x, y: y};*/
+  }
+
+  isZoneDamageableByPlayers() {
+    return this.CAN_PLAYERS_DAMAGE;
   }
 
   getOptionalParam(param, defaultValue) {

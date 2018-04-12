@@ -264,6 +264,15 @@ class UIListeners {
     $(window).on('mousemove', windowMoveCallback);
   }
 
+  resetHintTimer() { // TODO: FIX ME
+    var invokeTimeout = () => {
+      this.inactionTimer = window.setTimeout(() => {
+        $("#hintBox").fadeIn(2000);
+        this.inactionTimerFadingIn = true;
+      }, 2000);
+    }
+  }
+
   updateSelectedAbility() {
     $('.abilityCard.selected').removeClass('selected');
     if (PlayerInput.getSelectedAbility()) {

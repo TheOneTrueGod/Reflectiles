@@ -40,21 +40,23 @@ class ProjectileShapeChainShot extends ProjectileShape {
         Math.max(0, accuracy + accuracyDecay * shotIndex),
         Math.PI / 2.0
       );
-
+      let aimDist = Math.pow((targetPoint.y - castPoint.y) ** 2 + (targetPoint.x - castPoint.x) ** 2, 0.5);
       var aimAngle = Math.atan2(
         targetPoint.y - castPoint.y, targetPoint.x - castPoint.x
       );
       let angle = aimAngle + (boardState.getRandom() - 0.5) * 2 * accuracyForShot;
+      let aimTargetPoint = {x: Math.cos(aimAngle) * aimDist + castPoint.x, y: Math.sin(aimAngle) * aimDist + castPoint.y};
       boardState.addProjectile(
         Projectile.createProjectile(
           playerID,
           this.projectileType,
           castPoint,
-          null,
+          aimTargetPoint,
           angle,
           this.abilityDef
         ).addUnitHitCallback(this.unitHitCallback.bind(this))
         .addTimeoutHitCallback(this.timeoutHitCallback.bind(this))
+        .addTimeoutCallback(this.timeoutCallback.bind(this))
         .addCollisionHitCallback(this.collisionHitCallback.bind(this))
         .addOnKillCallback(this.onKillCallback.bind(this))
       );

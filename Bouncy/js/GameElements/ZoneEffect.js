@@ -35,7 +35,7 @@ class ZoneEffect extends Unit {
   }
 
   dealDamage(boardState, amount, source, damageType) {
-    if (this.creatorAbility.ZONE_TYPE == ZoneAbilityDef.ZoneTypes.KNIGHT_SHIELD) {
+    if (this.creatorAbility.isZoneDamageableByPlayers()) {
       return super.dealDamage(boardState, amount, source, damageType);
     }
     return;
