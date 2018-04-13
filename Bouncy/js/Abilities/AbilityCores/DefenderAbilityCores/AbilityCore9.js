@@ -41,7 +41,7 @@ class AbilityCore9 extends AbilityCore {
     let duration = 2 + this.hasPerk(perkPcts, 'duration 3') - this.hasPerk(perkPcts, 'spreading affliction');
     let weaknessDescription = Math.floor((weaknessAmount - 1) * 100);
     const rawAbil = {
-      name: 'Mass Weaken',
+      name: 'Weaken',
       description: 'Applies weakness to each enemy hit for [[hit_effects[1].duration]] turns, increasing the damage they take by <<' + weaknessDescription + '>>%',
       card_text_description: 'weaken',
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,

@@ -243,14 +243,7 @@ class UIListeners {
       return false;
     });
 
-    var invokeTimeout = () => {
-      this.inactionTimer = window.setTimeout(() => {
-        $("#hintBox").fadeIn(2000);
-        this.inactionTimerFadingIn = true;
-      }, 2000);
-    }
-
-    invokeTimeout();
+    this.invokeHintBoxTimeout();
     var windowMoveCallback = () => {
       if (this.inactionTimerFadingIn) {
         $("#hintBox").stop().fadeOut();
@@ -258,19 +251,30 @@ class UIListeners {
       }
 
       window.clearTimeout(this.inactionTimer);
-      invokeTimeout();
+      this.invokeHintBoxTimeout();
     };
 
     $(window).on('mousemove', windowMoveCallback);
   }
 
-  resetHintTimer() { // TODO: FIX ME
-    var invokeTimeout = () => {
-      this.inactionTimer = window.setTimeout(() => {
-        $("#hintBox").fadeIn(2000);
-        this.inactionTimerFadingIn = true;
-      }, 2000);
-    }
+  resetHintBox() {
+    $("#hintBox").stop().fadeOut(0);
+    window.clearTimeout(this.inactionTimer);
+    this.invokeHintBoxTimeout();
+  }
+
+  invokeHintBoxTimeout() {
+    this.inactionTimer = window.setTimeout(() => {
+      $("#hintBox").fadeIn(2000);
+      this.inactionTimerFadingIn = true;
+    }, 2000);
+  }
+
+  resetHintTimer() {
+    this.inactionTimer = window.setTimeout(() => {
+      $("#hintBox").fadeIn(2000);
+      this.inactionTimerFadingIn = true;
+    }, 2000);
   }
 
   updateSelectedAbility() {
