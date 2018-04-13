@@ -13,7 +13,8 @@ class AbilityCore8 extends AbilityCore {
 
     let coreDamage = Math.floor(lerp(100, 400,
       (
-        idx(perkPcts, 'core damage 1', 0) * 4 +
+        idx(perkPcts, 'core damage 1', 0) * 2 +
+        idx(perkPcts, 'core damage 1-2', 0) * 2 +
         idx(perkPcts, 'core damage 2', 0) * 6
       ) / 10
     ));
