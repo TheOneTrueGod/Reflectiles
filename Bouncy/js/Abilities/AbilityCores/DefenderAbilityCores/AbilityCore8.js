@@ -132,12 +132,12 @@ class AbilityCore8 extends AbilityCore {
       // Level 1
       (new AbilityPerkNode('shard damage 1',              6, [1, 0]))
         .addRequirement(new PerkLevelRequirement('ice shard 0')),
-      (new AbilityPerkNode('core damage 1',               10, [1, 3]))
+      (new AbilityPerkNode('core damage 1',               5, [1, 2]))
         .addRequirement(new PerkLevelRequirement('freeze area 0'))
-        .addRequirement(new OrPerkLevelRequirement(
-          [new PerkLevelRequirement('ice shard 0'),
-          new PerkLevelRequirement('bouncing 0')]
-        )),
+        .addRequirement(new PerkLevelRequirement('ice shard 0')),
+      (new AbilityPerkNode('core damage 1-2',               5, [1, 4]))
+        .addRequirement(new PerkLevelRequirement('freeze area 0'))
+        .addRequirement(new PerkLevelRequirement('bouncing 0')),
       (new MaxxedAbilityPerkNode('bouncing freeze 1',     3, [1, 6]))
         .addRequirement(new PerkLevelRequirement('bouncing 0')),
       // Level 2
@@ -152,10 +152,10 @@ class AbilityCore8 extends AbilityCore {
           new PerkLevelRequirement('shard damage 1')
         ])),
       (new AbilityPerkNode('cooldown 3',                  10, [3, 2]))
-        .addRequirement(new PerkLevelRequirement('core damage 1'))
+        .addRequirement(new PerkLevelRequirement('freeze area 0'))
         .addRequirement(new PerkLevelRequirement('more shards 2')),
       (new AbilityPerkNode('cooldown 3-2',                10, [3, 4]))
-        .addRequirement(new PerkLevelRequirement('core damage 1'))
+        .addRequirement(new PerkLevelRequirement('freeze area 0'))
         .addRequirement(new PerkLevelRequirement('core damage 2')),
       (new AbilityPerkNode('bouncing damage 3',           4, [3, 5]))
         .addRequirement(new OrPerkLevelRequirement([

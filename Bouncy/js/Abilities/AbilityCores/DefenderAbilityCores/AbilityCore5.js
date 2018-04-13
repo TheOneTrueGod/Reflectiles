@@ -103,6 +103,23 @@ class AbilityCore5 extends AbilityCore {
       });
     }
 
+    let poisonDamage = 0;
+    let poisonDuration = 0;
+    if (this.hasPerk(perkPcts, 'poison 1')) {
+      poisonDamage = 20;
+      poisonDuration = 2;
+      firstHit.push({
+        effect: ProjectileShape.HitEffects.POISON,
+        damage: poisonDamage,
+        duration: poisonDuration
+      });
+      finalHit.push({
+        effect: ProjectileShape.HitEffects.POISON,
+        damage: poisonDamage,
+        duration: poisonDuration
+      });
+    }
+
     let bounceExplosionRadius = 0;
     if (idx(perkPcts, 'bounce explosion 3', 0) > 0) {
       bounceExplosionRadius = lerp(
@@ -144,6 +161,9 @@ class AbilityCore5 extends AbilityCore {
     }
     if (this.hasPerk(perkPcts, 'curving 1')) {
       descriptionBehaviours.push('curve');
+    }
+    if (this.hasPerk(perkPcts, 'poison 1')) {
+      descriptionBehaviours.push('poison units for <<' + poisonDamage + '>> damage over <<' + poisonDuration + '>> turns');
     }
     if (damageType == Unit.DAMAGE_TYPE.FIRE) {
       descriptionBehaviours.push('deal <<Fire>> damage');
@@ -276,14 +296,14 @@ class AbilityCore5 extends AbilityCore {
     let perkList = [
       // Tier 1
       // Increase damage to single target
-      (new MaxxedAbilityPerkNode('focus fire 1',      3, [2, 2]))
+      (new MaxxedAbilityPerkNode('poison 1',      3, [2, 2]))
         .addRequirement(new NotPerkLevelRequirement(new PerkLevelRequirement('damage 1', 1))),
       (new MaxxedAbilityPerkNode('bouncing 1',        3, [2, 3]))
         .addRequirement(new NotPerkLevelRequirement(new PerkLevelRequirement('pass through 1', 1))),
       (new MaxxedAbilityPerkNode('curving 1',         3, [2, 4]))
         .addRequirement(new NotPerkLevelRequirement(new PerkLevelRequirement('more bullets 1', 1))),
       (new MaxxedAbilityPerkNode('damage 1',          3, [4, 4]))
-        .addRequirement(new NotPerkLevelRequirement(new PerkLevelRequirement('focus fire 1', 1))),
+        .addRequirement(new NotPerkLevelRequirement(new PerkLevelRequirement('poison 1', 1))),
       (new MaxxedAbilityPerkNode('pass through 1',     3, [4, 3]))
         .addRequirement(new NotPerkLevelRequirement(new PerkLevelRequirement('bouncing 1', 1))),
       (new MaxxedAbilityPerkNode('more bullets 1',    3, [4, 2]))
@@ -291,7 +311,7 @@ class AbilityCore5 extends AbilityCore {
 
       // Tier 2
       (new AbilityPerkNode('damage on status 2',        10, [1, 1]))
-        .addRequirement(new PerkLevelRequirement('focus fire 1'))
+        .addRequirement(new PerkLevelRequirement('poison 1'))
         .addRequirement(new OrPerkLevelRequirement([
           new PerkLevelRequirement('bouncing 1'),
           new PerkLevelRequirement('more bullets 1')
@@ -299,7 +319,7 @@ class AbilityCore5 extends AbilityCore {
       (new AbilityPerkNode('bounce damage 2',           10, [1, 3]))
         .addRequirement(new PerkLevelRequirement('bouncing 1'))
         .addRequirement(new OrPerkLevelRequirement([
-          new PerkLevelRequirement('focus fire 1'),
+          new PerkLevelRequirement('poison 1'),
           new PerkLevelRequirement('curving 1')
         ])),
       (new AbilityPerkNode('increase range 2',          10, [1, 5]))
@@ -324,7 +344,7 @@ class AbilityCore5 extends AbilityCore {
         .addRequirement(new PerkLevelRequirement('more bullets 1'))
         .addRequirement(new OrPerkLevelRequirement([
           new PerkLevelRequirement('pass through 1'),
-          new PerkLevelRequirement('focus fire 1')
+          new PerkLevelRequirement('poison 1')
         ])),
 
       // Tier 3
