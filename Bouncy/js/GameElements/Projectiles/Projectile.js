@@ -198,7 +198,6 @@ class Projectile {
     if (0 <= curveTick && curveTick < this.curveTime) {
       this.angle += this.curveAmount;
     }
-
     var speed = Victor(Math.cos(this.angle) * this.speed, Math.sin(this.angle) * this.speed);
     if (
       this.speedDecay instanceof Victor &&

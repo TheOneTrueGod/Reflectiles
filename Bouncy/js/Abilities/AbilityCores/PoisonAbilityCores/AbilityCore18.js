@@ -23,11 +23,11 @@ class AbilityCore18 extends AbilityCore {
             shape: ProjectileAbilityDef.Shapes.BULLET_EXPLOSION,
             inherit_angle: true,
             projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
-            speed: 8,
+            speed: 2,
             gravity: {x: 0, y: 0},
             angle_start: -Math.PI / 4.0,
             angle_end: Math.PI / 4.0,
-            num_bullets: 10,
+            num_bullets: 1,
             hit_effects:
               [{
                 effect: ProjectileShape.HitEffects.DAMAGE,

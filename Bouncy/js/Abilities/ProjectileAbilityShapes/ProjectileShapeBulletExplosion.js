@@ -32,10 +32,11 @@ class ProjectileShapeBulletExplosion extends ProjectileShape {
     if (tick == this.ACTIVATE_ON_TICK) {
       for (var j = 0; j < this.num_bullets; j++) {
         var deltaAngle = this.angle_end - this.angle_start;
-        var angle = (deltaAngle / this.num_bullets * j) + this.angle_start + angle_offset;
+        let denom = this.num_bullets - 1;
+        var angle = (deltaAngle / (denom ? denom : 1) * (denom ? j : 0.5)) + this.angle_start + angle_offset;
 
-        if (this.INHERIT_ANGLE) {
-          angle += Math.atan2(targetPoint.y - castPoint.y, targetPoint.x - castPoint.x);
+        if (this.INHERIT_ANGLE && castPoint instanceof Projectile) {
+          angle += castPoint.angle;
         }
 
         boardState.addProjectile(
