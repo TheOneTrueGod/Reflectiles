@@ -12,6 +12,10 @@ class PlayerInput {
     if (abilityID === undefined) {
       throw new Error("Can't set an undefined ability");
     }
+    if (this.selectedAbility) {
+      let command = this.getCommandForEvent({offsetX: 0, offsetY: 0});
+      MainGame.setAimPreview(null, null, null, command.getCommandPhase());
+    }
     if (abilityID === "move") {
       this.selectedAbility = abilityID;
     } else if (abilityID === "pass") {

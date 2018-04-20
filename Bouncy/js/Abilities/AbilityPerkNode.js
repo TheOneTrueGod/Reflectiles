@@ -89,6 +89,7 @@ class PerkLevelRequirement extends AbilityPerkRequirement {
       console.warn("ERROR: Trying to get perk [" + this.perkName + "] from perkTree:", perkTree);
       return false;
     }
+    if (childPerk.levels == 0) { return true; }
     return perkCounts[this.perkName] >= Math.min(childPerk.levels, (this.level === 'max' ? childPerk.levels : this.level));
   }
 }

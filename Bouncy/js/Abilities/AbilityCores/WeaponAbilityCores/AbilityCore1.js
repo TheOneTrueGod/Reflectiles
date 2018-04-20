@@ -6,7 +6,7 @@ class AbilityCore1 extends AbilityCore {
       idx(perkPcts, 'grenade area', 0)
     );
     if (this.hasPerk(perkPcts, 'grenade')) {
-      let grenadeDamage = lerp(50, 200,
+      let grenadeDamage = lerp(50, 400,
         (
           idx(perkPcts, 'grenade damage 1', 0) +
           idx(perkPcts, 'grenade damage 2', 0) +
@@ -34,7 +34,6 @@ class AbilityCore1 extends AbilityCore {
         ability_type: AbilityDef.AbilityTypes.PROJECTILE,
         shape: ProjectileAbilityDef.Shapes.CHAIN_SHOT,
         speed: 6,
-        accuracy_decay: Math.PI / 16.0,
         num_bullets: numGrenades,
         bullet_wave_delay: 20,
         accuracy: {
@@ -65,7 +64,7 @@ class AbilityCore1 extends AbilityCore {
     description += "Fire a spray of ";
     if (this.hasPerk(perkPcts, 'second volley')) {
       let smallVolleyBullets = Math.floor(lerp(6, 9, idx(perkPcts, 'more bullets', 0)));
-      let smallVolleyDamage = Math.floor(lerp(400, 900,
+      let smallVolleyDamage = Math.floor(lerp(400, 1500,
         (
           idx(perkPcts, '2 damage 1', 0) +
           idx(perkPcts, '2 damage 2', 0) +
@@ -91,7 +90,7 @@ class AbilityCore1 extends AbilityCore {
     }
 
     let num_bullets = 10;
-    let damage = Math.floor(lerp(1200, 3000, (
+    let damage = Math.floor(lerp(1200, 5000, (
       idx(perkPcts, '1 damage 1', 0) +
       idx(perkPcts, '1 damage 2', 0) +
       idx(perkPcts, '1 damage 3', 0) +

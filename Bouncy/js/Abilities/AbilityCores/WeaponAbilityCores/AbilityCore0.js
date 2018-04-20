@@ -127,7 +127,7 @@ class AbilityCore0 extends AbilityCore {
 
   static getCooldown(perkList, perkCounts) {
     let perkCount = perkList.length;
-    let cooldown = perkCount * 0.3 - 3;
+    let cooldown = perkCount * 0.25 - 3;
     cooldown -= idx(perkCounts, 'recharge 4', 0);
 
     cooldown = Math.round(cooldown);
@@ -200,7 +200,7 @@ class AbilityCore0 extends AbilityCore {
           new PerkLevelRequirement('damage3'),
           new PerkLevelRequirement('impact2')
         ])),
-      (new AbilityPerkNode('recharge 4', 8, [3, 3]))
+      (new AbilityPerkNode('recharge 4', 15, [3, 3]))
         .addRequirement(new PerkLevelRequirement('damage3')),
       (new AbilityPerkNode('damage4', 6, [3, 4]))
         .addRequirement(new PerkLevelRequirement('damage3')),

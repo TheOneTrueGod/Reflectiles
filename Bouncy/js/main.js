@@ -423,6 +423,16 @@ class MainGame {
   setAimPreview(x, y, abilityIndex, commandTurn) {
     if (this.aimPreviews[commandTurn]) {
       this.aimPreviews[commandTurn].removeAimIndicator();
+      this.playerCommands[this.playerID] &&
+        this.playerCommands[this.playerID].forEach((command) => {
+        if (command.getCommandPhase() === commandTurn) {
+          if (abilityIndex === null) {
+            command.addAimIndicator(this.boardState, this.stage, this.players);
+          } else {
+            command.removeAimIndicator(this.stage);
+          }
+        }
+      });
     }
     if (abilityIndex == "move") {
       var validMove = PlayerCommandMove.findValidMove(

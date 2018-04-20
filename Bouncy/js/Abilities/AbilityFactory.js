@@ -50,6 +50,6 @@ const AbilityFactory = {
         return false;
       }
     }
-    return (perkCounts[perkKey] === undefined || perkCounts[perkKey] < perk.levels);
+    return (idx(perkCounts, perkKey, 0) < perk.levels);
   }
 };

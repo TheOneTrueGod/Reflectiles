@@ -78,9 +78,11 @@ class ProjectileShapeTriShot extends ProjectileShape {
           pctOn = (i / (this.num_bullets - 1) * 2 - 1);
         }
 
-        var angle = Math.atan2(
+        let aimAngle = Math.atan2(
           targetPoint.y - castPoint.y, targetPoint.x - castPoint.x
-        ) + this.calculateSpread(castPoint, targetPoint) * pctOn;
+        );
+
+        var angle = aimAngle + this.calculateSpread(castPoint, targetPoint) * pctOn;
 
         let curveAmount = 0;
         if (this.curve_time > 0) {

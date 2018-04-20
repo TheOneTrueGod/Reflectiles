@@ -148,12 +148,39 @@ class DeckManager {
       let displayCard = this.createDisplayCard(card);
       $('.cardsSection').append(displayCard);
     }
+    /*let deckTypeSortOrder = {
+      neutral: 1,
+      weapon: 2,
+      defender: 3,
+      chaos: 4,
+      poison: 5,
+      engineer: 6,
+    };
+    $('.cardsSection').children().sort((cardA, cardB) => {
+      let $cardA = $(cardA);
+      let $cardB = $(cardB);
+      let cardATypeNumber = idx(deckTypeSortOrder, $cardA.data("cardDeckType"), 9999999);
+      let cardBTypeNumber = idx(deckTypeSortOrder, $cardB.data("cardDeckType"), 9999999);
+
+      if (cardATypeNumber > cardBTypeNumber) { return 1; }
+      if (cardBTypeNumber > cardATypeNumber) { return -1; }
+
+      if ($cardA.data("cardID") > $cardB.data("cardID")) { return 1; }
+      if ($cardA.data("cardID") < $cardB.data("cardID")) { return -1; }
+
+      if ($cardA.data("cardIndex") > $cardB.data("cardIndex")) { return 1; }
+      if ($cardA.data("cardIndex") < $cardB.data("cardIndex")) { return -1; }
+      return 0;
+    });*/
   }
 
   createDisplayCard(playerCard) {
     let ability = AbilityFactory.GetAbility(playerCard);
     let displayCard = AbilityCardBuilder.createDeckListAbilityCard(playerCard, ability);
     $(displayCard).data("playerCard", playerCard);
+    $(displayCard).data("cardDeckType", playerCard.getCardDeckType());
+    $(displayCard).data("cardID", playerCard.cardID);
+    $(displayCard).data("cardIndex", playerCard.card_index);
     return displayCard;
   }
 

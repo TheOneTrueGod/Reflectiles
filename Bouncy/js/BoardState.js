@@ -65,6 +65,18 @@ class BoardState {
     this.resetNoActionKillSwitch();
   }
 
+  sortUnitsByPosition() {
+    this.units.sort((unit, unit2) => {
+      if (unit.y === unit2.y && unit.x === unit2.x) {
+        return unit.id < unit2.id ? 1 : -1;
+      }
+      if (unit.y === unit2.y) {
+        return unit.x < unit2.x ? 1 : -1;
+      }
+      return unit.y < unit2.y ? 1 : -1;
+    });
+  }
+
   resetStage() {
     while(this.stage.children.length > 0){
       this.stage.removeChild(

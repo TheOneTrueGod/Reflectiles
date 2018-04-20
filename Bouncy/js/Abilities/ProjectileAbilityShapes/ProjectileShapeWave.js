@@ -15,7 +15,6 @@ class ProjectileShapeWave extends ProjectileShape {
     this.ANGLE_SPREAD = this.abilityDef.getOptionalParam('angle_spread', Math.PI / 3.0);
     this.ANGLE_OFFSET = this.abilityDef.getOptionalParam('angle_offset', -Math.PI / 16.0);
     this.FINAL_TICK = this.NUM_BULLETS * this.SHOT_DELAY + this.RETURN_NUM_BULLETS * this.RETURN_SHOT_DELAY;
-
   }
 
   appendIconDescHTML($container) {

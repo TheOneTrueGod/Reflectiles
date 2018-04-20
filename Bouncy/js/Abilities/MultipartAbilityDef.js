@@ -43,7 +43,7 @@ class MultipartAbilityDef extends AbilityDef {
           abil.TIMING_OFFSET_AFTER_TICK = tick;
         } else {
           let prevAbil = this.child_abilities[i - 1];
-          if (prevAbil.hasFinishedDoingEffect(tick)) {
+          if (prevAbil.hasFinishedDoingEffect(tick - this.getTimingOffset(tick, prevAbil))) {
             abil.TIMING_OFFSET_AFTER_TICK = tick;
           }
         }

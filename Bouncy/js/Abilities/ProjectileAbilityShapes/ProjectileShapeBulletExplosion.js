@@ -8,6 +8,7 @@ class ProjectileShapeBulletExplosion extends ProjectileShape {
     this.num_bullets = abilityDef.getOptionalParam('num_bullets', 12);
     this.angle_start = abilityDef.getOptionalParam('angle_start', -Math.PI / 2.0);
     this.angle_end = abilityDef.getOptionalParam('angle_end', Math.PI * 2 - Math.PI / 2.0);
+    this.angle_offset = abilityDef.getOptionalParam('angle_offset', 0);
     this.bullet_speed = abilityDef.getOptionalParam('bullet_speed', 4);
     this.GRAVITY = abilityDef.getOptionalParam('gravity', {x: 0, y: 0.05});
     this.INHERIT_ANGLE = abilityDef.getOptionalParam('inherit_angle', false);
@@ -24,10 +25,14 @@ class ProjectileShapeBulletExplosion extends ProjectileShape {
   }
 
   doActionOnTick(playerID, tick, boardState, castPoint, targetPoint) {
+    let angle_offset = this.angle_offset;
+    if (angle_offset === 'random') {
+      angle_offset = boardState.getRandom() * Math.PI * 2;
+    }
     if (tick == this.ACTIVATE_ON_TICK) {
       for (var j = 0; j < this.num_bullets; j++) {
         var deltaAngle = this.angle_end - this.angle_start;
-        var angle = (deltaAngle / this.num_bullets * j) + this.angle_start;
+        var angle = (deltaAngle / this.num_bullets * j) + this.angle_start + angle_offset;
 
         if (this.INHERIT_ANGLE) {
           angle += Math.atan2(targetPoint.y - castPoint.y, targetPoint.x - castPoint.x);
@@ -38,7 +43,7 @@ class ProjectileShapeBulletExplosion extends ProjectileShape {
             playerID,
             this.projectileType,
             castPoint,
-            null,
+            castPoint,
             angle,
             this.abilityDef,
             {
@@ -49,6 +54,7 @@ class ProjectileShapeBulletExplosion extends ProjectileShape {
             }
           ).addUnitHitCallback(this.unitHitCallback.bind(this))
           .addTimeoutHitCallback(this.timeoutHitCallback.bind(this))
+          .addTimeoutCallback(this.timeoutCallback.bind(this))
           .addCollisionHitCallback(this.collisionHitCallback.bind(this))
           .addOnKillCallback(this.onKillCallback.bind(this))
         );

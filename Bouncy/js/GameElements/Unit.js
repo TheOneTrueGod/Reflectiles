@@ -161,13 +161,17 @@ class Unit {
         return 1;
       case Unit.DAMAGE_TYPE.CORROSIVE:
         if (healthType == 'armor') { return 1.2; }
-        if (healthType == 'shield') { return 1; }
+        if (healthType == 'shield') { return 0.5; }
         if (healthType == 'health') { return 0.5; }
         return 0;
       case Unit.DAMAGE_TYPE.FIRE:
         if (healthType == 'armor') { return 0.5; }
         if (healthType == 'shield') { return 0.5; }
         if (healthType == 'health') { return 1.2; }
+      case Unit.DAMAGE_TYPE.LIGHTNING:
+      if (healthType == 'armor') { return 0.5; }
+      if (healthType == 'shield') { return 1.2; }
+      if (healthType == 'health') { return 0.5; }
     }
     return 1;
   }
@@ -644,4 +648,5 @@ Unit.DAMAGE_TYPE = {
   POISON: "POISON",
   CORROSIVE: "CORROSIVE",
   FIRE: "FIRE",
+  LIGHTNING: "LIGHTNING",
 };

@@ -33,6 +33,11 @@ class Projectile {
     }
     this.destroyOnWall = idx(projectileOptions, 'destroy_on_wall', this.destroyOnWall);
 
+    if (abilityDef) {
+      this.bounceOnWall = abilityDef.getOptionalParam('bounce_on_wall', null);
+    }
+    this.bounceOnWall = idx(projectileOptions, 'bounce_on_wall', this.bounceOnWall);
+
     this.gameSprite = null;
     this.readyToDel = false;
     this.unitHitCallback = null;
@@ -266,7 +271,10 @@ class Projectile {
 
   shouldBounceOffLine(line) {
     if (line instanceof BorderWallLine) {
-      return line.side !== BorderWallLine.BOTTOM;
+      if (!this.bounceOnWall) {
+        return true;
+      }
+      return this.bounceOnWall === 'all' || !!this.bounceOnWall[line.side];
     }
     if (line.forcePassthrough(this)) {
       return false;

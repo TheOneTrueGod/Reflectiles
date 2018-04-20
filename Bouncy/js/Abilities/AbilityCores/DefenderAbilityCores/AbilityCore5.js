@@ -248,6 +248,11 @@ class AbilityCore5 extends AbilityCore {
     }
 
     if (this.hasPerk(perkPcts, 'curving 1')) {
+      rawAbil.curve = {
+        curve_type: ProjectileCurveHandler.curveTypes.TO_AIM,
+        curve_time: 10,
+        curve_delay: Math.floor(duration / 8),
+      }; // TODO: THIS IS NOT ACTUALLY USED.  DEAL WITH IT LATER
       rawAbil.curve_delay = Math.floor(duration / 8);
       rawAbil.curve_time = Math.floor(duration / 4);
       rawAbil.curve_amount = -Math.PI / 6;

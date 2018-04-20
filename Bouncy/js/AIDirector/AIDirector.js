@@ -173,9 +173,7 @@ class AIDirector {
   }
 
   giveUnitsOrders(boardState) {
-    boardState.units.sort((unit, unit2) => {
-      return unit.y < unit2.y ? 1 : -1;
-    });
+    boardState.sortUnitsByPosition();
     for (var i = 0; i < boardState.units.length; i++) {
       var unit = boardState.units[i];
       if (!(unit instanceof UnitCore)) {

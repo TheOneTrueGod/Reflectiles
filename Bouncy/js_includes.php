@@ -15,6 +15,7 @@
 <!-- Order of these doesn't matter.  They're all classes -->
 <script src="/Bouncy/js/GameElements/Unit.js"></script>
 <script src="/Bouncy/js/GameElements/Projectiles/Projectile.js"></script>
+<script src="/Bouncy/js/GameElements/Projectiles/ProjectileCurveHandler.js"></script>
 <script src="/Bouncy/js/BoardState.js"></script>
 <script src="/Bouncy/js/GameStats.js"></script>
 <script src="/Bouncy/js/Board/UnitSectors.js"></script>
