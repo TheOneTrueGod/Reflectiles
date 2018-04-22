@@ -100,6 +100,14 @@ class Unit {
     }
   }
 
+  applyDamageOverTimeTick(boardState) {
+    for (let key in this.statusEffects) {
+      if (this.statusEffects[key] instanceof PoisonStatusEffect) {
+        this.statusEffects[key].turnStart(boardState, this);
+      }
+    }
+  }
+
   isAlive() {
     return this.health.current > 0;
   }

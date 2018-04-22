@@ -235,6 +235,7 @@ class AbilityCore5 extends AbilityCore {
       collision_behaviours: collisionBehaviours,
       wall_bounces: wallBounces,
       max_angle,
+      min_angle,
       duration,
       collision_effects: firstHit,
       on_kill_effects: killEffects,
@@ -266,8 +267,8 @@ class AbilityCore5 extends AbilityCore {
       idx(perkPcts, 'increase status duration 3', 0) * 4 +
       idx(perkPcts, 'damage to near', 0) * 2 +
       idx(perkPcts, 'damage to far', 0) * 2 +
-      idx(perkPcts, 'bounce explosion 3', 0) * 3 +
-      idx(perkPcts, 'kills explode 3', 0) * 3 +
+      idx(perkPcts, 'bounce explosion 3', 0) * 2 +
+      idx(perkPcts, 'kills explode 3', 0) * 2 +
       idx(perkPcts, 'more bullets 3', 0) * 2
       ;
 

@@ -110,7 +110,7 @@ class AbilityCore8 extends AbilityCore {
     }
 
     let cooldown = Math.floor(
-      3 + perkList.length * 0.1 - idx(perkPcts, 'cooldown 3', 0) * 5
+      3 + perkList.length * 0.07 - idx(perkPcts, 'cooldown 3', 0) * 2.5 - idx(perkPcts, 'cooldown 3-2', 0) * 2.5
     );
 
     const rawAbil = {

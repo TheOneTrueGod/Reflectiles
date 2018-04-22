@@ -94,3 +94,25 @@ function shuffle(a) {
         a[j] = x;
     }
 }
+
+/**
+ * getWeightedPercent
+ * turns a key -> numerical_weight map into a key -> percent_weight map, and returns it.
+ **/
+function getWeightedPercent(numericallyWeightedMap) {
+  let total = 0;
+  let returnMap = {};
+  for (var key in numericallyWeightedMap) {
+    if (numericallyWeightedMap.hasOwnProperty(key)) {
+      total += numericallyWeightedMap[key];
+    }
+  }
+
+  for (var key in numericallyWeightedMap) {
+    if (numericallyWeightedMap.hasOwnProperty(key)) {
+      returnMap[key] = total === 0 ? 0 : numericallyWeightedMap[key] / total;
+    }
+  }
+
+  return returnMap;
+}

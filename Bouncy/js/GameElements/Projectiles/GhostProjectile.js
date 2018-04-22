@@ -21,6 +21,8 @@ class GhostProjectile extends Projectile {
   hitUnit(boardState, unit, intersection) {
     this.hitEnemy = true;
     this.ghost_time = this.start_ghost_time;
+    this.throwProjectileEvent(ProjectileEvents.ON_PASSTHROUGH, boardState, unit, intersection);
+    this.throwProjectileEvent(ProjectileEvents.ON_HIT, boardState, unit, intersection);
   }
 
   runTick(boardState, boardWidth, boardHeight) {

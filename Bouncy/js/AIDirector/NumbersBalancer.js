@@ -126,12 +126,12 @@ class NumbersBalancer {
         healthVal = 100;
         break;
       case "UnitNecromancer":
-        healthVal = 400;
+        healthVal = 300;
         shieldVal = 100;
         break;
       case "UnitBossWarlock":
-        healthVal = 2000;
-        shieldVal = 2000;
+        healthVal = 1000;
+        shieldVal = 1000;
     }
     return {
       health: Math.floor(healthVal * healthMultiplier),
@@ -182,7 +182,7 @@ class NumbersBalancer {
         return 50 * playerMult * difficultyMult;
       case this.UNIT_ABILITIES.SKELETON_MAX_DAMAGE:
         let health = this.getUnitHealth(unit);
-        return Math.ceil(health / 4);
+        return Math.ceil(health / 2);
       case this.UNIT_ABILITIES.NECROMANCER_MAX_SKELETONS_PER_TURN:
         return 1;
       case this.UNIT_ABILITIES.NECROMANCER_RANGE:

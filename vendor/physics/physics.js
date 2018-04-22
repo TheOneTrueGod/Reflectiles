@@ -114,11 +114,11 @@ Physics.findIntersectPoint = function(x1, y1, x2, y2, lines, reflectOrPassThroug
       l2.x1, l2.y1, l2.x2, l2.y2
     );
     if (
-      Physics.truncate(intersectionPoint.x * 10000) === Physics.truncate(x1 * 10000) &&
-      Physics.truncate(intersectionPoint.y * 10000) === Physics.truncate(y1 * 10000)
+      Physics.truncate(intersectionPoint.x * 100000000000) === Physics.truncate(x1 * 100000000000) &&
+      Physics.truncate(intersectionPoint.y * 100000000000) === Physics.truncate(y1 * 100000000000)
       ||
-      Physics.truncate(intersectionPoint.x * 10000) === Physics.truncate(x2 * 10000) &&
-      Physics.truncate(intersectionPoint.y * 10000) === Physics.truncate(y2 * 10000)
+      Physics.truncate(intersectionPoint.x * 100000000000) === Physics.truncate(x2 * 100000000000) &&
+      Physics.truncate(intersectionPoint.y * 100000000000) === Physics.truncate(y2 * 100000000000)
     ) {
       continue;
     }

@@ -146,8 +146,8 @@ class AbilityCore7 extends AbilityCore {
   static getCooldown(perkList, perkCounts) {
     let perkCount = perkList.length;
     let cooldown = perkCount * 0.2 + 3;
-    cooldown -= idx(perkCounts, 'recharge 1', 0);
-    cooldown -= idx(perkCounts, 'recharge 2', 0);
+    cooldown -= idx(perkCounts, 'recharge 1', 0) * 1.4;
+    cooldown -= idx(perkCounts, 'recharge 2', 0) * 1.4;
 
     cooldown = Math.round(cooldown);
     if (cooldown <= 1) {

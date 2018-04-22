@@ -120,6 +120,8 @@ HitEffect.getHitEffectFromType = function(hitEffectDef, abilityDef, projectileSh
       return new CooldownReductionHitEffect(hitEffectDef, abilityDef, projectileShape);
     case ProjectileShape.HitEffects.NEGATIVE_CONDITION_TIME_MODIFICATION:
       return new NegativeConditionModifierHitEffect(hitEffectDef, abilityDef, projectileShape);
+    case ProjectileShape.HitEffects.APPLY_DOT_TICK:
+      return new ApplyDamageOverTimeEffectHitEffect(hitEffectDef, abilityDef, projectileShape);
   }
   return new HitEffect(hitEffectDef, abilityDef);
 }

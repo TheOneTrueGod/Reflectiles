@@ -105,35 +105,35 @@ class LevelDefsWorld3 {
       return new LevelDef({
         'waveCount': 12,
         'initialSpawn':[
-          [__, __, DD, DD, DD, __, __, __, __, __, DD, DD, DD, __, __],
-          [__, __, DD, NC, DD, __, __, __, __, __, DD, NC, DD, __, __],
+          [__, __, AA, AA, AA, __, __, __, __, __, AA, AA, AA, __, __],
+          [__, __, AA, NC, AA, __, __, __, __, __, AA, NC, AA, __, __],
+          [__, __, AA, AA, AA, __, __, __, __, __, AA, AA, AA, __, __],
           [__, __, SK, SK, SK, __, __, __, __, __, SK, SK, SK, __, __],
-          [__, SK, SK, SK, SK, SK, __, __, __, SK, SK, SK, SK, SK, __],
         ],
         'waves':[
           {'type': WAVE_TYPES.SKIP},
           {'type': WAVE_TYPES.FORMATION, units: [
-            [DD, SH, DD],
-            [DD, NC, DD],
-            [DD, DD, DD],
+            [AA, SH, AA],
+            [AA, NC, AA],
+            [AA, AA, AA],
           ]},
           {'type': WAVE_TYPES.SKIP},
           {'type': WAVE_TYPES.FORMATION, units: [
-            [DD, DD, DD],
-            [DD, NC, DD],
-            [DD, DD, DD],
+            [AA, AA, AA],
+            [AA, NC, AA],
+            [AA, AA, AA],
           ]},
           {'type': WAVE_TYPES.SKIP},
           {'type': WAVE_TYPES.FORMATION, units: [
-            [DD, SH, DD],
-            [DD, NC, DD],
-            [DD, DD, DD],
+            [AA, SH, AA],
+            [AA, NC, AA],
+            [AA, AA, AA],
           ]},
           {'type': WAVE_TYPES.SKIP},
           {'type': WAVE_TYPES.FORMATION, units: [
-            [DD, SH, DD],
-            [DD, NC, DD],
-            [DD, DD, DD],
+            [AA, SH, AA],
+            [AA, NC, AA],
+            [AA, AA, AA],
           ]},
           {'type': WAVE_TYPES.SKIP},
           {'type': WAVE_TYPES.FORMATION, units: [
@@ -144,7 +144,7 @@ class LevelDefsWorld3 {
           ]},
           {'type': WAVE_TYPES.UNIT_LIST, 'units':[{'unit': UnitBasicSquare, 'count': 3}]},
           {'type': WAVE_TYPES.UNIT_LIST, 'units':[{'unit': UnitBasicSquare, 'count': 3}]},
-          {'type': WAVE_TYPES.UNIT_LIST, 'units':[{'unit': UnitBasicSquare, 'count': 4}]},
+          {'type': WAVE_TYPES.UNIT_LIST, 'units':[{'unit': UnitBasicSquare, 'count': 4}, {'unit': SH, 'count': 1}]},
           {'type': WAVE_TYPES.GOTO, 'offset': -3, 'until': {'condition': WAVE_CONDITION.BOSS_HEALTH, 'health_percent': 0}},
         ]
       });
