@@ -15,7 +15,7 @@ class BouncyUser extends User {
 
   public function resetDeckData() {
     $chaosDeck = '[3, 2, 10, 11, 12]';
-    $damageDeck = '[0, 1, 2, 3, 4]';
+    $damageDeck = '[0, 1, 2, 3, 15]';
     $supportDeck = '[5, 6, 7, 8, 9]';
     $poisonDeck = '[13, 14, 15, 16, 17]';
     $turretDeck = '[18, 19, 20, 21, 22]';
