@@ -56,10 +56,10 @@ class AbilityCore15 extends AbilityCore {
 
     totalDamage /= numTargets;
     let corrosiveDamage = Math.round(corrosivePct * totalDamage);
-    let poisonDamage = Math.round(poisonPct * totalDamage / 2);
+    let poisonDamage = poisonPct * totalDamage / 2;
     let impactDamage = Math.round(impactPct * totalDamage);
 
-    poisonDamage *= lerp(1, 0.8, (poison_duration - 2) / 2);
+    poisonDamage = Math.round(poisonDamage * lerp(1, 0.8, (poison_duration - 2) / 2));
 
     let hit_effects = [{
       effect: ProjectileShape.HitEffects.DAMAGE,

@@ -23,9 +23,8 @@ class NumbersBalancer {
   getUnitDamage(unit) {
     var damage = 1;
     if (this.difficulty == this.DIFFICULTIES.HARD) {
-      damage *= 2;
     } else if (this.difficulty === this.DIFFICULTIES.NIGHTMARE) {
-      damage *= 3;
+      damage *= 2;
     }
     if (unit.constructor.name == "UnitBossHealer") { damage = 30; }
     if (unit.constructor.name == "UnitBossSlime") { damage = 30; }
@@ -51,7 +50,7 @@ class NumbersBalancer {
       case this.DIFFICULTIES.HARD:
         return 4;
       case this.DIFFICULTIES.NIGHTMARE:
-        return 16;
+        return 12;
     }
     throw new Error("Unknown difficulty");
   }

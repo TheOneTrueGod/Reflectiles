@@ -330,7 +330,8 @@ AbilityDef.AbilityTypes = {
   POSITION: 'POSITION',
   MULTIPART: 'MULTIPART',
   LASER: 'LASER',
-  SPECIAL: 'SPECIAL'
+  SPECIAL: 'SPECIAL',
+  MOVE: 'MOVE',
 };
 
 AbilityDef.SPECIAL_EFFECTS = {

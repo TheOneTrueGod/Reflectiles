@@ -113,6 +113,7 @@
 <?php
   }
 ?>
+<!--script src="/Bouncy/js/Abilities/AbilityCores/DefenderAbilityCores/AbilityCore25.js"></script-->
 
 <!-- Extends the above -->
 <script src="/Bouncy/js/GameElements/Effects/LineEffect.js"></script>

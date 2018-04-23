@@ -54,7 +54,7 @@ class BouncyUser extends User {
   public function resetCardData() {
     $this->cards = [];
     $card_index = 0;
-    for ($i = 0; $i < 5 * 5; $i++) {
+    for ($i = 0; $i < 25; $i++) {
       if ($i !== 10 && $i !== 12) {
         array_push($this->cards, new PlayerCard($card_index++, $i));
         //array_push($this->cards, new PlayerCard($card_index++, $i));
