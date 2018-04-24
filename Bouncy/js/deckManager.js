@@ -148,7 +148,7 @@ class DeckManager {
       let displayCard = this.createDisplayCard(card);
       $('.cardsSection').append(displayCard);
     }
-    /*let deckTypeSortOrder = {
+    let deckTypeSortOrder = {
       neutral: 1,
       weapon: 2,
       defender: 3,
@@ -156,7 +156,8 @@ class DeckManager {
       poison: 5,
       engineer: 6,
     };
-    $('.cardsSection').children().sort((cardA, cardB) => {
+
+    let items = $('.cardsSection').children().sort((cardA, cardB) => {
       let $cardA = $(cardA);
       let $cardB = $(cardB);
       let cardATypeNumber = idx(deckTypeSortOrder, $cardA.data("cardDeckType"), 9999999);
@@ -171,7 +172,8 @@ class DeckManager {
       if ($cardA.data("cardIndex") > $cardB.data("cardIndex")) { return 1; }
       if ($cardA.data("cardIndex") < $cardB.data("cardIndex")) { return -1; }
       return 0;
-    });*/
+    });
+    $('.cardsSection').append(items);
   }
 
   createDisplayCard(playerCard) {
