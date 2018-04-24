@@ -1,7 +1,12 @@
 class AbilityCore16 extends AbilityCore {
   static BuildAbilityChild(perkList, perkPcts, perkCounts) {
-    let totalDamage = lerp(1800, 9000, idx(perkPcts, 'damage', 0));
-    let num_bullets = 10;
+    let totalDamage = lerp(1800, 9000,
+      (
+        idx(perkPcts, 'damage', 0) * 3 +
+        idx(perkPcts, 'more shards', 0)
+      ) / 4
+    );
+    let num_bullets = Math.floor(lerp(10, 25, idx(perkPcts, 'more shards', 0)));
     let shotDamage = Math.floor(totalDamage / num_bullets);
     const rawAbil = { // 3000 damage max
       name: 'Infect',
@@ -39,7 +44,8 @@ class AbilityCore16 extends AbilityCore {
 
   static GetPerkList() {
     let perkList = [
-      (new AbilityPerkNode('damage',    80, [0, 0])),
+      (new AbilityPerkNode('damage',        50, [1, 2])),
+      (new AbilityPerkNode('more shards',    30, [1, 4])),
     ];
     return perkList;
   }
