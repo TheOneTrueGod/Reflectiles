@@ -1,5 +1,8 @@
 class AbilityCore16 extends AbilityCore {
   static BuildAbilityChild(perkList, perkPcts, perkCounts) {
+    let totalDamage = lerp(1800, 9000, idx(perkPcts, 'damage', 0));
+    let num_bullets = 10;
+    let shotDamage = Math.floor(totalDamage / num_bullets);
     const rawAbil = { // 3000 damage max
       name: 'Infect',
       description: 'Shoots a projectile that hits a single enemy.<br>' +
@@ -21,11 +24,11 @@ class AbilityCore16 extends AbilityCore {
           projectile_type: ProjectileShape.ProjectileTypes.PENETRATE,
           //bullet_speed: 6,
           speed: 8,
-          num_bullets: 10,
+          num_bullets,
           gravity: {x: 0, y: 0},
           hit_effects: [{
             effect: ProjectileShape.HitEffects.DAMAGE,
-            base_damage: 200
+            base_damage: shotDamage
           }],
         }
       }],
@@ -36,7 +39,7 @@ class AbilityCore16 extends AbilityCore {
 
   static GetPerkList() {
     let perkList = [
-      (new AbilityPerkNode('damage',    20, [0, 0])),
+      (new AbilityPerkNode('damage',    80, [0, 0])),
     ];
     return perkList;
   }
