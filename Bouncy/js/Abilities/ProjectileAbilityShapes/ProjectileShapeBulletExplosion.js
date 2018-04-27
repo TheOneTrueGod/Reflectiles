@@ -51,7 +51,10 @@ class ProjectileShapeBulletExplosion extends ProjectileShape {
               speed: this.bullet_speed,
               gravity: this.GRAVITY,
               size: 3,
-              trail_length: 4
+              trail_length: 4,
+              curve_handler: ProjectileCurveHandler.getCurveHandler(
+                this.abilityDef.getOptionalParam('curve_def', null)
+              ),
             }
           ).addUnitHitCallback(this.unitHitCallback.bind(this))
           .addTimeoutHitCallback(this.timeoutHitCallback.bind(this))

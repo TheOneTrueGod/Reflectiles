@@ -8,6 +8,7 @@ class Projectile {
     this.gravity = idx(projectileOptions, 'gravity', null);
     this.speedDecay = idx(projectileOptions, 'speed_decay', null);
     this.curveAmount = idx(projectileOptions, 'curve_amount', 0);
+    this.curveHandler = idx(projectileOptions, 'curve_handler', null);
     this.curveTime = idx(projectileOptions, 'curve_time', 0);
     this.curveDelay = idx(projectileOptions, 'curve_delay', 0);
     this.speedDecayDelay = 0;
@@ -197,6 +198,9 @@ class Projectile {
     let curveTick = boardState.tick - this.startTick - this.curveDelay;
     if (0 <= curveTick && curveTick < this.curveTime) {
       this.angle += this.curveAmount;
+    }
+    if (this.curveHandler) {
+      this.curveHandler.doCurveEffects(this, boardState.tick - this.startTick);
     }
     var speed = Victor(Math.cos(this.angle) * this.speed, Math.sin(this.angle) * this.speed);
     if (
