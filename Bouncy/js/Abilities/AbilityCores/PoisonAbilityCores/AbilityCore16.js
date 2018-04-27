@@ -57,27 +57,41 @@ class AbilityCore16 extends AbilityCore {
         }
       }
     );
+    let description = "Shoots a projectile that hits a single enemy";
     if (this.hasPerk(perkPcts, 'impact damage')) {
+      let impactDamage = Math.floor(
+        lerp(totalDamage / 100, totalDamage / 50, idx(perkPcts, 'more impact damage'))
+      );
       hit_effects.push({
-        base_damage: lerp(totalDamage / 100, totalDamage / 50, idx(perkPcts, 'more impact damage')),
+        base_damage: impactDamage,
         effect: ProjectileShape.HitEffects.DAMAGE,
       });
+      description += ' and deals <<' + impactDamage + ">> damage";
     }
+    description += ".";
 
     if (this.hasPerk(perkPcts, 'apply poison')) {
+      description += " If they have poison, it hits them once."
       hit_effects.push({
         effect: ProjectileShape.HitEffects.APPLY_DOT_TICK,
         amount: 1
       });
     }
 
+    description += "<br>";
+
+    description += 'That enemy is infected.  If they die in the next [[hit_effects[0].duration]] ' +
+    'turns, they explode into [[hit_effects[0].abil_def.num_bullets]] ';
+    
+    if (this.hasPerk(perkPcts, 'curving shards')) {
+      description += "curving ";
+    }
+    description += 'bullets, ' +
+    'each one dealing [[hit_effects[0].abil_def.hit_effects[0].base_damage]] damage';
 
     const rawAbil = { // 3000 damage max
       name: 'Infect',
-      description: 'Shoots a projectile that hits a single enemy.<br>' +
-        'That enemy is infected.  If they die in the next [[hit_effects[0].duration]] ' +
-        'turns, they explode into [[hit_effects[0].abil_def.num_bullets]] bullets, ' +
-        'each one dealing [[hit_effects[0].abil_def.hit_effects[0].base_damage]] damage',
+      description,
       card_text_description: '[[hit_effects[0].abil_def.num_bullets]] X [[hit_effects[0].abil_def.hit_effects[0].base_damage]]',
       style: (new AbilitySheetSpriteAbilityStyleBuilder())
         .setSheet('bullet_sheet').setCoordNums(393, 157, 406, 171).setRotation(0).fixRotation(true).build(),
