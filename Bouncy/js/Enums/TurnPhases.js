@@ -1,5 +1,6 @@
 const TurnPhasesEnum = {
   START_TURN: 'start_turn',
+  PLAYER_PRE_MINOR: 'player_pre_minor',
   PLAYER_ACTION: 'player_action',
   PLAYER_MINOR: 'player_minor',
 
@@ -17,6 +18,9 @@ TurnPhasesEnum.getNextPhase = function(currentPhase) {
   switch (currentPhase) {
     case TurnPhasesEnum.START_TURN:
       return TurnPhasesEnum.PLAYER_ACTION;
+
+    //case TurnPhasesEnum.PLAYER_PRE_MINOR:
+    //  return TurnPhasesEnum.PLAYER_ACTION;
 
     case TurnPhasesEnum.PLAYER_ACTION:
       return TurnPhasesEnum.PLAYER_MINOR;

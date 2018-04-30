@@ -82,7 +82,7 @@ class AbilityCore16 extends AbilityCore {
 
     description += 'That enemy is infected.  If they die in the next [[hit_effects[0].duration]] ' +
     'turns, they explode into [[hit_effects[0].abil_def.num_bullets]] ';
-    
+
     if (this.hasPerk(perkPcts, 'curving shards')) {
       description += "curving ";
     }
@@ -108,8 +108,8 @@ class AbilityCore16 extends AbilityCore {
   static getCooldown(perkList, perkPcts) {
     let perkCount = perkList.length;
     let cooldown = perkCount * 0.1 + 2;
-    cooldown -= idx(perkPcts, 'cooldown', 0) * 4.2;
-    cooldown -= idx(perkPcts, 'cooldown 2', 0) * 4.2;
+    cooldown -= idx(perkPcts, 'cooldown', 0) * 4;
+    cooldown -= idx(perkPcts, 'cooldown 2', 0) * 4;
 
     cooldown = Math.round(cooldown);
     if (cooldown <= 1) {
@@ -169,11 +169,9 @@ class AbilityCore16 extends AbilityCore {
       (new MaxxedAbilityPerkNode('impact damage',       6, [4, 1]))
         .addRequirement(new PerkLevelRequirement('more shards 3')),
       (new AbilityPerkNode('more impact damage',        6, [5, 0]))
-        .addRequirement(new PerkLevelRequirement('impact damage', 'max'))
-        .addRequirement(new NotPerkLevelRequirement(new PerkLevelRequirement('duration up', 1))),
+        .addRequirement(new PerkLevelRequirement('impact damage', 'max')),
       (new MaxxedAbilityPerkNode('duration up',                6, [5, 2]))
-        .addRequirement(new PerkLevelRequirement('impact damage', 'max'))
-        .addRequirement(new NotPerkLevelRequirement(new PerkLevelRequirement('more impact damage', 1))),
+        .addRequirement(new PerkLevelRequirement('impact damage', 'max')),
       (new AbilityPerkNode('damage 3-1',          6, [6, 1]))
         .addRequirement(new OrPerkLevelRequirement([
           new PerkLevelRequirement('duration up', 'max'),

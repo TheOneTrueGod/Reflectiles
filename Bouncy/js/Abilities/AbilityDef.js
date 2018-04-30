@@ -32,7 +32,15 @@ class AbilityDef {
       this.charge = this.maxCharge;
     }
     this.specialEffects = idx(defJSON, 'special_effects', {});
+    this.actionPhase = idx(defJSON, 'action_phase', null);
     this.rawJSON = defJSON;
+  }
+
+  getActionPhase() {
+    if (this.actionPhase) {
+      return this.actionPhase;
+    }
+    return TurnPhasesEnum.PLAYER_ACTION;
   }
 
   createExplosionEffect(boardState, targetPos) {

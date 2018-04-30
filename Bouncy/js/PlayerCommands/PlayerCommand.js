@@ -23,7 +23,7 @@ class PlayerCommand {
   }
 
   isMinorAction() {
-    return this.getCommandPhase() == TurnPhasesEnum.PLAYER_MINOR;
+    return this.getCommandPhase() == TurnPhasesEnum.PLAYER_MINOR || this.getCommandPhase() == TurnPhasesEnum.PLAYER_PRE_MINOR;
   }
 
   commandEndsTurn() {

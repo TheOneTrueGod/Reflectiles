@@ -20,6 +20,7 @@ class AbilityCore4 extends AbilityCore {
       max_range: {left: 0, right: 0, top: 0, bottom: 0},
       icon: "/Bouncy/assets/icons/icon_strong.png",
       charge: {initial_charge: -1, max_charge: 5, charge_type: "TURNS"},
+      action_phase: TurnPhasesEnum.PLAYER_MINOR,
     };
     return AbilityDef.createFromJSON(rawAbil);
   }

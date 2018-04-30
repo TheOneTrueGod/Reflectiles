@@ -29,6 +29,13 @@ class Player {
     }
   }
 
+  refillHand(boardState) {
+    let handSize = this.hand.length;
+    for (var i = 0; i < HAND_SIZE - handSize; i++) {
+      this.drawCard(boardState);
+    }
+  }
+
   drawCard(boardState) {
     if (this.deck.length === 0 || this.hand.length >= HAND_SIZE) {
       return;

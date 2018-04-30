@@ -17,6 +17,10 @@ class PlayerCommandUseAbility extends PlayerCommand {
     this.abilityDef = AbilityDef.abilityDefList[abilityID];
   }
 
+  getCommandPhase() {
+    return this.abilityDef.getActionPhase();
+  }
+
   commandEndsTurn() {
     return true;
   }

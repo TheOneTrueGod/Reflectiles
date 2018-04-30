@@ -606,7 +606,7 @@ class MainGame {
         });
       }
       player.endOfTurn();
-      player.drawCard(this.boardState);
+      player.refillHand(this.boardState);
     });
 
     UIListeners.createAbilityDisplay(this.players);
