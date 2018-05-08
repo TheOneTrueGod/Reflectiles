@@ -90,7 +90,7 @@ class UnitBossHealer extends UnitBasic {
   }
 
   doMovement(boardState) {
-    if (this.hasStatusEffect(FreezeStatusEffect)) {
+    if (!this.canMove()) {
       return;
     }
     this.movementCredits += this.movementSpeed;
@@ -103,7 +103,7 @@ class UnitBossHealer extends UnitBasic {
 
   projectileAnimationOver(targetUnit) {
     targetUnit.heal(
-      NumbersBalancer.getUnitAbilityNumber(this, 
+      NumbersBalancer.getUnitAbilityNumber(this,
         NumbersBalancer.UNIT_ABILITIES.UNIT_BOSS_HEALER_AMOUNT
       )
     );

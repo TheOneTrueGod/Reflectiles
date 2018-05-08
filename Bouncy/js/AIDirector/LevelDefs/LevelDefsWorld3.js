@@ -149,7 +149,7 @@ class LevelDefsWorld3 {
         ]
       });
     }
-    console.warn("No level def for World 2, stage " + stage);
+    console.warn("No level def for World 3, stage " + stage);
     return new LevelDef();
   }
 }

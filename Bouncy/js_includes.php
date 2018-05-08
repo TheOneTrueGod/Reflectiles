@@ -41,6 +41,7 @@
 <script src="/Bouncy/js/AIDirector/LevelDefs/LevelDefsWorld1.js"></script>
 <script src="/Bouncy/js/AIDirector/LevelDefs/LevelDefsWorld2.js"></script>
 <script src="/Bouncy/js/AIDirector/LevelDefs/LevelDefsWorld3.js"></script>
+<script src="/Bouncy/js/AIDirector/LevelDefs/LevelDefsWorld4.js"></script>
 <script src="/Bouncy/js/Players/Player.js"></script>
 <script src="/Bouncy/js/Players/PlayerDeck.js"></script>
 <script src="/Bouncy/js/Players/PlayerCard.js"></script>
@@ -82,6 +83,7 @@
 <script src="/Bouncy/js/GameElements/Enemies/StatusEffects/PoisonStatusEffect.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/StatusEffects/InfectStatusEffect.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/StatusEffects/FreezeStatusEffect.js"></script>
+<script src="/Bouncy/js/GameElements/Enemies/StatusEffects/ImmobilizeStatusEffect.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/StatusEffects/WeaknessStatusEffect.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/StatusEffects/ShieldStatusEffect.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/StatusEffects/PlayerDamageStatusEffect.js"></script>
@@ -132,6 +134,7 @@
 <script src="/Bouncy/js/GameElements/Enemies/UnitProtector.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/UnitBossHealer.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/UnitBossWarlock.js"></script>
+<script src="/Bouncy/js/GameElements/Enemies/UnitBossKing.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/UnitBasicDiamond.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/UnitFast.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/UnitHeavy.js"></script>
@@ -141,6 +144,7 @@
 <script src="/Bouncy/js/GameElements/Enemies/UnitSlime.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/UnitSkeleton.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/UnitNecromancer.js"></script>
+<script src="/Bouncy/js/GameElements/Enemies/UnitSpawningPlaceholder.js"></script>
 
 <script src="/Bouncy/js/GameElements/Enemies/UnitBossSlime.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/UnitMovementEffects.js"></script>

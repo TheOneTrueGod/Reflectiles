@@ -31,6 +31,10 @@ class UnitCore extends Unit {
     return sprite;
   }
 
+  isRealUnit() {
+    return true;
+  }
+
   canSelect() {
     return MainGame.playerID == this.owner;
   }

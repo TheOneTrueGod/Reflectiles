@@ -98,7 +98,7 @@ class UnitBossSlime extends UnitBasic {
   }
 
   doMovement(boardState) {
-    if (this.hasStatusEffect(FreezeStatusEffect)) {
+    if (!this.canMove()) {
       return;
     }
     this.movementCredits += this.movementSpeed;

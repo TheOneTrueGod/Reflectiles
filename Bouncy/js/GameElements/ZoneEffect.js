@@ -34,6 +34,10 @@ class ZoneEffect extends Unit {
     this.shield.max = shield;
   }
 
+  isRealUnit() {
+    return true;
+  }
+
   dealDamage(boardState, amount, source, damageType) {
     if (this.creatorAbility.isZoneDamageableByPlayers()) {
       return super.dealDamage(boardState, amount, source, damageType);

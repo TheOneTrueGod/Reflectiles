@@ -415,9 +415,11 @@ class BoardState {
         }
         let dyingUnit = this.units[i];
         this.units.splice(i, 1);
-        for (var j = 0; j < this.units.length; j++) {
-          if (!this.units[j].onUnitDying(this, dyingUnit)) {
-            break;
+        if (dyingUnit.isRealUnit()) {
+          for (var j = 0; j < this.units.length; j++) {
+            if (!this.units[j].onUnitDying(this, dyingUnit)) {
+              break;
+            }
           }
         }
       } else {

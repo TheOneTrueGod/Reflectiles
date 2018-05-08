@@ -43,6 +43,10 @@ class Unit {
     this.createCollisionBox();
   }
 
+  isRealUnit() {
+    return false;
+  }
+
   isInRangeOfCircle(point, radius) {
     let collisionBox = this.getCollisionBox();
     for (let collisionLine of collisionBox) {
@@ -305,7 +309,7 @@ class Unit {
     }
     var self = this;
     var collisionLines = this.collisionBox;
-    if (this.hasStatusEffect(FreezeStatusEffect)) {
+    if (!this.canMove()) {
       var t = -this.physicsHeight / 2;
       var b = this.physicsHeight / 2;
       var r = this.physicsWidth / 2;
@@ -388,7 +392,7 @@ class Unit {
 
   createSprite() {
     var sprite = new PIXI.Sprite(
-      PIXI.loader.resources['byte'].texture
+      PIXI.loader.resources['byte_diamond_red'].texture
     );
     sprite.anchor.set(0.5);
 
@@ -580,7 +584,8 @@ class Unit {
     return this.createSprite();
   }
 
-  playSpawnEffect(boardState, castPoint, time) {
+  playSpawnEffect(boardState, castPoint, time, spawnEffect) {
+    this.spawnEffect = spawnEffect;
     this.spawnEffectStart = {x: castPoint.x, y: castPoint.y};
     this.spawnEffectTime = {current: 0, max: time};
     this.moveTarget = {x: this.x, y: this.y};
@@ -592,12 +597,21 @@ class Unit {
 
   playSpawnEffectAtPct(boardState, pct) {
     if (!this.spawnEffectStart) { return; }
-    if (!this.creatorAbility || this.creatorAbility.ZONE_TYPE !== ZoneAbilityDef.ZoneTypes.BLOCKER_BARRIER) {
-      this.gameSprite.scale.x = lerp(0, this.spriteScale.x, pct);
+    switch (this.spawnEffect) {
+      case Unit.SpawnEffects.REINFORCE:
+        this.x = lerp(this.spawnEffectStart.x, this.moveTarget.x, pct);
+        this.y = lerp(0, this.moveTarget.y, pct);
+        break;
+      case Unit.SpawnEffects.DEFAULT:
+      default:
+        if (!this.creatorAbility || this.creatorAbility.ZONE_TYPE !== ZoneAbilityDef.ZoneTypes.BLOCKER_BARRIER) {
+          this.gameSprite.scale.x = lerp(0, this.spriteScale.x, pct);
+        }
+        this.gameSprite.scale.y = lerp(0, this.spriteScale.y, pct);
+        this.x = lerp(this.spawnEffectStart.x, this.moveTarget.x, pct);
+        this.y = lerp(this.spawnEffectStart.y, this.moveTarget.y, pct);
     }
-    this.gameSprite.scale.y = lerp(0, this.spriteScale.y, pct);
-    this.x = lerp(this.spawnEffectStart.x, this.moveTarget.x, pct);
-    this.y = lerp(this.spawnEffectStart.y, this.moveTarget.y, pct);
+
     this.gameSprite.x = this.x;
     this.gameSprite.y = this.y;
   }
@@ -642,6 +656,11 @@ Unit.loadFromServerData = function(serverData) {
 Unit.UNIT_SIZE = 40;
 Unit.UnitTypeMap = {
 };
+Unit.SpawnEffects = {
+  DEFAULT: 'DEFAULT',
+  REINFORCE: 'REINFORCE',
+}
+
 Unit.AddToTypeMap = function() {
   Unit.UnitTypeMap[this.name] = this;
 }

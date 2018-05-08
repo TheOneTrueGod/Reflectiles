@@ -9,6 +9,8 @@ class LevelDefs {
       return LevelDefsWorld2.getStageDef(stage);
     } else if (world == 3) {
       return LevelDefsWorld3.getStageDef(stage);
+    } else if (world == 4) {
+      return LevelDefsWorld4.getStageDef(stage);
     }
     return new LevelDef();
   }
@@ -24,7 +26,7 @@ class LevelDefs {
   isLevelAvailable(level) {
     let world = this.extractWorld(level);
     let stage = this.extractStage(level);
-    if (world <= 3) {
+    if (world <= 4) {
       return true;
     }
     /*if (world == 3) {

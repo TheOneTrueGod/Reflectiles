@@ -158,6 +158,10 @@ class UnitBasic extends Unit {
     this.createSpriteFromResource('byte_diamond_red');
   }
 
+  canMove() {
+    return !this.hasStatusEffect(FreezeStatusEffect) && !this.hasStatusEffect(ImmobilizeStatusEffect);
+  }
+
   canUseAbilities() {
     return !this.hasStatusEffect(FreezeStatusEffect);
   }
@@ -221,7 +225,7 @@ class UnitBasic extends Unit {
   }
 
   doMovement(boardState) {
-    if (this.hasStatusEffect(FreezeStatusEffect)) {
+    if (!this.canMove()) {
       return;
     }
     this.movementCredits += this.movementSpeed;
@@ -279,6 +283,10 @@ class UnitBasic extends Unit {
       }
     }
     return this.createSprite();
+  }
+
+  isRealUnit() {
+    return true;
   }
 }
 
