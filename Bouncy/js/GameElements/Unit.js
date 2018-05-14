@@ -41,6 +41,8 @@ class Unit {
     this.traits = {};
 
     this.createCollisionBox();
+
+    this.sortIndex = 100;
   }
 
   isRealUnit() {
@@ -573,6 +575,10 @@ class Unit {
   }
 
   otherUnitEntering(boardState, unit) {
+    return true;
+  }
+
+  otherUnitLeaving(boardState, unit) {
     return true;
   }
 

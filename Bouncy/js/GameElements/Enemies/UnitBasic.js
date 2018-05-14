@@ -183,7 +183,8 @@ class UnitBasic extends Unit {
         var targetPos = {x: currPos.x + dx * Unit.UNIT_SIZE, y: currPos.y + Unit.UNIT_SIZE};
         var canEnter =
           boardState.sectors.canUnitEnter(boardState, this, targetPos) &&
-          boardState.unitEntering(this, targetPos);
+          boardState.unitEntering(this, targetPos) &&
+          boardState.unitLeaving(this, currPos);
 
         if (canEnter) {
           boardState.sectors.removeUnit(this);

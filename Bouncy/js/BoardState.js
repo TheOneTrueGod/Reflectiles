@@ -67,13 +67,22 @@ class BoardState {
 
   sortUnitsByPosition() {
     this.units.sort((unit, unit2) => {
-      if (unit.y === unit2.y && unit.x === unit2.x) {
-        return unit.id < unit2.id ? 1 : -1;
+      if (unit.y !== unit2.y) {
+        return unit.y < unit2.y ? 1 : -1;
       }
-      if (unit.y === unit2.y) {
+
+      // They have the same Y
+      if (unit.x !== unit2.x) {
         return unit.x < unit2.x ? 1 : -1;
       }
-      return unit.y < unit2.y ? 1 : -1;
+
+      // They have the same Y and X.
+      if (unit.sortIndex !== unit.sortIndex) {
+        return unit.sortIndex < unit2.sortIndex ? 1 : -1;
+      }
+
+      // They have the same Y, X, and sortIndex.
+      return unit.id < unit2.id ? 1 : -1;
     });
   }
 
@@ -270,6 +279,18 @@ class BoardState {
       }
     }
 
+    return allowUnitThrough;
+  }
+
+  unitLeaving(unit, target) {
+    var unitsInSector = this.sectors.getUnitsAtPosition(target.x, target.y);
+    var allowUnitThrough = true;
+    for (var i = 0; i < unitsInSector.length; i++) {
+      if (unit.id !== unitsInSector[i]) {
+        var occupyingUnit = this.findUnit(unitsInSector[i]);
+        allowUnitThrough = allowUnitThrough && occupyingUnit.otherUnitLeaving(this, unit);
+      }
+    }
     return allowUnitThrough;
   }
 

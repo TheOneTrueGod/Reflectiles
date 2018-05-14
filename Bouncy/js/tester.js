@@ -12,11 +12,12 @@ class Tester extends MainGame {
 
     this.unitsToSpawn = [
       [UnitBasicSquare, null, null, null, UnitBasicSquare],
-      [UnitBasicSquare, null, UnitBossKing, null, UnitBasicSquare],
       [UnitBasicSquare, null, null, null, UnitBasicSquare],
       [UnitBasicSquare, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare],
+      [null, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare, null],
       [UnitBasicSquare, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare],
-      [UnitBasicSquare, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare]
+      [null, null, null, null, null],
+      [UnitCastleWall, UnitCastleWall, UnitCastleWall, UnitCastleWall, UnitCastleWall]
     ];
     /*this.unitsToSpawn =
     [

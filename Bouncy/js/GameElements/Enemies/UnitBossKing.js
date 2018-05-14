@@ -66,7 +66,8 @@ class UnitBossKing extends UnitBasic {
       this.owner,
       null,
       TURNS_UNTIL_SPAWN,
-      dyingUnit.constructor.name
+      dyingUnit.constructor.name,
+      Unit.SpawnEffects.DEFAULT,
     );
     boardState.addUnit(newUnit);
     newUnit.playSpawnEffect(boardState, this, 20);
