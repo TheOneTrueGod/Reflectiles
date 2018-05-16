@@ -2,7 +2,7 @@ class UnitSkeleton extends UnitBasic {
   constructor(x, y, owner, id) {
     super(x, y, owner, id);
     this.traits[Unit.UNIT_TRAITS.RESILIANT] =
-      NumbersBalancer.getUnitAbilityNumber(this, 
+      NumbersBalancer.getUnitAbilityNumber(this,
         NumbersBalancer.UNIT_ABILITIES.SKELETON_MAX_DAMAGE);
   }
 
@@ -27,10 +27,6 @@ class UnitSkeleton extends UnitBasic {
   createSprite() {
     return this.createSpriteFromResource('enemy_skeleton');
   }
-}
-
-UnitSkeleton.loadFromServerData = function(serverData) {
-  return UnitBasic.loadFromServerData(serverData);
 }
 
 UnitSkeleton.AddToTypeMap();

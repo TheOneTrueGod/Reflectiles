@@ -224,10 +224,6 @@ class UnitBlocker extends UnitBasic {
   }
 }
 
-UnitBlocker.loadFromServerData = function(serverData) {
-  return UnitBasic.loadFromServerData(serverData);
-}
-
 UnitBlocker.createAbilityDef = function() {
   UnitBlocker.abilityDef = AbilityDef.createFromJSON({
     'ability_type': AbilityDef.AbilityTypes.ZONE,

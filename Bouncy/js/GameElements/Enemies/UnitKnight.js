@@ -70,7 +70,7 @@ class UnitKnight extends UnitBasic {
 
         let playerUnits = boardState.getPlayerUnitsAtPosition(targetPoint);
         for (var j = 0; j < playerUnits.length; j++) {
-          playerUnits[j].knockback();
+          playerUnits[j].knockback(boardState);
         }
         UnitKnight.abilityDef.doActionOnTick('enemy', 0, boardState, castPoint, targetPoint);
       }
@@ -85,10 +85,6 @@ class UnitKnight extends UnitBasic {
     }
   }
 }
-
-UnitKnight.loadFromServerData = function(serverData) {
-  return UnitBasic.loadFromServerData(serverData);
-};
 
 UnitKnight.createAbilityDef = function() {
   UnitKnight.abilityDef = AbilityDef.createFromJSON({

@@ -147,6 +147,12 @@ class Unit {
     }
   }
 
+  createSpawnPlaceholderSprite() {
+    let sprite = this.createSprite();
+    sprite.alpha = 0.5;
+    return sprite;
+  }
+
   getHealth() {
     return this.health;
   }
@@ -299,6 +305,10 @@ class Unit {
 
   readyToDelete() {
     return this.readyToDel;
+  }
+
+  canMove() {
+    return false;
   }
 
   getCollisionBox() {
@@ -483,6 +493,12 @@ class Unit {
     if (
       effect instanceof FreezeStatusEffect &&
       this.getTraitValue(Unit.UNIT_TRAITS.FROST_IMMUNE) === true
+    ) {
+      return;
+    }
+    if (
+      effect instanceof PoisonStatusEffect &&
+      this.getTraitValue(Unit.UNIT_TRAITS.POISON_IMMUNE) === true
     ) {
       return;
     }
@@ -673,6 +689,7 @@ Unit.AddToTypeMap = function() {
 
 Unit.UNIT_TRAITS = {
   FROST_IMMUNE: 'frost_immune',
+  POISON_IMMUNE: 'poison_immune',
   RESILIANT: 'resiliant',
 }
 

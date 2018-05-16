@@ -264,6 +264,10 @@ class UnitTooltips {
         return 'Necromancer';
       case 'UnitBossWarlock':
         return 'Warlock';
+      case 'UnitBossKing':
+        return 'The King';
+      case 'UnitCastleWall':
+        return 'Castle Wall';
     }
     console.warn('no unit name for [' + unit.constructor.name + ']');
     return '<' + unit.constructor.name + '>';
@@ -272,7 +276,7 @@ class UnitTooltips {
   static getDescription(unit) {
     let maxDamage;
     let range;
-    let maxSkeletons;
+    let maxSkeletons; let numTurns;
     switch (unit.constructor.name) {
       case 'UnitBasicSquare':
       case 'UnitBasicDiamond':
@@ -323,9 +327,14 @@ class UnitTooltips {
         range = NumbersBalancer.getUnitAbilityNumber(unit, NumbersBalancer.UNIT_ABILITIES.WARLOCK_RANGE);
         maxSkeletons = NumbersBalancer.getUnitAbilityNumber(unit, NumbersBalancer.UNIT_ABILITIES.WARLOCK_MAX_SKELETONS_PER_TURN);
         let boneWallHealth = NumbersBalancer.getUnitAbilityNumber(unit, NumbersBalancer.UNIT_ABILITIES.WARLOCK_SHIELD);
-      return 'If a unit dies within ' + range + ' squares, the warlock reanimates it as a skeleton.  It can only reanimate up to ' + maxSkeletons + ' skeletons per turn.<br>' +
-        'Also creates a bone wall with ' + boneWallHealth + ' health around itself.';
-
+        return 'If a unit dies within ' + range + ' squares, the warlock reanimates it as a skeleton.  It can only reanimate up to ' + maxSkeletons + ' skeletons per turn.<br>' +
+          'Also creates a bone wall with ' + boneWallHealth + ' health around itself.';
+      case 'UnitBossKing':
+        numTurns = NumbersBalancer.getUnitAbilityNumber(unit, NumbersBalancer.UNIT_ABILITIES.KING_REVIVE_TURNS);
+        return 'All enemy units are unable to move as long as The King is around.  If an enemy unit dies, it is reinforced after ' + numTurns + ' turns.';
+      case 'UnitCastleWall':
+        numTurns = NumbersBalancer.getUnitAbilityNumber(unit, NumbersBalancer.UNIT_ABILITIES.CASTLE_WALL_REVIVE_TURNS);
+        return 'If the wall is destroyed, it is rebuilt after ' + numTurns + ' turns.';
     }
     console.warn('no description for [' + unit.constructor.name + ']');
     return '<no description>';
@@ -416,6 +425,8 @@ class UnitTooltips {
     switch (trait) {
       case Unit.UNIT_TRAITS.FROST_IMMUNE:
         return '#6666ff';
+      case Unit.UNIT_TRAITS.POISON_IMMUNE:
+        return '#47e549';
       case Unit.UNIT_TRAITS.RESILIANT:
         return '#BBBBBB';
       default:
@@ -427,6 +438,8 @@ class UnitTooltips {
     switch (trait) {
       case Unit.UNIT_TRAITS.FROST_IMMUNE:
         return 'Frost Immune';
+      case Unit.UNIT_TRAITS.POISON_IMMUNE:
+        return 'Poison Immune';
       case Unit.UNIT_TRAITS.RESILIANT:
         return 'Resiliant';
       default:
@@ -438,6 +451,8 @@ class UnitTooltips {
     switch (trait) {
       case Unit.UNIT_TRAITS.FROST_IMMUNE:
         return 'This unit is immune to being frozen';
+      case Unit.UNIT_TRAITS.POISON_IMMUNE:
+        return 'This unit is immune to being poisoned';
       case Unit.UNIT_TRAITS.RESILIANT:
         return 'Can\'t take more than ' + value + ' damage per attack';
       default:

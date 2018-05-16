@@ -122,8 +122,4 @@ class UnitBossSlime extends UnitBasic {
   }
 }
 
-UnitBossSlime.loadFromServerData = function(serverData) {
-  return UnitBasic.loadFromServerData(serverData);
-}
-
 UnitBossSlime.AddToTypeMap();

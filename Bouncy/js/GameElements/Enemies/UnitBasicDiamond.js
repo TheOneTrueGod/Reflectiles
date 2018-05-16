@@ -13,8 +13,4 @@ class UnitBasicDiamond extends UnitBasic {
   }
 }
 
-UnitBasicSquare.loadFromServerData = function(serverData) {
-  return UnitBasic.loadFromServerData(serverData);
-}
-
 UnitBasicDiamond.AddToTypeMap();

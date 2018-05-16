@@ -81,7 +81,7 @@ class AbilityCore2 extends AbilityCore {
       card_text_description: '[[child_abilities[0].num_bullets]] X [[child_abilities[0].hit_effects[0].base_damage]]',
       ability_type: AbilityDef.AbilityTypes.MULTIPART,
       icon: "/Bouncy/assets/icons/icon_plain_wave.png",
-      charge: {"initial_charge":-1, "max_charge": 5, "charge_type":"TURNS"},
+      charge: {"initial_charge":-1, "max_charge": 3, "charge_type":"TURNS"},
       child_abilities: [
         {
           style: styleBuilder.build(),

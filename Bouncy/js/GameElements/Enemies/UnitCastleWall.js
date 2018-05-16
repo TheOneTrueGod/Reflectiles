@@ -2,12 +2,17 @@ class UnitCastleWall extends UnitBasic {
   constructor(x, y, owner, id) {
     super(x, y, owner, id);
     this.traits[Unit.UNIT_TRAITS.FROST_IMMUNE] = true;
+    this.traits[Unit.UNIT_TRAITS.POISON_IMMUNE] = true;
     this.sortIndex = 1000;
   }
 
   createSprite() {
     let sprite = this.createSpriteFromResource('enemy_castle_wall');
     return sprite;
+  }
+
+  isRealUnit() {
+    return false;
   }
 
   canMove() {
@@ -18,20 +23,17 @@ class UnitCastleWall extends UnitBasic {
     return (unit instanceof UnitCore);
   }
 
-  otherUnitEntering(boardState, unit) {
-    this.gameSprite.alpha = 0.5;
-    return true;
-  }
-
-  otherUnitLeaving(boardState, unit) {
-    this.gameSprite.alpha = 1;
+  addToBackOfStage() {
     return true;
   }
 
   onDelete(boardState) {
     super.onDelete(boardState);
 
-    const TURNS_UNTIL_SPAWN = 3;
+    const TURNS_UNTIL_SPAWN = NumbersBalancer.getUnitAbilityNumber(
+      this,
+      NumbersBalancer.UNIT_ABILITIES.CASTLE_WALL_REVIVE_TURNS
+    );
     //let newUnit = new dyingUnit.constructor(dyingUnit.x, dyingUnit.y, this.owner);
     let newUnit = new UnitSpawningPlaceholder(
       this.x,
@@ -43,6 +45,10 @@ class UnitCastleWall extends UnitBasic {
     );
     boardState.addUnit(newUnit);
     newUnit.playSpawnEffect(boardState, this, 20);
+  }
+
+  createHealthBarSprite(sprite) {
+    return null;
   }
 }
 

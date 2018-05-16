@@ -53,7 +53,7 @@ class UnitBomber extends UnitBasic {
           angle,
           {
             //'friendly_fire': true,
-            'damage_to_players': NumbersBalancer.getUnitAbilityNumber(this, 
+            'damage_to_players': NumbersBalancer.getUnitAbilityNumber(this,
               NumbersBalancer.UNIT_ABILITIES.BOMBER_EXPLOSION_DAMAGE
             ) / num_projectiles,
           }
@@ -109,10 +109,6 @@ class UnitBomber extends UnitBasic {
     }, null);
     hitEffect.doHitEffect(boardState, unit, intersection, projectile);
   }
-}
-
-UnitBomber.loadFromServerData = function(serverData) {
-  return UnitBasic.loadFromServerData(serverData);
 }
 
 UnitBomber.AddToTypeMap();

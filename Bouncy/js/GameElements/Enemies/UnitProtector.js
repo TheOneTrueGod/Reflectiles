@@ -80,17 +80,12 @@ class UnitProtector extends UnitBasic {
 
   projectileAnimationOver(targetUnit) {
     targetUnit.addStatusEffect(
-      new ShieldStatusEffect(NumbersBalancer.getUnitAbilityNumber(this, 
+      new ShieldStatusEffect(NumbersBalancer.getUnitAbilityNumber(this,
         NumbersBalancer.UNIT_ABILITIES.PROTECTOR_SHIELD
       ))
     );
   }
 }
-
-UnitProtector.loadFromServerData = function(serverData) {
-  return UnitBasic.loadFromServerData(serverData);
-}
-
 
 UnitProtector.createAbilityDef = function() {
   //UnitKnight.abilityDef = Abi

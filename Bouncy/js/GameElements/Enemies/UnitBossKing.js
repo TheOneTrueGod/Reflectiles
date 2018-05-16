@@ -58,7 +58,10 @@ class UnitBossKing extends UnitBasic {
   }
 
   onUnitDying(boardState, dyingUnit) {
-    const TURNS_UNTIL_SPAWN = 3;
+    const TURNS_UNTIL_SPAWN = NumbersBalancer.getUnitAbilityNumber(
+      this,
+      NumbersBalancer.UNIT_ABILITIES.KING_REVIVE_TURNS,
+    );
     //let newUnit = new dyingUnit.constructor(dyingUnit.x, dyingUnit.y, this.owner);
     let newUnit = new UnitSpawningPlaceholder(
       dyingUnit.x,
@@ -73,10 +76,6 @@ class UnitBossKing extends UnitBasic {
     newUnit.playSpawnEffect(boardState, this, 20);
     return false;
   }
-}
-
-UnitBossKing.loadFromServerData = function(serverData) {
-  return UnitBasic.loadFromServerData(serverData);
 }
 
 UnitBossKing.AddToTypeMap();

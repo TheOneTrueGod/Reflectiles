@@ -245,7 +245,7 @@ class BoardState {
     } else {
       this.sectors.addUnit(unit);
     }
-    if (this.isEnemyUnit(unit)) {
+    if (this.isEnemyUnit(unit) && unit.isRealUnit()) {
       this.enemyUnitCount += 1;
     }
     unit.addToStage(this.stage);
@@ -431,7 +431,7 @@ class BoardState {
         this.units[i].onDelete(this);
         this.units[i].removeFromStage();
         this.sectors.removeUnit(this.units[i]);
-        if (this.isEnemyUnit(this.units[i])) {
+        if (this.isEnemyUnit(this.units[i]) && this.units[i].isRealUnit()) {
           this.enemyUnitCount -= 1;
         }
         let dyingUnit = this.units[i];

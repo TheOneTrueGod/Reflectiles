@@ -19,8 +19,4 @@ class UnitBasicSquare extends UnitBasic {
   }
 }
 
-UnitBasicSquare.loadFromServerData = function(serverData) {
-  return UnitBasic.loadFromServerData(serverData);
-}
-
 UnitBasicSquare.AddToTypeMap();

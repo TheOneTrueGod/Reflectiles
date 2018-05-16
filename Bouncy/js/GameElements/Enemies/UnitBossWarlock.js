@@ -132,10 +132,6 @@ class UnitBossWarlock extends UnitBasic {
   }
 }
 
-UnitBossWarlock.loadFromServerData = function(serverData) {
-  return UnitBasic.loadFromServerData(serverData);
-};
-
 UnitBossWarlock.createAbilityDef = function() {
   UnitBossWarlock.abilityDef = AbilityDef.createFromJSON({
     'ability_type': AbilityDef.AbilityTypes.ZONE,

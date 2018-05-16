@@ -73,9 +73,4 @@ class UnitDefensive extends UnitBasic {
   }
 }
 
-UnitDefensive.loadFromServerData = function(serverData) {
-  return UnitBasic.loadFromServerData(serverData);
-}
-
-
 UnitDefensive.AddToTypeMap();

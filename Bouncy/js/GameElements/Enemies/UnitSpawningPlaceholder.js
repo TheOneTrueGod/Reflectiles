@@ -2,14 +2,36 @@ class UnitSpawningPlaceholder extends Unit {
   constructor(x, y, owner, id, turnsUntilSpawn, unitToSpawn, spawnEffect) {
     super(x, y, owner, id);
     this.turnsUntilSpawn = turnsUntilSpawn;
-    this.unitToSpawn = unitToSpawn;
-    this.unitToSpawnName = unitToSpawn;
-    if (!unitToSpawn in Unit.UnitTypeMap) {
-      console.warn(unitToSpawn, " not in Unit.UnitTypeMap");
-    } else {
-      this.unitToSpawn = Unit.UnitTypeMap[unitToSpawn];
-    }
+    this.setUnitToSpawn(unitToSpawn);
     this.spawnEffect = spawnEffect ? spawnEffect : Unit.SpawnEffects.REINFORCE;
+  }
+
+  addToBackOfStage() {
+    return true;
+  }
+
+  setUnitToSpawn(unitToSpawnName) {
+    this.unitToSpawn = unitToSpawnName;
+    this.unitToSpawnName = unitToSpawnName;
+    if (!unitToSpawnName in Unit.UnitTypeMap) {
+      console.warn(unitToSpawnName, " not in Unit.UnitTypeMap");
+    } else {
+      this.unitToSpawn = Unit.UnitTypeMap[unitToSpawnName];
+    }
+  }
+
+  serializeData() {
+    return {
+      unit_to_spawn_name: this.unitToSpawnName,
+      spawn_effect: this.spawnEffect,
+      turns_until_spawn: this.turnsUntilSpawn,
+    };
+  }
+
+  loadSerializedData(data) {
+    this.setUnitToSpawn(data.unit_to_spawn_name);
+    this.spawnEffect = data.spawn_effect;
+    this.turnsUntilSpawn = data.turns_until_spawn;
   }
 
   isRealUnit() {
@@ -18,11 +40,7 @@ class UnitSpawningPlaceholder extends Unit {
 
   createSprite() {
     let spriteUnit = new this.unitToSpawn(this.x, this.y, this.owner);
-    let sprite = spriteUnit.createSprite();
-    if (spriteUnit.healthBarSprites) {
-      spriteUnit.healthBarSprites.textSprite.parent.removeChild(spriteUnit.healthBarSprites.textSprite);
-    }
-    sprite.alpha = 0.5;
+    let sprite = spriteUnit.createSpawnPlaceholderSprite();
     return sprite;
   }
 
@@ -50,10 +68,6 @@ class UnitSpawningPlaceholder extends Unit {
   preventsUnitEntry(unit) {
     return (unit instanceof UnitCore);
   }
-}
-
-UnitSpawningPlaceholder.loadFromServerData = function(serverData) {
-  return UnitBasic.loadFromServerData(serverData);
 }
 
 UnitSpawningPlaceholder.AddToTypeMap();

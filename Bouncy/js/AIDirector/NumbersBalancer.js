@@ -17,7 +17,7 @@ class NumbersBalancer {
       case this.PLAYER_STATS.PLAYER_HEALTH:
         return 40;
     }
-    throw new Exception("getPlayerStat (" + stat + ") not implemented");
+    throw new Error("getPlayerStat (" + stat + ") not implemented");
   }
 
   getUnitDamage(unit) {
@@ -131,6 +131,15 @@ class NumbersBalancer {
       case "UnitBossWarlock":
         healthVal = 1000;
         shieldVal = 1000;
+        break;
+      case "UnitBossKing":
+        healthVal = 5000;
+        armorVal = 1000;
+        break;
+      case "UnitCastleWall":
+        healthVal = 50;
+        armorVal = 150;
+        break;
     }
     return {
       health: Math.floor(healthVal * healthMultiplier),
@@ -192,8 +201,12 @@ class NumbersBalancer {
         return 5;
       case this.UNIT_ABILITIES.WARLOCK_SHIELD:
         return 50 * playerMult * difficultyMult;
+      case this.UNIT_ABILITIES.KING_REVIVE_TURNS:
+        return 3;
+      case this.UNIT_ABILITIES.CASTLE_WALL_REVIVE_TURNS:
+        return 3;
     }
-    throw new Exception("Failure");
+    throw new Error("Failure");
   }
 }
 
@@ -219,6 +232,8 @@ NumbersBalancer.prototype.UNIT_ABILITIES = {
   NECROMANCER_RANGE: 'NECROMANCER_RANGE',
   WARLOCK_MAX_SKELETONS_PER_TURN: 'WARLOCK_MAX_SKELETONS_PER_TURN',
   WARLOCK_RANGE: 'WARLOCK_RANGE',
+  KING_REVIVE_TURNS: 'KING_REVIVE_TURNS',
+  CASTLE_WALL_REVIVE_TURNS: 'CASTLE_WALL_REVIVE_TURNS'
 };
 
 NumbersBalancer.prototype.DIFFICULTIES = {

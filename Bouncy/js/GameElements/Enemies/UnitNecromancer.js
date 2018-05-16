@@ -67,9 +67,4 @@ class UnitNecromancer extends UnitBasic {
   }
 }
 
-UnitNecromancer.loadFromServerData = function(serverData) {
-  return UnitBasic.loadFromServerData(serverData);
-}
-
-
 UnitNecromancer.AddToTypeMap();

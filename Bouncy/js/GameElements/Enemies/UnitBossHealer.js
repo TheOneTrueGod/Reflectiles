@@ -122,12 +122,4 @@ class UnitBossHealer extends UnitBasic {
   }
 }
 
-UnitBossHealer.loadFromServerData = function(serverData) {
-  return UnitBasic.loadFromServerData(serverData);
-}
-
-
-UnitBossHealer.createAbilityDef = function() {
-}
-
 UnitBossHealer.AddToTypeMap();
