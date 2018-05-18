@@ -15,8 +15,8 @@ class UnitProtector extends UnitBasic {
     ];
   }
 
-  createSprite() {
-    return this.createSpriteFromResource('enemy_protector');
+  createSprite(hideHealthBar) {
+    return this.createSpriteFromResource('enemy_protector', hideHealthBar);
   }
 
   startOfPhase(boardState, phase) {

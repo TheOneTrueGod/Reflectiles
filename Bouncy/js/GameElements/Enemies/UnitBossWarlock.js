@@ -37,8 +37,8 @@ class UnitBossWarlock extends UnitBasic {
     ];
   }
 
-  createSprite() {
-    return this.createSpriteFromResource('enemy_warlock');
+  createSprite(hideHealthBar) {
+    return this.createSpriteFromResource('enemy_warlock', hideHealthBar);
   }
 
   doMovement(boardState) {

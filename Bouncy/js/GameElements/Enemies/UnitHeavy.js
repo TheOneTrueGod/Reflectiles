@@ -21,8 +21,8 @@ class UnitHeavy extends UnitBasic {
     ];
   }
 
-  createSprite() {
-    return this.createSpriteFromResource('enemy_strong');
+  createSprite(hideHealthBar) {
+    return this.createSpriteFromResource('enemy_strong', hideHealthBar);
   }
 }
 

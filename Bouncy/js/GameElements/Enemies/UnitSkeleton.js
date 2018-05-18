@@ -24,8 +24,8 @@ class UnitSkeleton extends UnitBasic {
     ];
   }
 
-  createSprite() {
-    return this.createSpriteFromResource('enemy_skeleton');
+  createSprite(hideHealthBar) {
+    return this.createSpriteFromResource('enemy_skeleton', hideHealthBar);
   }
 }
 

@@ -26,8 +26,8 @@ class UnitDefensive extends UnitBasic {
     ];
   }
 
-  createSprite() {
-    return this.createSpriteListFromResourceList(['enemy_damage_limit', 'enemy_damage_limit_2']);
+  createSprite(hideHealthBar) {
+    return this.createSpriteListFromResourceList(['enemy_damage_limit', 'enemy_damage_limit_2'], hideHealthBar);
   }
 
   getDamageThreshold() {

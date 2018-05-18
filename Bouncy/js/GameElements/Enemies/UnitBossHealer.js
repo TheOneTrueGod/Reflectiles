@@ -29,8 +29,8 @@ class UnitBossHealer extends UnitBasic {
     ];
   }
 
-  createSprite() {
-    return this.createSpriteFromResource('enemy_boss_healer');
+  createSprite(hideHealthBar) {
+    return this.createSpriteFromResource('enemy_boss_healer', hideHealthBar);
   }
 
   canHealTarget(targetUnit) {

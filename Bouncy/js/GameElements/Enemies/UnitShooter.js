@@ -42,8 +42,8 @@ class UnitShooter extends UnitBasic {
     boardState.addProjectile(projectile);
   }
 
-  createSprite() {
-    return this.createSpriteFromResource('enemy_shoot');
+  createSprite(hideHealthBar) {
+    return this.createSpriteFromResource('enemy_shoot', hideHealthBar);
   }
 }
 

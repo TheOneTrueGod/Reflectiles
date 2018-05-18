@@ -3,7 +3,7 @@ class UnitCore extends Unit {
     super(x, y, owner, id);
   }
 
-  createSprite() {
+  createSprite(hideHealthBar) {
     var sprite = new PIXI.Sprite(
       PIXI.loader.resources['core'].texture
     );

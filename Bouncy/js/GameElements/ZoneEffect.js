@@ -35,7 +35,7 @@ class ZoneEffect extends Unit {
   }
 
   isRealUnit() {
-    return true;
+    return false;
   }
 
   dealDamage(boardState, amount, source, damageType) {
@@ -194,7 +194,7 @@ class ZoneEffect extends Unit {
 
   }
 
-  createSprite() {
+  createSprite(hideHealthBar) {
     var sprite;
     if (this.SPRITE) {
       if (

@@ -112,12 +112,13 @@ class UnitBasic extends Unit {
     this.healthBarSprites.textSprite = healthBarGraphic;
   }
 
-  createSpriteFromResource(resource) {
+  createSpriteFromResource(resource, hideHealthBar) {
     var sprite = new PIXI.Sprite(
       PIXI.loader.resources[resource].texture
     );
-
-    this.createHealthBarSprite(sprite);
+    if (!hideHealthBar) {
+      this.createHealthBarSprite(sprite);
+    }
 
     sprite.anchor.set(0.5);
     /*for (var effect in this.statusEffects) {
@@ -129,7 +130,7 @@ class UnitBasic extends Unit {
     return sprite;
   }
 
-  createSpriteListFromResourceList(resources) {
+  createSpriteListFromResourceList(resources, hideHealthBar) {
     this.sprites = {};
     let container = new PIXI.Container();
     let onFirst = true;
@@ -146,16 +147,17 @@ class UnitBasic extends Unit {
 
       container.addChild(this.sprites[res]);
     }
-
-    this.createHealthBarSprite(container);
+    if (!hideHealthBar) {
+      this.createHealthBarSprite(container);
+    }
 
     container.width = this.physicsWidth;
     container.height = this.physicsHeight;
     return container;
   }
 
-  createSprite() {
-    this.createSpriteFromResource('byte_diamond_red');
+  createSprite(hideHealthBar) {
+    this.createSpriteFromResource('byte_diamond_red', hideHealthBar);
   }
 
   canMove() {

@@ -62,8 +62,8 @@ class UnitBomber extends UnitBasic {
     }
   }
 
-  createSprite() {
-    return this.createSpriteFromResource('enemy_bomber');
+  createSprite(hideHealthBar) {
+    return this.createSpriteFromResource('enemy_bomber', hideHealthBar);
   }
 
   createHealthBarSprite(sprite) {

@@ -14,8 +14,8 @@ class UnitFast extends UnitBasic {
     ];
   }
 
-  createSprite() {
-    return this.createSpriteFromResource('enemy_fast');
+  createSprite(hideHealthBar) {
+    return this.createSpriteFromResource('enemy_fast', hideHealthBar);
   }
 }
 

@@ -55,8 +55,8 @@ class UnitNecromancer extends UnitBasic {
     return super.onUnitDying(boardState, dyingUnit);
   }
 
-  createSprite() {
-    return this.createSpriteFromResource('enemy_necromancer');
+  createSprite(hideHealthBar) {
+    return this.createSpriteFromResource('enemy_necromancer', hideHealthBar);
   }
 
   startOfPhase(boardState, phase) {

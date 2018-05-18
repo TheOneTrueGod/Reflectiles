@@ -23,8 +23,8 @@ class UnitKnight extends UnitBasic {
     ];
   }
 
-  createSprite() {
-    return this.createSpriteFromResource('enemy_knight');
+  createSprite(hideHealthBar) {
+    return this.createSpriteFromResource('enemy_knight', hideHealthBar);
   }
 
   unitHitCallback(boardState, unit, intersection, projectile) {

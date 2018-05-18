@@ -15,8 +15,8 @@ class UnitShover extends UnitBasic {
     ];
   }
 
-  createSprite() {
-    return this.createSpriteFromResource('enemy_shover');
+  createSprite(hideHealthBar) {
+    return this.createSpriteFromResource('enemy_shover', hideHealthBar);
   }
 }
 

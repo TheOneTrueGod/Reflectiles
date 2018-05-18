@@ -14,8 +14,8 @@ class UnitBasicSquare extends UnitBasic {
     ];
   }
 
-  createSprite() {
-    return this.createSpriteFromResource('enemy_square');
+  createSprite(hideHealthBar) {
+    return this.createSpriteFromResource('enemy_square', hideHealthBar);
   }
 }
 

@@ -17,7 +17,7 @@ class PushableExplosive extends ZoneEffect {
     return;
   }
 
-  createSprite() {
+  createSprite(hideHealthBar) {
     if (this.SPRITE && this.SPRITE.index && this.SPRITE.end_index) {
       this.healthBasedSprites = [];
       var container = new PIXI.Graphics();

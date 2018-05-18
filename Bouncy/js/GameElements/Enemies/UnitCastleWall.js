@@ -6,8 +6,8 @@ class UnitCastleWall extends UnitBasic {
     this.sortIndex = 1000;
   }
 
-  createSprite() {
-    let sprite = this.createSpriteFromResource('enemy_castle_wall');
+  createSprite(hideHealthBar) {
+    let sprite = this.createSpriteFromResource('enemy_castle_wall', hideHealthBar);
     return sprite;
   }
 

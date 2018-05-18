@@ -38,7 +38,7 @@ class UnitSpawningPlaceholder extends Unit {
     return false;
   }
 
-  createSprite() {
+  createSprite(hideHealthBar) {
     let spriteUnit = new this.unitToSpawn(this.x, this.y, this.owner);
     let sprite = spriteUnit.createSpawnPlaceholderSprite();
     return sprite;

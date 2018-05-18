@@ -148,7 +148,7 @@ class Unit {
   }
 
   createSpawnPlaceholderSprite() {
-    let sprite = this.createSprite();
+    let sprite = this.createSprite(true);
     sprite.alpha = 0.5;
     return sprite;
   }
@@ -402,7 +402,7 @@ class Unit {
 
   }
 
-  createSprite() {
+  createSprite(hideHealthBar) {
     var sprite = new PIXI.Sprite(
       PIXI.loader.resources['byte_diamond_red'].texture
     );

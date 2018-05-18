@@ -93,8 +93,8 @@ class UnitBossSlime extends UnitBasic {
     //new UnitLine(0, t, r, t * 0.25, this), // Top-right
   }
 
-  createSprite() {
-    return this.createSpriteFromResource('enemy_boss_slime');
+  createSprite(hideHealthBar) {
+    return this.createSpriteFromResource('enemy_boss_slime', hideHealthBar);
   }
 
   doMovement(boardState) {

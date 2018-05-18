@@ -5,7 +5,7 @@ class Turret extends ZoneEffect {
     this.aimTarget = {x: this.x, y: this.y - Unit.UNIT_SIZE};
   }
 
-  createSprite() {
+  createSprite(hideHealthBar) {
     var sprite =
       new PIXI.Sprite(ImageLoader.getSquareTexture('deployables', 2));
 
@@ -17,7 +17,9 @@ class Turret extends ZoneEffect {
     sprite.addChild(this.turretSprite);
     this.turretSprite.anchor.set(0.5);
     sprite.anchor.set(0.5);
-    this.createHealthBarSprite(sprite);
+    if (!hideHealthBar) {
+      this.createHealthBarSprite(sprite);
+    }
     this.setAimTarget(this.aimTarget);
 
     sprite.width = Unit.UNIT_SIZE;

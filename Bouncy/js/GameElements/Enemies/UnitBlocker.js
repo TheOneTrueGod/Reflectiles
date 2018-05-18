@@ -45,7 +45,7 @@ class UnitBlocker extends UnitBasic {
     }
   }
 
-  createSprite() {
+  createSprite(hideHealthBar) {
     let container = new PIXI.Container();
     this.sprites.idleSprite = new PIXI.Sprite(
       PIXI.loader.resources['enemy_blocker'].texture
@@ -58,7 +58,9 @@ class UnitBlocker extends UnitBasic {
     container.addChild(this.sprites.idleSprite);
 
     //this.addPhysicsLines(container);
-    this.createHealthBarSprite(container);
+    if (!hideHealthBar) {
+      this.createHealthBarSprite(container);
+    }
 
     this.sprites.activeSprite.anchor.set(0.5);
     this.sprites.idleSprite.anchor.set(0.5);

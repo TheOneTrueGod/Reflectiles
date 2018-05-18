@@ -8,8 +8,8 @@ class UnitBasicDiamond extends UnitBasic {
     ];
   }
 
-  createSprite() {
-    return this.createSpriteFromResource('enemy_diamond');
+  createSprite(hideHealthBar) {
+    return this.createSpriteFromResource('enemy_diamond', hideHealthBar);
   }
 }
 

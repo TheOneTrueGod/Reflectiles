@@ -22,8 +22,8 @@ class UnitSlime extends UnitBasic {
     //new UnitLine(0, t, r, t * 0.25, this), // Top-right
   }
 
-  createSprite() {
-    return this.createSpriteFromResource('enemy_slime');
+  createSprite(hideHealthBar) {
+    return this.createSpriteFromResource('enemy_slime', hideHealthBar);
   }
 
   playMovement(pct) {
