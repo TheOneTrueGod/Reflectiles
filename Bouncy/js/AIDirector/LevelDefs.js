@@ -59,13 +59,13 @@ class LevelDef {
     let wave = this.waves[wavesSpawned];
     switch (wave.type) {
       case WAVE_TYPES.UNIT_LIST:
-        return new UnitListSpawnFormation(boardState, wave.units);
+        return new UnitListSpawnFormation(boardState, wave);
       case WAVE_TYPES.BASIC_WAVE:
-        return new BasicUnitWaveSpawnFormation(boardState, this.totalWaves, wave.count);
+        return new BasicUnitWaveSpawnFormation(boardState, this.totalWaves, wave);
       case WAVE_TYPES.ADVANCED_WAVE:
-        return new AdvancedUnitWaveSpawnFormation(boardState, this.totalWaves, wave.count, wave.advanced);
+        return new AdvancedUnitWaveSpawnFormation(boardState, this.totalWaves, wave);
       case WAVE_TYPES.FORMATION:
-        return new UnitFormationSpawnFormation(boardState, wave.units);
+        return new UnitFormationSpawnFormation(boardState, wave);
       case WAVE_TYPES.SKIP:
         return new SkipSpawnFormation(boardState, this.totalWaves);
       case WAVE_TYPES.GOTO:

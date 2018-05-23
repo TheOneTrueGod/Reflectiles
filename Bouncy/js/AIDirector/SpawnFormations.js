@@ -1,5 +1,5 @@
 class SpawnFormation {
-  constructor(boardState, totalWaves) {
+  constructor(boardState, totalWaves, waveDef) {
     this.boardState = boardState;
     this.totalWaves = totalWaves;
   }
@@ -42,9 +42,9 @@ class SpawnFormation {
 }
 
 class UnitListSpawnFormation extends SpawnFormation {
-  constructor(boardState, unitList) {
-    super(boardState, 1);
-    this.unitList = unitList;
+  constructor(boardState, waveDef) {
+    super(boardState, 1, waveDef);
+    this.unitList = waveDef.units;
     this.unitsToSpawn = 0;
     this.unitList.forEach((unitData) => {
       this.unitsToSpawn += unitData.count;
@@ -94,11 +94,11 @@ class UnitListSpawnFormation extends SpawnFormation {
 }
 
 class BasicUnitWaveSpawnFormation extends SpawnFormation {
-  constructor(boardState, totalWaves, unitsToSpawn = null) {
-    super(boardState, totalWaves);
+  constructor(boardState, totalWaves, waveDef) {
+    super(boardState, totalWaves, waveDef);
 
-    if (unitsToSpawn) {
-      this.unitsToSpawn = unitsToSpawn;
+    if (waveDef.count) {
+      this.unitsToSpawn = waveDef.count;
     } else {
       var pctDone = this.boardState.getWavesSpawned() / this.totalWaves;
       this.unitsToSpawn = this.boardState.sectors.columns
@@ -154,9 +154,9 @@ class BasicUnitWaveSpawnFormation extends SpawnFormation {
 }
 
 class AdvancedUnitWaveSpawnFormation extends BasicUnitWaveSpawnFormation {
-  constructor(boardState, totalWaves, unitsToSpawn = null, advancedToSpawn = null) {
-    super(boardState, totalWaves, unitsToSpawn);
-    this.advancedUnitsToSpawn = advancedToSpawn;
+  constructor(boardState, totalWaves, waveDef) {
+    super(boardState, totalWaves, waveDef);
+    this.advancedUnitsToSpawn = waveDef.advanced;
   }
 
   getAdvancedUnitSpawnWeights(unitsLeft) {
@@ -217,9 +217,9 @@ class AdvancedUnitWaveSpawnFormation extends BasicUnitWaveSpawnFormation {
 }
 
 class UnitFormationSpawnFormation extends SpawnFormation {
-  constructor(boardState, unitList) {
-    super(boardState, 0);
-    this.unitList = unitList;
+  constructor(boardState, waveDef) {
+    super(boardState, 0, waveDef);
+    this.unitList = waveDef.units;
     this.spawnHeight = this.unitList.length;
     this.spawnWidth = 0;
     this.unitList.forEach((unitRow) => {
@@ -255,7 +255,7 @@ class UnitFormationSpawnFormation extends SpawnFormation {
 
 class KnightAndShooterSpawnFormation extends SpawnFormation {
   constructor(boardState, totalWaves) {
-    super(boardState, totalWaves);
+    super(boardState, totalWaves, {});
     this.spawnWidth = 1;
     if (boardState.getWavesSpawned() > totalWaves * 0.5) {
       this.spawnWidth = 2;
@@ -300,7 +300,7 @@ class KnightAndShooterSpawnFormation extends SpawnFormation {
 }
 
 class SkipSpawnFormation extends SpawnFormation {
-  
+
 }
 
 class SpawnFormationUtils {

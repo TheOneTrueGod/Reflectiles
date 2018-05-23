@@ -2,6 +2,7 @@
 class LevelDefsWorld4 {
   static getStageDef(stage) {
     let __ = null;
+    let $$ = null;
     let AA = UnitBasicSquare;
     let BB = UnitBasicDiamond;
     let CC = UnitShover;
@@ -85,16 +86,31 @@ class LevelDefsWorld4 {
     } else if (stage == 'boss') {
       let KI = UnitBossKing;
       return new LevelDef({
+        'waveCount': 1,
         'initialSpawn':[
-          [WW, __, DE, SH, __, BB, __, __, __, BB, __, SH, DE, __, WW],
-          [WW, __, AA, BB, AA, __, __, KI, __, __, AA, BB, AA, __, WW],
-          [WW, __, __, __, __, KN, __, __, __, KN, __, __, __, __, WW],
-          [WW, __, __, __, __, __, __, DE, __, __, __, __, __, __, WW],
-          [WW, __, BB, __, BB, __, BB, DE, BB, __, BB, __, BB, __, WW],
-          [WW, __, __, AA, __, AA, __, AA, __, AA, __, AA, __, __, WW],
-          [WW, WW, WW, WW, WW, WW, WW, WW, WW, WW, WW, WW, WW, WW, WW]
+          [__, __, __, SH, __, __, $$, $$, $$, __, __, SH, __, __, __],
+          [__, __, __, __, __, __, $$, KI, $$, __, __, __, __, __, __],
+          [__, __, __, __, __, KN, $$, $$, $$, KN, __, __, __, __, __],
+          [__, __, __, __, __, __, __, __, __, __, __, __, __, __, __],
+          [__, __, __, __, __, __, __, DE, __, __, __, __, __, __, __],
+          [__, __, __, __, __, __, __, __, __, __, __, __, __, __, __],
+          [__, __, __, WW, WW, WW, WW, WW, WW, WW, WW, WW, __, __, __]
         ],
-        'waves':[]
+        'waves':[
+          {'type': WAVE_TYPES.UNIT_LIST, 'units':[]},
+          {'type': WAVE_TYPES.GOTO, 'offset': -1, 'until': {'condition': WAVE_CONDITION.BOSS_HEALTH, 'health_percent': 0.9}},
+          {'type': WAVE_TYPES.FORMATION, units: [
+            [__, __, __, $$, __, __, $$, $$, $$, __, __, $$, __, __, __],
+            [__, __, __, __, __, __, $$, $$, $$, __, __, __, __, __, __],
+            [__, __, __, __, __, $$, $$, $$, $$, $$, __, __, __, __, __],
+            [__, __, __, __, __, __, __, __, __, __, __, __, __, __, __],
+            [__, __, __, __, __, __, __, $$, __, __, __, __, __, __, __],
+            [__, __, __, __, __, __, __, __, __, __, __, __, __, __, __],
+            [__, __, __, $$, $$, $$, $$, $$, $$, $$, $$, $$, __, __, __]
+          ]},
+          {'type': WAVE_TYPES.UNIT_LIST, 'units':[]},
+          {'type': WAVE_TYPES.GOTO, 'offset': -1, 'until': {'condition': WAVE_CONDITION.BOSS_HEALTH, 'health_percent': 0.6}},
+        ]
       });
     }
     console.warn("No level def for World 4, stage " + stage);
