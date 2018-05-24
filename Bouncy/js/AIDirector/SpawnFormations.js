@@ -222,16 +222,25 @@ class UnitFormationSpawnFormation extends SpawnFormation {
     this.unitList = waveDef.units;
     this.spawnHeight = this.unitList.length;
     this.spawnWidth = 0;
+    this.forceSpawn = waveDef.forceSpawn ? waveDef.forceSpawn : false;
     this.unitList.forEach((unitRow) => {
       this.spawnWidth = Math.max(this.spawnWidth, unitRow.length);
     });
   }
 
   isValidSpawnSpot(spawnPosition) {
+    
+    let topLeft = {x: spawnPosition.x, y: 0};
+    let bottomRight = {x: spawnPosition.x + this.spawnWidth, y: this.spawnHeight};
+
+    if (this.forceSpawn) {
+      return !SpawnFormationUtils.isSpawnOutOfRange(this.boardState, topLeft, bottomRight);
+    }
+
     return SpawnFormationUtils.isBoxClearForSpawn(
       this.boardState,
-      {x: spawnPosition.x, y: 0},
-      {x: spawnPosition.x + this.spawnWidth, y: this.spawnHeight},
+      topLeft,
+      bottomRight,
     );
   }
 
@@ -304,11 +313,18 @@ class SkipSpawnFormation extends SpawnFormation {
 }
 
 class SpawnFormationUtils {
-  static isBoxClearForSpawn(boardState, topLeft, bottomRight) {
+  static isSpawnOutOfRange(boardState, topLeft, bottomRight) {
     if (
       topLeft.x > bottomRight.x || topLeft.y > bottomRight.y ||
       topLeft.x < 0 || bottomRight.x > boardState.sectors.columns
     ) {
+      return true;
+    }
+    return false;
+  }
+
+  static isBoxClearForSpawn(boardState, topLeft, bottomRight) {
+    if (SpawnFormationUtils.isSpawnOutOfRange(boardState, topLeft, bottomRight)) {
       return false;
     }
 

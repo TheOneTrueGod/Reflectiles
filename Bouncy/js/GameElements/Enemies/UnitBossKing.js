@@ -15,22 +15,23 @@ class UnitBossKing extends UnitBasic {
   }
 
   createCollisionBox() {
-    var t = -this.physicsHeight / 2;
+    var t = -this.physicsHeight / 2 + 30;
     var b = this.physicsHeight / 2;
-    var r = this.physicsWidth / 2;
-    var l = -this.physicsWidth / 2;
+    var r = this.physicsWidth / 2 - 15;
+    var l = -this.physicsWidth / 2 + 15;
 
     var offset = 0;
     this.collisionBox = [
-      new UnitLine(l - offset, t, r + offset, t, this), // Top
-      new UnitLine(r, t - offset, r, b + offset, this), // Right
-      new UnitLine(r + offset, b, l - offset, b, this), // Bottom
-      new UnitLine(l, b + offset, l, t - offset, this), // Left
+      new UnitLine(l, t, 0, t - 20, this), // Top Left
+      new UnitLine(0, t - 20, r, t, this), // Top Right
+      new UnitLine(r, t, r, b, this), // Right
+      new UnitLine(r, b, l, b, this), // Bottom
+      new UnitLine(l, b, l, t, this), // Left
     ];
   }
 
   createSprite(hideHealthBar) {
-    return this.createSpriteFromResource('enemy_boss_healer', hideHealthBar);
+    return this.createSpriteFromResource('enemy_boss_king', hideHealthBar);
   }
 
   doMovement(boardState) {

@@ -47,8 +47,14 @@ class UnitDefensive extends UnitBasic {
   }
 
   dealDamage(boardState, amount, source, damageType) {
+    if (!this.canUseAbilities()) {
+      return super.dealDamage(boardState, amount, source, damageType);
+    }
     if (this.damageTakenOnTurn >= this.getDamageThreshold()) {
-      return 0;
+      if (damageType == Unit.DAMAGE_TYPE.CORROSIVE) {
+        return super.dealDamage(boardState, amount / 2, source, damageType) * 2;
+      }
+      return amount;
     }
     let startHP = this.getHealth().current + this.getShield().current + this.getArmour().current;
     let damageTaken = super.dealDamage(boardState, amount, source, damageType);
@@ -61,6 +67,7 @@ class UnitDefensive extends UnitBasic {
         this.sprites['enemy_damage_limit'].visible = false;
       }
     }
+    return damageTaken;
   }
 
   startOfPhase(boardState, phase) {

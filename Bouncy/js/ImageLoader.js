@@ -22,6 +22,8 @@ class ImageLoader {
         .add("enemy_castle_wall",  "/Bouncy/assets/enemies/enemy_castle_wall.png")
         .add("enemy_bone_wall",  "/Bouncy/assets/enemies/enemy_bone_wall.png")
         .add("enemy_boss_slime",  "/Bouncy/assets/enemies/enemy_boss_slime.png")
+        .add("enemy_boss_king",  "/Bouncy/assets/enemies/enemy_boss_king.png")
+        .add("enemy_boss_wizard",  "/Bouncy/assets/enemies/enemy_boss_wizard.png")
         .add("zone_shield",  "/Bouncy/assets/sprites/zone_shield.png")
         .add("zone_blocker_barrier",  "/Bouncy/assets/enemies/zone_blocker_barrier.png")
         .add("enemy_protector",  "/Bouncy/assets/enemies/enemy_protector.png")
