@@ -438,8 +438,7 @@ class MainGame {
       var validMove = PlayerCommandMove.findValidMove(
         this.boardState,
         $('#gameContainer').attr('playerID'),
-        event.offsetX,
-        event.offsetY
+        x, y
       );
       if (validMove) {
         this.aimPreviews[commandTurn] = new PlayerCommandMove(validMove.x, validMove.y);

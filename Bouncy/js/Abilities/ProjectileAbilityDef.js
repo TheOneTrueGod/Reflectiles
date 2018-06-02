@@ -115,6 +115,12 @@ class ProjectileAbilityDef extends AbilityDef {
     return this.projectileType;
   }
 
+  getValidTarget(target, playerID) {
+    // TODO: Pass in boardState.  Too lazy right now.
+    if (this.shape.getValidTarget) { return this.shape.getValidTarget(MainGame.boardState, target, playerID); }
+    return super.getValidTarget(target, playerID);
+  }
+
   doActionOnTick(playerID, tick, boardState, castPoint, targetPoint) {
     super.doActionOnTick(playerID, tick, boardState, castPoint, targetPoint);
     this.shape.doActionOnTick(playerID, tick, boardState, castPoint, targetPoint);

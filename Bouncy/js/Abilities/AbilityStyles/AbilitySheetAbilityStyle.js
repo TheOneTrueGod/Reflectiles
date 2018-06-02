@@ -84,6 +84,13 @@ class AbilitySheetSpriteAbilityStyleBuilder extends SpriteAbilityStyleBuilder {
     this.coords = {left: left, top: top, right: right, bottom: bottom};
     return this;
   }
+  setCoordIndex(left, top, width, height) {
+    this.coords = {
+      left: left * width, top: top * height,
+      right: left * width + width, bottom: top * height + height
+    };
+    return this;
+  }
   setScale(scale) { this.scale = scale; return this;}
   setRotation(rotation) { this.rotation = rotation; return this; }
   setExplosion(explosion) { this.explosion = explosion; return this; }

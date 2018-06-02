@@ -38,11 +38,3 @@ class SpriteAbilityStyle extends AbilityStyle {
     }
   }
 }
-
-class SpriteAbilityStyleBuilder {
-  build() {
-    return {
-      style_name: 'SPRITE'
-    };
-  }
-}

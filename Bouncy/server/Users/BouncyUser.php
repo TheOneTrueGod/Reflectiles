@@ -16,7 +16,7 @@ class BouncyUser extends User {
   public function resetDeckData() {
     $chaosDeck = '[3, 2, 10, 11, 12]';
     $damageDeck = '[0, 1, 2, 3, 15]';
-    $supportDeck = '[5, 6, 7, 8, 9]';
+    $supportDeck = '[5, 25, 7, 8, 9]';
     $poisonDeck = '[13, 14, 15, 16, 17]';
     $turretDeck = '[18, 19, 20, 21, 22]';
     if ($this->id == 'tab' || $this->id == 'totg') {
@@ -54,7 +54,7 @@ class BouncyUser extends User {
   public function resetCardData() {
     $this->cards = [];
     $card_index = 0;
-    for ($i = 0; $i < 25; $i++) {
+    for ($i = 0; $i < 26; $i++) {
       if ($i !== 10 && $i !== 12) {
         array_push($this->cards, new PlayerCard($card_index++, $i));
         //array_push($this->cards, new PlayerCard($card_index++, $i));

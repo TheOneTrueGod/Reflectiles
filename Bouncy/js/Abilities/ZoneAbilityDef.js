@@ -25,34 +25,9 @@ class ZoneAbilityDef extends AbilityDef {
 
   getValidTarget(target, playerID) {
     var castPoint = MainGame.boardState.getPlayerCastPoint(playerID, TurnPhasesEnum.PLAYER_ACTION);
+
     // TODO: Pass in boardState.  Too lazy right now.
-    var castPointCoord = MainGame.boardState.sectors.getGridCoord(castPoint);
-    var targetCoord = MainGame.boardState.sectors.getGridCoord(target);
-
-    var targX = Math.min(
-      Math.max(castPointCoord.x - this.MAX_RANGE.left, targetCoord.x),
-      castPointCoord.x + this.MAX_RANGE.right
-    );
-    var targY = Math.min(
-      Math.max(castPointCoord.y - this.MAX_RANGE.top, targetCoord.y),
-      castPointCoord.y + this.MAX_RANGE.bottom
-    );
-
-    //console.log(castPointCoord.x - this.MAX_RANGE.left, targetCoord.x, castPointCoord.x + this.MAX_RANGE.right);
-    //console.log(castPointCoord.y - this.MAX_RANGE.top, targetCoord.y, castPointCoord.y + this.MAX_RANGE.bottom);
-
-    target = {x: targX, y: targY};
-    if (!target) { return null; }
-    return MainGame.boardState.sectors.getPositionFromGrid(target);
-/*    var max_range = idx(this.getOptionalParam('zone_size', {}), 'y_range', -1);
-    if (max_range == -1) {
-      return {x: target.x, y: target.y};
-    }
-
-    var maxY = MainGame.boardState.boardSize.height - (max_range + 0.5) * Unit.UNIT_SIZE;
-    var y = target.y;
-    y = Math.max(y, maxY);
-    return {x: target.x, y: y};*/
+    return AbilityTargetCalculations.getBoxTarget(MainGame.boardState, target, castPoint, this.MAX_RANGE);
   }
 
   isZoneDamageableByPlayers() {
@@ -98,25 +73,7 @@ class ZoneAbilityDef extends AbilityDef {
   }
 
   createTargettingGraphic(startPos, endPos, color) {
-    var lineGraphic = new PIXI.Graphics();
-    var pos = MainGame.boardState.sectors.snapPositionToGrid(endPos);
-
-    var size = this.getZoneSize();
-    var left = ((size.left + 0.5) * Unit.UNIT_SIZE);
-    var right = ((size.right + 0.5) * Unit.UNIT_SIZE);
-    var top = ((size.top + 0.5) * Unit.UNIT_SIZE);
-    var bottom = ((size.bottom + 0.5) * Unit.UNIT_SIZE);
-
-    lineGraphic.position.set(pos.x, pos.y);
-
-    lineGraphic
-      .lineStyle(1, color)
-      .drawRect(
-        -left, -top,
-        left + right, top + bottom
-      );
-
-    return lineGraphic;
+    return TargettingDrawHandler.createSquareTarget(endPos, this.getZoneSize(), color);
   }
 
   endOfPhase(boardState, phase, zone) {

@@ -202,7 +202,7 @@ class Unit {
     if (damageType === undefined) {
       console.warn("DamageType not provided to dealDamage");
     }
-    if (source instanceof Projectile) {
+    if (source instanceof Projectile || source instanceof AbilitySource) {
       abilID = AbilityDef.findAbsoluteParent(source.abilityDef.index);
       playerID = source.playerID;
     } else if (source instanceof StatusEffect) {

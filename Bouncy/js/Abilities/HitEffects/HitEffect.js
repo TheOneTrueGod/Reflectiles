@@ -12,14 +12,22 @@ class HitEffect {
     return defaultValue;
   }
 
+  getAoEType() {
+    return idx(this.hitEffectDef, 'aoe_type', ProjectileShape.AOE_TYPES.NONE);
+  }
+
+  getAoESize() {
+    return idx(this.hitEffectDef, 'aoe_size', {x: [-1, 1], y: [-1, 1]});
+  }
+
   doHitEffect(boardState, unit, intersection, source) {
-    var AOEType = idx(this.hitEffectDef, 'aoe_type', ProjectileShape.AOE_TYPES.NONE);
+    var AOEType = this.getAoEType();
     var aoeUnitsToHit = [];
     var damageDealt = 0;
     if (AOEType == ProjectileShape.AOE_TYPES.NONE) {
       damageDealt += this.doHitEffectOnUnit(boardState, unit, intersection, source);
     } else if (AOEType == ProjectileShape.AOE_TYPES.BOX) {
-      var size = idx(this.hitEffectDef, 'aoe_size', {x: [-1, 1], y: [-1, 1]});
+      var size = this.getAoESize();
       for (var x = size.x[0]; x <= size.x[1]; x++) {
         for (var y = size.y[0]; y <= size.y[1]; y++) {
           var targetPos = {

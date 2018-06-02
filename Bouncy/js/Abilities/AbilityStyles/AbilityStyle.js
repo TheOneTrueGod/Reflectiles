@@ -123,6 +123,27 @@ class AbilityStyle {
               .build(),
           ]
         }
+      case AbilityStyle.EXPLOSION_PREFABS.IMPACT:
+        return {
+          radius: radius,
+          style_defs: [
+            (new AbilitySheetSpriteAbilityStyleBuilder())
+              .setSheet('impact_hit').setCoordIndex(0, 0, 25, 25)
+              .build(),
+            (new AbilitySheetSpriteAbilityStyleBuilder())
+              .setSheet('impact_hit').setCoordIndex(1, 0, 25, 25)
+              .build(),
+            (new AbilitySheetSpriteAbilityStyleBuilder())
+              .setSheet('impact_hit').setCoordIndex(2, 0, 25, 25)
+              .build(),
+            (new AbilitySheetSpriteAbilityStyleBuilder())
+              .setSheet('impact_hit').setCoordIndex(3, 0, 25, 25)
+              .build(),
+            (new AbilitySheetSpriteAbilityStyleBuilder())
+              .setSheet('impact_hit').setCoordIndex(4, 0, 25, 25)
+              .build(),
+          ]
+        };
     }
     return {};
   }
@@ -132,4 +153,5 @@ AbilityStyle.FALLBACK_STYLE = new AbilityStyle({});
 AbilityStyle.EXPLOSION_PREFABS = {
   POISON: 'POISON',
   WHITE: 'WHITE',
+  IMPACT: 'IMPACT',
 };

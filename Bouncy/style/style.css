@@ -807,7 +807,9 @@
 
 .levelSelect.world1 .boss:after,
 .levelSelect.world2 .boss:after,
-.levelSelect.world3 .boss:after {
+.levelSelect.world3 .boss:after,
+.levelSelect.world4 .boss:after,
+.levelSelect.world5 .boss:after {
   content: "";
 }
 
@@ -826,6 +828,16 @@
   background-size: 70%;
   background-repeat: no-repeat;
   background-position: center;
+}
+
+.levelSelect.world4 .boss {
+  background-image: url('../assets/enemies/enemy_boss_king.png');
+  background-size: 100%;
+}
+
+.levelSelect.world5 .boss {
+  background-image: url('../assets/enemies/enemy_boss_wizard.png');
+  background-size: 100%;
 }
 
 .levelSelect .levelContainer {

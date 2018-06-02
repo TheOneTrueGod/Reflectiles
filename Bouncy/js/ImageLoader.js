@@ -31,6 +31,7 @@ class ImageLoader {
         .add("effect_heal",  "/Bouncy/assets/sprites/effect_heal.png")
         .add("core", "/Bouncy/assets/enemies/core.png")
         .add("sprite_explosion",  "/Bouncy/assets/sprites/explosion.png")
+        .add("impact_hit",  "/Bouncy/assets/sprites/impact_hit.png")
         .add("bullet_sheet",  "/Bouncy/assets/sprites/bullet_sheet.png")
         .add("poison_sheet",  "/Bouncy/assets/sprites/poison_sheet.png")
         .add("weapons_sheet",  "/Bouncy/assets/sprites/weapons_sheet.png")

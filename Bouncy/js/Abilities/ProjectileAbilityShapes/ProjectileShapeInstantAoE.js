@@ -1,5 +1,4 @@
 /* Params
- * [TODO] num_bullets (int) -- the number of bullets to be fired.
  */
 class ProjectileShapeInstantAoE extends ProjectileShape {
   constructor(abilityDef) {
@@ -22,12 +21,55 @@ class ProjectileShapeInstantAoE extends ProjectileShape {
       const hitEffects = this.abilityDef.getHitEffects();
       for (let i = 0; i < hitEffects.length; i++) {
         const hitEffect = HitEffect.getHitEffectFromType(hitEffects[i], this.abilityDef, this);
-        hitEffect.doHitEffect(boardState, targetPoint, null, targetPoint);
+        if (hitEffect.getAoEType() === ProjectileShape.AOE_TYPES.NONE) {
+          throw new Error("Don't Use an instant AoE without an AoE");
+        }
+        hitEffect.doHitEffect(boardState, targetPoint, null,
+          new AbilitySource(targetPoint.x, targetPoint.y, this.abilityDef, playerID)
+        );
       }
     }
   }
 
   hasFinishedDoingEffect(tickOn) {
     return tickOn > this.ACTIVATE_ON_TICK;
+  }
+
+  createTargettingGraphic(startPos, endPos, color) {
+    const hitEffects = this.abilityDef.getHitEffects();
+    for (let i = 0; i < hitEffects.length; i++) {
+      const hitEffect = HitEffect.getHitEffectFromType(hitEffects[i], this.abilityDef, this);
+      if (hitEffect.getAoEType() === ProjectileShape.AOE_TYPES.BOX) {
+        let aoeSize = hitEffect.getAoESize();
+        let size = {
+          left: -aoeSize.x[0], right: aoeSize.x[1],
+          top: -aoeSize.y[0], bottom: aoeSize.y[1]
+        };
+        return TargettingDrawHandler.createSquareTarget(
+          endPos,
+          {
+            left: idx(size, 'left', 0),
+            right: idx(size, 'right', 0),
+            top: idx(size, 'top', 0),
+            bottom: idx(size, 'bottom', 0)
+          },
+          color
+        );
+      }
+    }
+  }
+
+  getValidTarget(boardState, target, playerID) {
+    let maxRange = this.abilityDef.getOptionalParam('max_range', null);
+    if (!maxRange) {
+      return target;
+    }
+    var castPoint = boardState.getPlayerCastPoint(playerID, TurnPhasesEnum.PLAYER_ACTION);
+    return AbilityTargetCalculations.getBoxTarget(
+      boardState,
+      target,
+      castPoint,
+      maxRange
+    );
   }
 }

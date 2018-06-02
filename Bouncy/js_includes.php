@@ -15,6 +15,7 @@
 <!-- Order of these doesn't matter.  They're all classes -->
 <script src="/Bouncy/js/GameElements/Unit.js"></script>
 <script src="/Bouncy/js/GameElements/Projectiles/Projectile.js"></script>
+<script src="/Bouncy/js/GameElements/Projectiles/AbilitySource.js"></script>
 <script src="/Bouncy/js/GameElements/Projectiles/ProjectileCurveHandler.js"></script>
 <script src="/Bouncy/js/BoardState.js"></script>
 <script src="/Bouncy/js/GameStats.js"></script>
@@ -42,6 +43,7 @@
 <script src="/Bouncy/js/AIDirector/LevelDefs/LevelDefsWorld2.js"></script>
 <script src="/Bouncy/js/AIDirector/LevelDefs/LevelDefsWorld3.js"></script>
 <script src="/Bouncy/js/AIDirector/LevelDefs/LevelDefsWorld4.js"></script>
+<script src="/Bouncy/js/AIDirector/LevelDefs/LevelDefsWorld5.js"></script>
 <script src="/Bouncy/js/Players/Player.js"></script>
 <script src="/Bouncy/js/Players/PlayerDeck.js"></script>
 <script src="/Bouncy/js/Players/PlayerCard.js"></script>
@@ -62,6 +64,8 @@
 <script src="/Bouncy/js/Abilities/ProjectileAbilityDef.js"></script>
 <script src="/Bouncy/js/Abilities/PositionBasedAbilityDef.js"></script>
 <script src="/Bouncy/js/Abilities/ZoneAbilityDef.js"></script>
+<script src="/Bouncy/js/Abilities/Targetting/AbilityTargetCalculations.js"></script>
+<script src="/Bouncy/js/Abilities/TargettingDrawHandler.js"></script>
 <script src="/Bouncy/js/Abilities/SummonUnitAbilityDef.js"></script>
 <script src="/Bouncy/js/Abilities/MultipartAbilityDef.js"></script>
 <script src="/Bouncy/js/Abilities/ProjectileAbilityShapes/ProjectileShapeSingleShot.js"></script>
@@ -115,7 +119,7 @@
 <?php
   }
 ?>
-<!--script src="/Bouncy/js/Abilities/AbilityCores/DefenderAbilityCores/AbilityCore25.js"></script-->
+<script src="/Bouncy/js/Abilities/AbilityCores/DefenderAbilityCores/AbilityCore25.js"></script>
 
 <!-- Extends the above -->
 <script src="/Bouncy/js/GameElements/Effects/LineEffect.js"></script>
