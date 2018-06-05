@@ -9,9 +9,31 @@ class AbilityCore25 extends AbilityCore {
     );
 
     damage = Math.floor(damage);
+
+    let hit_effects =
+      [{
+        effect: ProjectileShape.HitEffects.DAMAGE,
+        base_damage: damage,
+        aoe_type: ProjectileShape.AOE_TYPES.BOX,
+        aoe_size: {x:[-1, 1], y:[-1, 0]}
+      }];
+
+    let description = 'Swing your hammer in a wide arc, hitting all units in front of you for <<' + damage + '>> damage.';
+
+    if (this.hasPerk(perkPcts, 'freeze')) {
+      hit_effects.push({
+        effect: ProjectileShape.HitEffects.FREEZE,
+        duration: 1,
+        aoe_type: ProjectileShape.AOE_TYPES.BOX,
+        aoe_size: {x:[-1, 1], y:[-1, 0]}
+      });
+
+      description += "<br>Freezes all units hit for one turn.";
+    };
+
     const rawAbil = {
       name: 'Hammer',
-      description: 'Swing your hammer in a wide arc, hitting all units in front of you for <<' + damage + '>> damage.',
+      description,
       card_text_description: '[[timeout_effects[0].abil_def.hit_effects[0].base_damage]]',
       charge: {initial_charge: -1, max_charge: 2, charge_type: AbilityDef.CHARGE_TYPES.TURNS},
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
@@ -22,27 +44,21 @@ class AbilityCore25 extends AbilityCore {
         ))
         .build(),
       projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
-      hit_effects: [{
-        effect: ProjectileShape.HitEffects.DAMAGE,
-        base_damage: damage,
-        aoe_type: ProjectileShape.AOE_TYPES.BOX,
-        aoe_size: {x:[-1, 1], y:[-1, 0]}
-      }],
+      hit_effects,
       max_range: {
         left: 1,
         right: 1,
         top: 1 + this.hasPerk(perkPcts, 'range up'), bottom: 0
       },
       icon: "/Bouncy/assets/icons/hammer-drop.png",
-      charge: this.getCooldown(perkList, perkCounts),
+      charge: this.getCooldown(perkList, perkPcts),
     };
     return AbilityDef.createFromJSON(rawAbil);
   }
 
-  static getCooldown(perkList, perkCounts) {
+  static getCooldown(perkList, perkPcts) {
     let perkCount = perkList.length;
-    let cooldown = 2;
-    cooldown -= idx(perkCounts, 'recharge 4', 0);
+    let cooldown = 2 + this.hasPerk(perkPcts, 'freeze');
 
     cooldown = Math.round(cooldown);
     if (cooldown <= 1) {
@@ -55,15 +71,17 @@ class AbilityCore25 extends AbilityCore {
   static GetPerkList() {
     let perkList = [
       (new AbilityPerkNode('damage 1', 10, [0, 3])),
-      (new MaxxedAbilityPerkNode('range up', 5, [1, 2]))
+      (new MaxxedAbilityPerkNode('freeze', 5, [1, 2]))
         .addRequirement(new PerkLevelRequirement('damage 1')),
       (new AbilityPerkNode('damage 2', 15, [2, 3]))
         .addRequirement(new PerkLevelRequirement('damage 1', 'max')),
+      (new MaxxedAbilityPerkNode('range up', 5, [3, 4]))
+        .addRequirement(new PerkLevelRequirement('damage 2')),
       (new AbilityPerkNode('damage 3', 15, [4, 3]))
         .addRequirement(new PerkLevelRequirement('damage 2', 'max')),
-      (new MaxxedAbilityPerkNode('width up', 10, [5, 2]))
+      (new MaxxedAbilityPerkNode('width up', 5, [5, 2]))
         .addRequirement(new PerkLevelRequirement('damage 3')),
-      (new MaxxedAbilityPerkNode('height up', 10, [5, 4]))
+      (new MaxxedAbilityPerkNode('height up', 5, [5, 4]))
         .addRequirement(new PerkLevelRequirement('damage 3')),
       (new AbilityPerkNode('damage 4', 20, [6, 3]))
         .addRequirement(new PerkLevelRequirement('damage 3', 'max')),
@@ -73,7 +91,7 @@ class AbilityCore25 extends AbilityCore {
 
   static GetDemoUnits() {
     return  [
-      [null, null, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare],
+      [null, null, UnitShooter, UnitBasicSquare, UnitShooter],
       [null, null, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare],
       [null, null, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare],
       [null, null, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare],
