@@ -12,12 +12,9 @@ class Tester extends MainGame {
 
     this.unitsToSpawn = [
       [UnitBasicSquare, null, null, null, UnitBasicSquare],
-      [UnitBasicSquare, null, null, null, UnitBasicSquare],
-      [UnitBasicSquare, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare],
-      [null, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare, null],
-      [UnitBasicSquare, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare],
+      [UnitBasicSquare, null, UnitBossGrandWizard, null, UnitBasicSquare],
       [null, null, null, null, null],
-      [UnitCastleWall, UnitCastleWall, UnitCastleWall, UnitCastleWall, UnitCastleWall]
+      [null, null, null, null, null],
     ];
     /*this.unitsToSpawn =
     [
@@ -60,7 +57,7 @@ class Tester extends MainGame {
     this.abilitiesToUse = [
       //[TestAbils[3].index, {x: -100, y: -50}],
       //[this.buildAbility(AbilityCore8).index, {x: 0, y: -100}],
-      [this.buildAbility(AbilityCore5,
+      //[this.buildAbility(AbilityCore5,
         /*["pass through 1", "pass through 1", "pass through 1", "damage 1", "damage 1",
         "damage 1", "pass through damage 2", "pass through damage 2", "pass through damage 2",
         "fire damage 2", "fire damage 2", "fire damage 2", "kills explode 3", "kills explode 3",
@@ -72,7 +69,7 @@ class Tester extends MainGame {
         "damage to far", "damage to far", "damage to far", "damage to far", "damage to far", "damage to far",
         "damage to far", "damage to far", "damage to far", "damage to far", "damage to far", "damage to far",
         "damage to far", "damage to far"]*/
-      ).index, {x: 0, y: -100}],
+      //).index, {x: 0, y: -100}],
       //[this.buildAbility(AbilityCore0, ['damage1', 'damage1', 'damage1', 'rocket count4', 'rocket count4', 'rocket count4']).index, {x: 0, y: -100}],
       //[this.buildAbility(AbilityCore0, ['damage1', 'damage1', 'damage1', 'rocket count4', 'rocket count4', 'rocket count4']).index, {x: 0, y: -100}],
       //[this.buildAbility(AbilityCore0, ['damage1', 'damage1', 'damage1', 'rocket count4', 'rocket count4', 'rocket count4']).index, {x: 0, y: -100}],
