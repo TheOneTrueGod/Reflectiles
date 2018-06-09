@@ -3,7 +3,7 @@ class SpriteShatterEffect extends Effect {
     super({x: oldPosition.x, y: oldPosition.y}, 0);
 
     this.originalSprite = sprite;
-    
+
     if (time) {
       this.startTime = time;
       this.time = this.startTime;

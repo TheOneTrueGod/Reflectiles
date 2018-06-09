@@ -142,6 +142,7 @@ class UnitBasic extends Unit {
       if (!onFirst) {
         this.sprites[res].visible = false;
       } else {
+        this.visibleSprite = this.sprites[res];
         onFirst = false;
       }
 
@@ -154,6 +155,14 @@ class UnitBasic extends Unit {
     container.width = this.physicsWidth;
     container.height = this.physicsHeight;
     return container;
+  }
+
+  setSpriteVisible(resourceName) {
+    if (this.visibleSprite) {
+      this.visibleSprite.visible = false;
+    }
+    this.visibleSprite = this.sprites[resourceName];
+    this.visibleSprite.visible = true;
   }
 
   createSprite(hideHealthBar) {

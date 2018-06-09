@@ -21,8 +21,9 @@ class EnemyAbilitySummonFireShards extends EnemyAbility {
 
     for (let i = 0; i < Math.min(this.numShards, validCoords.length); i++) {
       let targetPos = validCoords[i];
-      let newUnit = new UnitBasicSquare(targetPos.x, targetPos.y, 0);
+      let newUnit = new UnitFireShard(targetPos.x, targetPos.y, 0);
       boardState.addUnit(newUnit);
+      newUnit.playSpawnEffect(boardState, this.unit, 15, Unit.SpawnEffects.DEFAULT);
     }
   }
 }

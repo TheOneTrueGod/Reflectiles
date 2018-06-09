@@ -9,7 +9,7 @@ class UnitBossGrandWizard extends UnitBasic {
     this.traits[Unit.UNIT_TRAITS.FROST_IMMUNE] = true;
     // Ability Stuff.  Move to UnitBasic eventually.
     this.abilities = [];
-    this.abilities.push(new EnemyAbilitySummonFireShards(this, 4));
+    this.abilities.push(new EnemyAbilitySummonFireShards(this, 2));
   }
 
   getUnitSize() {

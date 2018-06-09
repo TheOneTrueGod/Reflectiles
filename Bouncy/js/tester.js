@@ -11,8 +11,8 @@ class Tester extends MainGame {
     this.cachedAbilities = {};
 
     this.unitsToSpawn = [
-      [UnitBasicSquare, null, null, null, UnitBasicSquare],
-      [UnitBasicSquare, null, UnitBossGrandWizard, null, UnitBasicSquare],
+      [UnitFireShard, null, null, null, UnitFireShard],
+      [null, null, UnitBossGrandWizard, null, null],
       [null, null, null, null, null],
       [null, null, null, null, null],
     ];
