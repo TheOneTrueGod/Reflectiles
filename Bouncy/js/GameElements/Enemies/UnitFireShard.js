@@ -1,8 +1,8 @@
 class UnitFireShard extends UnitBasic {
   constructor(x, y, owner, id) {
     super(x, y, owner, id);
-    this.timeLeft = NumbersBalancer.getUnitAbilityNumber(this, NumbersBalancer.UNIT_ABILITIES.BOMBER_DURATION);
     this.FIRE_SHARD_SPRITES = 4;
+    this.timeLeft = this.FIRE_SHARD_SPRITES;
   }
 
   createCollisionBox() {
@@ -47,7 +47,9 @@ class UnitFireShard extends UnitBasic {
   }
 
   explode(boardState) {
-    var num_projectiles = 3;
+    var num_projectiles = NumbersBalancer.getUnitAbilityNumber(this,
+      NumbersBalancer.UNIT_ABILITIES.FIRE_SHARD_NUM_SHOTS
+    );
     for (var i = -Math.floor(num_projectiles / 2); i <= Math.floor(num_projectiles / 2); i++) {
       let angle = Math.PI / 2.0 + i / Math.floor(num_projectiles / 2) * Math.PI / 4.0;
       boardState.addProjectile(
@@ -57,11 +59,11 @@ class UnitFireShard extends UnitBasic {
           angle,
           {
             //'friendly_fire': true,
-            'damage_to_players': NumbersBalancer.getUnitAbilityNumber(this,
-              NumbersBalancer.UNIT_ABILITIES.BOMBER_EXPLOSION_DAMAGE
-            ) / num_projectiles,
+            'damage_to_players': Math.floor(NumbersBalancer.getUnitAbilityNumber(this,
+              NumbersBalancer.UNIT_ABILITIES.FIRE_SHARD_TOTAL_DAMAGE
+            ) / num_projectiles),
           }
-        ).addUnitHitCallback(this.unitHitCallback.bind(this))
+        )
       );
     }
   }
@@ -75,13 +77,6 @@ class UnitFireShard extends UnitBasic {
       'fire_shard_2',
       'fire_shard_3',
     ], hideHealthBar);
-  }
-
-  unitHitCallback(boardState, unit, intersection, projectile) {
-    var hitEffect = new DamageHitEffect({
-      'base_damage': this.health.max / 8
-    }, null);
-    hitEffect.doHitEffect(boardState, unit, intersection, projectile);
   }
 }
 
