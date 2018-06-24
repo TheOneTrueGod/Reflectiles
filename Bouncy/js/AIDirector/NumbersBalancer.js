@@ -132,6 +132,10 @@ class NumbersBalancer {
         healthVal = 1000;
         shieldVal = 1000;
         break;
+      case "UnitBossGrandWizard":
+        healthVal = 1000;
+        shieldVal = 2000;
+        break;
       case "UnitBossKing":
         healthVal = 5000;
         armorVal = 1000;
@@ -140,6 +144,13 @@ class NumbersBalancer {
         healthVal = 50;
         armorVal = 150;
         break;
+      case "UnitIceWall":
+        healthVal = 50;
+        shieldVal = 350;
+        break;
+      case "UnitFireShard":
+        healthVal = 100;
+        shieldVal = 100;
     }
     return {
       health: Math.floor(healthVal * healthMultiplier),
@@ -209,6 +220,10 @@ class NumbersBalancer {
         return 3;
       case this.UNIT_ABILITIES.FIRE_SHARD_NUM_SHOTS:
         return 3;
+      case this.UNIT_ABILITIES.WIZARD_NUM_WALLS:
+        return 4;
+      case this.UNIT_ABILITIES.WIZARD_NUM_SHARDS:
+        return 4;
     }
     throw new Error("Failure");
   }
@@ -240,6 +255,8 @@ NumbersBalancer.prototype.UNIT_ABILITIES = {
   CASTLE_WALL_REVIVE_TURNS: 'CASTLE_WALL_REVIVE_TURNS',
   FIRE_SHARD_NUM_SHOTS: 'FIRE_SHARD_NUM_SHOTS',
   FIRE_SHARD_TOTAL_DAMAGE: 'FIRE_SHARD_TOTAL_DAMAGE',
+  WIZARD_NUM_SHARDS: 'WIZARD_NUM_SHARDS',
+  WIZARD_NUM_WALLS: 'WIZARD_NUM_WALLS',
 };
 
 NumbersBalancer.prototype.DIFFICULTIES = {

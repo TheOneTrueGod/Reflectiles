@@ -4,8 +4,6 @@ class UnitShooter extends UnitBasic {
   }
 
   createCollisionBox() {
-    var s = Unit.UNIT_SIZE / 2;
-
     var t = 0;
     var b = this.physicsHeight / 2;
     var r = this.physicsWidth / 2;

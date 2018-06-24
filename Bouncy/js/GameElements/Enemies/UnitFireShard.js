@@ -58,7 +58,8 @@ class UnitFireShard extends UnitBasic {
           {x: this.x + Math.cos(angle) * 10, y: this.y + Math.sin(angle) * 10},
           angle,
           {
-            //'friendly_fire': true,
+            'bounce_on_wall': true,
+            'destroy_on_wall': false,
             'damage_to_players': Math.floor(NumbersBalancer.getUnitAbilityNumber(this,
               NumbersBalancer.UNIT_ABILITIES.FIRE_SHARD_TOTAL_DAMAGE
             ) / num_projectiles),
