@@ -133,8 +133,8 @@ class NumbersBalancer {
         shieldVal = 1000;
         break;
       case "UnitBossGrandWizard":
-        healthVal = 1000;
-        shieldVal = 2000;
+        healthVal = 2000;
+        shieldVal = 4000;
         break;
       case "UnitBossKing":
         healthVal = 5000;
@@ -146,7 +146,7 @@ class NumbersBalancer {
         break;
       case "UnitIceWall":
         healthVal = 50;
-        shieldVal = 350;
+        shieldVal = 150;
         break;
       case "UnitFireShard":
         healthVal = 100;
@@ -221,7 +221,7 @@ class NumbersBalancer {
       case this.UNIT_ABILITIES.FIRE_SHARD_NUM_SHOTS:
         return 3;
       case this.UNIT_ABILITIES.WIZARD_NUM_WALLS:
-        return 2;
+        return 1;
       case this.UNIT_ABILITIES.WIZARD_NUM_SHARDS:
         return 1;
       case this.UNIT_ABILITIES.WIZARD_PROJECTILE_DAMAGE:

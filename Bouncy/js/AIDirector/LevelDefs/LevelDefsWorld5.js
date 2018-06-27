@@ -21,13 +21,16 @@ class LevelDefsWorld5 {
     } else if (stage == 3) {
 
     } else if (stage == 'boss') {
+      let IW = UnitIceWall;
+      let FS = UnitFireShard;
       return new LevelDef({
         'initialSpawn':[
           [__, SH, __, __, __, __, __, __, __, __, __, __, __, SH, __],
-          [__, __, __, __, __, __, __, WZ, __, __, __, __, __, __, __],
+          [__, __, FS, __, __, __, __, WZ, __, __, __, __, FS, __, __],
           [__, __, __, __, __, __, __, __, __, __, __, __, __, __, __],
-          //[AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA],
-          //[AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA],
+          [__, __, __, __, __, __, __, __, __, __, __, __, __, __, __],
+          [IW, IW, IW, IW, IW, IW, IW, IW, IW, IW, IW, IW, IW, IW, IW],
+          [IW, IW, IW, IW, IW, IW, IW, IW, IW, IW, IW, IW, IW, IW, IW],
         ],
         'waves':[],
       });
