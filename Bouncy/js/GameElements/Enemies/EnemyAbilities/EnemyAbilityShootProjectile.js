@@ -8,7 +8,7 @@ class EnemyAbilityShootProjectile extends EnemyAbility {
     if (!this.unit.canUseAbilities()) { return; }
     var projectile = new EnemyProjectile(
       {x: this.unit.x, y: this.unit.y}, {x: this.unit.x, y: this.unit.y + 50},
-      Math.PI / 2, this.unitHitCallback,
+      Math.PI / 2,
       { 'damage_to_players': this.damage }
     );
     projectile.addUnitHitCallback(this.unitHitCallback);

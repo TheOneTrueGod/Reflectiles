@@ -9,23 +9,18 @@ class UnitBossGrandWizard extends UnitBasic {
     this.animationFrames = 20;
     this.traits[Unit.UNIT_TRAITS.FROST_IMMUNE] = true;
     // Ability Stuff.  Move to UnitBasic eventually.
-    this.abilities = [];
-    this.abilities.push({'weight': 40, 'value':
-      new EnemyAbilitySummonFireShards(
-        this,
-        NumbersBalancer.getUnitAbilityNumber(this, NumbersBalancer.UNIT_ABILITIES.WIZARD_NUM_SHARDS)
-      )
-    });
-    this.abilities.push({'weight': 40, 'value':
-      new EnemyAbilitySummonIceWall(this,
-        NumbersBalancer.getUnitAbilityNumber(this, NumbersBalancer.UNIT_ABILITIES.WIZARD_NUM_WALLS)
-      )
-    });
-    this.abilities.push({'weight': 20, 'value':
-      new EnemyAbilityShootProjectile(this,
-        NumbersBalancer.getUnitAbilityNumber(this, NumbersBalancer.UNIT_ABILITIES.WIZARD_PROJECTILE_DAMAGE)
-      )
-    });
+    this.addAbility(40, new EnemyAbilitySummonFireShards(
+      this,
+      NumbersBalancer.getUnitAbilityNumber(this, NumbersBalancer.UNIT_ABILITIES.WIZARD_NUM_SHARDS)
+    ));
+    this.addAbility(40, new EnemyAbilitySummonIceWall(
+      this,
+      NumbersBalancer.getUnitAbilityNumber(this, NumbersBalancer.UNIT_ABILITIES.WIZARD_NUM_WALLS)
+    ));
+    this.addAbility(20, new EnemyAbilityShootProjectile(
+      this,
+      NumbersBalancer.getUnitAbilityNumber(this, NumbersBalancer.UNIT_ABILITIES.WIZARD_PROJECTILE_DAMAGE)
+    ));
   }
 
   getUnitSize() {
@@ -101,21 +96,10 @@ class UnitBossGrandWizard extends UnitBasic {
           this.setSpriteVisible('enemy_boss_wizard');
         }
         if (boardState.tick % this.animationFrames == this.animationFrames / 2) {
-          this.useAbility(boardState);
+          this.useRandomAbility(boardState);
         }
       }
     }
-  }
-
-  doSpawnEffect(boardState) {
-    //this.useAbility(boardState);
-  }
-
-  useAbility(boardState) {
-    let abilToUse = getRandomFromWeightedList(boardState.getRandom(), this.abilities);
-    //let rand = boardState.getRandom();
-    //let abilToUse = this.abilities[Math.floor(this.abilities.length * rand)];
-    abilToUse.doEffects(boardState);
   }
 
   isBoss() {

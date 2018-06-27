@@ -5,8 +5,6 @@ class AbilityCore6 extends AbilityCore {
       description: 'Shoots a projectile that passes through enemies.<br>' +
         'It deals [[hit_effects[0].base_damage]] damage to up to [[num_hits]] targets.',
       card_text_description: '[[num_hits]] X [[hit_effects[0].base_damage]]',
-      /*style: (new AbilitySheetSpriteAbilityStyleBuilder)
-        .setSheet('bullet_sheet').setCoordNums(275, 69, 294, 78).setRotation(0).setTrail({type: 'laser'}).build(),*/
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
       projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
@@ -17,7 +15,7 @@ class AbilityCore6 extends AbilityCore {
       icon: "/Bouncy/assets/icons/icon_plain_drill.png",
       hit_effects: [{
         effect: ProjectileShape.HitEffects.DAMAGE,
-        base_damage: 250
+        base_damage: 200
       }],
     };
     return AbilityDef.createFromJSON(rawAbil);

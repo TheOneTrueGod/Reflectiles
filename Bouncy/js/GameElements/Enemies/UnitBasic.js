@@ -5,6 +5,21 @@ class UnitBasic extends Unit {
     this.movementCredits = 0;
     this.movementSpeed = NumbersBalancer.getUnitSpeed(this);
     this.damage = NumbersBalancer.getUnitDamage(this);
+    this.abilities = [];
+  }
+
+  addAbility(weight, ability) {
+    this.abilities.push({'weight': weight, 'value': ability});
+  }
+
+  useRandomAbility(boardState) {
+    if (this.abilities.length == 1) {
+      this.abilities[0].value.doEffects(boardState);
+      return;
+    }
+
+    let abilToUse = getRandomFromWeightedList(boardState.getRandom(), this.abilities);
+    abilToUse.doEffects(boardState);
   }
 
   createCollisionBox() {
