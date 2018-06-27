@@ -124,6 +124,12 @@ class Unit {
     );
   }
 
+  getTotalHealthPercent() {
+    let maxHealth = this.health.max + this.armour.max + this.shield.max;
+    let currHealth = this.health.current + this.armour.current + this.shield.current;
+    return currHealth / Math.max(maxHealth, 1);
+  }
+
   setHealth(amount) {
     this.health.current = Math.max(amount, 0);
     if (
@@ -346,7 +352,7 @@ class Unit {
     this.memoizedCollisionBox = null;
   }
 
-  isFinishedDoingAction() {
+  isFinishedDoingAction(boardState, phase) {
     return this.moveTarget === null;
   }
 
@@ -543,7 +549,7 @@ class Unit {
 
   triggerHit(boardState, unit, intersection, projectile) {}
 
-  runTick(boardState) {
+  runTick(boardState, phase) {
     if (this.moveTarget && this.spawnEffectStart) {
       this.spawnEffectTime.current += 1;
       var pct = this.spawnEffectTime.current / this.spawnEffectTime.max;

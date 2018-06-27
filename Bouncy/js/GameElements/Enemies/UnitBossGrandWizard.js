@@ -6,15 +6,26 @@
 class UnitBossGrandWizard extends UnitBasic {
   constructor(x, y, owner, id) {
     super(x, y, owner, id);
+    this.animationFrames = 20;
     this.traits[Unit.UNIT_TRAITS.FROST_IMMUNE] = true;
     // Ability Stuff.  Move to UnitBasic eventually.
     this.abilities = [];
-    this.abilities.push(new EnemyAbilitySummonFireShards(this,
-      NumbersBalancer.getUnitAbilityNumber(this, NumbersBalancer.UNIT_ABILITIES.WIZARD_NUM_SHARDS)
-    ));
-    this.abilities.push(new EnemyAbilitySummonIceWall(this,
-      NumbersBalancer.getUnitAbilityNumber(this, NumbersBalancer.UNIT_ABILITIES.WIZARD_NUM_WALLS)
-    ));
+    this.abilities.push({'weight': 40, 'value':
+      new EnemyAbilitySummonFireShards(
+        this,
+        NumbersBalancer.getUnitAbilityNumber(this, NumbersBalancer.UNIT_ABILITIES.WIZARD_NUM_SHARDS)
+      )
+    });
+    this.abilities.push({'weight': 40, 'value':
+      new EnemyAbilitySummonIceWall(this,
+        NumbersBalancer.getUnitAbilityNumber(this, NumbersBalancer.UNIT_ABILITIES.WIZARD_NUM_WALLS)
+      )
+    });
+    this.abilities.push({'weight': 20, 'value':
+      new EnemyAbilityShootProjectile(this,
+        NumbersBalancer.getUnitAbilityNumber(this, NumbersBalancer.UNIT_ABILITIES.WIZARD_PROJECTILE_DAMAGE)
+      )
+    });
   }
 
   getUnitSize() {
@@ -44,7 +55,10 @@ class UnitBossGrandWizard extends UnitBasic {
   }
 
   createSprite(hideHealthBar) {
-    return this.createSpriteFromResource('enemy_boss_wizard', hideHealthBar);
+    return this.createSpriteListFromResourceList([
+      'enemy_boss_wizard',
+      'enemy_boss_healer'
+    ], hideHealthBar);
   }
 
   doMovement(boardState) {
@@ -57,20 +71,50 @@ class UnitBossGrandWizard extends UnitBasic {
     }
   }
 
-  startOfPhase(boardState, phase) {
-    super.startOfPhase(boardState, phase);
-    if (phase == TurnPhasesEnum.END_OF_TURN) {
-      this.useAbility(boardState);
+  isFinishedDoingAction(boardState, phase) {
+    if (
+      phase === TurnPhasesEnum.ENEMY_ACTION &&
+      boardState.tick / this.animationFrames < this.getAbilitiesToUse()
+    ) {
+      return false;
+    }
+    return super.isFinishedDoingAction(boardState, phase);
+  }
+
+  getAbilitiesToUse() {
+    let healthPercent = this.getTotalHealthPercent();
+    if (healthPercent > 0.75) {
+      return 2;
+    } else if (healthPercent > 0.5) {
+      return 3;
+    }
+    return 4;
+  }
+
+  runTick(boardState, phase) {
+    super.runTick(boardState, phase);
+    if (this.canUseAbilities() && phase === TurnPhasesEnum.ENEMY_ACTION) {
+      if (boardState.tick / this.animationFrames < this.getAbilitiesToUse()) {
+        if (boardState.tick % this.animationFrames < this.animationFrames / 2) {
+          this.setSpriteVisible('enemy_boss_healer');
+        } else {
+          this.setSpriteVisible('enemy_boss_wizard');
+        }
+        if (boardState.tick % this.animationFrames == this.animationFrames / 2) {
+          this.useAbility(boardState);
+        }
+      }
     }
   }
 
   doSpawnEffect(boardState) {
-    this.useAbility(boardState);
+    //this.useAbility(boardState);
   }
 
   useAbility(boardState) {
-    let rand = boardState.getRandom();
-    let abilToUse = this.abilities[Math.floor(this.abilities.length * rand)];
+    let abilToUse = getRandomFromWeightedList(boardState.getRandom(), this.abilities);
+    //let rand = boardState.getRandom();
+    //let abilToUse = this.abilities[Math.floor(this.abilities.length * rand)];
     abilToUse.doEffects(boardState);
   }
 

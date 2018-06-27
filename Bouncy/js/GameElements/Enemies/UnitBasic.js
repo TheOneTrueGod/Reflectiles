@@ -256,8 +256,8 @@ class UnitBasic extends Unit {
     this.y = lerp(this.startMovementPos.y, this.moveTarget.y, pct);
   }
 
-  runTick(boardState) {
-    super.runTick(boardState);
+  runTick(boardState, phase) {
+    super.runTick(boardState, phase);
     if (this.moveTarget === null) {
       return;
     }

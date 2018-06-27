@@ -221,9 +221,11 @@ class NumbersBalancer {
       case this.UNIT_ABILITIES.FIRE_SHARD_NUM_SHOTS:
         return 3;
       case this.UNIT_ABILITIES.WIZARD_NUM_WALLS:
-        return 4;
+        return 2;
       case this.UNIT_ABILITIES.WIZARD_NUM_SHARDS:
-        return 4;
+        return 1;
+      case this.UNIT_ABILITIES.WIZARD_PROJECTILE_DAMAGE:
+        return 1;
     }
     throw new Error("Failure");
   }
@@ -257,6 +259,7 @@ NumbersBalancer.prototype.UNIT_ABILITIES = {
   FIRE_SHARD_TOTAL_DAMAGE: 'FIRE_SHARD_TOTAL_DAMAGE',
   WIZARD_NUM_SHARDS: 'WIZARD_NUM_SHARDS',
   WIZARD_NUM_WALLS: 'WIZARD_NUM_WALLS',
+  WIZARD_PROJECTILE_DAMAGE: 'WIZARD_PROJECTILE_DAMAGE',
 };
 
 NumbersBalancer.prototype.DIFFICULTIES = {

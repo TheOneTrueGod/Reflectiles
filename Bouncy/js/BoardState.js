@@ -339,7 +339,7 @@ class BoardState {
         y: this.playerCastPoints[playerID].y
       };
       if (
-        turnPhase == TurnPhasesEnum.PLAYER_MINOR &&
+        turnPhase === TurnPhasesEnum.PLAYER_MINOR &&
         MainGame.playerCommands[playerID] &&
         MainGame.playerCommands[playerID].length > 0
       ) {
@@ -385,7 +385,7 @@ class BoardState {
     }
 
     for (var i = 0; i < this.units.length; i++) {
-      if (!this.units[i].isFinishedDoingAction()) {
+      if (!this.units[i].isFinishedDoingAction(this, phase)) {
         return false;
       }
     }
@@ -458,7 +458,7 @@ class BoardState {
   }
 
   runTick(players, playerCommands, phase) {
-    this.runUnitTicks();
+    this.runUnitTicks(phase);
 
     this.runProjectileTicks();
 
@@ -468,9 +468,9 @@ class BoardState {
     this.noActionKillLimit += 1;
   }
 
-  runUnitTicks() {
+  runUnitTicks(phase) {
     for (var unit in this.units) {
-      this.units[unit].runTick(this);
+      this.units[unit].runTick(this, phase);
     }
 
     this.doDeleteChecks();
@@ -568,7 +568,6 @@ class BoardState {
     if (commands) {
       for (var i = 0; i < commands.length; i++) {
         var command = commands[i];
-        var tick = this.tick;
         if (command) {
           command.doActionOnTick(
             this.getOffsetTickForPlayer(phase, commands, commands[i].playerID, players),
