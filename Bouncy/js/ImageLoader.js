@@ -25,6 +25,7 @@ class ImageLoader {
         .add("enemy_boss_slime",  "/Bouncy/assets/enemies/enemy_boss_slime.png")
         .add("enemy_boss_king",  "/Bouncy/assets/enemies/enemy_boss_king.png")
         .add("enemy_boss_wizard",  "/Bouncy/assets/enemies/enemy_boss_wizard.png")
+        .add("enemy_boss_wizard_2",  "/Bouncy/assets/enemies/enemy_boss_wizard_2.png")
         .add("fire_shard_0",  "/Bouncy/assets/enemies/fire_shard_0.png")
         .add("fire_shard_1",  "/Bouncy/assets/enemies/fire_shard_1.png")
         .add("fire_shard_2",  "/Bouncy/assets/enemies/fire_shard_2.png")

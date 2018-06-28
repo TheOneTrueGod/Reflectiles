@@ -52,7 +52,7 @@ class UnitBossGrandWizard extends UnitBasic {
   createSprite(hideHealthBar) {
     return this.createSpriteListFromResourceList([
       'enemy_boss_wizard',
-      'enemy_boss_healer'
+      'enemy_boss_wizard_2'
     ], hideHealthBar);
   }
 
@@ -91,7 +91,7 @@ class UnitBossGrandWizard extends UnitBasic {
     if (this.canUseAbilities() && phase === TurnPhasesEnum.ENEMY_ACTION) {
       if (boardState.tick / this.animationFrames < this.getAbilitiesToUse()) {
         if (boardState.tick % this.animationFrames < this.animationFrames / 2) {
-          this.setSpriteVisible('enemy_boss_healer');
+          this.setSpriteVisible('enemy_boss_wizard_2');
         } else {
           this.setSpriteVisible('enemy_boss_wizard');
         }
