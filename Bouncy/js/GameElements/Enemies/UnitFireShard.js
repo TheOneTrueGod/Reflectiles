@@ -6,18 +6,12 @@ class UnitFireShard extends UnitBasic {
   }
 
   createCollisionBox() {
-    var t = -this.physicsHeight / 2;
-    var b = this.physicsHeight / 2;
-    var r = this.physicsWidth / 2;
-    var l = -this.physicsWidth / 2;
-
-    var offset = 0;
+    let pct = 0.8;
     this.collisionBox = [
-      new UnitLine(l, 0, 0, t, this), // Top Left
-      new UnitLine(0, t, r, 0, this), // Top Right
-      new UnitLine(r, 0, r, b + offset, this), // Right
-      new UnitLine(r + offset, b, l - offset, b, this), // Bottom
-      new UnitLine(l, b + offset, l, 0, this), // Left
+      new UnitLine(0, -this.physicsHeight / 2 * pct, this.physicsWidth / 2 * pct, 0, this), // Top Right
+      new UnitLine(this.physicsWidth / 2 * pct, 0, 0, this.physicsHeight / 2 * pct, this), // Bottom Right
+      new UnitLine(0, this.physicsHeight / 2 * pct, -this.physicsWidth / 2 * pct, 0, this), // Bottom Left
+      new UnitLine(-this.physicsWidth / 2 * pct, 0, 0, -this.physicsHeight / 2 * pct, this), // Top Left
     ];
   }
 
@@ -34,15 +28,18 @@ class UnitFireShard extends UnitBasic {
     if (!this.canUseAbilities()) { return; }
     if (phase == TurnPhasesEnum.ENEMY_ACTION) {
       this.timeLeft -= 1;
+      this.chooseSpriteVisibility();
       if (this.timeLeft <= 0) {
         this.readyToDel = true;
         this.explode(boardState);
       }
+    }
+  }
 
-      if (this.timeLeft - 1 < this.FIRE_SHARD_SPRITES && this.timeLeft - 1 >= 0) {
-        let spriteNum = (this.FIRE_SHARD_SPRITES - 1) - (this.timeLeft - 1);
-        this.setSpriteVisible('fire_shard_' + spriteNum);
-      }
+  chooseSpriteVisibility() {
+    if (this.timeLeft - 1 < this.FIRE_SHARD_SPRITES && this.timeLeft - 1 >= 0) {
+      let spriteNum = (this.FIRE_SHARD_SPRITES - 1) - (this.timeLeft - 1);
+      this.setSpriteVisible('fire_shard_' + spriteNum);
     }
   }
 

@@ -73,7 +73,7 @@ class UnitBasic extends Unit {
   }
 
   addPhysicsLines(sprite, color) {
-    color = color ? color : 0xff0000;
+    color = color ? color : 0xffff00;
     for (var i = 0; i < this.collisionBox.length; i++) {
       var lineGraphic = new PIXI.Graphics();
       var line = this.collisionBox[i];
@@ -81,12 +81,12 @@ class UnitBasic extends Unit {
         line.x1 / sprite.scale.x,
         line.y1 / sprite.scale.y
       );
-      lineGraphic.lineStyle(3, color)
-             .moveTo(0, 0)
-             .lineTo(
-               (line.x2 - line.x1) / sprite.scale.x,
-               (line.y2 - line.y1) / sprite.scale.y
-             );
+      lineGraphic.lineStyle(3, color, 0.5)
+         .moveTo(0, 0)
+         .lineTo(
+           (line.x2 - line.x1) / sprite.scale.x,
+           (line.y2 - line.y1) / sprite.scale.y
+         );
       sprite.addChild(lineGraphic);
     }
   }

@@ -446,8 +446,13 @@ class Unit {
     return {x: 0, y: 0};
   }
 
+  chooseSpriteVisibility() {
+
+  }
+
   addToStage(stage) {
     this.gameSprite = this.createSprite();
+    this.chooseSpriteVisibility();
     this.spriteScale = {x: this.gameSprite.scale.x, y: this.gameSprite.scale.y};
     for (var effect in this.statusEffects) {
       this.addEffectSprite(effect);

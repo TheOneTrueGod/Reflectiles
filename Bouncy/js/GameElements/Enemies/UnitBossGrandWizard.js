@@ -34,18 +34,32 @@ class UnitBossGrandWizard extends UnitBasic {
   }
 
   createCollisionBox() {
+    var hatTop = -this.physicsHeight / 2;
     var t = -this.physicsHeight / 2 + 30;
     var b = this.physicsHeight / 2;
-    var r = this.physicsWidth / 2 - 15;
-    var l = -this.physicsWidth / 2 + 15;
+    var r = this.physicsWidth / 2 - 10;
+    var l = -this.physicsWidth / 2 + 10;
 
     var offset = 0;
     this.collisionBox = [
-      new UnitLine(l, t, 0, t - 20, this), // Top Left
-      new UnitLine(0, t - 20, r, t, this), // Top Right
-      new UnitLine(r, t, r, b, this), // Right
-      new UnitLine(r, b, l, b, this), // Bottom
-      new UnitLine(l, b, l, t, this), // Left
+       // Top Left
+      new UnitLine(l, t, l + 10, t, this),
+      new UnitLine(l + 10, t, -10, hatTop, this),
+      // Top Center
+      new UnitLine(-10, hatTop, 10, hatTop, this),
+      // Top Right
+      new UnitLine(10, hatTop, r - 10, t, this),
+      new UnitLine(r - 10, t, r, t, this),
+      // Right
+      new UnitLine(r, t, r, b, this),
+      // Bottom
+      new UnitLine(r, b, r - 20, b, this),
+      new UnitLine(r - 20, b, r - 35, b - 15, this),
+      new UnitLine(r - 35, b - 15, l + 35, b - 15, this),
+      new UnitLine(l + 35, b - 15, l + 20, b, this),
+      new UnitLine(l + 20, b, l, b, this),
+      // Left
+      new UnitLine(l, b, l, t, this),
     ];
   }
 
