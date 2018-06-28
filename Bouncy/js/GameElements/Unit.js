@@ -327,7 +327,7 @@ class Unit {
     }
     var self = this;
     var collisionLines = this.collisionBox;
-    if (!this.canMove()) {
+    if (!this.canMove() && !collisionLines) {
       var t = -this.physicsHeight / 2;
       var b = this.physicsHeight / 2;
       var r = this.physicsWidth / 2;

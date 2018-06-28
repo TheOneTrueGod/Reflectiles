@@ -322,10 +322,10 @@ UnitBasic.loadFromServerData = function(serverData) {
 };
 
 UnitBasic.createAbilityDefs = function() {
-  UnitKnight.createAbilityDef();
   UnitBlocker.createAbilityDef();
   UnitProtector.createAbilityDef();
   UnitBossWarlock.createAbilityDef();
+  EnemyAbilityShieldWall.createAbilityDef();
 };
 
 UnitBasic.AddToTypeMap();

@@ -11,7 +11,7 @@ class Tester extends MainGame {
     this.cachedAbilities = {};
 
     this.unitsToSpawn = [
-      [null, UnitShooter, UnitShooter, UnitShooter, null],
+      [null, UnitShooter, UnitKnight, UnitShooter, null],
       //[null, null, UnitBossGrandWizard, null, null],
       [null, null, null, null, null],
       [null, null, null, null, null],
@@ -40,7 +40,9 @@ class Tester extends MainGame {
     // SET COMMANDS HERE
     this.abilitiesToUse = [
       //[TestAbils[3].index, {x: -100, y: -50}],
-      [this.buildAbility(AbilityCore7, ['shield width 1']).index, {x: 0, y: -100}],
+      //[this.buildAbility(AbilityCore7, ['shield width 1']).index, {x: 0, y: -100}],
+      [this.buildAbility(AbilityCore4, []).index, {x: 0, y: -100}],
+      [this.buildAbility(AbilityCore13).index, {x: 0, y: -100}],
       //[this.buildAbility(AbilityCore5,
         /*["pass through 1", "pass through 1", "pass through 1", "damage 1", "damage 1",
         "damage 1", "pass through damage 2", "pass through damage 2", "pass through damage 2",
