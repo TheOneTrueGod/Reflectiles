@@ -39,9 +39,9 @@ class AbilityCore2 extends AbilityCore {
     }
     let damage = Math.floor(totalDamage / damageDivisor);
     let shot_delay = Math.round(lerp(4.5, 2, bulletCountPerkPct));
-    let destroy_on_wall = true;
+    let wall_bounces = 1;
     if (this.hasPerk(perkPcts, 'wall bounce 3')) {
-      destroy_on_wall = [BorderWallLine.TOP];
+      wall_bounces = 2;
     }
 
     let angle_spread = lerp(Math.PI / 3.0, Math.PI / 1.5, bulletCountPerkPct - tighterSpreadPerkPct);
@@ -90,7 +90,8 @@ class AbilityCore2 extends AbilityCore {
           projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
           num_bullets: num_bullets,
           return_num_bullets: 0,
-          destroy_on_wall: destroy_on_wall,
+          destroy_on_wall: [],
+          wall_bounces,
           hit_effects: hitEffects,
           angle_spread: angle_spread,
           angle_offset: angle_offset,

@@ -268,13 +268,17 @@ class UnitTooltips {
         return 'The King';
       case 'UnitCastleWall':
         return 'Castle Wall';
+      case 'UnitIceWall':
+        return 'Ice Wall';
+      case 'UnitFireShard':
+        return 'Fire Shard';
     }
     console.warn('no unit name for [' + unit.constructor.name + ']');
     return '<' + unit.constructor.name + '>';
   }
 
   static getDescription(unit) {
-    let maxDamage;
+    let maxDamage; let damage;
     let range;
     let maxSkeletons; let numTurns;
     switch (unit.constructor.name) {
@@ -301,7 +305,7 @@ class UnitTooltips {
         return 'Every turn, the protector shields ' + numTargets + ' nearby units.' +
           '  Each shield has ' + shieldVal + ' health.';
       case 'UnitShooter':
-        let damage = NumbersBalancer.getUnitAbilityNumber(unit, NumbersBalancer.UNIT_ABILITIES.SHOOTER_DAMAGE);
+        damage = NumbersBalancer.getUnitAbilityNumber(unit, NumbersBalancer.UNIT_ABILITIES.SHOOTER_DAMAGE);
         return 'Shoots every turn dealing ' + damage + ' damage.';
       case 'UnitBossHealer':
         let healAmount = NumbersBalancer.getUnitAbilityNumber(unit,
@@ -332,9 +336,21 @@ class UnitTooltips {
       case 'UnitBossKing':
         numTurns = NumbersBalancer.getUnitAbilityNumber(unit, NumbersBalancer.UNIT_ABILITIES.KING_REVIVE_TURNS);
         return 'All enemy units are unable to move as long as The King is around.  If an enemy unit dies, it is reinforced after ' + numTurns + ' turns.';
+      case 'UnitBossGrandWizard':
+        let numAbils = unit.getAbilitiesToUse();
+        return 'The grand wizard casts ' + numAbils + ' random spells each turn.';
       case 'UnitCastleWall':
         numTurns = NumbersBalancer.getUnitAbilityNumber(unit, NumbersBalancer.UNIT_ABILITIES.CASTLE_WALL_REVIVE_TURNS);
         return 'If the wall is destroyed, it is rebuilt after ' + numTurns + ' turns.';
+      case 'UnitIceWall':
+        return 'It sits in your way.';
+      case 'UnitFireShard':
+        damage = NumbersBalancer.getUnitAbilityNumber(unit, NumbersBalancer.UNIT_ABILITIES.FIRE_SHARD_TOTAL_DAMAGE);
+        let timeLeft = Math.max(unit.timeLeft - 1, 0);
+        if (timeLeft > 0) {
+          return 'Charges up for ' + timeLeft + ' more turn' + (timeLeft > 1 ? 's' : '') + ', and then explodes, dealing ' + damage + ' damage';
+        }
+        return 'Explodes this turn, dealing ' + damage + ' damage';
     }
     console.warn('no description for [' + unit.constructor.name + ']');
     return '<no description>';

@@ -82,7 +82,8 @@ class AbilityCore0 extends AbilityCore {
       speed: projectileSpeed,
       scale: 0.5,
       projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
-      destroy_on_wall: true,
+      destroy_on_wall: [],
+      wall_bounces: 1,
       num_bullets: rocketCount,
       accuracy_decay: Math.PI / 32.0,
       hit_effects: [

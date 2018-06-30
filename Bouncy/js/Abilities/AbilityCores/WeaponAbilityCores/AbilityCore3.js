@@ -88,7 +88,7 @@ class AbilityCore3 extends AbilityCore {
       }
     }
 
-    let speed_decay = 1 - 0.02 *
+    let speed_decay = 1 - 0 *
       (idx(perkPcts, 'wider area 30', 0) === 1 ? 0.5 : 1) *
       (idx(perkPcts, 'wider area 52', 0) === 1 ? 0.5 : 1);
 

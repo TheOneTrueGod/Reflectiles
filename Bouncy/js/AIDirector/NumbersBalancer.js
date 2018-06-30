@@ -220,7 +220,7 @@ class NumbersBalancer {
       case this.UNIT_ABILITIES.FIRE_SHARD_NUM_SHOTS:
         return 3;
       case this.UNIT_ABILITIES.WIZARD_NUM_WALLS:
-        return 1;
+        return 2;
       case this.UNIT_ABILITIES.WIZARD_NUM_SHARDS:
         return 1;
       case this.UNIT_ABILITIES.WIZARD_PROJECTILE_DAMAGE:

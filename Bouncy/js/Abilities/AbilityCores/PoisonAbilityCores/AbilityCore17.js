@@ -56,10 +56,11 @@ class AbilityCore17 extends AbilityCore {
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.CHAIN_SHOT,
       projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
-      destroy_on_wall: true,
+      destroy_on_wall: [],
       num_bullets,
       bullet_wave_delay,
       accuracy_decay,
+      wall_bounces: 1,
       icon: "/Bouncy/assets/icons/bullets.png",
       hit_effects: [{
         effect: ProjectileShape.HitEffects.DAMAGE,

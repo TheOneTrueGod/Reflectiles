@@ -3,6 +3,10 @@ class UnitCore extends Unit {
     super(x, y, owner, id);
   }
 
+  getDefensePercent() {
+    return 1.5;
+  }
+
   createSprite(hideHealthBar) {
     var sprite = new PIXI.Sprite(
       PIXI.loader.resources['core'].texture
@@ -41,7 +45,7 @@ class UnitCore extends Unit {
 
   touchedByEnemy(boardState, unit) {
     if (unit.damage) {
-      boardState.dealDamage(unit.damage);
+      boardState.dealDamage(Math.ceil(unit.damage * this.getDefensePercent()));
       EffectFactory.createDamagePlayersEffect(
         boardState,
         this.x,
@@ -52,7 +56,7 @@ class UnitCore extends Unit {
   }
 
   hitByEnemyProjectile(boardState, projectile) {
-    boardState.dealDamage(projectile.DAMAGE);
+    boardState.dealDamage(Math.ceil(projectile.DAMAGE * this.getDefensePercent()));
     EffectFactory.createDamagePlayersEffect(
       boardState,
       this.x,
