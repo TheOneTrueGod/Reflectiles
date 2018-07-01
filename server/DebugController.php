@@ -6,6 +6,21 @@ class DebugController {
     return '/debug';
   }
 
+  function rrmdir($dir) {
+    if (is_dir($dir)) {
+      $objects = scandir($dir);
+      foreach ($objects as $object) {
+        if ($object != "." && $object != "..") {
+          if (filetype($dir."/".$object) == "dir")
+             rrmdir($dir."/".$object);
+          else unlink   ($dir."/".$object);
+        }
+      }
+      reset($objects);
+      rmdir($dir);
+    }
+  }
+
   function getResponse($request, $user) {
     if (!$user->isAdmin()) {
       return "You're not supposed to be here.";
@@ -32,6 +47,12 @@ class DebugController {
           $message .= "Unsuccessful for " . User::$all_users[$i][1] . "<br>";
         }
       }
+    } else if ($request->clear_users) {
+      $files = glob('saves/users/*'); // get all file names
+      foreach($files as $file){ // iterate files
+        $this->rrmdir($file); // delete file
+      }
+      $message = "Cleared All Users";
     }
 
 
@@ -59,6 +80,12 @@ class DebugController {
               </div>
               <div class="col-8">
                 <input name="level" type="number" placeholder="Level"/>
+              </div>
+            </div>
+            <div class="row"><br></div>
+            <div class="row">
+              <div class="col-4">
+                <input name="clear_users" type="submit" value="Clear all users"/>
               </div>
             </div>
           </form>
