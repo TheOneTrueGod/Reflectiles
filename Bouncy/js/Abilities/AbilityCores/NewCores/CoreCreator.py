@@ -3,7 +3,7 @@ import argparse
 
 from shutil import copyfile
 
-parser = argparse.ArgumentParser(description='Process some integers.')
+parser = argparse.ArgumentParser(description='Make a bunch of ability cores.')
 parser.add_argument('coreNum', metavar='N', type=int,
                    help='the Core Number to create')
 

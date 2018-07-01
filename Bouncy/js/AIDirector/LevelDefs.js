@@ -1,8 +1,5 @@
 class LevelDefs {
-  getLevelDef(level) {
-    let world = this.extractWorld(level);
-    let stage = this.extractStage(level);
-
+  getLevelDef(world, stage) {
     if (world == 1) {
       return LevelDefsWorld1.getStageDef(stage);
     } else if (world == 2) {
@@ -45,12 +42,21 @@ class LevelDef {
       this.waves = null;
       this.hudWaves = this.totalWaves;
       this.initialSpawn = null;
+      this.powerLevel = 0;
     } else {
       this.totalWaves = levelData.waves.length;
       this.waves = levelData.waves;
       this.hudWaves = levelData.waveCount ? levelData.waveCount : this.totalWaves;
       this.initialSpawn = levelData.initialSpawn;
+      this.powerLevel = levelData.powerLevel ? levelData.powerLevel : 0;
     }
+  }
+
+  getPowerLevel(world, stage) {
+    if (this.powerLevel !== 0) {
+      return this.powerLevel;
+    }
+    return NumbersBalancer.getPowerLevel(world, stage);
   }
 
   getWaveSpawnFormation(boardState) {

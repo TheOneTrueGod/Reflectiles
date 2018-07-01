@@ -1,24 +1,20 @@
-// To Replace;
-// COOLDOWN_HERE = integer representing the cooldown of this ability
-// CORE_NUMBER = integer of the core
 class AbilityCore1000 extends AbilityCore {
-  static BuildAbilityChild(perkList, perkPcts, perkCounts) {
-
+  static BuildAbilityChild(level) {
+    let base_damage = Math.round(NumbersBalancer.getAbilityDamage(level, 1) / 4);
+    let explosionRadius = 40;
     const rawAbil = {
       name: 'Explosion',
-      description: 'Description Goes Here ',
-      card_text_description: 'Card Text 3x3',
+      description: 'Fire a rocket that deals [[hit_effects[1].base_damage]] ' +
+        'damage in a circle of size [[hit_effects[1].aoe_size]].',
+      card_text_description: '[[hit_effects[1].base_damage]]',
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
-      shape: ProjectileAbilityDef.Shapes.CHAIN_SHOT,
+      shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
+      speed: 8,
+      scale: 0.5,
       projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
-      destroy_on_wall: true,
-      num_bullets: 10,
-      accuracy_decay: Math.PI / 32.0,
+      destroy_on_wall: [],
+      wall_bounces: 1,
       hit_effects: [
-        {
-          base_damage: impact_damage,
-          effect: ProjectileShape.HitEffects.DAMAGE,
-        },
         {
           base_damage: base_damage,
           effect: ProjectileShape.HitEffects.DAMAGE,
@@ -29,16 +25,16 @@ class AbilityCore1000 extends AbilityCore {
       icon: "/Bouncy/assets/icons/icon_plain_explosion.png"
     };
 
-    let cooldown = this.getCooldown(perkList, perkCounts);
+    let cooldown = this.getCooldown();
     if (cooldown !== null) {
       rawAbil.charge = cooldown;
     }
 
-    rawAbil.style = abilityStyle.build();
+    rawAbil.style = this.createAbilityStyle(explosionRadius).build();
     return AbilityDef.createFromJSON(rawAbil);
   }
 
-  static createAbilityStyle() {
+  static createAbilityStyle(explosionRadius) {
     return (new AbilitySheetSpriteAbilityStyleBuilder())
       .setSheet('weapons_sheet')
       .setCoordNums(2, 1, 24, 23)
@@ -47,8 +43,8 @@ class AbilityCore1000 extends AbilityCore {
       ));
   }
 
-  static getCooldown(perkList, perkCounts) {
-    return {initial_charge: -1, max_charge: COOLDOWN_HERE, charge_type: "TURNS"};
+  static getCooldown() {
+    return {initial_charge: -1, max_charge: 2, charge_type: "TURNS"};
   }
 
   static GetCardDeckType() {

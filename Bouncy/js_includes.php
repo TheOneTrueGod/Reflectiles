@@ -108,6 +108,7 @@
 <script src="/Bouncy/js/Abilities/AbilityStyles/AbilitySheetAbilityStyle.js"></script>
 <script src="/Bouncy/js/Abilities/AbilityStyles/ColorizedAbilityStyle.js"></script>
 <script src="/Bouncy/js/Abilities/AbilityCores/AbilityConstants.js"></script>
+<script src="/Bouncy/js/Abilities/AbilityCores/AbilityList.js"></script>
 <?php
   for ($i = 0; $i < 5; $i++) {
 ?>
@@ -120,6 +121,16 @@
   }
 ?>
 <script src="/Bouncy/js/Abilities/AbilityCores/DefenderAbilityCores/AbilityCore25.js"></script>
+<script type="text/javascript">
+  <?
+  foreach (glob('Bouncy/js/Abilities/AbilityCores/NewCores/*.js') as $file)
+  {
+    if (strpos($file, 'Template') === False) {
+      readfile($file);
+    }
+  }
+  ?>
+</script>
 
 <!-- Extends the above -->
 <script src="/Bouncy/js/GameElements/Effects/LineEffect.js"></script>

@@ -4,13 +4,24 @@ class AIDirector {
     this.levelDef = null;
   }
 
+  extractWorld(level) {
+    return level.split("-")[0];
+  }
+
+  extractStage(level) {
+    return level.split("-")[1];
+  }
+
   setLevel(level) {
     this.level = level;
   }
 
   loadLevelDef() {
     if (!this.levelDef) {
-      this.levelDef = LevelDefs.getLevelDef(this.level);
+      let world = this.extractWorld(this.level);
+      let stage = this.extractStage(this.level);
+      this.levelDef = LevelDefs.getLevelDef(world, stage);
+      NumbersBalancer.setPowerLevelBase(this.levelDef.getPowerLevel(world, stage));
     }
   }
 

@@ -583,7 +583,6 @@ class UIListeners {
 
       $('.levelSelect .level.selected').removeClass('selected');
       $target.addClass('selected');
-
       ServerCalls.UpdatePreGameState(
         null,
         ServerCalls.SLOT_ACTIONS.SET_LEVEL,

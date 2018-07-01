@@ -1,6 +1,7 @@
 class NumbersBalancer {
   constructor() {
     this.num_players = 4;
+    this.powerLevelBase = 0;
     this.difficulty = this.DIFFICULTIES.MEDIUM;
   }
 
@@ -10,6 +11,22 @@ class NumbersBalancer {
 
   setDifficulty(difficulty) {
     this.difficulty = difficulty;
+  }
+
+  getDifficulty() {
+    return this.difficulty;
+  }
+
+  setPowerLevelBase(powerLevel) {
+    this.powerLevelBase = powerLevel;
+  }
+
+  getPowerLevelMultiplier(powerLevel) {
+    return Math.pow(2, powerLevel / 20);
+  }
+
+  getAbilityDamage(level, damageScaling) {
+    return 1000 * this.getPowerLevelMultiplier(level) * damageScaling;
   }
 
   getPlayerStat(stat) {
@@ -70,7 +87,9 @@ class NumbersBalancer {
 
   getUnitHealthStats(unit, stat) {
     var healthMultiplier =
-      this.getDifficultyMultiplier() * this.getPlayerCountMultiplier();
+      this.getDifficultyMultiplier() *
+      this.getPlayerCountMultiplier() *
+      this.getPowerLevelMultiplier(this.powerLevelBase);
 
     let healthVal = 100;
     let armorVal = 0;
@@ -156,6 +175,30 @@ class NumbersBalancer {
       armor: Math.floor(armorVal * healthMultiplier),
       shield: Math.floor(shieldVal * healthMultiplier)
     };
+  }
+
+  getPowerLevel(world, stage) {
+    let difficulty = this.getDifficulty();
+    if (stage === 'boss') { stage = 4; }
+    world = Number.parseInt(world) - 1;
+    stage = Number.parseInt(stage) - 1;
+    let pctDone = (world * 4 + stage) / 20;
+    // TODO: REMOVE ME.
+    return 0;
+    switch (difficulty) {
+      case this.DIFFICULTIES.EASY:
+        return Math.floor(lerp(0, 10, pctDone));
+      case this.DIFFICULTIES.MEDIUM:
+        return Math.floor(lerp(0, 20, pctDone));
+      case this.DIFFICULTIES.HARD:
+        return Math.floor(lerp(15, 50, pctDone));
+      case this.DIFFICULTIES.NIGHTMARE:
+        return Math.floor(lerp(30, 75, pctDone));
+      case this.DIFFICULTIES.IMPOSSIBLE:
+        return Math.floor(lerp(50, 100, pctDone));
+    }
+
+    return this.powerLevel;
   }
 
   getUnitHealth(unit) {
@@ -266,6 +309,7 @@ NumbersBalancer.prototype.DIFFICULTIES = {
   MEDIUM: 'medium',
   HARD: 'hard',
   NIGHTMARE: 'nightmare',
+  IMPOSSIBLE: 'impossible',
 };
 
 NumbersBalancer = new NumbersBalancer();
