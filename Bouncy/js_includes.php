@@ -150,11 +150,16 @@
 <script src="/Bouncy/js/GameElements/Enemies/UnitSkeleton.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/UnitNecromancer.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/UnitCastleWall.js"></script>
+<script src="/Bouncy/js/GameElements/Enemies/UnitIceWall.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/UnitFireShard.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/UnitSpawningPlaceholder.js"></script>
 
 <script src="/Bouncy/js/GameElements/Enemies/EnemyAbilities/EnemyAbility.js"></script>
+<script src="/Bouncy/js/GameElements/Enemies/EnemyAbilities/EnemyAbilitySummonUnits.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/EnemyAbilities/EnemyAbilitySummonFireShards.js"></script>
+<script src="/Bouncy/js/GameElements/Enemies/EnemyAbilities/EnemyAbilitySummonIceWall.js"></script>
+<script src="/Bouncy/js/GameElements/Enemies/EnemyAbilities/EnemyAbilityShootProjectile.js"></script>
+\<script src="/Bouncy/js/GameElements/Enemies/EnemyAbilities/EnemyAbilityShieldWall.js"></script>
 
 <script src="/Bouncy/js/GameElements/Enemies/UnitBossSlime.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/UnitMovementEffects.js"></script>

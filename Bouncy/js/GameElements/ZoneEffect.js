@@ -20,6 +20,14 @@ class ZoneEffect extends Unit {
     this.createCollisionBox();
   }
 
+  getUnitSize() {
+    if (!this.size) { return super.getUnitSize(); }
+    return {
+      x: (this.size.right + this.size.left + 1) * Unit.UNIT_SIZE,
+      y: (this.size.bottom + this.size.top + 1) * Unit.UNIT_SIZE,
+    };
+  }
+
   setMaxHealthValues() {
     var healthTypes = this.creatorAbility.getOptionalParam('zone_health', this.health);
     let health = 0;
@@ -160,6 +168,10 @@ class ZoneEffect extends Unit {
   setCreatorAbility(creatorAbilityID) {
     this.creatorAbility = AbilityDef.abilityDefList[creatorAbilityID];
     this.size = this.creatorAbility.getZoneSize();
+
+    let unitSize = this.getUnitSize();
+    this.physicsWidth = unitSize.x;
+    this.physicsHeight = unitSize.y;
 
     this.SPRITE = this.creatorAbility.getOptionalParam('sprite', this.SPRITE);
     this.ZONE_ICON = this.creatorAbility.getOptionalParam('zone_icon', this.ZONE_ICON);

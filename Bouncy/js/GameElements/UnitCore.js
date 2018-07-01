@@ -71,7 +71,7 @@ class UnitCore extends Unit {
     return 4;
   }
 
-  runTick(boardState) {
+  runTick(boardState, phase) {
     if (this.moveTarget) {
       var moveVec = Victor(this.moveTarget.x - this.x, this.moveTarget.y - this.y);
       var ang = Math.atan2(

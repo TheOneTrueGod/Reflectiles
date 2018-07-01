@@ -6,10 +6,21 @@
 class UnitBossGrandWizard extends UnitBasic {
   constructor(x, y, owner, id) {
     super(x, y, owner, id);
+    this.animationFrames = 20;
     this.traits[Unit.UNIT_TRAITS.FROST_IMMUNE] = true;
     // Ability Stuff.  Move to UnitBasic eventually.
-    this.abilities = [];
-    this.abilities.push(new EnemyAbilitySummonFireShards(this, 2));
+    this.addAbility(40, new EnemyAbilitySummonFireShards(
+      this,
+      NumbersBalancer.getUnitAbilityNumber(this, NumbersBalancer.UNIT_ABILITIES.WIZARD_NUM_SHARDS)
+    ));
+    this.addAbility(40, new EnemyAbilitySummonIceWall(
+      this,
+      NumbersBalancer.getUnitAbilityNumber(this, NumbersBalancer.UNIT_ABILITIES.WIZARD_NUM_WALLS)
+    ));
+    this.addAbility(20, new EnemyAbilityShootProjectile(
+      this,
+      NumbersBalancer.getUnitAbilityNumber(this, NumbersBalancer.UNIT_ABILITIES.WIZARD_PROJECTILE_DAMAGE)
+    ));
   }
 
   getUnitSize() {
@@ -23,23 +34,40 @@ class UnitBossGrandWizard extends UnitBasic {
   }
 
   createCollisionBox() {
+    var hatTop = -this.physicsHeight / 2;
     var t = -this.physicsHeight / 2 + 30;
     var b = this.physicsHeight / 2;
-    var r = this.physicsWidth / 2 - 15;
-    var l = -this.physicsWidth / 2 + 15;
+    var r = this.physicsWidth / 2 - 10;
+    var l = -this.physicsWidth / 2 + 10;
 
     var offset = 0;
     this.collisionBox = [
-      new UnitLine(l, t, 0, t - 20, this), // Top Left
-      new UnitLine(0, t - 20, r, t, this), // Top Right
-      new UnitLine(r, t, r, b, this), // Right
-      new UnitLine(r, b, l, b, this), // Bottom
-      new UnitLine(l, b, l, t, this), // Left
+       // Top Left
+      new UnitLine(l, t, l + 10, t, this),
+      new UnitLine(l + 10, t, -10, hatTop, this),
+      // Top Center
+      new UnitLine(-10, hatTop, 10, hatTop, this),
+      // Top Right
+      new UnitLine(10, hatTop, r - 10, t, this),
+      new UnitLine(r - 10, t, r, t, this),
+      // Right
+      new UnitLine(r, t, r, b, this),
+      // Bottom
+      new UnitLine(r, b, r - 20, b, this),
+      new UnitLine(r - 20, b, r - 35, b - 15, this),
+      new UnitLine(r - 35, b - 15, l + 35, b - 15, this),
+      new UnitLine(l + 35, b - 15, l + 20, b, this),
+      new UnitLine(l + 20, b, l, b, this),
+      // Left
+      new UnitLine(l, b, l, t, this),
     ];
   }
 
   createSprite(hideHealthBar) {
-    return this.createSpriteFromResource('enemy_boss_wizard', hideHealthBar);
+    return this.createSpriteListFromResourceList([
+      'enemy_boss_wizard',
+      'enemy_boss_wizard_2'
+    ], hideHealthBar);
   }
 
   doMovement(boardState) {
@@ -52,21 +80,40 @@ class UnitBossGrandWizard extends UnitBasic {
     }
   }
 
-  startOfPhase(boardState, phase) {
-    super.startOfPhase(boardState, phase);
-    if (phase == TurnPhasesEnum.END_OF_TURN) {
-      this.useAbility(boardState);
+  isFinishedDoingAction(boardState, phase) {
+    if (
+      phase === TurnPhasesEnum.ENEMY_ACTION &&
+      boardState.tick / this.animationFrames < this.getAbilitiesToUse()
+    ) {
+      return false;
     }
+    return super.isFinishedDoingAction(boardState, phase);
   }
 
-  doSpawnEffect(boardState) {
-    this.useAbility(boardState);
+  getAbilitiesToUse() {
+    let healthPercent = this.getTotalHealthPercent();
+    if (healthPercent > 0.75) {
+      return 2;
+    } else if (healthPercent > 0.5) {
+      return 3;
+    }
+    return 4;
   }
 
-  useAbility(boardState) {
-    let rand = boardState.getRandom();
-    let abilToUse = this.abilities[Math.floor(this.abilities.length * rand)];
-    abilToUse.doEffects(boardState);
+  runTick(boardState, phase) {
+    super.runTick(boardState, phase);
+    if (this.canUseAbilities() && phase === TurnPhasesEnum.ENEMY_ACTION) {
+      if (boardState.tick / this.animationFrames < this.getAbilitiesToUse()) {
+        if (boardState.tick % this.animationFrames < this.animationFrames / 2) {
+          this.setSpriteVisible('enemy_boss_wizard_2');
+        } else {
+          this.setSpriteVisible('enemy_boss_wizard');
+        }
+        if (boardState.tick % this.animationFrames == this.animationFrames / 2) {
+          this.useRandomAbility(boardState);
+        }
+      }
+    }
   }
 
   isBoss() {

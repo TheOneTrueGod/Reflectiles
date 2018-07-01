@@ -60,6 +60,7 @@ class FrozenOrbProjectile extends StandardProjectile {
         )
         .cloneListeners(this)
         .setStyle(this.styleDef)
+        .cloneBuffsFrom(this)
       );
     }
   }

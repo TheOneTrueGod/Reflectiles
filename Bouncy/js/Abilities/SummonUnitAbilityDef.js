@@ -34,9 +34,6 @@ class SummonUnitAbilityDef extends AbilityDef {
       castPointCoord.y + this.MAX_RANGE.bottom
     );
 
-    //console.log(castPointCoord.x - this.MAX_RANGE.left, targetCoord.x, castPointCoord.x + this.MAX_RANGE.right);
-    //console.log(castPointCoord.y - this.MAX_RANGE.top, targetCoord.y, castPointCoord.y + this.MAX_RANGE.bottom);
-
     var target = {x: targX, y: targY};
     target = this.nudgeTargetAroundOtherUnits(target, castPoint)
     if (!target) { return null; }

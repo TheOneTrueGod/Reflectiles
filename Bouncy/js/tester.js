@@ -11,27 +11,11 @@ class Tester extends MainGame {
     this.cachedAbilities = {};
 
     this.unitsToSpawn = [
-      [UnitFireShard, null, null, null, UnitFireShard],
-      [null, null, UnitBossGrandWizard, null, null],
+      [null, UnitShooter, UnitKnight, UnitShooter, null],
+      //[null, null, UnitBossGrandWizard, null, null],
       [null, null, null, null, null],
       [null, null, null, null, null],
     ];
-    /*this.unitsToSpawn =
-    [
-      [null, null, null, null, null],
-      [null, null, UnitBossSlime, null, null],
-      [null, null, null, null, null],
-    ];*/
-
-    /*this.unitsToSpawn =
-    [
-      [null, null, null, null, null, null, null],
-      [null, UnitBossHealer, null, null, UnitBossSlime, null],
-      [null, null, null, null, null, null, null],
-      [UnitBomber, UnitBasicDiamond, UnitBasicSquare, UnitSlime, UnitSlime],
-      [UnitHeavy, UnitKnight, UnitProtector, UnitShooter, UnitShover],
-      [UnitFast, UnitSkeleton],
-    ];*/
   }
 
   buildAbility(core, perkList) {
@@ -56,7 +40,9 @@ class Tester extends MainGame {
     // SET COMMANDS HERE
     this.abilitiesToUse = [
       //[TestAbils[3].index, {x: -100, y: -50}],
-      //[this.buildAbility(AbilityCore8).index, {x: 0, y: -100}],
+      //[this.buildAbility(AbilityCore7, ['shield width 1']).index, {x: 0, y: -100}],
+      [this.buildAbility(AbilityCore4, []).index, {x: 0, y: -100}],
+      [this.buildAbility(AbilityCore13).index, {x: 0, y: -100}],
       //[this.buildAbility(AbilityCore5,
         /*["pass through 1", "pass through 1", "pass through 1", "damage 1", "damage 1",
         "damage 1", "pass through damage 2", "pass through damage 2", "pass through damage 2",

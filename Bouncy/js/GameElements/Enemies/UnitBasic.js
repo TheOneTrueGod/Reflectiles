@@ -5,6 +5,21 @@ class UnitBasic extends Unit {
     this.movementCredits = 0;
     this.movementSpeed = NumbersBalancer.getUnitSpeed(this);
     this.damage = NumbersBalancer.getUnitDamage(this);
+    this.abilities = [];
+  }
+
+  addAbility(weight, ability) {
+    this.abilities.push({'weight': weight, 'value': ability});
+  }
+
+  useRandomAbility(boardState) {
+    if (this.abilities.length == 1) {
+      this.abilities[0].value.doEffects(boardState);
+      return;
+    }
+
+    let abilToUse = getRandomFromWeightedList(boardState.getRandom(), this.abilities);
+    abilToUse.doEffects(boardState);
   }
 
   createCollisionBox() {
@@ -58,7 +73,7 @@ class UnitBasic extends Unit {
   }
 
   addPhysicsLines(sprite, color) {
-    color = color ? color : 0xff0000;
+    color = color ? color : 0xffff00;
     for (var i = 0; i < this.collisionBox.length; i++) {
       var lineGraphic = new PIXI.Graphics();
       var line = this.collisionBox[i];
@@ -66,12 +81,12 @@ class UnitBasic extends Unit {
         line.x1 / sprite.scale.x,
         line.y1 / sprite.scale.y
       );
-      lineGraphic.lineStyle(3, color)
-             .moveTo(0, 0)
-             .lineTo(
-               (line.x2 - line.x1) / sprite.scale.x,
-               (line.y2 - line.y1) / sprite.scale.y
-             );
+      lineGraphic.lineStyle(3, color, 0.5)
+         .moveTo(0, 0)
+         .lineTo(
+           (line.x2 - line.x1) / sprite.scale.x,
+           (line.y2 - line.y1) / sprite.scale.y
+         );
       sprite.addChild(lineGraphic);
     }
   }
@@ -256,8 +271,8 @@ class UnitBasic extends Unit {
     this.y = lerp(this.startMovementPos.y, this.moveTarget.y, pct);
   }
 
-  runTick(boardState) {
-    super.runTick(boardState);
+  runTick(boardState, phase) {
+    super.runTick(boardState, phase);
     if (this.moveTarget === null) {
       return;
     }
@@ -307,10 +322,10 @@ UnitBasic.loadFromServerData = function(serverData) {
 };
 
 UnitBasic.createAbilityDefs = function() {
-  UnitKnight.createAbilityDef();
   UnitBlocker.createAbilityDef();
   UnitProtector.createAbilityDef();
   UnitBossWarlock.createAbilityDef();
+  EnemyAbilityShieldWall.createAbilityDef();
 };
 
 UnitBasic.AddToTypeMap();

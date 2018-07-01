@@ -15,20 +15,19 @@ class NumbersBalancer {
   getPlayerStat(stat) {
     switch (stat) {
       case this.PLAYER_STATS.PLAYER_HEALTH:
-        return 40;
+        return 100;
     }
     throw new Error("getPlayerStat (" + stat + ") not implemented");
   }
 
   getUnitDamage(unit) {
-    var damage = 1;
+    var damage = 5;
     if (this.difficulty == this.DIFFICULTIES.HARD) {
     } else if (this.difficulty === this.DIFFICULTIES.NIGHTMARE) {
       damage *= 2;
     }
-    if (unit.constructor.name == "UnitBossHealer") { damage = 30; }
-    if (unit.constructor.name == "UnitBossSlime") { damage = 30; }
-    if (unit.constructor.name == "UnitBomber") { damage = 10; }
+    if (unit.constructor.name == "UnitBossHealer") { damage = 50; }
+    if (unit.constructor.name == "UnitBossSlime") { damage = 50; }
 
     return damage;
   }
@@ -132,6 +131,10 @@ class NumbersBalancer {
         healthVal = 1000;
         shieldVal = 1000;
         break;
+      case "UnitBossGrandWizard":
+        healthVal = 2000;
+        shieldVal = 4000;
+        break;
       case "UnitBossKing":
         healthVal = 5000;
         armorVal = 1000;
@@ -140,6 +143,13 @@ class NumbersBalancer {
         healthVal = 50;
         armorVal = 150;
         break;
+      case "UnitIceWall":
+        healthVal = 50;
+        shieldVal = 150;
+        break;
+      case "UnitFireShard":
+        healthVal = 100;
+        shieldVal = 100;
     }
     return {
       health: Math.floor(healthVal * healthMultiplier),
@@ -173,11 +183,11 @@ class NumbersBalancer {
       case this.UNIT_ABILITIES.KNIGHT_SHIELD:
         return 50 * playerMult * difficultyMult;
       case this.UNIT_ABILITIES.DEFENSIVE_MAX_DAMAGE:
-        return 200 * playerMult;
+        return 200 * playerMult * difficultyMult;
       case this.UNIT_ABILITIES.SHOOTER_DAMAGE:
-        return 1;
+        return 2;
       case this.UNIT_ABILITIES.BOMBER_EXPLOSION_DAMAGE:
-        return 5;
+        return 20;
       case this.UNIT_ABILITIES.BOMBER_DURATION:
         return 5;
       case this.UNIT_ABILITIES.UNIT_BOSS_HEALER_RANGE:
@@ -206,9 +216,15 @@ class NumbersBalancer {
       case this.UNIT_ABILITIES.CASTLE_WALL_REVIVE_TURNS:
         return 3;
       case this.UNIT_ABILITIES.FIRE_SHARD_TOTAL_DAMAGE:
-        return 3;
+        return 9;
       case this.UNIT_ABILITIES.FIRE_SHARD_NUM_SHOTS:
         return 3;
+      case this.UNIT_ABILITIES.WIZARD_NUM_WALLS:
+        return 1;
+      case this.UNIT_ABILITIES.WIZARD_NUM_SHARDS:
+        return 1;
+      case this.UNIT_ABILITIES.WIZARD_PROJECTILE_DAMAGE:
+        return 2;
     }
     throw new Error("Failure");
   }
@@ -240,6 +256,9 @@ NumbersBalancer.prototype.UNIT_ABILITIES = {
   CASTLE_WALL_REVIVE_TURNS: 'CASTLE_WALL_REVIVE_TURNS',
   FIRE_SHARD_NUM_SHOTS: 'FIRE_SHARD_NUM_SHOTS',
   FIRE_SHARD_TOTAL_DAMAGE: 'FIRE_SHARD_TOTAL_DAMAGE',
+  WIZARD_NUM_SHARDS: 'WIZARD_NUM_SHARDS',
+  WIZARD_NUM_WALLS: 'WIZARD_NUM_WALLS',
+  WIZARD_PROJECTILE_DAMAGE: 'WIZARD_PROJECTILE_DAMAGE',
 };
 
 NumbersBalancer.prototype.DIFFICULTIES = {

@@ -51,7 +51,7 @@ class UnitSectors {
         if (index != -1) {
           this.grid[spot.row][spot.column].splice(index, 1);
         } else {
-          console.log("Something's up");
+          console.warn("Something's up");
         }
       }
     }

@@ -1,11 +1,13 @@
 class UnitShooter extends UnitBasic {
   constructor(x, y, owner, id) {
     super(x, y, owner, id);
+    this.addAbility(20, new EnemyAbilityShootProjectile(
+      this,
+      NumbersBalancer.getUnitAbilityNumber(this, NumbersBalancer.UNIT_ABILITIES.SHOOTER_DAMAGE)
+    ));
   }
 
   createCollisionBox() {
-    var s = Unit.UNIT_SIZE / 2;
-
     var t = 0;
     var b = this.physicsHeight / 2;
     var r = this.physicsWidth / 2;
@@ -23,23 +25,9 @@ class UnitShooter extends UnitBasic {
     ];
   }
 
-  unitHitCallback(boardState, unit, intersection, projectile) {
-
-  }
-
   doUnitActions(boardState) {
     if (!this.canUseAbilities()) { return; }
-    var projectile = new EnemyProjectile(
-      {x: this.x, y: this.y}, {x: this.x, y: this.y + 50},
-      Math.PI / 2, this.unitHitCallback,
-      {
-        'damage_to_players': NumbersBalancer.getUnitAbilityNumber(this,
-          NumbersBalancer.UNIT_ABILITIES.SHOOTER_DAMAGE
-        ),
-      }
-    );
-    projectile.addUnitHitCallback(this.unitHitCallback);
-    boardState.addProjectile(projectile);
+    this.useRandomAbility(boardState);
   }
 
   createSprite(hideHealthBar) {
