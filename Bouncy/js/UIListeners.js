@@ -7,6 +7,7 @@ class UIListeners {
     this.lostCardsPile = null;
     this.inactionTimer = null;
     this.inactionTimerFadingIn = false;
+    this.currScreen = null;
   }
 
   createPlayerStatus(players) {
@@ -419,8 +420,7 @@ class UIListeners {
 
   updateGameSetupScreen(players, difficulty, level) {
     var loggedInPlayerID = $('#gameContainer').attr('playerID');
-    $('.screen').hide();
-    $('#playerSetupBoard').show();
+    this.showCurrentScreen();
     $("#playerSetupBoard .noPlayerSection").hide();
     $("#playerSetupBoard .playerSection").hide();
     $('.levelSelect .level.selected').removeClass('selected');
@@ -524,7 +524,8 @@ class UIListeners {
   }
 
   switchDeckClick(player_slot, player, event) {
-    var currDeckID = player.getAbilityDeckID();
+    this.showDeckEditorBoard();
+    /*var currDeckID = player.getAbilityDeckID();
     var nextDeckIndex = -1;
     for (var i = 0; i < this.otherDecks.length; i++) {
       if (this.otherDecks[i].getID() == currDeckID) {
@@ -540,7 +541,7 @@ class UIListeners {
       GameInitializer.handleMetaDataLoaded.bind(GameInitializer, false),
       GameInitializer,
       this.otherDecks[nextDeckIndex].getID()
-    );
+    );*/
   }
 
   setupPlayerInitListeners() {
@@ -593,9 +594,42 @@ class UIListeners {
     });
   }
 
+  showCurrentScreen() {
+    switch (this.currScreen) {
+      case 'deckEditor':
+        this.showDeckEditorBoard();
+        break;
+      case 'gameBoard':
+        this.showGameBoard();
+        break;
+      case 'setup':
+      default:
+        this.showSetupBoard();
+    }
+  }
+
+  showSetupBoard() {
+    if (this.currScreen !== 'setup') {
+      this.currScreen = 'setup';
+      $('.screen').hide();
+      $('#playerSetupBoard').show();
+    }
+  }
+
+  showDeckEditorBoard() {
+    if (this.currScreen !== 'deckEditor') {
+      this.currScreen = 'deckEditor';
+      $('.screen').hide();
+      $("#deckModifierBoard").show();
+    }
+  }
+
   showGameBoard() {
-    $('.screen').hide();
-    $('#gameBoard').show();
+    if (this.currScreen !== 'gameBoard') {
+      this.currScreen = 'gameBoard';
+      $('.screen').hide();
+      $('#gameBoard').show();
+    }
   }
 }
 

@@ -71,10 +71,11 @@ class BouncyController {
     $is_host = $this->gameObject->isUserHost($this->user);
     $turn = $this->gameObject->getCurrentTurn();
     $game_id = $this->gameObject->getID();
+    $bouncy_user = BouncyUser::getFromID($user->id);
 
     ob_start(); ?>
     <?php require('BouncyPageHTML.php'); ?>
-    <?php require('Bouncy/js_includes.php'); ?>
+    <?php require_once('Bouncy/js_includes.php'); ?>
     <script src="../Bouncy/js/gameLauncher.js"></script>
     <?php
     return ob_get_clean();

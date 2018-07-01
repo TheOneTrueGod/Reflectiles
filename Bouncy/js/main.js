@@ -31,7 +31,7 @@
  * Background of a person in a square
  * Make freeze spread across all shields.  They take double damage
  */
-const DEBUG_MODE = false;
+const DEBUG_IMAGES = false;
 
 class MainGame {
   constructor() {

@@ -32,11 +32,6 @@ class DeckManager {
         this.collectionCardClicked(event);
       });
 
-    $('.chooseDeckButton').on('click', (event) => {
-      $('.deckToolbar .active').removeClass('active');
-      $('.deckToolbar .deckFilterSection').addClass('active');
-    });
-
     $('.deckToolbar .saveButton').on('click', (event) => {
       if (!$('.deckToolbar .saveButton').hasClass('disabled')) {
         $('.deckToolbar .saveButton').addClass("disabled");
@@ -62,13 +57,9 @@ class DeckManager {
     if (!clickTarget.hasClass("abilityCard")) {
       clickTarget = clickTarget.closest(".abilityCard");
     }
-    if (event.button == 2 || event.shiftKey) {
-      this.showCardManager(clickTarget.data("playerCard"));
-    } else {
-      this.removeCardFromDeck(clickTarget.data("playerCard"));
-      this.markDeckDirty();
-      this.updateCardStatus();
-    }
+    this.removeCardFromDeck(clickTarget.data("playerCard"));
+    this.markDeckDirty();
+    this.updateCardStatus();
 
     event.preventDefault();
     return false;
@@ -81,26 +72,16 @@ class DeckManager {
       clickTarget = clickTarget.closest(".abilityCard");
     }
     let playerCard = clickTarget.data("playerCard");
-    if (event.button == 2 || event.shiftKey) {
-      this.showCardManager(playerCard);
-    } else {
-      if (playerCard) {
-        let cardAbility = this.selectedDeck.addCard(playerCard);
-        if (cardAbility) {
-          this.addCardToDeckSection(playerCard, cardAbility);
-          this.markDeckDirty();
-          this.updateCardStatus();
-        }
+    if (playerCard) {
+      let cardAbility = this.selectedDeck.addCard(playerCard);
+      if (cardAbility) {
+        this.addCardToDeckSection(playerCard, cardAbility);
+        this.markDeckDirty();
+        this.updateCardStatus();
       }
     }
     event.preventDefault();
     return false;
-  }
-
-  showCardManager(playerCard) {
-    this.cardManager.setupForCard(playerCard);
-    $(".deckControlSection").addClass("hidden");
-    $(".cardControlSection").removeClass("hidden");
   }
 
   updateCardStatus() {
@@ -134,8 +115,8 @@ class DeckManager {
     $('.deckFilter.selected').removeClass('selected');
     $('[data-deck-id=' + deckID + ']').addClass("selected");
 
-    $('.deckToolbar .active').removeClass('active');
-    $('.deckToolbar .tools').addClass('active');
+    //$('.deckToolbar .active').removeClass('active');
+    //$('.deckToolbar .tools').addClass('active');
 
     this.displayDeck(deckID);
     this.selectedDeck = this.decks[deckID];

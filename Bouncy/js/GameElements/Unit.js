@@ -467,7 +467,7 @@ class Unit {
       stage.addChild(this.gameSprite);
     }
 
-    if (DEBUG_MODE && this.addPhysicsLines) {
+    if (DEBUG_IMAGES && this.addPhysicsLines) {
       this.addPhysicsLines(this.gameSprite);
     }
   }

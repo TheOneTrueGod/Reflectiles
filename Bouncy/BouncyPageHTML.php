@@ -113,5 +113,11 @@
       <?php } ?>
       </div>
     </div>
+
+    <div id="deckModifierBoard" class="screen" style="display: none;">
+      <?php
+      require('Bouncy/server/HTML/NewDeckSelectorHTML.php');
+      ?>
+    </div>
   </div>
 </div>

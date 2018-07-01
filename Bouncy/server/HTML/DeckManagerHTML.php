@@ -94,7 +94,7 @@
   </div>
 </div>
 
-<?php require('Bouncy/js_includes.php'); ?>
+<?php require_once('Bouncy/js_includes.php'); ?>
 <?php
   $serialized_decks = addslashes(json_encode(array_map(
     function ($deck) use ($bouncy_user) {
