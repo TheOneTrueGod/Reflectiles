@@ -58,7 +58,7 @@
     <div class="cardsTitleSection">Your Cards</div>
     <div class="deckContentsTitleSection">Deck</div>
   </div>
-  <div class="clearfix">
+  <div class="clearfix cardAndDeckContainer">
     <div class="cardsSection"> </div>
     <div class="deckContentsSection"> </div>
   </div>

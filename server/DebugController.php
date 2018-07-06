@@ -53,6 +53,19 @@ class DebugController {
         $this->rrmdir($file); // delete file
       }
       $message = "Cleared All Users";
+    } else if ($request->unlock_all_cards) {
+      $message = "Unlocking all cards";
+
+      for ($i = 0; $i < count(User::$all_users); $i++) {
+        $currUser = BouncyUser::getFromID(User::$all_users[$i][0]);
+        if ($currUser) {
+          $currUser->loadUserData();
+          $currUser->resetCardData(!$request->old_cards);
+          $currUser->saveAllDecks();
+        } else {
+          $message .= "Unsuccessful for " . User::$all_users[$i][1] . "<br>";
+        }
+      }
     }
 
 
@@ -80,6 +93,12 @@ class DebugController {
               </div>
               <div class="col-8">
                 <input name="level" type="number" placeholder="Level"/>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-4">
+                <input name="unlock_all_cards" type="submit" value="Unlock All Cards"/>
+                <input name="old_cards" type="checkbox"/>
               </div>
             </div>
             <div class="row"><br></div>

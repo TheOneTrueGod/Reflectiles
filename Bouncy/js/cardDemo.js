@@ -1,4 +1,4 @@
-class CardDemo extends MainGame {
+class CardDemo extends MainGameHandler {
   constructor() {
     super();
     this.MAX_TURNS_TO_PLAY = 1;

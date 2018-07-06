@@ -35,13 +35,13 @@ class PlayerDeck {
       if ($card) {
         array_push($serializedCards, $card->serialize());
       } else {
-        print_r(debug_backtrace());
-        print_r("ERROR: ");
+        print_r("ERROR IN PLAYER DECK SERIALIZE.  PLAYER DOESN'T OWN A CARD THAT'S IN ONE OF THEIR DECKS: ");
         print_r($bouncy_user);
         print_r("\n");
         print_r("Card Index: ");
         print_r($card_index);
         print_r("\n");
+        print_r(debug_backtrace());
       }
     }
 

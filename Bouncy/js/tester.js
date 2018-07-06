@@ -1,4 +1,4 @@
-class Tester extends MainGame {
+class Tester extends MainGameHandler {
   start() {
     NumbersBalancer.setNumPlayers(1);
     //NumbersBalancer.setDifficulty(NumbersBalancer.DIFFICULTIES.NIGHTMARE);

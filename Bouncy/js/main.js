@@ -33,7 +33,7 @@
  */
 const DEBUG_IMAGES = false;
 
-class MainGame {
+class MainGameHandler {
   constructor() {
     this.ticksPerTurn = 20;
     this.gameID = $('#gameBoard').attr('data-gameID');
@@ -664,3 +664,5 @@ class MainGame {
     }
   }
 }
+
+let MainGame = null;

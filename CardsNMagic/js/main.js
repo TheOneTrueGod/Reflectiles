@@ -1,4 +1,4 @@
-class MainGame {
+class MainGameHandler {
   constructor() {
     this.ticksPerTurn = 20;
     this.gameID = $('#gameBoard').attr('data-gameID');
@@ -175,7 +175,8 @@ class MainGame {
   }
 }
 
-MainGame = new MainGame();
+let MainGame = null;
+MainGame = new MainGameHandler();
 MainGame.redraw();
 
 MainGame.loadImages(MainGame.start.bind(MainGame));

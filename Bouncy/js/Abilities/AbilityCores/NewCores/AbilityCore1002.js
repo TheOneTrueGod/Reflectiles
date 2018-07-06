@@ -46,4 +46,4 @@ class AbilityCore1002 extends AbilityCore {
   }
 }
 
-AbilityCore1002.coreList[0] = AbilityCore1002;
+AbilityCore.coreList[1002] = AbilityCore1002;

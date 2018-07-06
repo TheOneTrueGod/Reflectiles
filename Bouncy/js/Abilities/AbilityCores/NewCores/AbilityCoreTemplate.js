@@ -29,4 +29,4 @@ class AbilityCoreNUMBER extends AbilityCore {
   }
 }
 
-AbilityCoreNUMBER.coreList[0] = AbilityCoreNUMBER;
+AbilityCore.coreList[NUMBER] = AbilityCoreNUMBER;

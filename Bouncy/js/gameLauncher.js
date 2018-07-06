@@ -2,7 +2,7 @@
 //MainGame.debugSpeed();
 
 //MainGame.runLineTester();
-MainGame = new MainGame();
+MainGame = new MainGameHandler();
 MainGame.redraw();
 //MainGame.runRandomTester();
 MainGame.start();

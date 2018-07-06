@@ -51,13 +51,25 @@ class BouncyUser extends User {
     );
   }
 
-  public function resetCardData() {
-    $this->cards = [];
-    $card_index = 0;
-    for ($i = 0; $i < 26; $i++) {
-      if ($i !== 10 && $i !== 12) {
-        array_push($this->cards, new PlayerCard($card_index++, $i));
-        //array_push($this->cards, new PlayerCard($card_index++, $i));
+  public function resetCardData($giveNewCards = false) {
+    if ($giveNewCards) {
+      $this->cards = [];
+      $this->decks = array(new PlayerDeck(0, "Weapons", '[0, 1, 2]'));
+      $card_index = 0;
+      foreach (glob('Bouncy/js/Abilities/AbilityCores/NewCores/*.js') as $file)
+      {
+        if (strpos($file, 'Template') === False) {
+          preg_match_all('!\d+!', $file, $matches);
+          array_push($this->cards, new PlayerCard($card_index++, (int)$matches[0][0]));
+        }
+      }
+    } else {
+      $this->cards = [];
+      $card_index = 0;
+      for ($i = 0; $i < 26; $i++) {
+        if ($i !== 10 && $i !== 12) {
+          array_push($this->cards, new PlayerCard($card_index++, $i));
+        }
       }
     }
   }
@@ -75,7 +87,7 @@ class BouncyUser extends User {
     }
 
     if ($this->cards == null) {
-      $this->resetCardData();
+      $this->resetCardData($this->id === "totg");
     }
   }
 

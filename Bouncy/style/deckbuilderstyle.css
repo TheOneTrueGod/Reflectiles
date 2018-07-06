@@ -19,6 +19,10 @@
   text-align: center;
 }
 
+.cardAndDeckContainer {
+  width: 100%;
+}
+
 .cardsSection, .deckContentsSection, .controls {
   background: rgba(86, 61, 124, .15);
   padding: 1%;
