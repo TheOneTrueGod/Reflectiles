@@ -67,6 +67,8 @@ class GameSelectController {
 
   function getGameRow($user, $game) {
     $game_over = $game->isGameOver();
+    $started = $game->getMetadata()->isGameStarted();
+    $player_in_game = $game->isPlayerInGame($user->getID());
     $players_won = $game->didPlayersWin();
     ob_start(); ?>
     <div class="row tableRow<?php
@@ -76,7 +78,7 @@ class GameSelectController {
       <div class="col-2"><?php echo $game->getID(); ?></div>
       <div class="col-7"><?php echo $game->getName(); ?></div>
       <div class="col-3">
-      <?php if (!$game_over) { ?>
+      <?php if (!$game_over && ($player_in_game || !$started)) { ?>
         <a href="<?php echo GameController::buildURL($game->getID()); ?>">Join</a>
       <?php } ?>
       <?php if ($game_over || $user && $user->isAdmin() || $game->isUserHost($user)) { ?>

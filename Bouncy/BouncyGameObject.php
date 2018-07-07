@@ -61,6 +61,18 @@ class BouncyGameObject extends GameObject {
     return $this->metadata;
   }
 
+  public function isPlayerInGame($player_id) {
+    if ($this->metadata->player_data) {
+      for ($i = 0; $i < count($this->metadata->player_data); $i++) {
+        $playerData = json_decode($this->metadata->player_data[$i]);
+        if ($playerData->user_id === $player_id) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
   public function createInitialMetadata() {
     $this->metadata = new Metadata();
     $this->saveMetadata();

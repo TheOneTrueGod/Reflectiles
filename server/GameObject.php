@@ -22,6 +22,7 @@ abstract class GameObject {
   public function isGameOver() { return false; }
   public function didPlayersWin() { return false; }
   public function createInitialMetadata() {}
+  public abstract function isPlayerInGame($player_id);
 
   public function save() {
     DatastoreFactory::getDatastore()->saveGameObjectJSON($this);

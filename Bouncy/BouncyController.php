@@ -72,9 +72,13 @@ class BouncyController {
     $turn = $this->gameObject->getCurrentTurn();
     $game_id = $this->gameObject->getID();
     $bouncy_user = BouncyUser::getFromID($user->id);
-
-    ob_start(); ?>
-    <?php require('BouncyPageHTML.php'); ?>
+    ob_start();
+    if ($this->gameObject->getMetadata()->isGameStarted()) {
+      require('BouncyGameHTML.php');
+    } else {
+      require('BouncyPageHTML.php');
+    }
+    ?>
     <?php require_once('Bouncy/js_includes.php'); ?>
     <script src="../Bouncy/js/gameLauncher.js"></script>
     <?php

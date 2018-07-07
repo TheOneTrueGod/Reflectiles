@@ -31,6 +31,10 @@ class CardsNMagicGameObject extends GameObject {
     return $this->board_state;
   }
 
+  public function isPlayerInGame($player_id) {
+    return false;
+  }
+
   public function getPlayerCommands() {
     return $this->player_commands;
   }

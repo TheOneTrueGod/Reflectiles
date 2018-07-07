@@ -80,6 +80,14 @@ class DeckManager {
         this.updateCardStatus();
       }
     }
+
+    if (MainGame && MainGame instanceof CardDemo) {
+      let abilityDef = AbilityFactory.GetAbility(
+        playerCard.cardID, playerCard.cardPerks
+      );
+      MainGame.demoAbility(abilityDef, playerCard);
+    }
+
     event.preventDefault();
     return false;
   }
