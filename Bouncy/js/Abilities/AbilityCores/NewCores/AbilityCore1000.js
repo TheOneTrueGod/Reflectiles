@@ -4,9 +4,9 @@ class AbilityCore1000 extends AbilityCore {
     let explosionRadius = 40;
     const rawAbil = {
       name: 'Explosion',
-      description: 'Fire a rocket that deals [[hit_effects[1].base_damage]] ' +
-        'damage in a circle of size [[hit_effects[1].aoe_size]].',
-      card_text_description: '[[hit_effects[1].base_damage]]',
+      description: 'Fire a rocket that deals [[hit_effects[0].base_damage]] ' +
+        'damage in a circle of size [[hit_effects[0].aoe_size]].',
+      card_text_description: '[[hit_effects[0].base_damage]]',
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
       speed: 8,
