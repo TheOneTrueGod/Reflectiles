@@ -19,21 +19,21 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE);
 session_start();
 $klein = new \Klein\Klein();
 
-KleinUtils::addHTMLResponder($klein, LoginController, GameSelectController, 'GET', '/');
-KleinUtils::addHTMLResponder($klein, LoginController, GameSelectController, 'POST', '/');
-KleinUtils::addHTMLResponder($klein, LoginController, TestController, 'GET', '/test');
-//KleinUtils::addHTMLResponder($klein, LoginController, GameSelectController);
-KleinUtils::addHTMLResponder($klein, LoginController, NewGameController, 'GET');
-KleinUtils::addHTMLResponder($klein, LoginController, GameController, 'GET');
-KleinUtils::addHTMLResponder($klein, LoginController, GameController, 'POST');
-KleinUtils::addLogicResponder($klein, LoginController, GameLogicController);
-KleinUtils::addLogicResponder($klein, LoginController, GameLogicController, 'POST');
-KleinUtils::addHTMLResponder($klein, LoginController, GameDeletionController, 'GET');
-KleinUtils::addHTMLResponder($klein, LoginController, GameDeletionController, 'POST');
-KleinUtils::addHTMLResponder($klein, LoginController, BouncyUserController, 'GET');
-KleinUtils::addLogicResponder($klein, LoginController, BouncyUserController, 'POST');
-KleinUtils::addHTMLResponder($klein, LoginController, DebugController, 'GET');
-KleinUtils::addHTMLResponder($klein, LoginController, DebugController, 'POST');
+KleinUtils::addHTMLResponder($klein, 'LoginController', 'GameSelectController', 'GET', '/');
+KleinUtils::addHTMLResponder($klein, 'LoginController', 'GameSelectController', 'POST', '/');
+KleinUtils::addHTMLResponder($klein, 'LoginController', 'TestController', 'GET', '/test');
+//KleinUtils::addHTMLResponder($klein, 'LoginController', GameSelectController);
+KleinUtils::addHTMLResponder($klein, 'LoginController', 'NewGameController', 'GET');
+KleinUtils::addHTMLResponder($klein, 'LoginController', 'GameController', 'GET');
+KleinUtils::addHTMLResponder($klein, 'LoginController', 'GameController', 'POST');
+KleinUtils::addLogicResponder($klein, 'LoginController', 'GameLogicController');
+KleinUtils::addLogicResponder($klein, 'LoginController', 'GameLogicController', 'POST');
+KleinUtils::addHTMLResponder($klein, 'LoginController', 'GameDeletionController', 'GET');
+KleinUtils::addHTMLResponder($klein, 'LoginController', 'GameDeletionController', 'POST');
+KleinUtils::addHTMLResponder($klein, 'LoginController', 'BouncyUserController', 'GET');
+KleinUtils::addLogicResponder($klein, 'LoginController', 'BouncyUserController', 'POST');
+KleinUtils::addHTMLResponder($klein, 'LoginController', 'DebugController', 'GET');
+KleinUtils::addHTMLResponder($klein, 'LoginController', 'DebugController', 'POST');
 
 $klein->respond('GET', '/logout', function($request, $response) {
   $_SESSION['user_token'] = null;
