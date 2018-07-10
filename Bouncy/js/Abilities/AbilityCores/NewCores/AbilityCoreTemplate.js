@@ -1,5 +1,6 @@
 class AbilityCoreNUMBER extends AbilityCore {
   static BuildAbilityChild(level) {
+    let hitDamage = Math.floor(NumbersBalancer.getAbilityDamage(level, 1));
     const rawAbil = {};
 
     let cooldown = this.getCooldown();
@@ -14,10 +15,7 @@ class AbilityCoreNUMBER extends AbilityCore {
   static createAbilityStyle() {
     return (new AbilitySheetSpriteAbilityStyleBuilder())
       .setSheet('weapons_sheet')
-      .setCoordNums(2, 1, 24, 23)
-      .setExplosion(AbilityStyle.getExplosionPrefab(
-        AbilityStyle.EXPLOSION_PREFABS.WHITE, explosionRadius
-      ));
+      .setCoordNums(2, 1, 24, 23);
   }
 
   static getCooldown() {
