@@ -9,6 +9,7 @@ class ProjectileShapeChainShot extends ProjectileShape {
     super(abilityDef);
     this.num_waves = abilityDef.getOptionalParam('num_bullets', 4);
     var wave_delay = abilityDef.getOptionalParam('bullet_wave_delay', 10);
+    this.barrel_width = abilityDef.getOptionalParam('barrel_width', 0);
     this.ACTIVATE_ON_TICKS = {0: 0};
     this.FINAL_TICK = 1;
     for (var i = 1; i < this.num_waves; i++) {
@@ -47,8 +48,13 @@ class ProjectileShapeChainShot extends ProjectileShape {
       let shotsPerWave = this.abilityDef.getOptionalParam('shots_per_wave', 1);
       let numBullets = Math.floor(shotIndex * shotsPerWave) - Math.floor((shotIndex - 1) * shotsPerWave);
       for (let i = 0; i < numBullets; i++) {
-        let angle = aimAngle + (boardState.getRandom() - 0.5) * 2 * accuracyForShot;
+        let aimRand = boardState.getRandom();
+        let angle = aimAngle + (aimRand - 0.5) * 2 * accuracyForShot;
         let aimTargetPoint = {x: Math.cos(angle) * aimDist + castPoint.x, y: Math.sin(angle) * aimDist + castPoint.y};
+        let barrelOffset = {
+          x: this.barrel_width * (aimRand - 0.5) * Math.cos(aimAngle + Math.PI / 2.0),
+          y: this.barrel_width * (aimRand - 0.5) * Math.sin(aimAngle + Math.PI / 2.0),
+        };
         aimTargetPoint = this.abilityDef.getAccuracy().getRandomTarget(
           boardState,
           castPoint,
@@ -61,7 +67,10 @@ class ProjectileShapeChainShot extends ProjectileShape {
           Projectile.createProjectile(
             playerID,
             this.projectileType,
-            castPoint,
+            {
+              x: castPoint.x + barrelOffset.x,
+              y: castPoint.y + barrelOffset.y
+            },
             aimTargetPoint,
             angle,
             this.abilityDef,

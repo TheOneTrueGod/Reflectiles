@@ -13,9 +13,10 @@ class AbilityCore1004 extends AbilityCore {
       destroy_on_wall: [],
       num_bullets,
       shots_per_wave,
+      barrel_width: 40,
       curve_def: {
         type: ProjectileCurveHandler.CURVE_TYPES.TO_AIM_ANGLE,
-        curve_time: 15,
+        curve_time: 5,
       },
       bullet_wave_delay: 1,
       base_accuracy: Math.PI / 3.0,
