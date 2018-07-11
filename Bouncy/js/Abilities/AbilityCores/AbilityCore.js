@@ -14,11 +14,11 @@ class AbilityCore {
     return idx(perkPcts, perkName, 0) === 1;
   }
 
-  static BuildAbility(perkList) {
+  static BuildAbility(perkList, level, coreID) {
     let perkResults = this.BuildPerkDetails(perkList);
     let perkPcts = perkResults.perkPcts;
     let perkCounts = perkResults.perkCounts;
-    return this.BuildAbilityChild(perkList, perkPcts, perkCounts);
+    return this.BuildAbilityChild(coreID >= 1000 ? level : perkList, perkPcts, perkCounts);
   }
 
   static BuildAbilityChild(perkList, perkPcts, perkCounts) {

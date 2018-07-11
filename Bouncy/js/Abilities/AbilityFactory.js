@@ -2,13 +2,13 @@ const AbilityFactory = {
   GetAbilityCore: function(abilityCoreID) {
     return AbilityCore.GetAbilityCore(abilityCoreID);
   },
-  GetAbility: function(abilityCoreID, perkList) {
+  GetAbility: function(abilityCoreID, perkList, level) {
     if (abilityCoreID instanceof PlayerCard) {
-      return AbilityFactory.GetAbility(abilityCoreID.cardID, abilityCoreID.cardPerks);
+      return AbilityFactory.GetAbility(abilityCoreID.cardID, abilityCoreID.cardPerks, abilityCoreID.getCardLevel());
     }
     let abilityCore = this.GetAbilityCore(abilityCoreID);
     if (abilityCore) {
-      return abilityCore.BuildAbility(perkList);
+      return abilityCore.BuildAbility(perkList, level ? level : 0, abilityCoreID);
     }
     return AbilityDef.abilityDefList[abilityCoreID];
   },

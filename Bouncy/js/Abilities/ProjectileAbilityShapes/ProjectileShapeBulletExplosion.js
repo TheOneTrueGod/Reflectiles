@@ -53,7 +53,9 @@ class ProjectileShapeBulletExplosion extends ProjectileShape {
               size: 3,
               trail_length: 4,
               curve_handler: ProjectileCurveHandler.getCurveHandler(
-                this.abilityDef.getOptionalParam('curve_def', null)
+                this.abilityDef.getOptionalParam('curve_def', null),
+                angle,
+                angle,
               ),
             }
           ).addUnitHitCallback(this.unitHitCallback.bind(this))

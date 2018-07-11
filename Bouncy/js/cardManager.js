@@ -78,7 +78,8 @@ class CardManager {
 
   updateCardDetails() {
     this.abilityDef = AbilityFactory.GetAbility(
-      this.playerCard.cardID, this.playerCard.cardPerks.slice(0).concat(this.previewPerkList)
+      this.playerCard.cardID, this.playerCard.cardPerks.slice(0).concat(this.previewPerkList),
+      this.playerCard.getCardLevel()
     );
 
     // Card name and description

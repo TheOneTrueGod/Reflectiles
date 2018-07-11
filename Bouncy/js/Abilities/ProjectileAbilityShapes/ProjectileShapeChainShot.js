@@ -33,41 +33,52 @@ class ProjectileShapeChainShot extends ProjectileShape {
 
   doActionOnTick(playerID, tick, boardState, castPoint, targetPoint) {
     if (tick in this.ACTIVATE_ON_TICKS) {
-      var shotIndex = this.ACTIVATE_ON_TICKS[tick];
-      var accuracy = this.abilityDef.getOptionalParam('base_accuracy', 0);
-      var accuracyDecay = this.abilityDef.getOptionalParam('accuracy_decay', 0);
-      var accuracyForShot = Math.min(
+      const shotIndex = this.ACTIVATE_ON_TICKS[tick];
+      const accuracy = this.abilityDef.getOptionalParam('base_accuracy', 0);
+      const accuracyDecay = this.abilityDef.getOptionalParam('accuracy_decay', 0);
+      const accuracyForShot = Math.min(
         Math.max(0, accuracy + accuracyDecay * shotIndex),
         Math.PI / 2.0
       );
-      let aimDist = Math.pow((targetPoint.y - castPoint.y) ** 2 + (targetPoint.x - castPoint.x) ** 2, 0.5);
-      var aimAngle = Math.atan2(
+      const aimDist = Math.pow((targetPoint.y - castPoint.y) ** 2 + (targetPoint.x - castPoint.x) ** 2, 0.5);
+      const aimAngle = Math.atan2(
         targetPoint.y - castPoint.y, targetPoint.x - castPoint.x
       );
-      let angle = aimAngle + (boardState.getRandom() - 0.5) * 2 * accuracyForShot;
-      let aimTargetPoint = {x: Math.cos(angle) * aimDist + castPoint.x, y: Math.sin(angle) * aimDist + castPoint.y};
-      aimTargetPoint = this.abilityDef.getAccuracy().getRandomTarget(
-        boardState,
-        castPoint,
-        aimTargetPoint
-      );
-      angle = Math.atan2(
-        aimTargetPoint.y - castPoint.y, aimTargetPoint.x - castPoint.x
-      );
-      boardState.addProjectile(
-        Projectile.createProjectile(
-          playerID,
-          this.projectileType,
+      let shotsPerWave = this.abilityDef.getOptionalParam('shots_per_wave', 1);
+      let numBullets = Math.floor(shotIndex * shotsPerWave) - Math.floor((shotIndex - 1) * shotsPerWave);
+      for (let i = 0; i < numBullets; i++) {
+        let angle = aimAngle + (boardState.getRandom() - 0.5) * 2 * accuracyForShot;
+        let aimTargetPoint = {x: Math.cos(angle) * aimDist + castPoint.x, y: Math.sin(angle) * aimDist + castPoint.y};
+        aimTargetPoint = this.abilityDef.getAccuracy().getRandomTarget(
+          boardState,
           castPoint,
-          aimTargetPoint,
-          angle,
-          this.abilityDef
-        ).addUnitHitCallback(this.unitHitCallback.bind(this))
-        .addTimeoutHitCallback(this.timeoutHitCallback.bind(this))
-        .addTimeoutCallback(this.timeoutCallback.bind(this))
-        .addCollisionHitCallback(this.collisionHitCallback.bind(this))
-        .addOnKillCallback(this.onKillCallback.bind(this))
-      );
+          aimTargetPoint
+        );
+        angle = Math.atan2(
+          aimTargetPoint.y - castPoint.y, aimTargetPoint.x - castPoint.x
+        );
+        boardState.addProjectile(
+          Projectile.createProjectile(
+            playerID,
+            this.projectileType,
+            castPoint,
+            aimTargetPoint,
+            angle,
+            this.abilityDef,
+            {
+              curve_handler: ProjectileCurveHandler.getCurveHandler(
+                this.abilityDef.getOptionalParam('curve_def', null),
+                angle,
+                aimAngle,
+              ),
+            }
+          ).addUnitHitCallback(this.unitHitCallback.bind(this))
+          .addTimeoutHitCallback(this.timeoutHitCallback.bind(this))
+          .addTimeoutCallback(this.timeoutCallback.bind(this))
+          .addCollisionHitCallback(this.collisionHitCallback.bind(this))
+          .addOnKillCallback(this.onKillCallback.bind(this))
+        );
+      }
     }
   }
 

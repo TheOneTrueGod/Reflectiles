@@ -450,7 +450,7 @@ class MainGameHandler {
         this.aimPreviews[commandTurn].addAimIndicator(this.boardState, this.stage, this.players);
       }
     } else if (abilityIndex !== null) {
-      this.aimPreviews[commandTurn] = new PlayerCommandUseAbility(this.boardState, x, y, abilityIndex, $('#gameContainer').attr('playerID'));
+      this.aimPreviews[commandTurn] = new PlayerCommandUseAbility(x, y, abilityIndex, $('#gameContainer').attr('playerID'));
       this.aimPreviews[commandTurn].addAimIndicator(this.boardState, this.stage, this.players);
     } else {
       this.aimPreviews[commandTurn] = null;

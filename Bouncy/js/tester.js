@@ -27,7 +27,7 @@ class Tester extends MainGameHandler {
     if (key in this.cachedAbilities) {
       return this.cachedAbilities[key];
     }
-    let ability = core.BuildAbility(perkList);
+    let ability = core.BuildAbility(perkList, 0);
     this.cachedAbilities[key] = ability;
     return ability;
   }
