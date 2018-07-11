@@ -86,10 +86,11 @@ class NumbersBalancer {
   }
 
   getUnitHealthStats(unit, stat) {
+    let powerLevelMultiplier = this.getPowerLevelMultiplier(this.powerLevelBase);
     var healthMultiplier =
       this.getDifficultyMultiplier() *
       this.getPlayerCountMultiplier() *
-      this.getPowerLevelMultiplier(this.powerLevelBase);
+      powerLevelMultiplier;
 
     let healthVal = 100;
     let armorVal = 0;
@@ -184,7 +185,7 @@ class NumbersBalancer {
     stage = Number.parseInt(stage) - 1;
     let pctDone = (world * 4 + stage) / 20;
     // TODO: REMOVE ME.
-    return 0;
+    //return 0;
     switch (difficulty) {
       case this.DIFFICULTIES.EASY:
         return Math.floor(lerp(0, 10, pctDone));
