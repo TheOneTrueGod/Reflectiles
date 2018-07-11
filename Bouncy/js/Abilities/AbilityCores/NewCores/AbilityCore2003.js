@@ -7,7 +7,7 @@ class AbilityCore2003 extends AbilityCore {
     let weaknessDescription = Math.floor((weaknessAmount - 1) * 100);
     const rawAbil = {
       name: 'Weaken',
-      description: 'Applies weakness to a single enemy for [[hit_effects[1].duration]] turns, increasing the damage they take by <<' + weaknessDescription + '>>%',
+      description: 'Applies weakness to all enemies in a 3x2 box for [[hit_effects[1].duration]] turns, increasing the damage they take by <<' + weaknessDescription + '>>%',
       card_text_description: 'weaken',
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
