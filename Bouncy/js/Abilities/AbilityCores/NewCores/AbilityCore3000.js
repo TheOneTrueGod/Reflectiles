@@ -21,7 +21,7 @@ class AbilityCore3000 extends AbilityCore {
       angle_offset: -Math.PI / 16.0,
       shot_delay: 4,
       collision_behaviours: [],
-      icon: "/Bouncy/assets/icons/icon_plain_wave.png",
+      icon: "/Bouncy/assets/icons/icon_double_wave.png",
     };
 
     let cooldown = this.getCooldown();
