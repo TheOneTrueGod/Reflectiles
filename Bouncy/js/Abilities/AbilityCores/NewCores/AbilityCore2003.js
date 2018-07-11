@@ -2,7 +2,7 @@ class AbilityCore2003 extends AbilityCore {
   static BuildAbilityChild(level) {
     let coreDamage = Math.round(NumbersBalancer.getAbilityDamage(level, 0.1));
     let weaknessAmount = 1.5;
-    let duration = 2;
+    let duration = 3;
 
     let weaknessDescription = Math.floor((weaknessAmount - 1) * 100);
     const rawAbil = {
@@ -15,11 +15,15 @@ class AbilityCore2003 extends AbilityCore {
       hit_effects:[{
         effect: ProjectileShape.HitEffects.DAMAGE,
         base_damage: coreDamage,
+        aoe_type: ProjectileShape.AOE_TYPES.BOX,
+        aoe_size: {x:[-1, 1], y:[-1, 0]},
       },
       {
         effect: ProjectileShape.HitEffects.WEAKNESS,
         duration: duration,
         amount: weaknessAmount,
+        aoe_type: ProjectileShape.AOE_TYPES.BOX,
+        aoe_size: {x:[-1, 1], y:[-1, 0]},
       }],
       icon: "/Bouncy/assets/icons/icon_plain_hearts.png",
     };
