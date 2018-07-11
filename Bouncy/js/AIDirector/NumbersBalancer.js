@@ -26,7 +26,7 @@ class NumbersBalancer {
   }
 
   getAbilityDamage(level, damageScaling) {
-    return 1000 * this.getPowerLevelMultiplier(level) * damageScaling;
+    return 1000 * this.getPowerLevelMultiplier(Math.max(level - 1, 0)) * damageScaling;
   }
 
   getPlayerStat(stat) {
