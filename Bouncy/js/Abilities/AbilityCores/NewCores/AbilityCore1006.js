@@ -1,27 +1,31 @@
-class AbilityCore1002 extends AbilityCore {
+class AbilityCore1006 extends AbilityCore {
   static BuildAbilityChild(level) {
-    let num_bullets = 30;
-    let damage = Math.round(NumbersBalancer.getAbilityDamage(level, 1.1) / num_bullets);
-
-    const rawAbil = { // 2440 damage max.  Actually dealing less than that
-      name: 'Shoot \'em up',
-      description: 'Shoots a wild spray of bullets.<br>' +
-        '[[num_bullets]] bullets deal [[hit_effects[0].base_damage]] damage',
+    let num_bullets = 25;
+    let return_num_bullets = 0;
+    let hitDamage = Math.floor(NumbersBalancer.getAbilityDamage(level, 1.0) / num_bullets);
+    const rawAbil = {
+      name: 'Uzi',
+      description: "Shoot a spray of <<" + (num_bullets + return_num_bullets) + ">> bullets that deal <<" + hitDamage + ">> damage each.",
       card_text_description: '[[num_bullets]] X [[hit_effects[0].base_damage]]',
+      icon: "/Bouncy/assets/icons/uzi.png",
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
-      shape: ProjectileAbilityDef.Shapes.CHAIN_SHOT,
+      shape: ProjectileAbilityDef.Shapes.WAVE,
       projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
       destroy_on_wall: [],
-      num_bullets,
-      bullet_wave_delay: 3,
-      accuracy_decay: Math.PI / 5.12 / num_bullets,
+      collision_behaviours: [],
+      angle_spread: Math.PI / 3,
+      angle_offset: -Math.PI / 6,
       wall_bounces: 1,
-      icon: "/Bouncy/assets/icons/bullets.png",
+      num_bullets,
+      speed: 10,
+      return_num_bullets,
+      return_shot_delay: 15,
+      shot_delay: 2,
       hit_effects: [{
         effect: ProjectileShape.HitEffects.DAMAGE,
-        base_damage: damage
+        base_damage: hitDamage,
       }],
-    };
+    };;
 
     let cooldown = this.getCooldown();
     if (cooldown !== null) {
@@ -49,4 +53,4 @@ class AbilityCore1002 extends AbilityCore {
   }
 }
 
-AbilityCore.coreList[1002] = AbilityCore1002;
+AbilityCore.coreList[1006] = AbilityCore1006;

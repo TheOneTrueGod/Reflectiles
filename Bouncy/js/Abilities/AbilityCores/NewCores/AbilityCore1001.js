@@ -31,7 +31,7 @@ class AbilityCore1001 extends AbilityCore {
   static createAbilityStyle() {
     return (new AbilitySheetSpriteAbilityStyleBuilder())
       .setSheet('bullet_sheet')
-      .setCoordNums(334, 70, 340, 76)
+      .setCoordNums(36, 139, 44, 147)
       .setRotation(0)
       .fixRotation(true);
   }
