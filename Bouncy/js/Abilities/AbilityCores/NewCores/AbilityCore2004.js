@@ -8,11 +8,6 @@ class AbilityCore2004 extends AbilityCore {
       charge: {initial_charge: -1, max_charge: 2, charge_type: AbilityDef.CHARGE_TYPES.TURNS},
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.INSTANT_AOE,
-      style: (new AbilitySheetSpriteAbilityStyleBuilder())
-        .setExplosion(AbilityStyle.getExplosionPrefab(
-          AbilityStyle.EXPLOSION_PREFABS.IMPACT
-        ))
-        .build(),
       projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
       hit_effects: [{
         effect: ProjectileShape.HitEffects.DAMAGE,

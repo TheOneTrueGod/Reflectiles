@@ -19,7 +19,7 @@ class AbilityCore4002 extends AbilityCore {
           aoe_size: {x:[-1, 1],y:[-1, 1]},
         }
       ],
-      icon: "/Bouncy/assets/icons/poison-gas.png",
+      icon: "/Bouncy/assets/icons/foamy-disc.png",
     };
 
     let cooldown = this.getCooldown();

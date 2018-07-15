@@ -1,23 +1,24 @@
-class AbilityCore1005 extends AbilityCore {
+class AbilityCore1007 extends AbilityCore {
   static BuildAbilityChild(level) {
-    let grenadeRadius = Math.floor(Unit.UNIT_SIZE * 1.5);
-    let hitDamage = Math.floor(NumbersBalancer.getAbilityDamage(level, 0.1));
+    let numShots = 12;
+    let grenadeRadius = Math.floor(Unit.UNIT_SIZE);
+    let hitDamage = Math.floor(NumbersBalancer.getAbilityDamage(level, 0.3) / numShots);
     const rawAbil = {
-      name: 'Grenade',
-      description: 'Toss a grenade that deals <<' + hitDamage + '>> damage in a <<' + grenadeRadius + '>> radius.',
+      name: 'Mortar',
+      description: 'Launch a series of <<' + numShots + '>> grendades that deal <<' + hitDamage + '>> damage in a <<' + grenadeRadius + '>> radius.',
       ability_type: AbilityDef.AbilityTypes.MULTIPART,
-      icon: "/Bouncy/assets/icons/grenade.png",
+      icon: "/Bouncy/assets/icons/mortar.png",
       destroy_on_wall: true,
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.CHAIN_SHOT,
       speed: 6,
-      num_bullets: 1,
-      bullet_wave_delay: 20,
+      num_bullets: numShots,
+      bullet_wave_delay: 1,
       accuracy: {
-        min_radius: 20,
-        max_radius: 90,
+        min_radius: 50,
+        max_radius: 100,
         min_dist: 100,
-        max_dist: 300,
+        max_dist: 500,
       },
       projectile_type: ProjectileShape.ProjectileTypes.GRENADE,
       timeout_effects: [
@@ -69,4 +70,4 @@ class AbilityCore1005 extends AbilityCore {
   }
 }
 
-AbilityCore.coreList[1005] = AbilityCore1005;
+AbilityCore.coreList[1007] = AbilityCore1007;
