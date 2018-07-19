@@ -14,7 +14,7 @@ class GrenadeProjectile extends Projectile {
 
   createTrail(boardState) {
     boardState.addProjectile(
-      new ProjectileTrailEffect(this, 1, lerp(0.8, 0.25, this.getZPct()))
+      new ProjectileShadowEffect(this, 1, lerp(0.8, 0.25, this.getZPct()))
     );
   }
 

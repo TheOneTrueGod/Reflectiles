@@ -1,12 +1,12 @@
 class AbilityCore4002 extends AbilityCore {
   static BuildAbilityChild(level) {
     let duration = 3;
-    let hitDamage = NumbersBalancer.getAbilityDamage(level, 0.2);
-    let damagePerTurn = Math.floor(hitDamage / duration);
+    let hitDamage = NumbersBalancer.getAbilityDamage(level, 0.1);
+    let damagePerTurn = Math.floor(hitDamage);
     const rawAbil = {
       name: 'Poison Explosion',
       description: 'Fires a poison shot, poisoning all enemies in a <<' + 3 + '>>x<<' + 3 + '>> area for ' +
-        '<<' + damagePerTurn + '>> poison damage per turn for <<' + duration + '>> turns.<br>',
+        '<<' + damagePerTurn + '>> poison damage.',
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
       projectile_type: ProjectileShape.ProjectileTypes.STANDARD,

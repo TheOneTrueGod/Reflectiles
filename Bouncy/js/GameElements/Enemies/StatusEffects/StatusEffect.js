@@ -32,6 +32,10 @@ class StatusEffect {
 
   }
 
+  mergeWithOtherEffect(otherEffect) {
+    return otherEffect;
+  }
+
   isPositive() {
     console.warn("Status effect didn't override isPositive.", this);
     return false;

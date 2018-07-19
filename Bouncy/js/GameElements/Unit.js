@@ -211,7 +211,7 @@ class Unit {
     if (source instanceof Projectile || source instanceof AbilitySource) {
       abilID = AbilityDef.findAbsoluteParent(source.abilityDef.index);
       playerID = source.playerID;
-    } else if (source instanceof StatusEffect) {
+    } else if (source instanceof StatusEffect || source.abilityID) {
       abilID = AbilityDef.findAbsoluteParent(source.abilityID);
       playerID = source.playerID;
     } else if (source instanceof ZoneEffect && source.owningPlayerID) {
@@ -514,7 +514,12 @@ class Unit {
       return;
     }
     this.removeEffectSprite(effect.getEffectType());
-    this.statusEffects[effect.getEffectType()] = effect;
+    if (this.statusEffects[effect.getEffectType()]) {
+      this.statusEffects[effect.getEffectType()] = this.statusEffects[effect.getEffectType()].mergeWithOtherEffect(effect);
+    } else {
+      this.statusEffects[effect.getEffectType()] = effect;
+    }
+
     this.memoizedCollisionBox = null;
     this.addEffectSprite(effect.getEffectType());
   }

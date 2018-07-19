@@ -1,16 +1,15 @@
 class AbilityCore4000 extends AbilityCore {
   static BuildAbilityChild(level) {
-    let poison_duration = 3;
     let numTargets = 5;
     let totalDamage = NumbersBalancer.getAbilityDamage(level, 1) / numTargets;
     let impactDamage = Math.floor(totalDamage * 0.25);
-    let poisonDamage = Math.floor(totalDamage * 0.75) / poison_duration;
+    let poisonDamage = Math.floor(totalDamage * 0.5);
 
     const rawAbil = { // 1000 damage.  500 more per turn
       name: 'Poison Drill',
       description: 'Shoots a projectile that passes through enemies.<br>' +
         'It deals <<' + impactDamage + '>> damage, ' +
-        'and poisons them, dealing <<' + poisonDamage + '>> over <<' + poison_duration + '>> turns',
+        'and poisons them for <<' + poisonDamage + '>> poison damage.',
       card_text_description: '[[num_hits]] X <<' + impactDamage + '>>',
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
@@ -27,7 +26,6 @@ class AbilityCore4000 extends AbilityCore {
       },{
         effect: ProjectileShape.HitEffects.POISON,
         damage: poisonDamage,
-        duration: poison_duration
       }],
       charge: {"initial_charge":-1, "max_charge":4, "charge_type":"TURNS"}
     };

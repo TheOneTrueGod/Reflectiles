@@ -2,18 +2,50 @@ class PoisonStatusEffect extends StatusEffect {
   constructor(duration, damage, effect, playerID, abilityID) {
     super(duration, abilityID);
     this.damage = damage;
+    this.effectList = {};
+    this.effectList[abilityID] = {
+      abilityID: abilityID,
+      playerID: playerID,
+      damage: damage,
+    };
     this.effect = effect;
     this.playerID = playerID;
+    this.abilityID = abilityID;
+    this.duration = 99999;
   }
 
   isPositive() { return false; }
   isNegative() { return true; }
 
   turnStart(boardState, unit) {
-    if (this.getDamageMultiplier() != 0) {
-      unit.dealDamage(boardState, this.damage / this.getDamageMultiplier(), this, Unit.DAMAGE_TYPE.POISON);
+    let damageMult = this.getDamageMultiplier();
+    if (damageMult != 0) {
+      for (var abilityID in this.effectList) {
+        let damage = this.effectList[abilityID].damage;
+        unit.dealDamage(boardState, damage / damageMult, this.effectList[abilityID], Unit.DAMAGE_TYPE.POISON);
+        this.effectList[abilityID].damage = Math.ceil(this.effectList[abilityID].damage / 2);
+      }
     }
     this.duration -= 1;
+  }
+
+  getRemainingDamage() {
+    let totalDamage = 0;
+    for (var abilityID in this.effectList) {
+      totalDamage += this.effectList[abilityID].damage;
+    }
+    return totalDamage;
+  }
+
+  mergeWithOtherEffect(otherEffect) {
+    if (
+      this.effectList[otherEffect.abilityID] &&
+      this.effectList[otherEffect.abilityID].damage > otherEffect.effectList[otherEffect.abilityID].damage
+    ) {
+      return this;
+    }
+    this.effectList[otherEffect.abilityID] = otherEffect.effectList[otherEffect.abilityID];
+    return this;
   }
 
   getDamageMultiplier() {
@@ -32,7 +64,12 @@ class PoisonStatusEffect extends StatusEffect {
       'effect': this.effect,
       'player_id': this.playerID,
       'ability_id': this.abilityID,
+      'effect_data': this.effectList,
     };
+  }
+
+  deserializeEffectData(serializedEffectData) {
+    this.effectList = serializedEffectData;
   }
 
   static addEffectSprite(unit) {
@@ -58,13 +95,15 @@ class PoisonStatusEffect extends StatusEffect {
 }
 
 PoisonStatusEffect.loadFromServerData = function(server_data) {
-  return new PoisonStatusEffect(
+  let poisonStatusEffect = new PoisonStatusEffect(
     server_data.duration,
     server_data.damage,
     server_data.effect,
     server_data.player_id,
     server_data.ability_id,
   );
+  poisonStatusEffect.deserializeEffectData(server_data.effect_data);
+  return poisonStatusEffect;
 }
 
 PoisonStatusEffect.AddToTypeMap();

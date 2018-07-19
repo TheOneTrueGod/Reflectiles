@@ -1,7 +1,7 @@
 class Tester extends MainGameHandler {
   start() {
-    NumbersBalancer.setNumPlayers(1);
-    //NumbersBalancer.setDifficulty(NumbersBalancer.DIFFICULTIES.NIGHTMARE);
+    NumbersBalancer.setNumPlayers(4);
+    NumbersBalancer.setDifficulty(NumbersBalancer.DIFFICULTIES.NIGHTMARE);
     $('.unitDetailsContainer')
       .append($("<div>", {class: 'damageDealt noselect'}))
       .append($("<div>", {class: 'damageTaken noselect'}));
@@ -13,9 +13,9 @@ class Tester extends MainGameHandler {
     this.unitsToSpawn = [
       //[null, UnitShooter, UnitKnight, UnitShooter, null],
       [null, null, null, null, null],
-      [null, null, UnitBossSlime, null, null],
-      [null, null, null, null, null],
-      [null, null, null, null, null],
+      [null, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare, null],
+      [null, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare, null],
+      [null, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare, null],
     ];
   }
 
@@ -42,7 +42,9 @@ class Tester extends MainGameHandler {
     this.abilitiesToUse = [
       //[TestAbils[3].index, {x: -100, y: -50}],
       //[this.buildAbility(AbilityCore7, ['shield width 1']).index, {x: 0, y: -100}],
-      [this.buildAbility(AbilityCore1, ['grenade', 'grenade', 'grenade']).index, {x: 0, y: -200}],
+      [this.buildAbility(AbilityCore4002, []).index, {x: 0, y: -200}],
+      [this.buildAbility(AbilityCore4004, []).index, {x: 0, y: -200}],
+      [this.buildAbility(AbilityCore4002, []).index, {x: 0, y: -200}],
       //[this.buildAbility(AbilityCore13).index, {x: 0, y: -100}],
       //[this.buildAbility(AbilityCore5,
         /*["pass through 1", "pass through 1", "pass through 1", "damage 1", "damage 1",
@@ -158,10 +160,12 @@ class Tester extends MainGameHandler {
 
   loopTicksForPhase(phase) {
     super.loopTicksForPhase(phase);
+    let totalDamage = 0;
     for (let key in this.boardState.gameStats.playerDamage.totg) {
       let damageStat = this.boardState.gameStats.playerDamage.totg[key];
-      $(".damageDealt").html("Damage Dealt<br>" + damageStat.damage);
+      totalDamage += damageStat.damage;
     }
+    $(".damageDealt").html("Damage Dealt<br>" + totalDamage);
     let damageTaken = this.boardState.teamHealth[1] - this.boardState.teamHealth[0];
     $(".damageTaken").html("Damage Taken<br>" + damageTaken);
   }

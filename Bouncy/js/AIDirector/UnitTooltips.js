@@ -415,7 +415,7 @@ class UnitTooltips {
     }
     switch (statusEffect.constructor.name) {
       case 'PoisonStatusEffect':
-        return 'Deals ' + statusEffect.damage + ' damage per turn for ' + statusEffect.duration + ' turns';
+        return 'Deals ' + statusEffect.getRemainingDamage() + ' damage at the end of this turn, and half of that next turn.';
       case 'FreezeStatusEffect':
         return 'The unit is stunned for ' + statusEffect.duration + ' turns';
       case 'WeaknessStatusEffect':

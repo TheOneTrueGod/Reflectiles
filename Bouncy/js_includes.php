@@ -138,6 +138,7 @@
 <script src="/Bouncy/js/GameElements/Effects/SpriteShatterEffect.js"></script>
 <script src="/Bouncy/js/GameElements/Effects/CircleEffect.js"></script>
 <script src="/Bouncy/js/GameElements/Effects/ProjectileTrailEffect.js"></script>
+<script src="/Bouncy/js/GameElements/Effects/ProjectileShadowEffect.js"></script>
 <script src="/Bouncy/js/GameElements/Effects/CustomAnimatedSprite.js"></script>
 <script src="/Bouncy/js/GameElements/Deployables/Turret.js"></script>
 <script src="/Bouncy/js/GameElements/Deployables/Landmine.js"></script>

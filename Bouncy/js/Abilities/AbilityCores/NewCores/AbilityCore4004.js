@@ -1,10 +1,10 @@
 class AbilityCore4004 extends AbilityCore {
   static BuildAbilityChild(level) {
     let duration = 2;
-    let damage = Math.round(NumbersBalancer.getAbilityDamage(level, 1 / 6));
+    let damage = Math.round(NumbersBalancer.getAbilityDamage(level, 0.15));
     const rawAbil = {
       name: 'Poison Breath',
-      description: 'Exhale poison gas in a <<3>>x<<2>> area, inflicting <<' + damage + '>> poison on all enemies hit.',
+      description: 'Exhale poison gas in a <<3>>x<<2>> area, inflicting <<' + damage + '>> poison damage on all enemies hit.',
       card_text_description: '[[timeout_effects[0].abil_def.hit_effects[0].base_damage]]',
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.INSTANT_AOE,
