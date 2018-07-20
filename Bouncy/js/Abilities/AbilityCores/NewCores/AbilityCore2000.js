@@ -11,10 +11,6 @@ class AbilityCore2000 extends AbilityCore {
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.TRI_SHOT,
       projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
-      style: (new AbilitySheetSpriteAbilityStyleBuilder())
-        .setSheet('weapons_sheet')
-        .setCoordNums(54, 2, 75, 23)
-        .build(),
       num_bullets,
       collision_behaviours: [],
       wall_bounces: AbilityConstants.MINOR_WALL_BOUNCES,
@@ -40,6 +36,9 @@ class AbilityCore2000 extends AbilityCore {
   }
 
   static createAbilityStyle() {
+    return (new AbilitySheetSpriteAbilityStyleBuilder())
+      .setSheet('weapons_sheet')
+      .setCoordNums(54, 2, 75, 23);
     return (new AbilitySheetSpriteAbilityStyleBuilder())
       .setSheet('bullet_sheet')
       .setCoordNums(275, 69, 294, 78)

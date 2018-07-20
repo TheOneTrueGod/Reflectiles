@@ -84,10 +84,11 @@ class AbilitySheetSpriteAbilityStyleBuilder extends SpriteAbilityStyleBuilder {
     this.coords = {left: left, top: top, right: right, bottom: bottom};
     return this;
   }
-  setCoordIndex(left, top, width, height) {
+  setCoordIndex(left, top, width, height, border) {
+    border = border ? border : 0;
     this.coords = {
-      left: left * width, top: top * height,
-      right: left * width + width, bottom: top * height + height
+      left: left * width + border + 1, top: top * height + border + 1,
+      right: left * width + width - border * 2, bottom: top * height + height - border * 2
     };
     return this;
   }

@@ -4,25 +4,30 @@
 // [] Change the cooldown
 // [] Change the style
 // [] Change the rawAbil
-class AbilityCoreNUMBER extends AbilityCore {
+class AbilityCore2005 extends AbilityCore {
   static BuildAbilityChild(level) {
-    let hitDamage = Math.floor(NumbersBalancer.getAbilityDamage(level, 1));
+    let num_bullets = 14;
+    let hitDamage = Math.floor(NumbersBalancer.getAbilityDamage(level, 1.4) / num_bullets);
     const rawAbil = {
-      name: '',
-      description: '',
-      card_text_description: '',
+      name: 'Shatter',
+      description: 'Shoot <<' + num_bullets + '>> spikes in a circle around you.  Each one deals <<' + hitDamage + '>> damage.',
+      card_text_description: '[[num_bullets]] X <<' + hitDamage + '>>',
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
-      shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
+      shape: ProjectileAbilityDef.Shapes.BULLET_EXPLOSION,
       projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
-      destroy_on_wall: [],
+      destroy_on_wall: [BorderWallLine.BOTTOM],
+      num_bullets,
       wall_bounces: 1,
+      speed_decay: {x: 0.98, y: 0.98},
+      duration: 40,
+      speed: 8,
       hit_effects: [
         {
           base_damage: hitDamage,
           effect: ProjectileShape.HitEffects.DAMAGE,
         }
       ],
-      icon: "/Bouncy/assets/icons/icon_plain_explosion.png"
+      icon: "/Bouncy/assets/icons/shatter.png"
     };
 
     let cooldown = this.getCooldown();
@@ -37,7 +42,7 @@ class AbilityCoreNUMBER extends AbilityCore {
   static createAbilityStyle() {
     return (new AbilitySheetSpriteAbilityStyleBuilder())
       .setSheet('weapons_sheet')
-      .setCoordNums(2, 1, 24, 23);
+      .setCoordIndex(3, 0, 26, 25, 1);
   }
 
   static getCooldown() {
@@ -45,8 +50,8 @@ class AbilityCoreNUMBER extends AbilityCore {
   }
 
   static GetCardDeckType() {
-    return CardDeckTypes.CLASS_TYPE;
+    return CardDeckTypes.DEFENDER;
   }
 }
 
-AbilityCore.coreList[NUMBER] = AbilityCoreNUMBER;
+AbilityCore.coreList[2005] = AbilityCore2005;

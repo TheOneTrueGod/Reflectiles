@@ -1,10 +1,13 @@
 /*
- * Progression thoughts;  Do a combination of clash royale & EDF.
+ * Progression thoughts;
+ * Do a combination of clash royale & EDF.
  * When you win a fight, you roll a chest and get 3 abilities from it.
  * You choose one of those abilities to keep.  If you don't know the ability, you learn it.
  * If you do know it, you gain exp for it.
  * You also gain a bit of exp for cards based on damage dealt.
  * Cards damage / # of shots is determined by their level, and that's the only change.
+ * ALTERNATIVE;
+ * quest-based level up system.  In order to level up a card, you must complete a quest.
  * TODO;
     You can still change your selected ability after the round has ended
     split freeze into two status ailments -- stun and immobilize
