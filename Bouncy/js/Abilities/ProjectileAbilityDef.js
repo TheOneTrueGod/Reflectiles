@@ -122,8 +122,22 @@ class ProjectileAbilityDef extends AbilityDef {
   }
 
   doActionOnTick(playerID, tick, boardState, castPoint, targetPoint) {
-    super.doActionOnTick(playerID, tick, boardState, castPoint, targetPoint);
-    this.shape.doActionOnTick(playerID, tick, boardState, castPoint, targetPoint);
+    let target = targetPoint;
+    if (this.accuracy.isAccuracyDefined()) {
+      const maxDist = this.accuracy.maxDist;
+      const minDist = this.accuracy.minDist;
+
+      var angle = Math.atan2(targetPoint.y - castPoint.y, targetPoint.x - castPoint.x);
+      var dist = ((targetPoint.x - castPoint.x) ** 2 + (targetPoint.y - castPoint.y) ** 2) ** 0.5;
+      dist = Math.max(Math.min(dist, maxDist), minDist);
+      target = {
+        x: castPoint.x + Math.cos(angle) * dist,
+        y: castPoint.y + Math.sin(angle) * dist
+      };
+    }
+
+    super.doActionOnTick(playerID, tick, boardState, castPoint, target);
+    this.shape.doActionOnTick(playerID, tick, boardState, castPoint, target);
   }
 
   hasFinishedDoingEffect(tickOn) {

@@ -1,4 +1,17 @@
 /*
+ * 7/20/2018 todo list;
+ * Player movement in ability
+ * Ability with player movement
+    - Dash, then spear stab
+    - Run and gun (move and shoot while moving)
+    - Teleport
+ * Allow users to select "Next Level" in the post-level screen
+ * Adjust targetting indicators to be more accurate by using invisible tracers
+ * Add chests to levels
+ * Unlock abilities from chests
+ * Tweak level up system
+ * Figure out what to do with the UI for post-level system (show level ups?), and the deck editor
+ * ********************
  * Progression thoughts;
  * Do a combination of clash royale & EDF.
  * When you win a fight, you roll a chest and get 3 abilities from it.

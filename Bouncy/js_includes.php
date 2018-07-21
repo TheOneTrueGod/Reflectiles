@@ -62,6 +62,7 @@
 <script src="/Bouncy/js/GameElements/Effects/Effect.js"></script>
 <script src="/Bouncy/js/GameElements/Projectiles/SpriteLerpProjectile.js"></script>
 <script src="/Bouncy/js/Abilities/ProjectileAbilityDef.js"></script>
+<script src="/Bouncy/js/Abilities/PlayerMoveAbilityDef.js"></script>
 <script src="/Bouncy/js/Abilities/PositionBasedAbilityDef.js"></script>
 <script src="/Bouncy/js/Abilities/ZoneAbilityDef.js"></script>
 <script src="/Bouncy/js/Abilities/Targetting/AbilityTargetCalculations.js"></script>

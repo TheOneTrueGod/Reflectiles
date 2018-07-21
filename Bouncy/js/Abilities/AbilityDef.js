@@ -340,6 +340,7 @@ AbilityDef.AbilityTypes = {
   LASER: 'LASER',
   SPECIAL: 'SPECIAL',
   MOVE: 'MOVE',
+  PLAYER_MOVE: 'PLAYER_MOVE',
 };
 
 AbilityDef.SPECIAL_EFFECTS = {
@@ -370,6 +371,8 @@ AbilityDef.createFromJSON = function(defJSON, subAbility) {
       return new PositionBasedAbilityDef(defJSON, subAbility);
     case AbilityDef.AbilityTypes.MULTIPART:
       return new MultipartAbilityDef(defJSON, subAbility);
+    case AbilityDef.AbilityTypes.PLAYER_MOVE:
+      return new PlayerMoveAbilityDef(defJSON, subAbility);
     default:
       throw new Error("[" + defJSON['abilityType'] + "] not handled");
   }
