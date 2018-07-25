@@ -33,7 +33,7 @@ class ProjectileShapeBulletExplosion extends ProjectileShape {
       for (var j = 0; j < this.num_bullets; j++) {
         var deltaAngle = this.angle_end - this.angle_start;
         let denom = this.num_bullets - 1;
-        var angle = (deltaAngle / (denom ? denom : 1) * (denom ? j : 0.5)) + this.angle_start + angle_offset;
+        var angle = (deltaAngle / (denom ? denom : 1) * (denom ? j : 0.5)) + this.angle_start + this.angle_offset;
 
         if (this.INHERIT_ANGLE && castPoint instanceof Projectile) {
           angle += castPoint.angle;
@@ -70,5 +70,34 @@ class ProjectileShapeBulletExplosion extends ProjectileShape {
 
   hasFinishedDoingEffect(tickOn) {
     return tickOn > this.ACTIVATE_ON_TICK;
+  }
+
+  createTargettingGraphic(startPos, endPos, color) {
+    // Create a new Graphics object and add it to the scene
+    var lineGraphic = new PIXI.Graphics();
+    const circleSize = 8;
+    let targetPoint = endPos;
+    let castPoint = startPos;
+    for (var i = 0; i < this.num_bullets; i++) {
+      var deltaAngle = this.angle_end - this.angle_start;
+      let denom = this.num_bullets - 1;
+      var angle = (deltaAngle / (denom ? denom : 1) * (denom ? i : 0.5)) + this.angle_start + this.angle_offset;
+
+      if (this.INHERIT_ANGLE && castPoint instanceof Projectile) {
+        angle += castPoint.angle;
+      }
+
+      let dist = this.abilityDef.getOptionalParam('duration', 100) *
+        this.abilityDef.getOptionalParam('speed', 6);
+        
+      lineGraphic.lineStyle(1, color)
+        .moveTo(startPos.x, startPos.y)
+        .lineTo(
+          startPos.x + Math.cos(angle) * dist,
+          startPos.y + Math.sin(angle) * dist
+        );
+    }
+
+    return lineGraphic;
   }
 }

@@ -76,11 +76,11 @@ class NumbersBalancer {
       case 1:
         return 1;
       case 2:
-        return 2;
+        return 1.75;
       case 3:
-        return 3;
+        return 2.5;
       case 4:
-        return 4;
+        return 3;
     }
     throw new Error("Unknown player count Multiplier");
   }
