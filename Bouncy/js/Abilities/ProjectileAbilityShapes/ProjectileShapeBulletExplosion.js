@@ -7,7 +7,7 @@ class ProjectileShapeBulletExplosion extends ProjectileShape {
     this.ACTIVATE_ON_TICK = 0;
     this.num_bullets = abilityDef.getOptionalParam('num_bullets', 12);
     this.angle_start = abilityDef.getOptionalParam('angle_start', -Math.PI / 2.0);
-    this.angle_end = abilityDef.getOptionalParam('angle_end', Math.PI * 2 - Math.PI / 2.0);
+    this.angle_end = abilityDef.getOptionalParam('angle_end', this.angle_start + Math.PI * 2);
     this.angle_offset = abilityDef.getOptionalParam('angle_offset', 0);
     this.bullet_speed = abilityDef.getOptionalParam('bullet_speed', 4);
     this.GRAVITY = abilityDef.getOptionalParam('gravity', {x: 0, y: 0.05});
@@ -89,13 +89,13 @@ class ProjectileShapeBulletExplosion extends ProjectileShape {
 
       let dist = this.abilityDef.getOptionalParam('duration', 100) *
         this.abilityDef.getOptionalParam('speed', 6);
-        
-      lineGraphic.lineStyle(1, color)
-        .moveTo(startPos.x, startPos.y)
-        .lineTo(
-          startPos.x + Math.cos(angle) * dist,
-          startPos.y + Math.sin(angle) * dist
-        );
+      ProjectileAbilityDef.createProjectileTargetter(
+        lineGraphic, color, startPos, angle, 250,
+        this.abilityDef.getOptionalParam('speed', 6),
+        this.abilityDef.getOptionalParam('duration', 100),
+        this.abilityDef.getOptionalParam('speed_decay', null),
+        this.abilityDef.getOptionalParam('gravity', null),
+      );
     }
 
     return lineGraphic;

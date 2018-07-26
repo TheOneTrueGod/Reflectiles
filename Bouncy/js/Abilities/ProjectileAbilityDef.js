@@ -166,17 +166,33 @@ class ProjectileAbilityDef extends AbilityDef {
         y: startPos.y + Math.sin(angle) * dist
       };
       dist -= circleSize;
-      lineGraphic.lineStyle(1, color)
-        .moveTo(startPos.x, startPos.y)
-        .lineTo(
-          startPos.x + Math.cos(angle) * dist,
-          startPos.y + Math.sin(angle) * dist
-        );
+      let accuracyDecay = this.getOptionalParam('accuracy_decay', null);
+      let finalPos = ProjectileAbilityDef.createProjectileTargetter(
+        lineGraphic, color, startPos, angle, Math.min(dist, 250),
+        this.getOptionalParam('speed', 6),
+        this.getOptionalParam('duration', 100),
+        this.getOptionalParam('speed_decay', null),
+        this.getOptionalParam('gravity', null),
+      );
 
-      lineGraphic.drawCircle(circleCenter.x, circleCenter.y, circleSize);
+      if (accuracyDecay) {
+        for (let i = -1; i <= 1; i+= 2) {
+          ProjectileAbilityDef.createProjectileTargetter(
+            lineGraphic, color, startPos,
+            angle + accuracyDecay * i,
+            Math.min(dist, 250) * 0.75,
+            this.getOptionalParam('speed', 6),
+            this.getOptionalParam('duration', 100),
+            this.getOptionalParam('speed_decay', null),
+            this.getOptionalParam('gravity', null),
+          );
+        }
+      }
+
+      lineGraphic.drawCircle(finalPos.x, finalPos.y, circleSize);
 
       lineGraphic.beginFill(color);
-      lineGraphic.drawCircle(circleCenter.x, circleCenter.y, innerCircleSize);
+      lineGraphic.drawCircle(finalPos.x, finalPos.y, innerCircleSize);
 
       return lineGraphic;
     }
@@ -195,6 +211,40 @@ class ProjectileAbilityDef extends AbilityDef {
     }
     return this.collisionBehaviours;
   }
+}
+
+ProjectileAbilityDef.createProjectileTargetter = function (
+  lineGraphic, color,
+  startPos, angle,
+  maxDist,
+  speed, duration,
+  speedDecay, gravity,
+) {
+  duration = duration ? duration : 100;
+  speed = speed ? speed : 6;
+
+  let dist = duration * speed;
+  let currPos = Victor(startPos.x, startPos.y);
+
+  lineGraphic.lineStyle(1, color)
+    .moveTo(startPos.x, startPos.y);
+  let currDist = 0;
+  for (let i = 0; i < duration && currDist < maxDist; i++) {
+    speed = Victor(Math.cos(angle) * speed, Math.sin(angle) * speed);
+
+    currDist += speed.length();
+    currPos.add(speed);
+    if (speedDecay && i >= idx(speedDecay, 'delay', 0)) {
+      speed.multiply(speedDecay);
+    }
+    if (gravity) {
+      speed.add(gravity);
+    }
+    angle = speed.angle();
+    speed = speed.length();
+    lineGraphic.lineTo(currPos.x, currPos.y);
+  }
+  return currPos;
 }
 
 ProjectileAbilityDef.Shapes = {

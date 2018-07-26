@@ -44,12 +44,19 @@ class ProjectileShapeTriShot extends ProjectileShape {
       var dist = ((endPos.x - startPos.x) ** 2 + (endPos.y - startPos.y) ** 2) ** 0.5;
       dist = 250;
       dist -= circleSize;
-      lineGraphic.lineStyle(1, color)
+      ProjectileAbilityDef.createProjectileTargetter(
+        lineGraphic, color, startPos, angle, 250,
+        this.abilityDef.getOptionalParam('speed', 6),
+        this.abilityDef.getOptionalParam('duration', 100),
+        this.abilityDef.getOptionalParam('speed_decay', null),
+        this.abilityDef.getOptionalParam('gravity', null),
+      );
+      /*lineGraphic.lineStyle(1, color)
         .moveTo(startPos.x, startPos.y)
         .lineTo(
           startPos.x + Math.cos(angle) * dist,
           startPos.y + Math.sin(angle) * dist
-        );
+        );*/
     }
 
     lineGraphic.drawCircle(endPos.x, endPos.y, circleSize);

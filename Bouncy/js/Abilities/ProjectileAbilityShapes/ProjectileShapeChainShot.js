@@ -38,7 +38,7 @@ class ProjectileShapeChainShot extends ProjectileShape {
       const accuracy = this.abilityDef.getOptionalParam('base_accuracy', 0);
       const accuracyDecay = this.abilityDef.getOptionalParam('accuracy_decay', 0);
       const accuracyForShot = Math.min(
-        Math.max(0, accuracy + accuracyDecay * shotIndex),
+        Math.max(0, accuracy + accuracyDecay * shotIndex / this.num_waves),
         Math.PI / 2.0
       );
       const aimDist = Math.pow((targetPoint.y - castPoint.y) ** 2 + (targetPoint.x - castPoint.x) ** 2, 0.5);

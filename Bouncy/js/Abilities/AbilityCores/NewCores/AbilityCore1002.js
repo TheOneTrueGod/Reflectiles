@@ -14,7 +14,7 @@ class AbilityCore1002 extends AbilityCore {
       destroy_on_wall: [],
       num_bullets,
       bullet_wave_delay: 3,
-      accuracy_decay: Math.PI / 5.12 / num_bullets,
+      accuracy_decay: Math.PI / 5.12,
       wall_bounces: 1,
       icon: "/Bouncy/assets/icons/bullets.png",
       hit_effects: [{

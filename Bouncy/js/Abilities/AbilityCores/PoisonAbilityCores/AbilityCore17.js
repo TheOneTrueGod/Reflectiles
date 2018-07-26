@@ -43,7 +43,7 @@ class AbilityCore17 extends AbilityCore {
         idx(perkPcts, 'better aim 1', 0) +
         idx(perkPcts, 'better aim 2', 0)
       ) / 2
-    ) / num_bullets;
+    );
 
     let shotDamage = Math.floor(totalDamage / num_bullets);
     const rawAbil = { // 2440 damage max.  Actually dealing less than that

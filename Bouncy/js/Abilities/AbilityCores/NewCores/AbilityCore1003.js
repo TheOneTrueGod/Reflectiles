@@ -13,7 +13,7 @@ class AbilityCore1003 extends AbilityCore {
       scale: 0.5,
       projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
       destroy_on_wall: [],
-      wall_bounces: num_bounces,
+      wall_bounces: num_bounces * 2,
       collision_behaviours: [
         {behaviour: CollisionBehaviour.BOUNCE, count: num_bounces},
       ],
