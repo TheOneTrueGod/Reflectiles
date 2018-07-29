@@ -10,6 +10,10 @@ class UnitSpawningPlaceholder extends Unit {
     return true;
   }
 
+  dealDamage(boardState, amount, source, damageType) {
+    return 0;
+  }
+
   setUnitToSpawn(unitToSpawnName) {
     this.unitToSpawn = unitToSpawnName;
     this.unitToSpawnName = unitToSpawnName;

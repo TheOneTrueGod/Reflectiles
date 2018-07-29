@@ -22,6 +22,9 @@ class NumbersBalancer {
   }
 
   getPowerLevelMultiplier(powerLevel) {
+    if (DEBUG_DISABLE_LEVELING) {
+      return 1;
+    }
     return Math.pow(2, powerLevel / 20);
   }
 
@@ -217,17 +220,18 @@ class NumbersBalancer {
   getUnitAbilityNumber(unit, ability) {
     var playerMult = this.getPlayerCountMultiplier();
     var difficultyMult = this.getDifficultyMultiplier();
+    let powerLevelMultiplier = this.getPowerLevelMultiplier(this.powerLevelBase);
     switch (ability) {
       case this.UNIT_ABILITIES.PROTECTOR_SHIELD:
-        return 50 + 50 * playerMult * difficultyMult;
+        return 50 + 50 * playerMult * difficultyMult * powerLevelMultiplier;
       case this.UNIT_ABILITIES.PROTECTOR_SHIELD_NUM_TARGETS:
         return 2;
       case this.UNIT_ABILITIES.PROTECTOR_SHIELD_RANGE:
         return 2;
       case this.UNIT_ABILITIES.KNIGHT_SHIELD:
-        return 50 * playerMult * difficultyMult;
+        return 50 * playerMult * difficultyMult * powerLevelMultiplier;
       case this.UNIT_ABILITIES.DEFENSIVE_MAX_DAMAGE:
-        return 200 * playerMult * difficultyMult;
+        return 200 * playerMult * difficultyMult * powerLevelMultiplier;
       case this.UNIT_ABILITIES.SHOOTER_DAMAGE:
         return 2;
       case this.UNIT_ABILITIES.BOMBER_EXPLOSION_DAMAGE:
@@ -239,9 +243,9 @@ class NumbersBalancer {
       case this.UNIT_ABILITIES.UNIT_BOSS_HEALER_NUM_TARGETS:
         return 4;
       case this.UNIT_ABILITIES.UNIT_BOSS_HEALER_AMOUNT:
-        return 50 * playerMult * difficultyMult;
+        return 50 * playerMult * difficultyMult * powerLevelMultiplier;
       case this.UNIT_ABILITIES.BOSS_SLIME_SPLIT_THRESHOLD:
-        return 50 * playerMult * difficultyMult;
+        return 50 * playerMult * difficultyMult * powerLevelMultiplier;
       case this.UNIT_ABILITIES.SKELETON_MAX_DAMAGE:
         let health = this.getUnitHealth(unit);
         return Math.ceil(health / 2);
@@ -254,11 +258,11 @@ class NumbersBalancer {
       case this.UNIT_ABILITIES.WARLOCK_RANGE:
         return 5;
       case this.UNIT_ABILITIES.WARLOCK_SHIELD:
-        return 50 * playerMult * difficultyMult;
+        return 50 * playerMult * difficultyMult * powerLevelMultiplier;
       case this.UNIT_ABILITIES.KING_REVIVE_TURNS:
         return 3;
       case this.UNIT_ABILITIES.CASTLE_WALL_REVIVE_TURNS:
-        return 3;
+        return 4;
       case this.UNIT_ABILITIES.FIRE_SHARD_TOTAL_DAMAGE:
         return 9;
       case this.UNIT_ABILITIES.FIRE_SHARD_NUM_SHOTS:

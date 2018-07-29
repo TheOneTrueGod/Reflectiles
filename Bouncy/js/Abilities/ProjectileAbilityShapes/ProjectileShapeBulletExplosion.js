@@ -32,9 +32,8 @@ class ProjectileShapeBulletExplosion extends ProjectileShape {
     if (tick == this.ACTIVATE_ON_TICK) {
       for (var j = 0; j < this.num_bullets; j++) {
         var deltaAngle = this.angle_end - this.angle_start;
-        let denom = this.num_bullets - 1;
+        let denom = this.num_bullets;
         var angle = (deltaAngle / (denom ? denom : 1) * (denom ? j : 0.5)) + this.angle_start + this.angle_offset;
-
         if (this.INHERIT_ANGLE && castPoint instanceof Projectile) {
           angle += castPoint.angle;
         }
@@ -80,7 +79,7 @@ class ProjectileShapeBulletExplosion extends ProjectileShape {
     let castPoint = startPos;
     for (var i = 0; i < this.num_bullets; i++) {
       var deltaAngle = this.angle_end - this.angle_start;
-      let denom = this.num_bullets - 1;
+      let denom = this.num_bullets;
       var angle = (deltaAngle / (denom ? denom : 1) * (denom ? i : 0.5)) + this.angle_start + this.angle_offset;
 
       if (this.INHERIT_ANGLE && castPoint instanceof Projectile) {

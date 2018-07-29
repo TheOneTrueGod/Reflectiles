@@ -383,6 +383,8 @@ class UnitTooltips {
         return '#8F4F58';
       case 'InfectStatusEffect':
         return '#db4dff';
+      case 'ImmobilizeStatusEffect':
+        return '#BB6600';
     }
     return 'white';
   }
@@ -402,6 +404,8 @@ class UnitTooltips {
         return 'Weakness';
       case 'InfectStatusEffect':
         return 'Infect';
+      case 'ImmobilizeStatusEffect':
+        return 'Immobilized';
     }
     console.warn('no status effect name for [' + statusEffect.constructor.name + ']');
     return null;
@@ -415,13 +419,19 @@ class UnitTooltips {
     }
     switch (statusEffect.constructor.name) {
       case 'PoisonStatusEffect':
-        return 'Deals ' + statusEffect.getRemainingDamage() + ' damage at the end of this turn, and half of that next turn.';
+      let damage = statusEffect.getRemainingDamage()
+        return 'Deals ' + damage + ' damage at the end of ' + (damage > 1 ? 'this' : 'every') +' turn' +
+        (damage > 1 ?
+          ', and half of that next turn.' :
+          '.');
       case 'FreezeStatusEffect':
         return 'The unit is stunned for ' + statusEffect.duration + ' turns';
       case 'WeaknessStatusEffect':
         return 'The unit takes 50% more damage';
       case 'InfectStatusEffect':
         return 'If the unit dies within ' + statusEffect.duration + ' turns, it explodes';
+      case 'ImmobilizeStatusEffect':
+        return "The unit is immobilized and unable to move for the next " + statusEffect.duration + ".";
     }
     console.warn('no status effect description for [' + statusEffect.constructor.name + ']');
   }

@@ -194,10 +194,18 @@ class Unit {
         if (healthType == 'armor') { return 0.5; }
         if (healthType == 'shield') { return 0.5; }
         if (healthType == 'health') { return 1.2; }
+        return 0;
       case Unit.DAMAGE_TYPE.LIGHTNING:
-      if (healthType == 'armor') { return 0.5; }
-      if (healthType == 'shield') { return 1.2; }
-      if (healthType == 'health') { return 0.5; }
+        if (healthType == 'armor') { return 0.5; }
+        if (healthType == 'shield') { return 1.2; }
+        if (healthType == 'health') { return 0.5; }
+        return 0;
+      case Unit.DAMAGE_TYPE.ANTI_ARMOR:
+        if (healthType == 'armor') { return 1; }
+        return 0;
+      case Unit.DAMAGE_TYPE.ANTI_SHIELD:
+        if (healthType == 'shield') { return 1; }
+        return 0;
     }
     return 1;
   }
@@ -715,4 +723,6 @@ Unit.DAMAGE_TYPE = {
   CORROSIVE: "CORROSIVE",
   FIRE: "FIRE",
   LIGHTNING: "LIGHTNING",
+  ANTI_ARMOR: "ANTI_ARMOR",
+  ANTI_SHIELD: "ANTI_SHIELD",
 };

@@ -2,7 +2,7 @@ class AbilityCore2003 extends AbilityCore {
   static BuildAbilityChild(level) {
     let coreDamage = Math.round(NumbersBalancer.getAbilityDamage(level, 0.1));
     let weaknessAmount = 1.5;
-    let duration = 3;
+    let duration = 4;
 
     let weaknessDescription = Math.floor((weaknessAmount - 1) * 100);
     const rawAbil = {

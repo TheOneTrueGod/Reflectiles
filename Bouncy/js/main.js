@@ -48,6 +48,7 @@
  * Make freeze spread across all shields.  They take double damage
  */
 const DEBUG_IMAGES = false;
+const DEBUG_DISABLE_LEVELING = true;
 
 class MainGameHandler {
   constructor() {
