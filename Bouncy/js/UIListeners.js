@@ -292,7 +292,7 @@ class UIListeners {
     for (var key in players) {
       var player = players[key];
       if (player_commands[player.getUserID()] !== undefined) {
-        for (let command of player_commands[player.getUserID()]) {
+        for (let command of player_commands[player.getUserID()].getCommands()) {
           if (command.commandEndsTurn()) {
             let iconURL = AbilityCardBuilder.getIconURL(command.abilityDef);
             $('.playerStatus.' + player.getUserID() + ' .statusIndicator').addClass('ready');

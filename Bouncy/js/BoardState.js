@@ -341,9 +341,9 @@ class BoardState {
       if (
         turnPhase === TurnPhasesEnum.PLAYER_MINOR &&
         MainGame.playerCommands[playerID] &&
-        MainGame.playerCommands[playerID].length > 0
+        MainGame.playerCommands[playerID].getCommands().length > 0
       ) {
-        for (let command of MainGame.playerCommands[playerID]) {
+        for (let command of MainGame.playerCommands[playerID].getCommands()) {
           if (command.getCommandPhase() === TurnPhasesEnum.PLAYER_ACTION) {
             return command.getPlayerCastPointAfterCommand(castPoint);
           }
@@ -523,7 +523,7 @@ class BoardState {
   getAllPlayerActions(players, playerCommands, filterFunction) {
     var commands = [];
     for (var key in players) {
-      var pc = playerCommands[players[key].getUserID()];
+      var pc = playerCommands[players[key].getUserID()].getCommands();
       if (pc) {
         commands = commands.concat(pc.filter(filterFunction));
       }

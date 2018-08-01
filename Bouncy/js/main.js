@@ -226,7 +226,7 @@ class MainGameHandler {
 
     if (ignoreSelf && previousPlayerCommands.length > 0) {
       this.playerCommands[this.playerID] = previousPlayerCommands;
-      var commands = this.playerCommands[this.playerID];
+      var commands = this.playerCommands[this.playerID].getCommands();
       commands.forEach(function(command) {
         self.setPlayerCommand(command, false);
       });
@@ -240,12 +240,13 @@ class MainGameHandler {
   }
 
   checkForAutoEndTurn() {
+    return;
     if (!this.gameStarted || this.playingOutTurn || !this.isHost || this.isFinalizing || this.isFinalized) { return; }
     var allPlayersHaveCommand = true;
     for (var key in this.players) {
       var playerHasCommand = false;
       if (this.playerCommands[this.players[key].getUserID()]) {
-        var pc = this.playerCommands[this.players[key].getUserID()];
+        var pc = this.playerCommands[this.players[key].getUserID()].getCommands();
         let hasMinor = false;
         let hasMajor = false;
         for (var i = 0; i < pc.length; i++) {
@@ -269,7 +270,7 @@ class MainGameHandler {
 
   removeAllPlayerCommands() {
     for (var key in this.playerCommands) {
-      this.playerCommands[key].forEach((command) => {
+      this.playerCommands[key].getCommands().forEach((command) => {
         command.removeAimIndicator(this.stage);
       })
     }
@@ -386,7 +387,7 @@ class MainGameHandler {
       $('#gameContainer').addClass("turnPlaying");
       this.removeAllPlayerCommands();
       for (let pid in this.playerCommands) {
-        for (let command of this.playerCommands[pid]) {
+        for (let command of this.playerCommands[pid].getCommands()) {
           if (command instanceof PlayerCommandUseAbility) {
             this.boardState.gameStats.addAbilityUseCount(pid, command.abilityID);
           }
@@ -446,7 +447,7 @@ class MainGameHandler {
     if (this.aimPreviews[commandTurn]) {
       this.aimPreviews[commandTurn].removeAimIndicator();
       this.playerCommands[this.playerID] &&
-        this.playerCommands[this.playerID].forEach((command) => {
+        this.playerCommands[this.playerID].getCommands().forEach((command) => {
         if (command.getCommandPhase() === commandTurn) {
           if (abilityIndex === null) {
             command.addAimIndicator(this.boardState, this.stage, this.players);
@@ -479,13 +480,13 @@ class MainGameHandler {
       return "abilityselected";
     } else if (
       !this.playerCommands[this.playerID] ||
-      this.playerCommands[this.playerID].length == 0
+      this.playerCommands[this.playerID].getCommands().length == 0
     ) {
       return "nomajor";
     } else {
       let hasMajor = false;
       let hasMinor = false;
-      for (let command of this.playerCommands[this.playerID]) {
+      for (let command of this.playerCommands[this.playerID].getCommands()) {
         if (command.isMajorAction()) {
           hasMajor = true;
         }
@@ -517,25 +518,16 @@ class MainGameHandler {
   setPlayerCommand(playerCommand, saveCommand) {
     var pID = playerCommand.getPlayerID();
     if (!this.playerCommands[pID]) {
-      this.playerCommands[pID] = [];
+      this.playerCommands[pID] = new PlayerCommandController(pID, {});
     } else {
-      this.playerCommands[pID].forEach((command) => {
+      this.playerCommands[pID].getCommands().forEach((command) => {
         command.removeAimIndicator(this.stage);
       });
     }
-    var replaced = false;
-    for (var i = 0; i < this.playerCommands[pID].length; i++) {
-      if (this.playerCommands[pID][i].getCommandPhase() === playerCommand.getCommandPhase()) {
-        this.playerCommands[pID][i] = playerCommand;
-        replaced = true;
-      }
-    }
-    if (!replaced) {
-      this.playerCommands[pID].push(playerCommand);
-    }
+    this.playerCommands[pID].addCommand(playerCommand);
 
     if (!$('#gameContainer').hasClass("turnPlaying")) {
-      this.playerCommands[pID].forEach((command) => {
+      this.playerCommands[pID].getCommands().forEach((command) => {
         let aimPreview = this.aimPreviews[command.getCommandPhase()];
         if (pID !== this.playerID || !aimPreview) {
           command.addAimIndicator(this.boardState, this.stage, this.players);
@@ -552,11 +544,7 @@ class MainGameHandler {
       UIListeners.updatePlayerCommands(this.playerCommands, this.players);
       ServerCalls.SavePlayerCommands(
         this.boardState,
-        this.playerCommands[pID].map(
-          function(playerCommand) {
-            return playerCommand.serialize();
-          }
-        ),
+        this.playerCommands[pID].serialize(),
         this,
         this.playerCommandsSaved
       );
@@ -618,7 +606,7 @@ class MainGameHandler {
     this.players.forEach((player) => {
       let discardedCards = 0;
       if (player.user_id in this.playerCommands) {
-        this.playerCommands[player.user_id].forEach((command) => {
+        this.playerCommands[player.user_id].getCommands().forEach((command) => {
           if (command instanceof PlayerCommandUseAbility) {
             if (player.discardCard(command.abilityID)) {
               discardedCards += 1;

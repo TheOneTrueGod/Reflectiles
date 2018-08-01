@@ -180,6 +180,7 @@
 <script src="/Bouncy/js/GameElements/Enemies/UnitMovementEffects.js"></script>
 
 <script src="/Bouncy/js/Players/AbilityManager.js"></script>
+<script src="/Bouncy/js/Players/PlayerCommandController.js"></script>
 
 <!-- MUST GO LAST -->
 <script src="/Bouncy/js/main.js"></script>
