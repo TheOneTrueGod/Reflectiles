@@ -240,7 +240,6 @@ class MainGameHandler {
   }
 
   checkForAutoEndTurn() {
-    return;
     if (!this.gameStarted || this.playingOutTurn || !this.isHost || this.isFinalizing || this.isFinalized) { return; }
     var allPlayersHaveCommand = true;
     for (var key in this.players) {

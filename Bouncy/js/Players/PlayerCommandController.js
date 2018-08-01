@@ -1,31 +1,32 @@
 class PlayerCommandController {
   constructor(player) {
     this.player = player;
-    this.commandData = [];
+    this.minorAction = null;
+    this.majorAction = null;
   }
 
   addCommand(command) {
-    var replaced = false;
-    for (var i = 0; i < this.commandData.length; i++) {
-      if (this.commandData[i].getCommandPhase() === command.getCommandPhase()) {
-        this.commandData[i] = command;
-        replaced = true;
-      }
-    }
-    if (!replaced) {
-      this.commandData.push(command);
+    if (command.getCommandPhase() === null) {
+      console.log(command);
+    } else if (command.getCommandPhase() === TurnPhasesEnum.PLAYER_MINOR) {
+      this.minorAction = command;
+    } else if (command.getCommandPhase() === TurnPhasesEnum.PLAYER_ACTION) {
+      this.majorAction = command;
     }
   }
 
   getCommands() {
-    return this.commandData;
+    if (this.minorAction && this.majorAction) {
+      return [this.minorAction, this.majorAction];
+    } else if (this.minorAction) {
+      return [this.minorAction];
+    } else if (this.majorAction) {
+      return [this.majorAction];
+    }
+    return [];
   }
 
   serialize() {
-    return this.commandData.map(
-      function(playerCommand) {
-        return playerCommand.serialize();
-      }
-    );
+    return this.getCommands().map((command) => { return command.serialize(); });
   }
 }

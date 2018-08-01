@@ -127,6 +127,8 @@ PlayerCommand.FromServerData = function(serializedData) {
   if (deserialized.command) {
     if (!(deserialized.command in PlayerCommand.CommandTypeMap)) {
       alert(deserialized.command + " not in PlayerCommand.CommandTypeMap");
+    } else if (deserialized.command === PlayerCommandSpecial.constructor.name) {
+      return PlayerCommandSpecial.FromServerData(deserialized);
     } else {
       CommandClass = PlayerCommand.CommandTypeMap[deserialized.command];
     }
