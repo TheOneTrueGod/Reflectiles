@@ -51,6 +51,7 @@
 <script src="/Bouncy/js/GameElements/GameLines.js"></script>
 <script src="/Bouncy/js/GameElements/Effects/EffectFactory.js"></script>
 <script src="/Bouncy/js/GameElements/Projectiles/ProjectileBuffs/ProjectileDamageBuff.js"></script>
+<script src="/Bouncy/js/GameElements/Projectiles/ProjectileBuffs/ProjectileWeakenBuff.js"></script>
 <script src="/Bouncy/js/Errors/Errors.js"></script>
 
 <!-- Extends the above -->
@@ -176,13 +177,6 @@
 
 <script src="/Bouncy/js/GameElements/Enemies/UnitBossSlime.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/UnitMovementEffects.js"></script>
-
-<script src="/Bouncy/js/Players/testing_decks/TJDeck.js"></script>
-<script src="/Bouncy/js/Players/testing_decks/ChipDeck.js"></script>
-<script src="/Bouncy/js/Players/testing_decks/TestDeck.js"></script>
-<script src="/Bouncy/js/Players/testing_decks/TabithaDeck.js"></script>
-<script src="/Bouncy/js/Players/testing_decks/SeanDeck.js"></script>
-<script src="/Bouncy/js/Players/testing_decks/ClarenceDeck.js"></script>
 
 <script src="/Bouncy/js/Players/AbilityManager.js"></script>
 

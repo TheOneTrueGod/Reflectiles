@@ -242,8 +242,14 @@ UnitBlocker.createAbilityDef = function() {
     "unit_interaction": {
       'prevent_unit_entry': true,
     },
-    projectile_interaction: {
+    /*projectile_interaction: {
       player_projectiles: {destroy: true},
+    },*/
+    projectile_interaction: {
+      player_projectiles: {
+        buff: {type: Projectile.BuffTypes.WEAKEN},
+        force_passthrough: true,
+      },
     },
     invulnerable: true,
   });

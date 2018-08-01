@@ -29,6 +29,11 @@ class DamageHitEffect extends HitEffect {
       damageMod *= damageBuff.getAmount();
     }
 
+    let weakenBuff = projectile.getBuff ? projectile.getBuff(ProjectileWeakenBuff.name) : null;
+    if (weakenBuff) {
+      damageMod *= weakenBuff.getAmount();
+    }
+
     var finalDamage = base_damage * damageMod;
 
     var damageDealt = unit.dealDamage(boardState, finalDamage, projectile, damageType);

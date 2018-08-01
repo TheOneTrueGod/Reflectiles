@@ -112,8 +112,11 @@ class ZoneEffect extends Unit {
         case Projectile.BuffTypes.DAMAGE:
           projectile.addBuff(new ProjectileDamageBuff());
           break;
+        case Projectile.BuffTypes.WEAKEN:
+          projectile.addBuff(new ProjectileWeakenBuff());
+          break;
         default:
-        throw new Error("unhandled buff type: [" + interaction.buff.type + "]");
+          throw new Error("unhandled buff type: [" + interaction.buff.type + "]");
       }
     }
 

@@ -420,6 +420,7 @@ CollisionBehaviour = {
 
 Projectile.BuffTypes = {
   DAMAGE: 'DAMAGE',
+  WEAKEN: 'WEAKEN',
 };
 
 ProjectileEvents = {

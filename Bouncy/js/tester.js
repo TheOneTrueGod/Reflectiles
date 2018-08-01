@@ -14,11 +14,9 @@ class Tester extends MainGameHandler {
       //[null, UnitShooter, UnitKnight, UnitShooter, null],
       [null, null, null, null, null],
       [null, null, null, null, null],
-      [null, null, null, null, null],
-      [null, null, null, null, null],
-      [null, null, null, null, null],
       [null, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare, null],
       [null, UnitBasicSquare, UnitBasicSquare, UnitBasicSquare, null],
+      [UnitBlocker, null, null, null, UnitBlocker],
     ];
   }
 
@@ -45,6 +43,8 @@ class Tester extends MainGameHandler {
     this.abilitiesToUse = [
       //[TestAbils[3].index, {x: -100, y: -50}],
       //[this.buildAbility(AbilityCore7, ['shield width 1']).index, {x: 0, y: -100}],
+      null,
+      [this.buildAbility(AbilityCore1003, []).index, {x: 0, y: -1000}],
       [this.buildAbility(AbilityCore2006, []).index, {x: 0, y: -1000}],
       //[this.buildAbility(AbilityCore13).index, {x: 0, y: -100}],
       //[this.buildAbility(AbilityCore5,

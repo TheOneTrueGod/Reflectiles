@@ -218,7 +218,7 @@ class UnitTooltips {
       case ZoneAbilityDef.ZoneTypes.KNIGHT_SHIELD:
         return "Blocks bullets.  Dissapears at end of turn.";
       case ZoneAbilityDef.ZoneTypes.BLOCKER_BARRIER:
-        return "Blocks all bullets that try to pass through.";
+        return "Reduces the damage of all bullets that pass through it by 80%.";
     }
 
     let description = zone.creatorAbility.replaceSmartTooltipText(

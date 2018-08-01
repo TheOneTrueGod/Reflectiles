@@ -6,8 +6,8 @@
 // [] Change the rawAbil
 class AbilityCore2006 extends AbilityCore {
   static BuildAbilityChild(level) {
-    let distance = Unit.UNIT_SIZE * 3;
-    let hitDamage = Math.floor(NumbersBalancer.getAbilityDamage(level, 1));
+    let distance = Unit.UNIT_SIZE * 3.5;
+    let hitDamage = Math.floor(NumbersBalancer.getAbilityDamage(level, 0.2));
     const rawAbil = {
       name: 'Slash',
       description: 'Dash forward <<' + distance + '>> units, and deal <<' + hitDamage + '>> damage to each unit you pass through.',
