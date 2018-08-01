@@ -6,11 +6,14 @@
 // [] Change the rawAbil
 class AbilityCore2006 extends AbilityCore {
   static BuildAbilityChild(level) {
+    let distance = Unit.UNIT_SIZE * 3;
     let hitDamage = Math.floor(NumbersBalancer.getAbilityDamage(level, 1));
     const rawAbil = {
-      name: 'Move Test',
-      description: 'Move a bit.',
+      name: 'Slash',
+      description: 'Dash forward <<' + distance + '>> units, and deal <<' + hitDamage + '>> damage to each unit you pass through.',
       card_text_description: 'Move',
+      max_dist: distance,
+      move_speed: 6,
       ability_type: AbilityDef.AbilityTypes.PLAYER_MOVE,
       hit_effects: [
         {

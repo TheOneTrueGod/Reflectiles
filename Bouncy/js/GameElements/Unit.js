@@ -11,6 +11,8 @@ class Unit {
     }
     this.selectedSprite = null;
     this.moveTarget = null;
+    this.moveAbility = null;
+    this.abilityMoveSpeed = null;
 
     // See Also Unit.UNIT_SIZE
     let unitSize = this.getUnitSize();
@@ -364,10 +366,12 @@ class Unit {
     return this.moveTarget === null;
   }
 
-  setMoveTarget(x, y) {
+  setMoveTarget(x, y, ability, abilityMoveSpeed) {
     this.memoizedCollisionBox = null;
+    this.abilityMoveSpeed = abilityMoveSpeed ? abilityMoveSpeed : null;
     this.startMovementPos = {x: this.x, y: this.y};
     this.moveTarget = {'x': x, 'y': y};
+    this.moveAbility = ability;
   }
 
   canSelect() {

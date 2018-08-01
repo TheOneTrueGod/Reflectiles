@@ -43,7 +43,7 @@ class UnitCore extends Unit {
     return MainGame.playerID == this.owner;
   }
 
-  touchedByEnemy(boardState, unit) {
+  touchedByEnemy(boardState, unit, suppressKnockback) {
     if (unit.damage) {
       boardState.dealDamage(Math.ceil(unit.damage * this.getDefensePercent()));
       EffectFactory.createDamagePlayersEffect(
@@ -51,7 +51,9 @@ class UnitCore extends Unit {
         this.x,
         this.y
       );
-      this.knockback(boardState);
+      if (!suppressKnockback) {
+        this.knockback(boardState);
+      }
     }
   }
 
@@ -72,7 +74,10 @@ class UnitCore extends Unit {
   }
 
   getMoveSpeed() {
-    return 4;
+    if (this.abilityMoveSpeed) {
+      return this.abilityMoveSpeed;
+    }
+    return UnitCore.BASE_MOVE_SPEED;
   }
 
   runTick(boardState, phase) {
@@ -85,13 +90,57 @@ class UnitCore extends Unit {
 
       var moveSpeed = this.getMoveSpeed();
 
+      let oldPosition = {x: this.x, y: this.y};
+      let moveOver = false;
+
       if (moveVec.length() <= moveSpeed) {
         this.x = this.moveTarget.x;
         this.y = this.moveTarget.y;
         this.moveTarget = null;
+        moveOver = true;
       } else {
         this.x += Math.cos(ang) * moveSpeed;
         this.y += Math.sin(ang) * moveSpeed;
+      }
+
+      let unitsAtPos = boardState.sectors.getUnitsAtPosition(this.x, this.y);
+      if (moveOver || !this.moveAbility || this.moveAbility.playerCollidesWithEnemies()) {
+        for (let i = 0; i < unitsAtPos.length; i++) {
+          let unit = boardState.findUnit(unitsAtPos[i])
+          if (boardState.isEnemyUnit(unit)) {
+            this.touchedByEnemy(boardState, unit, true);
+            if (this.moveAbility !== UnitCore.TOUCHED_ENEMY) {
+              this.setMoveTarget(
+                this.x - Math.cos(ang) * Unit.UNIT_SIZE,
+                this.y - Math.sin(ang) * Unit.UNIT_SIZE,
+                UnitCore.TOUCHED_ENEMY,
+              );
+            } else {
+              this.setMoveTarget(this.x, this.y + Unit.UNIT_SIZE, UnitCore.TOUCHED_ENEMY);
+            }
+
+            moveOver = false;
+          }
+        }
+      }
+
+      if (this.moveAbility) {
+        let prevCoord = boardState.sectors.getGridCoord(oldPosition);
+        let newCoord = boardState.sectors.getGridCoord({x: this.x, y: this.y});
+
+        if (this.moveAbility.doCollisionEffects && (prevCoord.y !== newCoord.y || prevCoord.x !== newCoord.x)) {
+          let unitsAtPos = boardState.sectors.getUnitsAtPosition(this.x, this.y);
+          for (let i = 0; i < unitsAtPos.length; i++) {
+            let unit = boardState.findUnit(unitsAtPos[i])
+            if (boardState.isEnemyUnit(unit)) {
+              this.moveAbility.doCollisionEffects(boardState, unit, this);
+            }
+          }
+        }
+        if (moveOver) {
+          this.moveAbility = null;
+          this.abilityMoveSpeed = null;
+        }
       }
     }
     this.gameSprite.x = this.x;
@@ -99,8 +148,12 @@ class UnitCore extends Unit {
   }
 }
 
+UnitCore.BASE_MOVE_SPEED = 4;
+
 UnitCore.loadFromServerData = function(serverData) {
   return Unit.loadFromServerData(serverData);
 }
+
+UnitCore.TOUCHED_ENEMY = {playerCollidesWithEnemies: () => { return false; }};
 
 UnitCore.AddToTypeMap();

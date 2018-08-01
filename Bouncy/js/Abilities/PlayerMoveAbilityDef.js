@@ -3,6 +3,7 @@ class PlayerMoveAbilityDef extends AbilityDef {
     super(defJSON, subAbility);
 
     this.maxDist = idx(defJSON, 'max_dist', 100);
+    this.moveSpeed = idx(defJSON, 'move_speed', UnitCore.BASE_MOVE_SPEED);
 
     this.hitEffects = defJSON['hit_effects'] ? defJSON['hit_effects'] : [];
     this.collisionEffects = defJSON['collision_effects'] ? defJSON['collision_effects'] : [];
@@ -69,6 +70,38 @@ class PlayerMoveAbilityDef extends AbilityDef {
     return super.getValidTarget(target, playerID);
   }
 
+  doCollisionEffects(boardState, unit, movingUnit) {
+    let hitEffects = this.getHitEffects();
+    let collisionEffects = this.getCollisionEffects();
+    var damageDealt = 0;
+    let style = this.getStyle()
+    for (var i = 0; i < hitEffects.length; i++) {
+      var hitEffect = HitEffect.getHitEffectFromType(hitEffects[i], this.abilityDef, this);
+      damageDealt += hitEffect.doHitEffect(boardState, unit, null,
+        new AbilitySource(movingUnit.x, movingUnit.y, this, movingUnit.owner)
+      );
+
+      if (style) {
+        this.createExplosionEffect(boardState, unit, hitEffect.styleDef);
+      }
+    }
+  }
+
+  createExplosionEffect(boardState, targetUnit, styleDef) {
+    var style = this.getStyle();
+    if (style) {
+      style.createExplosion(boardState, targetUnit, this);
+    } else {
+      var AOESprite = 'sprite_explosion';
+      EffectFactory.createExplosionSpriteAtUnit(boardState, targetUnit, AOESprite);
+    }
+    EffectFactory.createDamageEntireUnitEffect(boardState, targetUnit);
+  }
+
+  playerCollidesWithEnemies() {
+    return this.hitEffects.length === 0;
+  }
+
   doActionOnTick(playerID, tick, boardState, castPoint, targetPoint) {
     var angle = Math.atan2(targetPoint.y - castPoint.y, targetPoint.x - castPoint.x);
     var dist = ((targetPoint.x - castPoint.x) ** 2 + (targetPoint.y - castPoint.y) ** 2) ** 0.5;
@@ -81,7 +114,7 @@ class PlayerMoveAbilityDef extends AbilityDef {
     super.doActionOnTick(playerID, tick, boardState, castPoint, target);
     if (tick == 0) {
       var playerUnit = boardState.getPlayerUnit(playerID);
-      playerUnit.setMoveTarget(target.x, target.y);
+      playerUnit.setMoveTarget(target.x, target.y, this, this.moveSpeed);
     }
   }
 
