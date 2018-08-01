@@ -146,7 +146,7 @@ class UIListeners {
 
   getMoveAbilityHTML() {
     return this.createStandardAbilityHTML(
-      "move",
+      StaticPlayerAbilities.abilities.PLAYER_MOVE.index,
       "icon_walk",
       "Move",
       "Move to a new location"

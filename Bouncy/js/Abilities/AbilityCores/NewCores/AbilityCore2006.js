@@ -1,9 +1,6 @@
 // TODO:
-// [] Change the weapon type
 // [] Change the icon
-// [] Change the cooldown
 // [] Change the style
-// [] Change the rawAbil
 class AbilityCore2006 extends AbilityCore {
   static BuildAbilityChild(level) {
     let distance = Unit.UNIT_SIZE * 3.5;

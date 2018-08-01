@@ -9,7 +9,9 @@ class PlayerCommandMove extends PlayerCommand {
 
   static findValidMove(boardState, playerID, x, y) {
     var playerUnit = boardState.getPlayerUnit(playerID);
-    var unitCoord = boardState.sectors.getGridCoord(playerUnit);
+    let unitCoord = boardState.sectors.getGridCoord(
+      boardState.getPlayerCastPoint(playerID, TurnPhasesEnum.PLAYER_MINOR)
+    );
     var targetCoord = boardState.sectors.getGridCoord({x, y});
 
     var targets = [

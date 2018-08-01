@@ -11,6 +11,10 @@ class PlayerCommand {
   }
 
   getPlayerCastPointAfterCommand(castPoint) {
+    let ability = AbilityDef.abilityDefList[this.abilityID];
+    if (ability) {
+      return ability.getPlayerCastPointAfterCommand(castPoint, {x: this.x, y: this.y});
+    }
     return castPoint;
   }
 

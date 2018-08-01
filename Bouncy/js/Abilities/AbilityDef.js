@@ -94,6 +94,10 @@ class AbilityDef {
     }
   }
 
+  getPlayerCastPointAfterCommand(castPoint, targetPoint) {
+    return castPoint;
+  }
+
   endOfTurn() {
     if (this.chargeType == AbilityDef.CHARGE_TYPES.TURNS) {
       this.addCharge();

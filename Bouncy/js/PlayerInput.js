@@ -48,6 +48,13 @@ class PlayerInput {
   getCommandForEvent(event) {
     if (this.selectedAbility === null) { return null; }
     if (this.selectedAbility == "move") {
+      return new PlayerCommandUseAbility(
+        event.offsetX,
+        event.offsetY,
+        StaticPlayerAbilities.abilities.PLAYER_MOVE.index,
+        $('#gameContainer').attr('playerID')
+      );
+
       var validMove = PlayerCommandMove.findValidMove(
         MainGame.boardState,
         $('#gameContainer').attr('playerID'),

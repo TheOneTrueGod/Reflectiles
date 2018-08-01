@@ -39,6 +39,11 @@ class PlayerMoveAbilityDef extends AbilityDef {
     }
   }
 
+  getPlayerCastPointAfterCommand(castPoint, targetPoint) {
+    let target = this.clampMovement(castPoint, targetPoint);
+    return target;
+  }
+
   getAccuracy() {
     return this.accuracy;
   }
@@ -102,14 +107,18 @@ class PlayerMoveAbilityDef extends AbilityDef {
     return this.hitEffects.length === 0;
   }
 
-  doActionOnTick(playerID, tick, boardState, castPoint, targetPoint) {
+  clampMovement(castPoint, targetPoint) {
     var angle = Math.atan2(targetPoint.y - castPoint.y, targetPoint.x - castPoint.x);
     var dist = ((targetPoint.x - castPoint.x) ** 2 + (targetPoint.y - castPoint.y) ** 2) ** 0.5;
     dist = Math.min(dist, this.maxDist);
-    let target = {
+    return {
       x: castPoint.x + Math.cos(angle) * dist,
       y: castPoint.y + Math.sin(angle) * dist
     };
+  }
+
+  doActionOnTick(playerID, tick, boardState, castPoint, targetPoint) {
+    let target = this.clampMovement(castPoint, targetPoint);
 
     super.doActionOnTick(playerID, tick, boardState, castPoint, target);
     if (tick == 0) {

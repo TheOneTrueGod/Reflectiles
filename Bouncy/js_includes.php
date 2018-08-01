@@ -133,6 +133,7 @@
   }
   ?>
 </script>
+<script src="/Bouncy/js/Abilities/AbilityCores/StaticPlayerAbilities.js"></script>
 
 <!-- Extends the above -->
 <script src="/Bouncy/js/GameElements/Effects/LineEffect.js"></script>
