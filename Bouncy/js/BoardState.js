@@ -523,9 +523,9 @@ class BoardState {
   getAllPlayerActions(players, playerCommands, filterFunction) {
     var commands = [];
     for (var key in players) {
-      var pc = playerCommands[players[key].getUserID()].getCommands();
+      var pc = playerCommands[players[key].getUserID()];
       if (pc) {
-        commands = commands.concat(pc.filter(filterFunction));
+        commands = commands.concat(pc.getCommands().filter(filterFunction));
       }
     }
     return commands;

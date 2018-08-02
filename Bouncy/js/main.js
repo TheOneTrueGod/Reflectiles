@@ -215,12 +215,14 @@ class MainGameHandler {
         (!ignoreSelf || player_id != this.playerID || !previousPlayerCommands.length)
       ) {
         var command_list = player_command_list[player_id];
-        command_list.forEach(function(commandJSON) {
-          self.setPlayerCommand(
-            PlayerCommand.FromServerData(commandJSON),
-            false
-          );
-        });
+        if (command_list) {
+          command_list.forEach(function(commandJSON) {
+            self.setPlayerCommand(
+              PlayerCommand.FromServerData(commandJSON),
+              false
+            );
+          });
+        }
       }
     }
 
@@ -241,11 +243,12 @@ class MainGameHandler {
 
   checkForAutoEndTurn() {
     if (!this.gameStarted || this.playingOutTurn || !this.isHost || this.isFinalizing || this.isFinalized) { return; }
-    var allPlayersHaveCommand = true;
+    var allPlayersDone = true;
     for (var key in this.players) {
-      var playerHasCommand = false;
+      var isDone = false;
       if (this.playerCommands[this.players[key].getUserID()]) {
-        var pc = this.playerCommands[this.players[key].getUserID()].getCommands();
+        isDone = this.playerCommands[this.players[key].getUserID()].isDoneTurn();
+        /*var pc = this.playerCommands[this.players[key].getUserID()].getCommands();
         let hasMinor = false;
         let hasMajor = false;
         for (var i = 0; i < pc.length; i++) {
@@ -254,14 +257,14 @@ class MainGameHandler {
         }
         if ((true || hasMinor) && hasMajor) {
           playerHasCommand = true;
-        }
+        }*/
       }
-      if (!playerHasCommand) {
-        allPlayersHaveCommand = false;
+      if (!isDone) {
+        allPlayersDone = false;
       }
     }
 
-    if (allPlayersHaveCommand && this.players.length > 0) {
+    if (allPlayersDone && this.players.length > 0) {
       TurnControls.setPlayState(false);
       this.finalizeTurn();
     }

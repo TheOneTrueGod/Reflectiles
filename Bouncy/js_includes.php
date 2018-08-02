@@ -60,6 +60,7 @@
 <script src="/Bouncy/js/GameElements/UnitCore.js"></script>
 <script src="/Bouncy/js/PlayerCommands/PlayerCommandUseAbility.js"></script>
 <script src="/Bouncy/js/PlayerCommands/PlayerCommandMove.js"></script>
+<script src="/Bouncy/js/PlayerCommands/PlayerCommandSpecial.js"></script>
 <script src="/Bouncy/js/GameElements/Effects/Effect.js"></script>
 <script src="/Bouncy/js/GameElements/Projectiles/SpriteLerpProjectile.js"></script>
 <script src="/Bouncy/js/Abilities/ProjectileAbilityDef.js"></script>

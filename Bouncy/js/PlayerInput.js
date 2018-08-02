@@ -19,7 +19,7 @@ class PlayerInput {
     if (abilityID === "move") {
       this.selectedAbility = abilityID;
     } else if (abilityID === "pass") {
-      //this.selectedAbility = abilityID;
+      this.selectedAbility = abilityID;
     } else if (
       abilityID === null ||
       AbilityDef.abilityDefList[abilityID].canBeUsed()
@@ -64,6 +64,10 @@ class PlayerInput {
       if (validMove) {
         return new PlayerCommandMove(validMove.x, validMove.y);
       }
+    } else if (this.selectedAbility === "pass") {
+      return new PlayerCommandSpecial(
+        PlayerCommandSpecial.SPECIAL_COMMANDS.END_TURN
+      );
     } else {
       return new PlayerCommandUseAbility(
         event.offsetX,
@@ -94,7 +98,7 @@ class PlayerInput {
 
   handleMouseMotion(event) {
     let command = this.getCommandForEvent(event);
-    if (command) {
+    if (command && command.hasAimPreview()) {
       MainGame.setAimPreview(
         event.offsetX, event.offsetY,
         this.selectedAbility,

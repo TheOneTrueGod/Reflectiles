@@ -139,8 +139,7 @@ class UIListeners {
       "pass",
       "icon_cancel",
       "Pass",
-      "Take no action",
-      true
+      "Take no action"
     );
   }
 
@@ -214,8 +213,14 @@ class UIListeners {
 
   setupUIListeners() {
     $('#missionEndTurnButton').on('click', function() {
-      TurnControls.setPlayState(false);
-      MainGame.finalizeTurn();
+      MainGame.setPlayerCommand(
+        new PlayerCommandSpecial(
+          PlayerCommandSpecial.SPECIAL_COMMANDS.END_TURN
+        )
+      );
+      //PlayerInput.setSelectedAbility("pass");
+      //TurnControls.setPlayState(false);
+      //MainGame.finalizeTurn();
     });
 
     var self = this;
@@ -287,17 +292,32 @@ class UIListeners {
   }
 
   updatePlayerCommands(player_commands, players) {
-    $('.playerStatus .statusIndicator').removeClass('ready');
-    $('.playerStatus').css('background-image', 'none');
+    $('.playerStatus .statusIndicator').removeClass('ready').removeClass("noicon").removeClass("hasicon");
+    $('.playerStatus').css('background-image', 'none').removeClass("ready").removeClass("notready");
     for (var key in players) {
       var player = players[key];
       if (player_commands[player.getUserID()] !== undefined) {
-        for (let command of player_commands[player.getUserID()].getCommands()) {
-          if (command.commandEndsTurn()) {
-            let iconURL = AbilityCardBuilder.getIconURL(command.abilityDef);
-            $('.playerStatus.' + player.getUserID() + ' .statusIndicator').addClass('ready');
-            $('.playerStatus.' + player.getUserID()).css('background-image', "url(" + iconURL + ")");
+        let $statusIndicator = $('.playerStatus.' + player.getUserID() + ' .statusIndicator');
+        let $playerStatus = $('.playerStatus.' + player.getUserID());
+
+        let majorAction = player_commands[player.getUserID()].getMajorAction();
+        let doneTurn = false;
+        if (player_commands[player.getUserID()].isDoneTurn()) {
+          if (!majorAction) {
+            $statusIndicator.addClass('noicon');
           }
+          $statusIndicator.addClass('ready');
+          doneTurn = true;
+        }
+
+        if (majorAction) {
+          let iconURL = AbilityCardBuilder.getIconURL(majorAction.abilityDef);
+          $playerStatus.css('background-image', "url(" + iconURL + ")");
+          $statusIndicator.addClass("hasicon");
+        }
+
+        if (!doneTurn) {
+          $playerStatus.addClass("notready");
         }
       }
     }
