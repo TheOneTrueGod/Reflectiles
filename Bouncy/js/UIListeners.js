@@ -307,12 +307,12 @@ class UIListeners {
     }
     for (var key in players) {
       var player = players[key];
+      let doneTurn = false;
+      let $playerStatus = $('.playerStatus.' + player.getUserID());
       if (player_commands[player.getUserID()] !== undefined) {
         let $statusIndicator = $('.playerStatus.' + player.getUserID() + ' .statusIndicator');
-        let $playerStatus = $('.playerStatus.' + player.getUserID());
 
         let majorAction = player_commands[player.getUserID()].getMajorAction();
-        let doneTurn = false;
         if (player_commands[player.getUserID()].isDoneTurn()) {
           if (!majorAction) {
             $statusIndicator.addClass('noicon');
@@ -326,10 +326,9 @@ class UIListeners {
           $playerStatus.css('background-image', "url(" + iconURL + ")");
           $statusIndicator.addClass("hasicon");
         }
-
-        if (!doneTurn) {
-          $playerStatus.addClass("notready");
-        }
+      }
+      if (!doneTurn) {
+        $playerStatus.addClass("notready");
       }
     }
   }
