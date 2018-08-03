@@ -526,6 +526,11 @@ class BoardState {
   }
 
   getPlayerActionsInPhase(players, playerCommands, phase) {
+    if (phase == TurnPhasesEnum.PLAYER_PRE_MINOR) {
+      return this.getAllPlayerActions(players, playerCommands, (command) => {
+        return command.getCommandPhase() == TurnPhasesEnum.PLAYER_PRE_MINOR;
+      });
+    }
     if (phase == TurnPhasesEnum.PLAYER_MINOR) {
       return this.getAllPlayerActions(players, playerCommands, (command) => {
         return command.getCommandPhase() == TurnPhasesEnum.PLAYER_MINOR;
