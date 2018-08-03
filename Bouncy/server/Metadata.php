@@ -47,6 +47,10 @@ class Metadata {
     $this->level = $level;
   }
 
+  function getDifficulty() {
+    return $this->difficulty;
+  }
+
   function setDifficulty($difficulty) {
     $this->difficulty = $difficulty;
   }

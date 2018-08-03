@@ -102,6 +102,8 @@ class NewGameController {
           $gameObj->getMetadata()->setLevel($linkedGame->getMetadata()->getLevel());
         }
 
+        $gameObj->getMetadata()->setDifficulty($linkedGame->getMetadata()->getDifficulty());
+
         $linkedGame->saveMetadata();
       }
     } else {
