@@ -26,6 +26,7 @@ class AbilityCore2001 extends AbilityCore {
       unit_enter_effect: {},
       zone_icon: 'zone_icon_shield',
       icon: "/Bouncy/assets/icons/icon_plain_shield.png",
+      action_phase: TurnPhasesEnum.PLAYER_MINOR,
     };
 
     let cooldown = this.getCooldown();

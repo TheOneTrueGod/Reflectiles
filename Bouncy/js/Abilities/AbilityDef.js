@@ -171,9 +171,13 @@ class AbilityDef {
   }
 
   getDescription() {
-    return this.replaceSmartTooltipText(
+    let tooltipText = this.replaceSmartTooltipText(
       this.getOptionalParam("description", null)
     );
+    if (this.actionPhase === TurnPhasesEnum.PLAYER_MINOR) {
+      tooltipText = "Minor Action.<br/>" + tooltipText;
+    }
+    return tooltipText;
   }
 
   createTooltip() {

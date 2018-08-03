@@ -10,10 +10,11 @@ class AbilityCore2002 extends AbilityCore {
       style: {style_name: 'COLORIZED', color: 0x00f4ff},
       projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
       hit_effects: [
-        {effect: ProjectileShape.HitEffects.DAMAGE, base_damage: coreDamage},
+        //{effect: ProjectileShape.HitEffects.DAMAGE, base_damage: coreDamage},
         {effect: ProjectileShape.HitEffects.FREEZE, duration: freezeDuration}
       ],
       icon: "/Bouncy/assets/icons/icon_plain_frost.png",
+      action_phase: TurnPhasesEnum.PLAYER_MINOR,
     };
 
     let cooldown = this.getCooldown();
