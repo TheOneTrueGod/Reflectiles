@@ -23,7 +23,7 @@ class AbilityCore2007 extends AbilityCore {
           effect: ProjectileShape.HitEffects.DAMAGE,
         }
       ],
-      icon: "/Bouncy/assets/icons/icon_plain_explosion.png",
+      icon: "/Bouncy/assets/icons/thrown-knife.png",
       action_phase: TurnPhasesEnum.PLAYER_MINOR,
     };
 

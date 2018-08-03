@@ -22,7 +22,7 @@ class AbilityCoreNUMBER extends AbilityCore {
           effect: ProjectileShape.HitEffects.DAMAGE,
         }
       ],
-      icon: "/Bouncy/assets/icons/icon_plain_explosion.png"
+      icon: "/Bouncy/assets/icons/help.png"
     };
 
     let cooldown = this.getCooldown();

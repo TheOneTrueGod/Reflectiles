@@ -18,7 +18,7 @@ class AbilityCore2006 extends AbilityCore {
           effect: ProjectileShape.HitEffects.DAMAGE,
         }
       ],
-      icon: "/Bouncy/assets/icons/icon_plain_explosion.png"
+      icon: "/Bouncy/assets/icons/quick-slash.png"
     };
 
     let cooldown = this.getCooldown();
