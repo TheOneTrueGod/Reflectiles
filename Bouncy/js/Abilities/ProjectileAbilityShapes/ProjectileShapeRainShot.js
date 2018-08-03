@@ -28,6 +28,10 @@ class ProjectileShapeRainShot extends ProjectileShape {
     return 0;
   }
 
+  getAngleRange() {
+    return [Math.PI / 2 * 3 - Math.PI / 4.0, Math.PI / 2 * 3 + Math.PI / 4.0];
+  }
+
   doActionOnTick(playerID, tick, boardState, castPoint, targetPoint) {
     if (tick >= this.ACTIVATE_ON_TICK && tick <= this.FINAL_TICK) {
       for (var i = 0; i < this.SHOTS_PER_TICK; i++) {
@@ -35,7 +39,9 @@ class ProjectileShapeRainShot extends ProjectileShape {
           continue;
         }
         var rand = boardState.getRandom();
-        var angle = Math.PI / 2 * 3 + Math.PI / 2.0 * (rand - 0.5);
+        let angleRange = this.getAngleRange();
+        let angle = lerp(angleRange[0], angleRange[1], rand);
+
         rand = boardState.getRandom();
         var speed = 4 + 2 * rand;
         boardState.addProjectile(
@@ -70,20 +76,37 @@ class ProjectileShapeRainShot extends ProjectileShape {
     // Create a new Graphics object and add it to the scene
     var lineGraphic = new PIXI.Graphics();
     var circleSize = 50;
-    lineGraphic.position = {x: startPos.x, y: startPos.y};
-    lineGraphic.lineStyle(1, color);
+    //lineGraphic.position = {x: startPos.x, y: startPos.y};
+    //lineGraphic.lineStyle(1, color);
     /*lineGraphic.lineStyle(1, color)
       .arc(0, -circleSize, circleSize, 0, Math.PI); // cx, cy, radius, startAngle, endAngle
       */
 
-    lineGraphic
+    /*lineGraphic
       .moveTo(-circleSize / 3 * 2, -circleSize / 2)
       .lineTo(-circleSize - 60, -circleSize * 4);
 
     lineGraphic
       .moveTo(circleSize / 3 * 2, -circleSize / 2)
-      .lineTo(circleSize + 60, -circleSize * 4);
+      .lineTo(circleSize + 60, -circleSize * 4);*/
 
+    let angleRange = this.getAngleRange();
+
+    ProjectileAbilityDef.createProjectileTargetter(
+      lineGraphic, color, startPos, angleRange[0], 250,
+      this.abilityDef.getOptionalParam('speed', 6),
+      this.abilityDef.getOptionalParam('duration', 100),
+      this.abilityDef.getOptionalParam('speed_decay', null),
+      this.abilityDef.getOptionalParam('gravity', null),
+    );
+
+    ProjectileAbilityDef.createProjectileTargetter(
+      lineGraphic, color, startPos, angleRange[1], 250,
+      this.abilityDef.getOptionalParam('speed', 6),
+      this.abilityDef.getOptionalParam('duration', 100),
+      this.abilityDef.getOptionalParam('speed_decay', null),
+      this.abilityDef.getOptionalParam('gravity', null),
+    );
 
     //lineGraphic.drawCircle(endPos.x, endPos.y, circleSize);
 
