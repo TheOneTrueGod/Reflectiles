@@ -329,7 +329,7 @@ class MainGameHandler {
     }
 
     if (this.boardState.isGameOver(AIDirector)) {
-      $('#missionEndTurnButton').prop("disabled", true);
+      $('#missionEndTurnButton').prop("disabled", true).removeClass("flashing");
       UIListeners.showGameOverScreen(this.boardState.didPlayersWin(AIDirector), this.boardState.gameStats);
       this.updateActionHint();
     }
@@ -367,7 +367,7 @@ class MainGameHandler {
   finalizeTurn() {
     this.isFinalizing = true;
     this.boardState.loadState();
-    $('#missionEndTurnButton').prop("disabled", true);
+    $('#missionEndTurnButton').prop("disabled", true).removeClass("flashing");
     ServerCalls.FinalizeTurn(this.boardState.turn, this, this.turnFinalizedOnServer);
   }
 
@@ -480,24 +480,13 @@ class MainGameHandler {
   getHintState() {
     if (PlayerInput.selectedAbility) {
       return "abilityselected";
-    } else if (
-      !this.playerCommands[this.playerID] ||
-      this.playerCommands[this.playerID].getCommands().length == 0
-    ) {
+    } else if (!this.playerCommands[this.playerID]) {
       return "nomajor";
     } else {
-      let hasMajor = false;
-      let hasMinor = false;
-      for (let command of this.playerCommands[this.playerID].getCommands()) {
-        if (command.isMajorAction()) {
-          hasMajor = true;
-        }
-        if (command.isMinorAction()) {
-          hasMinor = true;
-        }
-      }
-      if (!hasMajor) { return "nomajor"; }
-      if (!hasMinor) { return "nominor"; }
+      let pc = this.playerCommands[this.playerID];
+      if (!pc.hasMajor()) { return "nomajor"; }
+      if (!pc.hasMinor()) { return "nominor"; }
+      if (!pc.isDoneTurn()) { return "notdone"; }
     }
     return 'done';
   }
@@ -509,6 +498,8 @@ class MainGameHandler {
         return "Select an action card below";
       case 'nominor':
         return "Select a minor action card below";
+      case 'notdone':
+        return "Press the 'Finish Turn' button to end your turn";
       case 'abilityselected':
         return "Click on the game area to use the selected ability";
       case 'done':
@@ -600,7 +591,7 @@ class MainGameHandler {
   finalizedTurnOver() {
     $('#gameContainer').removeClass("turnPlaying");
     if (!this.boardState.isGameOver(AIDirector)) {
-      $('#missionEndTurnButton').prop("disabled", false);
+      $('#missionEndTurnButton').prop("disabled", false).removeClass("flashing");
     } else {
       UIListeners.showGameOverScreen(this.boardState.didPlayersWin(AIDirector), this.boardState.gameStats);
     }

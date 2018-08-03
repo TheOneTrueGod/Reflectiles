@@ -218,6 +218,7 @@ class UIListeners {
           PlayerCommandSpecial.SPECIAL_COMMANDS.END_TURN
         )
       );
+      $('#missionEndTurnButton').removeClass("flashing");
       //PlayerInput.setSelectedAbility("pass");
       //TurnControls.setPlayState(false);
       //MainGame.finalizeTurn();
@@ -294,6 +295,16 @@ class UIListeners {
   updatePlayerCommands(player_commands, players) {
     $('.playerStatus .statusIndicator').removeClass('ready').removeClass("noicon").removeClass("hasicon");
     $('.playerStatus').css('background-image', 'none').removeClass("ready").removeClass("notready");
+    let currPlayer = $('#gameContainer').attr('playerid');
+    if (
+      player_commands[currPlayer] &&
+      player_commands[currPlayer].hasMajor() &&
+      !player_commands[currPlayer].isDoneTurn()
+    ) {
+      $('#missionEndTurnButton').addClass("flashing")
+    } else {
+      $('#missionEndTurnButton').removeClass("flashing");
+    }
     for (var key in players) {
       var player = players[key];
       if (player_commands[player.getUserID()] !== undefined) {

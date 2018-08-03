@@ -33,6 +33,14 @@ class PlayerCommandController {
     return [];
   }
 
+  hasMajor() {
+    return this.majorAction !== null;
+  }
+
+  hasMinor() {
+    return this.minorAction !== null;
+  }
+
   getMajorAction() {
     return this.majorAction;
   }
