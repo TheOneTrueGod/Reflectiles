@@ -218,6 +218,7 @@ class UIListeners {
           PlayerCommandSpecial.SPECIAL_COMMANDS.END_TURN
         )
       );
+      MainGame.playerCommands[$('#gameContainer').attr('playerID')].updateValidTargetChecks();
       $('#missionEndTurnButton').removeClass("flashing");
       //PlayerInput.setSelectedAbility("pass");
       //TurnControls.setPlayState(false);

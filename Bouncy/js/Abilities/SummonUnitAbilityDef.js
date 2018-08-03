@@ -13,7 +13,7 @@ class SummonUnitAbilityDef extends AbilityDef {
   }
 
   getValidTarget(target, playerID) {
-    var castPoint = MainGame.boardState.getPlayerCastPoint(playerID, TurnPhasesEnum.PLAYER_ACTION);
+    var castPoint = MainGame.boardState.getPlayerCastPoint(playerID, this.getActionPhase());
     if (
       this.MAX_RANGE.left === undefined || this.MAX_RANGE.right === undefined ||
       this.MAX_RANGE.top === undefined || this.MAX_RANGE.bottom === undefined

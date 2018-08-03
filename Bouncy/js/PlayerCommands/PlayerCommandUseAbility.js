@@ -4,17 +4,22 @@ class PlayerCommandUseAbility extends PlayerCommand {
     abilityID,
     playerID
   ) {
-    var abil = AbilityDef.abilityDefList[abilityID];
     super(x, y, abilityID);
 
     this.playerID = playerID;
-    var target = abil.getValidTarget({x: x, y: y}, playerID);
+    this.originalX = x;
+    this.originalY = y;
+    this.abilityDef = AbilityDef.abilityDefList[abilityID];
+    //this.updateValidTargetCheck();
+  }
+
+  updateValidTargetCheck() {
+    var target = this.abilityDef.getValidTarget({x: this.originalX, y: this.originalY}, this.playerID);
     if (!target) {
       throw new Error("No valid targets!");
     }
     this.x = target.x;
     this.y = target.y;
-    this.abilityDef = AbilityDef.abilityDefList[abilityID];
   }
 
   getCommandPhase() {

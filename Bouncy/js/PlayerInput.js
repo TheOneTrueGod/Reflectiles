@@ -46,37 +46,30 @@ class PlayerInput {
   }
 
   getCommandForEvent(event) {
+    let command = null;;
     if (this.selectedAbility === null) { return null; }
     if (this.selectedAbility == "move") {
-      return new PlayerCommandUseAbility(
+      command = new PlayerCommandUseAbility(
         event.offsetX,
         event.offsetY,
         StaticPlayerAbilities.abilities.PLAYER_MOVE.index,
         $('#gameContainer').attr('playerID')
       );
-
-      var validMove = PlayerCommandMove.findValidMove(
-        MainGame.boardState,
-        $('#gameContainer').attr('playerID'),
-        event.offsetX,
-        event.offsetY
-      );
-      if (validMove) {
-        return new PlayerCommandMove(validMove.x, validMove.y);
-      }
+      command.updateValidTargetCheck();
     } else if (this.selectedAbility === "pass") {
-      return new PlayerCommandSpecial(
+      command = new PlayerCommandSpecial(
         PlayerCommandSpecial.SPECIAL_COMMANDS.END_TURN
       );
     } else {
-      return new PlayerCommandUseAbility(
+      command = new PlayerCommandUseAbility(
         event.offsetX,
         event.offsetY,
         this.selectedAbility,
         $('#gameContainer').attr('playerID')
       );
+      command.updateValidTargetCheck();
     }
-    return null;
+    return command;
   }
 
   handleClick(target, event) {
@@ -87,6 +80,7 @@ class PlayerInput {
       let command = this.getCommandForEvent(event);
       if (command) {
         MainGame.setPlayerCommand(command);
+        command.updateValidTargetCheck();
         MainGame.setAimPreview(null, null, null, command.getCommandPhase());
       }
 

@@ -10,6 +10,10 @@ class PlayerCommand {
     this.aimIndicator = null;
   }
 
+  updateValidTargetCheck() {
+    return;
+  }
+
   getPlayerCastPointAfterCommand(castPoint) {
     let ability = AbilityDef.abilityDefList[this.abilityID];
     if (ability) {

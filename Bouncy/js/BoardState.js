@@ -35,6 +35,7 @@ class BoardState {
     this.unitsToSpawn = new UnitsToSpawn();
 
     this.noActionKillLimit = 0;
+    this.currPhase = null;
 
     this.runEffectTicks();
   }
@@ -338,18 +339,10 @@ class BoardState {
         x: this.playerCastPoints[playerID].x,
         y: this.playerCastPoints[playerID].y
       };
-      if (
-        turnPhase === TurnPhasesEnum.PLAYER_MINOR &&
-        MainGame.playerCommands[playerID] &&
-        MainGame.playerCommands[playerID].getCommands().length > 0
-      ) {
-        for (let command of MainGame.playerCommands[playerID].getCommands()) {
-          if (command.getCommandPhase() === TurnPhasesEnum.PLAYER_ACTION) {
-            return command.getPlayerCastPointAfterCommand(castPoint);
-          }
-        }
+      if (!MainGame.playerCommands[playerID]) {
+        return castPoint;
       }
-      return castPoint;
+      return MainGame.playerCommands[playerID].getCastPoint(castPoint, this.currPhase, turnPhase);
     }
 
     throw new Error(
@@ -412,6 +405,7 @@ class BoardState {
     for (var unit in this.units) {
       this.units[unit].startOfPhase(this, phase);
     }
+    this.currPhase = phase;
     this.doDeleteChecks();
   }
 

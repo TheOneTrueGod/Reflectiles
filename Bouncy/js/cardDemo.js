@@ -92,6 +92,7 @@ class CardDemo extends MainGameHandler {
         );
       }
     }
+    this.playerCommands[$('#gameContainer').attr('playerID')].updateValidTargetChecks();
     this.playOutTurn();
   }
 

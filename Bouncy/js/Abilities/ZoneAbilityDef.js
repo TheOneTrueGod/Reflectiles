@@ -24,8 +24,7 @@ class ZoneAbilityDef extends AbilityDef {
   }
 
   getValidTarget(target, playerID) {
-    var castPoint = MainGame.boardState.getPlayerCastPoint(playerID, TurnPhasesEnum.PLAYER_ACTION);
-
+    var castPoint = MainGame.boardState.getPlayerCastPoint(playerID, this.getActionPhase());
     // TODO: Pass in boardState.  Too lazy right now.
     return AbilityTargetCalculations.getBoxTarget(MainGame.boardState, target, castPoint, this.MAX_RANGE);
   }

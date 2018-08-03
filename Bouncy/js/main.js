@@ -238,6 +238,10 @@ class MainGameHandler {
       this.checkForAutoEndTurn();
     }
 
+    for (var player_id in this.playerCommands) {
+      this.playerCommands[player_id].updateValidTargetChecks();
+    }
+
     UIListeners.updatePlayerCommands(this.playerCommands, this.players);
   }
 
@@ -467,10 +471,12 @@ class MainGameHandler {
       );
       if (validMove) {
         this.aimPreviews[commandTurn] = new PlayerCommandMove(validMove.x, validMove.y);
+        this.aimPreviews[commandTurn].updateValidTargetCheck();
         this.aimPreviews[commandTurn].addAimIndicator(this.boardState, this.stage, this.players);
       }
     } else if (abilityIndex !== null) {
       this.aimPreviews[commandTurn] = new PlayerCommandUseAbility(x, y, abilityIndex, $('#gameContainer').attr('playerID'));
+      this.aimPreviews[commandTurn].updateValidTargetCheck();
       this.aimPreviews[commandTurn].addAimIndicator(this.boardState, this.stage, this.players);
     } else {
       this.aimPreviews[commandTurn] = null;
