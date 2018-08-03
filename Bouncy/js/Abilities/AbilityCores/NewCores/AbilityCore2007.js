@@ -6,15 +6,16 @@
 // [] Change the rawAbil
 class AbilityCore2007 extends AbilityCore {
   static BuildAbilityChild(level) {
-    let hitDamage = Math.floor(NumbersBalancer.getAbilityDamage(level, 1));
+    let hitDamage = Math.floor(NumbersBalancer.getAbilityDamage(level, 0.2));
     const rawAbil = {
-      name: '',
-      description: '',
-      card_text_description: '',
+      name: 'Hidden Blade',
+      description: 'Throw a single dagger that deals <<' + hitDamage + '>> damage.',
+      card_text_description: hitDamage,
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
       projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
       destroy_on_wall: [],
+      speed: 6,
       wall_bounces: 1,
       hit_effects: [
         {
@@ -22,7 +23,8 @@ class AbilityCore2007 extends AbilityCore {
           effect: ProjectileShape.HitEffects.DAMAGE,
         }
       ],
-      icon: "/Bouncy/assets/icons/icon_plain_explosion.png"
+      icon: "/Bouncy/assets/icons/icon_plain_explosion.png",
+      action_phase: TurnPhasesEnum.PLAYER_MINOR,
     };
 
     let cooldown = this.getCooldown();
@@ -37,7 +39,7 @@ class AbilityCore2007 extends AbilityCore {
   static createAbilityStyle() {
     return (new AbilitySheetSpriteAbilityStyleBuilder())
       .setSheet('weapons_sheet')
-      .setCoordNums(2, 1, 24, 23);
+      .setCoordNums(54, 2, 75, 23);
   }
 
   static getCooldown() {

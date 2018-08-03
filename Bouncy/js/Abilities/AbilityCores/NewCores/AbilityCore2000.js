@@ -39,10 +39,6 @@ class AbilityCore2000 extends AbilityCore {
     return (new AbilitySheetSpriteAbilityStyleBuilder())
       .setSheet('weapons_sheet')
       .setCoordNums(54, 2, 75, 23);
-    return (new AbilitySheetSpriteAbilityStyleBuilder())
-      .setSheet('bullet_sheet')
-      .setCoordNums(275, 69, 294, 78)
-      .setRotation(0);
   }
 
   static getCooldown() {
