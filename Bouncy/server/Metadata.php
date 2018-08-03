@@ -5,6 +5,8 @@ class Metadata {
     $this->game_started = false;
     $this->level = "1-1";
     $this->difficulty = "medium";
+    $this->next_game = null;
+    $this->retry_game = null;
     if ($json) {
       $decoded = json_decode($json);
       $this->game_started = ($decoded->game_started == "true");
@@ -16,7 +18,29 @@ class Metadata {
 
       $this->level = $decoded->level;
       $this->difficulty = $decoded->difficulty;
+      $this->next_game = $decoded->next_game;
+      $this->retry_game = $decoded->retry_game;
     }
+  }
+
+  function getNextGame() {
+    return $this->next_game;
+  }
+
+  function setNextGame($id) {
+    $this->next_game = $id;
+  }
+
+  function getRetryGame() {
+    return $this->retry_game;
+  }
+
+  function setRetryGame($id) {
+    $this->retry_game = $id;
+  }
+
+  function getLevel() {
+    return $this->level;
   }
 
   function setLevel($level) {
@@ -33,6 +57,8 @@ class Metadata {
       'game_started' => $this->game_started ? true : false,
       'difficulty' => $this->difficulty,
       'level' => $this->level,
+      'next_game' => $this->next_game,
+      'retry_game' => $this->retry_game,
     );
     if ($user) {
       $bouncy_user = BouncyUser::getFromID($user->id);

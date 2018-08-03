@@ -4,7 +4,7 @@ const StaticPlayerAbilities = {abilities: {}, initialize: function() {
         name: 'Move',
         description: 'Walk towards a target point.',
         card_text_description: 'Move',
-        max_dist: Unit.UNIT_SIZE * 1.5,
+        max_dist: Unit.UNIT_SIZE * 2,
         move_speed: 4,
         ability_type: AbilityDef.AbilityTypes.PLAYER_MOVE,
         icon: "/Bouncy/assets/icons/icon_plain_explosion.png",

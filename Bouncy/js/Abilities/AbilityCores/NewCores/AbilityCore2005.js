@@ -6,8 +6,8 @@
 // [] Change the rawAbil
 class AbilityCore2005 extends AbilityCore {
   static BuildAbilityChild(level) {
-    let num_bullets = 12;
-    let hitDamage = Math.floor(NumbersBalancer.getAbilityDamage(level, 1.8) / num_bullets);
+    let num_bullets = 20;
+    let hitDamage = Math.floor(NumbersBalancer.getAbilityDamage(level, 2) / num_bullets);
     const rawAbil = {
       name: 'Shatter',
       description: 'Shoot <<' + num_bullets + '>> spikes in a circle around you.  Each one deals <<' + hitDamage + '>> damage.',
