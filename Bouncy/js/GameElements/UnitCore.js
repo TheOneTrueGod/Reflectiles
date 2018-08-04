@@ -80,7 +80,38 @@ class UnitCore extends Unit {
     return UnitCore.BASE_MOVE_SPEED;
   }
 
+  checkForCollisions(boardState, moveAng) {
+    let unitsAtPos = boardState.sectors.getUnitsAtPosition(this.x, this.y);
+    let collided = false;
+    for (let i = 0; i < unitsAtPos.length; i++) {
+      let unit = boardState.findUnit(unitsAtPos[i])
+      if (boardState.isEnemyUnit(unit)) {
+        this.touchedByEnemy(boardState, unit, true);
+        if (this.moveAbility !== UnitCore.TOUCHED_ENEMY) {
+          this.setMoveTarget(
+            this.x - Math.cos(moveAng) * Unit.UNIT_SIZE,
+            this.y - Math.sin(moveAng) * Unit.UNIT_SIZE,
+            UnitCore.TOUCHED_ENEMY,
+          );
+        } else {
+          this.setMoveTarget(this.x, this.y + Unit.UNIT_SIZE, UnitCore.TOUCHED_ENEMY);
+        }
+
+        collided = true;
+      }
+    }
+    return collided;
+  }
+
   runTick(boardState, phase) {
+    if (
+      !this.moveTarget &&
+      phase !== TurnPhasesEnum.PLAYER_PRE_MINOR &&
+      phase !== TurnPhasesEnum.PLAYER_ACTION &&
+      phase !== TurnPhasesEnum.PLAYER_MINOR
+    ) {
+      this.checkForCollisions(boardState, Math.PI / 2 * 3);
+    }
     if (this.moveTarget) {
       var moveVec = Victor(this.moveTarget.x - this.x, this.moveTarget.y - this.y);
       var ang = Math.atan2(
@@ -103,24 +134,12 @@ class UnitCore extends Unit {
         this.y += Math.sin(ang) * moveSpeed;
       }
 
-      let unitsAtPos = boardState.sectors.getUnitsAtPosition(this.x, this.y);
-      if (moveOver || !this.moveAbility || this.moveAbility.playerCollidesWithEnemies()) {
-        for (let i = 0; i < unitsAtPos.length; i++) {
-          let unit = boardState.findUnit(unitsAtPos[i])
-          if (boardState.isEnemyUnit(unit)) {
-            this.touchedByEnemy(boardState, unit, true);
-            if (this.moveAbility !== UnitCore.TOUCHED_ENEMY) {
-              this.setMoveTarget(
-                this.x - Math.cos(ang) * Unit.UNIT_SIZE,
-                this.y - Math.sin(ang) * Unit.UNIT_SIZE,
-                UnitCore.TOUCHED_ENEMY,
-              );
-            } else {
-              this.setMoveTarget(this.x, this.y + Unit.UNIT_SIZE, UnitCore.TOUCHED_ENEMY);
-            }
-
-            moveOver = false;
-          }
+      if (
+        !this.moveAbility ||
+        this.moveAbility.playerCollidesWithEnemies()
+      ) {
+        if (this.checkForCollisions(boardState)) {
+          moveOver = false;
         }
       }
 

@@ -14,8 +14,9 @@ class AbilityCore9000 extends AbilityCore {
       ability_type: AbilityDef.AbilityTypes.PLAYER_MOVE,
       action_phase: TurnPhasesEnum.PLAYER_PRE_MINOR,
       max_dist: Unit.UNIT_SIZE * 2,
+      collides_with_enemies: false,
       move_speed: 4,
-      icon: "/Bouncy/assets/icons/help.png"
+      icon: "/Bouncy/assets/icons/dodging.png"
     };
 
     let cooldown = this.getCooldown();
@@ -34,7 +35,7 @@ class AbilityCore9000 extends AbilityCore {
   }
 
   static getCooldown() {
-    return {initial_charge: -1, max_charge: 1, charge_type: "TURNS"};
+    return {initial_charge: -1, max_charge: 5, charge_type: "TURNS"};
   }
 
   static GetCardDeckType() {

@@ -10,6 +10,7 @@ class PlayerMoveAbilityDef extends AbilityDef {
     this.timeoutHitEffects = defJSON['timeout_hit_effects'] ? defJSON['timeout_hit_effects'] : [];
     this.timeoutEffects = defJSON['timeout_effects'] ? defJSON['timeout_effects'] : [];
     this.onKillEffects = defJSON['on_kill_effects'] ? defJSON['on_kill_effects'] : [];
+    this.collidesWithEnemies = idx(defJSON, 'collides_with_enemies', false);
 
     this.accuracy = new ProjectileAccuracy(defJSON.accuracy);
     this.collisionBehaviours = defJSON['collision_behaviours'];
@@ -104,7 +105,7 @@ class PlayerMoveAbilityDef extends AbilityDef {
   }
 
   playerCollidesWithEnemies() {
-    return this.hitEffects.length === 0;
+    return this.collidesWithEnemies;
   }
 
   clampMovement(castPoint, targetPoint) {
