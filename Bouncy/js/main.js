@@ -383,6 +383,7 @@ class MainGameHandler {
       false,
       false
     );
+    PlayerInput.setSelectedAbility(null);
     // phases
     this.playOutTurn();
   }
@@ -454,7 +455,11 @@ class MainGameHandler {
       this.aimPreviews[commandTurn].removeAimIndicator();
       this.playerCommands[this.playerID] &&
         this.playerCommands[this.playerID].getCommands().forEach((command) => {
-        if (command.getCommandPhase() === commandTurn) {
+        if (
+          command.getCommandPhase() === commandTurn ||
+          command.isMinorAction() && commandTurn === TurnPhasesEnum.PLAYER_PRE_MINOR ||
+          command.isMinorAction() && commandTurn === TurnPhasesEnum.PLAYER_MINOR
+        ) {
           if (abilityIndex === null) {
             command.addAimIndicator(this.boardState, this.stage, this.players);
           } else {

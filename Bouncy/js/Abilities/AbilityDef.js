@@ -176,6 +176,15 @@ class AbilityDef {
     );
     if (this.actionPhase === TurnPhasesEnum.PLAYER_MINOR) {
       tooltipText = "Minor Action.<br/>" + tooltipText;
+    } else if (this.actionPhase === TurnPhasesEnum.PLAYER_PRE_MINOR) {
+      tooltipText = "Quick Minor Action.<br/>" + tooltipText;
+    } else if (
+      this.actionPhase === TurnPhasesEnum.PLAYER_ACTION || 
+      this.actionPhase === null
+    ) {
+      tooltipText = "Standard Action.<br/>" + tooltipText;
+    } else {
+      console.warn("No tooltip for action phase: [" + this.actionPhase + "]");
     }
     return tooltipText;
   }
