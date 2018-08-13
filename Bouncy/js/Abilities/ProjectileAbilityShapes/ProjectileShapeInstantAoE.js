@@ -64,7 +64,7 @@ class ProjectileShapeInstantAoE extends ProjectileShape {
     if (!maxRange) {
       return target;
     }
-    var castPoint = boardState.getPlayerCastPoint(playerID, this.abilityDef.getActionPhase());
+    var castPoint = boardState.getPlayerCastPoint(playerID, this.abilityDef.getActionPhase(), true);
     return AbilityTargetCalculations.getBoxTarget(
       boardState,
       target,

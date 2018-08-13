@@ -13,8 +13,9 @@ class PlayerInput {
       throw new Error("Can't set an undefined ability");
     }
     if (this.selectedAbility) {
-      let command = this.getCommandForEvent({offsetX: 0, offsetY: 0});
-      MainGame.setAimPreview(null, null, null, command.getCommandPhase());
+      //let command = this.getCommandForEvent({offsetX: 0, offsetY: 0});
+      //MainGame.setAimPreview(null, null, null, command.getCommandPhase());
+      MainGame.clearAimPreviewNEW();
     }
     if (abilityID === "move") {
       this.selectedAbility = abilityID;
@@ -28,10 +29,11 @@ class PlayerInput {
     }
 
     MainGame.updateActionHint();
-    let command = this.getCommandForEvent({offsetX: 0, offsetY: 0});
-    if (command) {
-      MainGame.setAimPreview(null, null, null, command.getCommandPhase());
-    }
+    //let command = this.getCommandForEvent({offsetX: 0, offsetY: 0});
+    //if (command) {
+      //MainGame.setAimPreview(null, null, null, command.getCommandPhase());
+    //}
+    MainGame.clearAimPreviewNEW();
   }
 
   selectUnit(unit) {
@@ -79,10 +81,15 @@ class PlayerInput {
     ) {
       let command = this.getCommandForEvent(event);
       if (command) {
+        //MainGame.setPlayerCommand(command);
+        //command.updateValidTargetCheck();
+        //MainGame.setAimPreview(null, null, null, command.getCommandPhase());
+
+        MainGame.clearAimPreviewNEW();
         MainGame.setPlayerCommand(command);
-        command.updateValidTargetCheck();
-        MainGame.setAimPreview(null, null, null, command.getCommandPhase());
+        //MainGame.setAimPreviewNEW(command);
       }
+
 
       this.selectedCommand = null;
       this.setSelectedAbility(null);
@@ -93,11 +100,12 @@ class PlayerInput {
   handleMouseMotion(event) {
     let command = this.getCommandForEvent(event);
     if (command && command.hasAimPreview()) {
-      MainGame.setAimPreview(
+      /*MainGame.setAimPreview(
         event.offsetX, event.offsetY,
         this.selectedAbility,
         command.getCommandPhase()
-      );
+      );*/
+      MainGame.setAimPreviewNEW(command);
     }
 
     this.handleUnitTooltip(event);

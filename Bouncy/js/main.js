@@ -203,7 +203,7 @@ class MainGameHandler {
 
   deserializePlayerCommands(player_command_list, ignoreSelf = false, checkForTurnEnd = true) {
     this.removeAllPlayerCommands();
-    let previousPlayerCommands = [];
+    let previousPlayerCommands = this.getPlayerCommandController(this.playerID);
     if (ignoreSelf && this.playerCommands[this.playerID]) {
       previousPlayerCommands = this.playerCommands[this.playerID]
     }
@@ -212,7 +212,7 @@ class MainGameHandler {
     for (var player_id in player_command_list) {
       if (
         player_command_list.hasOwnProperty(player_id) &&
-        (!ignoreSelf || player_id != this.playerID || !previousPlayerCommands.length)
+        (!ignoreSelf || player_id != this.playerID || !previousPlayerCommands.getCommands().length)
       ) {
         var command_list = player_command_list[player_id];
         if (command_list) {
@@ -226,7 +226,7 @@ class MainGameHandler {
       }
     }
 
-    if (ignoreSelf && previousPlayerCommands.length > 0) {
+    if (ignoreSelf && previousPlayerCommands.getCommands().length > 0) {
       this.playerCommands[this.playerID] = previousPlayerCommands;
       var commands = this.playerCommands[this.playerID].getCommands();
       commands.forEach(function(command) {
@@ -450,6 +450,72 @@ class MainGameHandler {
     return this.boardState.atEndOfPhase(this.players, this.playerCommands, phase);
   }
 
+  getPlayerCommandController(playerID) {
+    if (!this.playerCommands[playerID]) {
+      this.playerCommands[playerID] = new PlayerCommandController(playerID);
+    }
+    return this.playerCommands[playerID];
+  }
+
+  getMajorAimPreviewCommand() {
+    if (this.aimPreviewCommand && this.aimPreviewCommand.isMajorAction()) {
+      return this.aimPreviewCommand;
+    }
+    if (this.playerCommands[this.playerID] && this.playerCommands[this.playerID].hasMajor()) {
+      return this.playerCommands[this.playerID].getMajorAction();
+    }
+    return null;
+  }
+
+  getMinorAimPreviewCommand() {
+    if (this.aimPreviewCommand && this.aimPreviewCommand.isMinorAction()) {
+      return this.aimPreviewCommand;
+    }
+
+    if (this.playerCommands[this.playerID] && this.playerCommands[this.playerID].hasMinor()) {
+      return this.playerCommands[this.playerID].getMinorAction();
+    }
+    return null;
+  }
+
+  redrawAimPreviews() {
+    if (this.majorAimPreviewCommand) { this.majorAimPreviewCommand.removeAimIndicator(this.stage); }
+    if (this.minorAimPreviewCommand) { this.minorAimPreviewCommand.removeAimIndicator(this.stage); }
+
+    this.majorAimPreviewCommand = this.getMajorAimPreviewCommand();
+    this.minorAimPreviewCommand = this.getMinorAimPreviewCommand();
+    if (this.majorAimPreviewCommand) {
+      this.majorAimPreviewCommand.updateValidTargetCheck();
+      this.majorAimPreviewCommand.addAimIndicator(this.boardState, this.stage, this.players);
+    }
+
+    if (this.minorAimPreviewCommand) {
+      this.minorAimPreviewCommand.updateValidTargetCheck();
+      this.minorAimPreviewCommand.addAimIndicator(this.boardState, this.stage, this.players);
+    }
+  }
+
+  clearAimPreviewNEW() {
+    this.aimPreviewCommand = null;
+    this.getPlayerCommandController(this.playerID).setPreviewCommand(this.aimPreviewCommand);
+    this.redrawAimPreviews();
+  }
+
+  setAimPreviewNEW(command) {
+    this.aimPreviewCommand = command;
+    let commandController = this.getPlayerCommandController(this.playerID);
+    commandController.setPreviewCommand(this.aimPreviewCommand);
+    if (command.isMajorAction() && commandController.hasMajor()) {
+      commandController.getMajorAction().removeAimIndicator(this.stage);
+    } else if (command.isMinorAction() && commandController.hasMinor()) {
+      commandController.getMinorAction().removeAimIndicator(this.stage);
+    }
+    /*this.getPlayerCommandController(this.playerID).getCommands().forEach((command) => {
+      command.addAimIndicator(this.boardState, this.stage, this.players);
+    });*/
+    this.redrawAimPreviews();
+  }
+
   setAimPreview(x, y, abilityIndex, commandTurn) {
     if (this.aimPreviews[commandTurn]) {
       this.aimPreviews[commandTurn].removeAimIndicator();
@@ -461,6 +527,7 @@ class MainGameHandler {
           command.isMinorAction() && commandTurn === TurnPhasesEnum.PLAYER_MINOR
         ) {
           if (abilityIndex === null) {
+            command.updateValidTargetCheck();
             command.addAimIndicator(this.boardState, this.stage, this.players);
           } else {
             command.removeAimIndicator(this.stage);
@@ -522,7 +589,7 @@ class MainGameHandler {
   setPlayerCommand(playerCommand, saveCommand) {
     var pID = playerCommand.getPlayerID();
     if (!this.playerCommands[pID]) {
-      this.playerCommands[pID] = new PlayerCommandController(pID, {});
+      this.playerCommands[pID] = new PlayerCommandController(pID);
     } else {
       this.playerCommands[pID].getCommands().forEach((command) => {
         command.removeAimIndicator(this.stage);
@@ -533,9 +600,24 @@ class MainGameHandler {
     if (!$('#gameContainer').hasClass("turnPlaying")) {
       this.playerCommands[pID].getCommands().forEach((command) => {
         let aimPreview = this.aimPreviews[command.getCommandPhase()];
-        if (pID !== this.playerID || !aimPreview) {
+        let newAimPreview = null;
+        if (
+          pID === this.playerID &&
+          this.aimPreviewCommand &&
+          (
+            this.aimPreviewCommand.isMinorAction() === command.isMinorAction() ||
+            this.aimPreviewCommand.isMajorAction() === command.isMajorAction()
+          )
+        ) {
+          newAimPreview = this.aimPreviewCommand;
+        }
+        if (newAimPreview) {
+          // nothing;
+        } else if (pID !== this.playerID || !aimPreview) {
+          command.updateValidTargetCheck();
           command.addAimIndicator(this.boardState, this.stage, this.players);
         } else if (pID == this.playerID && aimPreview) {
+          aimPreview.updateValidTargetCheck();
           aimPreview.addAimIndicator(this.boardState, this.stage, this.players);
         }
       });

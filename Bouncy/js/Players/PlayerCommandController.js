@@ -1,9 +1,14 @@
 class PlayerCommandController {
   constructor(player) {
     this.player = player;
+    this.previewCommand = null;
     this.minorAction = null;
     this.majorAction = null;
     this.passCommand = null;
+  }
+
+  setPreviewCommand(command) {
+    this.previewCommand = command;
   }
 
   updateValidTargetChecks() {
@@ -40,18 +45,32 @@ class PlayerCommandController {
     return [];
   }
 
-  getCastPoint(playerPos, currPhase, checkPhase) {
+  getCastPoint(playerPos, currPhase, checkPhase, usePreviews) {
+    usePreviews = (usePreviews === undefined) ? false : usePreviews;
+
     if (checkPhase === TurnPhasesEnum.PLAYER_PRE_MINOR) {
       return playerPos;
     }
     let castPoint = playerPos;
+
     if (
       currPhase !== TurnPhasesEnum.PLAYER_ACTION &&
-      currPhase !== TurnPhasesEnum.PLAYER_MINOR &&
-      this.minorAction &&
-      this.minorAction.getCommandPhase() === TurnPhasesEnum.PLAYER_PRE_MINOR
+      currPhase !== TurnPhasesEnum.PLAYER_MINOR
     ) {
-      castPoint = this.minorAction.getPlayerCastPointAfterCommand(castPoint);
+      let minorPreviewCommand = MainGame.getMinorAimPreviewCommand();
+      if (
+        usePreviews &&
+        minorPreviewCommand &&
+        minorPreviewCommand.getCommandPhase() === TurnPhasesEnum.PLAYER_PRE_MINOR
+      ) {
+        castPoint = minorPreviewCommand.getPlayerCastPointAfterCommand(castPoint);
+      } else if (
+        !minorPreviewCommand &&
+        this.minorAction &&
+        this.minorAction.getCommandPhase() === TurnPhasesEnum.PLAYER_PRE_MINOR
+      ) {
+        castPoint = this.minorAction.getPlayerCastPointAfterCommand(castPoint);
+      }
     }
 
     if (checkPhase === TurnPhasesEnum.PLAYER_ACTION) {
@@ -60,10 +79,14 @@ class PlayerCommandController {
 
     if (
       // If the current phase is the minor action, then we don't want to adjust based on the major action.
-      currPhase !== TurnPhasesEnum.PLAYER_MINOR &&
-      this.majorAction
+      currPhase !== TurnPhasesEnum.PLAYER_MINOR
     ) {
-      castPoint = this.majorAction.getPlayerCastPointAfterCommand(castPoint);
+      let majorPreviewCommand = MainGame.getMajorAimPreviewCommand();
+      if (usePreviews && majorPreviewCommand) {
+        castPoint = majorPreviewCommand.getPlayerCastPointAfterCommand(castPoint);
+      } else if (this.majorAction) {
+        castPoint = this.majorAction.getPlayerCastPointAfterCommand(castPoint);
+      }
     }
 
     return castPoint;
@@ -79,6 +102,10 @@ class PlayerCommandController {
 
   getMajorAction() {
     return this.majorAction;
+  }
+
+  getMinorAction() {
+    return this.minorAction;
   }
 
   isDoneTurn() {

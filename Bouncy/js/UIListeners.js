@@ -237,15 +237,15 @@ class UIListeners {
       }
     );
 
-    $('#missionActionDisplay').on('click', function(event) {
+    $('#missionActionDisplay').on('click', 'canvas', function(event) {
       PlayerInput.handleClick(this, event);
     });
 
-    $('#missionActionDisplay').on('mousemove', function(event) {
+    $('#missionActionDisplay').on('mousemove', 'canvas', function(event) {
       PlayerInput.handleMouseMotion(event);
     });
 
-    $('#missionActionDisplay').on('contextmenu', function(event) {
+    $('#missionActionDisplay').on('contextmenu', 'canvas', function(event) {
       PlayerInput.handleClick(this, event);
       event.preventDefault();
       return false;

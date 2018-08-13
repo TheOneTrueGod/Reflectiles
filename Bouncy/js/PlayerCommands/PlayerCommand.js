@@ -72,7 +72,11 @@ class PlayerCommand {
       this.removeAimIndicator(stage);
     }
 
-    var castPoint = boardState.getPlayerCastPoint(this.playerID, this.getCommandPhase());
+    var castPoint = boardState.getPlayerCastPoint(
+      this.playerID,
+      this.getCommandPhase(),
+      this.playerID === MainGame.playerID
+    );
     var color = 0x666666;
     if ($('#gameContainer').attr('playerID') == this.playerID) {
       color = 0xAAAAAA;

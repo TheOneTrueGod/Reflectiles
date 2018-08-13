@@ -333,16 +333,18 @@ class BoardState {
     }
   }
 
-  getPlayerCastPoint(playerID, turnPhase) {
+  getPlayerCastPoint(playerID, turnPhase, usePreviews) {
+    usePreviews = (usePreviews === undefined) ? false : usePreviews;
     if (playerID in this.playerCastPoints) {
       let castPoint = {
         x: this.playerCastPoints[playerID].x,
         y: this.playerCastPoints[playerID].y
       };
+
       if (!MainGame.playerCommands[playerID]) {
         return castPoint;
       }
-      return MainGame.playerCommands[playerID].getCastPoint(castPoint, this.currPhase, turnPhase);
+      return MainGame.playerCommands[playerID].getCastPoint(castPoint, this.currPhase, turnPhase, usePreviews);
     }
 
     throw new Error(
