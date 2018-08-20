@@ -76,18 +76,11 @@ class BouncyUser extends User {
 
   public function loadUserData() {
     $datastore = DatastoreFactory::getDatastore();
+
     $json_data = $datastore->loadUserData($this);
     if ($json_data) {
       $user_data = json_decode($json_data);
       $this->deserializeData($user_data);
-    }
-
-    if ($this->decks == null) {
-      $this->resetDeckData();
-    }
-
-    if ($this->cards == null) {
-      $this->resetCardData($this->id === "totg");
     }
   }
 

@@ -88,6 +88,9 @@ class FlatFileDatastore extends Datastore {
   }
 
   private function getSavePath($game_id = -1, $create = true) {
+    if ($game_id === null) {
+      throw new Exception("Can't create a null game ID");
+    }
     if (!$create && !self::doesGameExist($game_id)) {
       throw new GameDoesntExistException("Game doesn't exist");
     }
@@ -127,6 +130,7 @@ class FlatFileDatastore extends Datastore {
 
     if (!file_exists($path)) { mkdir($path); }
     $path .= "/" . $user->id;
+
     if (!file_exists($path)) { mkdir($path); }
     return $path;
   }

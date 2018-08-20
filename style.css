@@ -94,3 +94,22 @@ body {
   height: 400px;
   overflow: hidden;
 }
+
+.abilityCard.neutral, .deckOption.neutral {
+  background-color: tan;
+}
+.abilityCard.weapon, .deckOption.weapon {
+  background-color: #d2938c;
+}
+.abilityCard.chaos, .deckOption.chaos{
+  background-color: #8cbed2;
+}
+.abilityCard.poison, .deckOption.poison {
+  background-color: #c3d28c;
+}
+.abilityCard.engineer, .deckOption.engineer {
+  background-color: #ad9f8a;
+}
+.abilityCard.defender, .deckOption.defender {
+  background-color: #ffd352;
+}

@@ -1,5 +1,6 @@
 <?php
 class KleinUtils {
+  public static $newUserResponder = 'NewUserController';
   static function addLogicResponder($klein, $loginResponderClass, $responderClass, $requestType='GET', $override='') {
     $responder = new $responderClass();
     $loginResponder = new $loginResponderClass();
@@ -9,6 +10,10 @@ class KleinUtils {
         $user = $loginResponder::getUser($request);
         if (!$user) {
           return $loginResponder->getAsyncResponse($request);
+        }
+        $newUserResponder = new KleinUtils::$newUserResponder();
+        if ($newUserResponder::requiresNewUserRedirect($request)) {
+          return $newUserResponder->getAsyncResponse($request);
         }
         return $responder->getResponse($request, $user);
       }
@@ -24,6 +29,10 @@ class KleinUtils {
         $user = $loginResponder::getUser($request);
         if (!$user) {
           return KleinUtils::wrapPageContent($loginResponder->getResponse($request), null);
+        }
+        $newUserResponder = new KleinUtils::$newUserResponder();
+        if ($newUserResponder::requiresNewUserRedirect($request)) {
+          return KleinUtils::wrapPageContent($newUserResponder->getResponse($request), null);
         }
         return KleinUtils::wrapPageContent($responder->getResponse($request, $user), $user);
       }

@@ -3,6 +3,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 require_once('server/GameSelectController.php');
 require_once('server/NewGameController.php');
 require_once('server/LoginController.php');
+require_once('server/NewUserController.php');
 require_once('server/GameController.php');
 require_once('server/GameDeletionController.php');
 require_once('server/User.php');

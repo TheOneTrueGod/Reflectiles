@@ -1,0 +1,9 @@
+.deckOption {
+  width: 23%;
+  margin: 0.5%;
+  float: left;
+}
+
+.selectDeckButton {
+  margin: 10px;
+}
