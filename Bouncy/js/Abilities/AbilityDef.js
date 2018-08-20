@@ -179,7 +179,7 @@ class AbilityDef {
     } else if (this.actionPhase === TurnPhasesEnum.PLAYER_PRE_MINOR) {
       tooltipText = "Quick Minor Action.<br/>" + tooltipText;
     } else if (
-      this.actionPhase === TurnPhasesEnum.PLAYER_ACTION || 
+      this.actionPhase === TurnPhasesEnum.PLAYER_ACTION ||
       this.actionPhase === null
     ) {
       tooltipText = "Standard Action.<br/>" + tooltipText;
@@ -285,7 +285,7 @@ class AbilityDef {
           case AbilityDef.SPECIAL_EFFECTS.TURRET_AIM:
             boardState.callOnAllUnits((unit) => {
               if (unit instanceof Turret && unit.owningPlayerID === playerID) {
-                  unit.setAimTarget(targetPoint);
+                  unit.setAimTarget(targetPoint, true);
               }
             });
             break;
