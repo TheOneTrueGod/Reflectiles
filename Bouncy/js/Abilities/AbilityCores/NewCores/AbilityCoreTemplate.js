@@ -1,5 +1,4 @@
 // TODO:
-// [] Change the weapon type
 // [] Change the icon
 // [] Change the cooldown
 // [] Change the style
