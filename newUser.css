@@ -2,8 +2,32 @@
   width: 23%;
   margin: 0.5%;
   float: left;
+  text-align: center;
+  font-size: 20px;
+  height: 300px;
+  position: relative;
+}
+
+.deckDescription {
+  font-size: 16px;
+  margin: 10px;
+  text-align: left;
+}
+
+.deckIconContainer {
+  margin: 10px;
 }
 
 .selectDeckButton {
   margin: 10px;
+  bottom: 0;
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+
+.selectDeckButton input {
+  cursor: pointer;
+  font-size: 20px;
+  padding: 10px;
 }

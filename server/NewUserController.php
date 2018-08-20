@@ -62,29 +62,41 @@ class NewUserController {
         <div class="titleArea">
           <h2> Choose Your Deck </h2>
         </div>
-        <form class="form-select-starting-deck" method="post">
+        <form class="startingDeckForm" method="post">
           <div class="deckOption weapon">
             Weapons
+            <div class="deckDescription">
+              The weapon deck uses a variety of guns that deal average damage in a very controllable manner.
+            </div>
             <div class="selectDeckButton">
-              <input class="btn btn-lg btn-primary btn-block selectDeckButton" name="deckWeapons" type="submit" value="Choose Me">
+              <input class="btn btn-lg btn-primary btn-block" name="deckWeapons" type="submit" value="Choose Me">
             </div>
           </div>
           <div class="deckOption defender">
             Defender
+            <div class="deckDescription">
+              The defender focuses around debuffing your opponents and attacking at close range.
+            </div>
             <div class="selectDeckButton">
-              <input class="btn btn-lg btn-primary btn-block selectDeckButton" name="deckDefender" type="submit" value="Choose Me">
+              <input class="btn btn-lg btn-primary btn-block" name="deckDefender" type="submit" value="Choose Me">
             </div>
           </div>
           <div class="deckOption chaos">
             Magic
+            <div class="deckDescription">
+              The magic user has a variety of effects and deals high damage, but is quite unwieldy.
+            </div>
             <div class="selectDeckButton">
               <input class="btn btn-lg btn-primary btn-block" name="deckMagic" type="submit" value="Choose Me">
             </div>
           </div>
           <div class="deckOption poison">
             Engineer
+            <div class="deckDescription">
+              The engineer deals its damage over time and sets traps.  It also has ways to bypass armor or shields.
+            </div>
             <div class="selectDeckButton">
-              <input class="btn btn-lg btn-primary btn-block selectDeckButton" name="deckEngineer" type="submit" value="Choose Me">
+              <input class="btn btn-lg btn-primary btn-block" name="deckEngineer" type="submit" value="Choose Me">
             </div>
           </div>
         </div>
