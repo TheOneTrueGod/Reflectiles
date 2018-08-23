@@ -6,7 +6,7 @@
 class AbilityCore4009 extends AbilityCore {
   static BuildAbilityChild(level) {
     let duration = 2;
-    let grenadeRadius = Math.floor(Unit.UNIT_SIZE * 1.5);
+    let grenadeRadius = Math.floor(Unit.UNIT_SIZE);
     let hitDamage = Math.floor(NumbersBalancer.getAbilityDamage(level, 0.05));
     const rawAbil = {
       name: 'Shock Grenade',
@@ -22,8 +22,8 @@ class AbilityCore4009 extends AbilityCore {
       accuracy: {
         min_radius: 20,
         max_radius: 40,
-        min_dist: 100,
-        max_dist: 300,
+        min_dist: 50,
+        max_dist: 200,
       },
       projectile_type: ProjectileShape.ProjectileTypes.GRENADE,
       timeout_effects: [
