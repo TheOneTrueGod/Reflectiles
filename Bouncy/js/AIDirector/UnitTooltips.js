@@ -132,11 +132,13 @@ class UnitTooltips {
     let maxShield = unit.getShield().max;
     if (maxShield > 0) {
       numHealthBars += 1;
+      let shieldDisabled = unit.hasStatusEffect(DisableShieldStatusEffect);
+      let disableClass = shieldDisabled ? 'disabled' : null;
       healthContainer.append(
         $(
           '<div>' +
-            '<div class="healthBar shield" style="width: ' + shieldPct + '%;"/> ' +
-            '<div class="healthNumber noselect">' + currShield + '</div>' +
+            `<div class="healthBar ${disableClass} shield" style="width: ` + shieldPct + `%;"/> ` +
+            '<div class="healthNumber noselect">' + (shieldDisabled ? 0 : currShield) + '</div>' +
           '</div>'
         ).addClass('unitHealth')
       );
@@ -266,6 +268,8 @@ class UnitTooltips {
         return 'Warlock';
       case 'UnitBossKing':
         return 'The King';
+      case 'UnitBossGrandWizard':
+        return 'Grand Wizard';
       case 'UnitCastleWall':
         return 'Castle Wall';
       case 'UnitIceWall':
@@ -385,6 +389,8 @@ class UnitTooltips {
         return '#db4dff';
       case 'ImmobilizeStatusEffect':
         return '#BB6600';
+      case 'DisableShieldStatusEffect':
+        return "#C119b9";
     }
     return 'white';
   }
@@ -406,6 +412,8 @@ class UnitTooltips {
         return 'Infect';
       case 'ImmobilizeStatusEffect':
         return 'Immobilized';
+      case 'DisableShieldStatusEffect':
+        return 'Shields Down';
     }
     console.warn('no status effect name for [' + statusEffect.constructor.name + ']');
     return null;
@@ -432,6 +440,8 @@ class UnitTooltips {
         return 'If the unit dies within ' + statusEffect.duration + ' turns, it explodes';
       case 'ImmobilizeStatusEffect':
         return "The unit is immobilized and unable to move for the next " + statusEffect.duration + ".";
+      case 'DisableShieldStatusEffect':
+        return 'This unit\'s shields are disabled for the next ' + statusEffect.duration + ' turns.';
     }
     console.warn('no status effect description for [' + statusEffect.constructor.name + ']');
   }

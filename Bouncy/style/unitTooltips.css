@@ -52,6 +52,10 @@
   border: 1px solid gray;
 }
 
+.healthBar.disabled {
+  opacity: 0.4;
+}
+
 .unitHealth .healthBar {
   height: 100%;
   position: absolute;

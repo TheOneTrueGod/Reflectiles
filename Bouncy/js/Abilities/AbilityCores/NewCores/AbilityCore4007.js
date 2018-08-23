@@ -1,8 +1,3 @@
-// TODO:
-// [] Change the icon
-// [] Change the cooldown
-// [] Change the style
-// [] Change the rawAbil
 class AbilityCore4007 extends AbilityCore {
   static BuildAbilityChild(level) {
     let hitDamage = Math.floor(NumbersBalancer.getAbilityDamage(level, 0.1));

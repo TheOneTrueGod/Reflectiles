@@ -142,6 +142,7 @@ ProjectileShape.ProjectileTypes = {
 ProjectileShape.HitEffects = {
   DAMAGE: 'DAMAGE',
   POISON: 'POISON',
+  DISABLE_SHIELD: 'DISABLE_SHIELD',
   WEAKNESS: 'WEAKNESS',
   FREEZE: 'FREEZE',
   BULLET_SPLIT: 'BULLET_SPLIT',

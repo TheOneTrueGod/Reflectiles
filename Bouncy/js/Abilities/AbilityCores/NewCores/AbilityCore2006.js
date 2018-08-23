@@ -1,6 +1,3 @@
-// TODO:
-// [] Change the icon
-// [] Change the style
 class AbilityCore2006 extends AbilityCore {
   static BuildAbilityChild(level) {
     let distance = Unit.UNIT_SIZE * 5;

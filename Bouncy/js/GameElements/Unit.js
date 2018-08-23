@@ -170,6 +170,9 @@ class Unit {
   }
 
   getShield() {
+    if (this.hasStatusEffect(DisableShieldStatusEffect)) {
+      return {current: 0, max: 0};
+    }
     var toRet = {current: this.shield.current, max: this.shield.max};
     if (this.hasStatusEffect(ShieldStatusEffect)) {
       var buffCurrent = this.getStatusEffect(ShieldStatusEffect).health.current;
@@ -250,8 +253,9 @@ class Unit {
       damageToDeal = Math.min(damageToDeal, resiliantValue);
     }
 
+    let shieldsDisabled = this.hasStatusEffect(DisableShieldStatusEffect);
     let shieldDamageMod = this.getDamageTypeModifier(damageType, 'shield');
-    if (this.hasStatusEffect(ShieldStatusEffect) && shieldDamageMod > 0) {
+    if (!shieldsDisabled && this.hasStatusEffect(ShieldStatusEffect) && shieldDamageMod > 0) {
       var shieldEffect = this.statusEffects[ShieldStatusEffect.getEffectType()];
       maxDamageDealt += shieldEffect.health.current;
       let shieldDamage = shieldEffect.dealDamage(Math.floor(Math.max(damageToDeal * shieldDamageMod, 0)));
@@ -263,7 +267,7 @@ class Unit {
       }
     }
 
-    if (this.shield.current > 0 && shieldDamageMod > 0) {
+    if (!shieldsDisabled && this.shield.current > 0 && shieldDamageMod > 0) {
       maxDamageDealt += this.shield.current;
       if (this.shield.current >= damageToDeal * shieldDamageMod) {
         this.shield.current -= damageToDeal * shieldDamageMod;
@@ -566,6 +570,9 @@ class Unit {
           this.removeStatusEffect(key);
         }
       }
+    }
+    if (this.gameSprite && this.createHealthBarSprite) {
+      this.createHealthBarSprite(this.gameSprite);
     }
   }
 

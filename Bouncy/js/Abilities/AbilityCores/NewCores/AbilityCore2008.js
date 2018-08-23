@@ -1,9 +1,3 @@
-// TODO:
-// [] Change the weapon type
-// [] Change the icon
-// [] Change the cooldown
-// [] Change the style
-// [] Change the rawAbil
 class AbilityCore2008 extends AbilityCore {
   static BuildAbilityChild(level) {
     let num_hits = 4;

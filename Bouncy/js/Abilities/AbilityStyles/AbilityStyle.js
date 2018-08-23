@@ -123,6 +123,27 @@ class AbilityStyle {
               .build(),
           ]
         }
+      case AbilityStyle.EXPLOSION_PREFABS.LIGHTNING:
+        return {
+          radius: radius,
+          style_defs: [
+            (new AbilitySheetSpriteAbilityStyleBuilder())
+              .setSheet('sprite_lightning_explosion').setCoordNums(0, 0, 44, 44)
+              .build(),
+            (new AbilitySheetSpriteAbilityStyleBuilder())
+              .setSheet('sprite_lightning_explosion').setCoordNums(44, 0, 44 * 2, 44)
+              .build(),
+            (new AbilitySheetSpriteAbilityStyleBuilder())
+              .setSheet('sprite_lightning_explosion').setCoordNums(44 * 2, 0, 44 * 3, 44)
+              .build(),
+            (new AbilitySheetSpriteAbilityStyleBuilder())
+              .setSheet('sprite_lightning_explosion').setCoordNums(44 * 3, 0, 44 * 4, 44)
+              .build(),
+            (new AbilitySheetSpriteAbilityStyleBuilder())
+              .setSheet('sprite_lightning_explosion').setCoordNums(44 * 4, 0, 44 * 5, 44)
+              .build(),
+          ]
+        }
       case AbilityStyle.EXPLOSION_PREFABS.IMPACT:
         return {
           radius: radius,
@@ -153,5 +174,6 @@ AbilityStyle.FALLBACK_STYLE = new AbilityStyle({});
 AbilityStyle.EXPLOSION_PREFABS = {
   POISON: 'POISON',
   WHITE: 'WHITE',
+  LIGHTNING: 'LIGHTNING',
   IMPACT: 'IMPACT',
 };
