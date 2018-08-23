@@ -126,7 +126,7 @@ class AbilityCore1 extends AbilityCore {
         ))
         .build(),
       icon: "/Bouncy/assets/icons/shotgun.png",
-      charge: {initial_charge: -1, max_charge: 2, charge_type: "TURNS"},
+      charge: {initial_charge: -1, max_charge: 2, charge_type: AbilityDef.CHARGE_TYPES.TURNS},
       child_abilities: shootAbilities,
     }
     return AbilityDef.createFromJSON(rawAbil);

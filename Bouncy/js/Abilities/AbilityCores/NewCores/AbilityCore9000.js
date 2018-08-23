@@ -35,7 +35,7 @@ class AbilityCore9000 extends AbilityCore {
   }
 
   static getCooldown() {
-    return {initial_charge: -1, max_charge: 5, charge_type: "TURNS"};
+    return {initial_charge: -1, max_charge: 5, charge_type: AbilityDef.CHARGE_TYPES.TURNS};
   }
 
   static GetCardDeckType() {

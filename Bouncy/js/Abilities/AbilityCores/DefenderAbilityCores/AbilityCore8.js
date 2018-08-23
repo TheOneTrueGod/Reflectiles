@@ -119,7 +119,7 @@ class AbilityCore8 extends AbilityCore {
       ability_type: AbilityDef.AbilityTypes.MULTIPART,
       icon: "/Bouncy/assets/icons/icon_plain_frost.png",
       special_effects: {status_effect_death_recharge: cooldownReduction},
-      charge: {initial_charge: -1, max_charge: cooldown, charge_type: "TURNS"},
+      charge: {initial_charge: -1, max_charge: cooldown, charge_type: AbilityDef.CHARGE_TYPES.TURNS},
       child_abilities: childAbils,
     };
     return AbilityDef.createFromJSON(rawAbil);

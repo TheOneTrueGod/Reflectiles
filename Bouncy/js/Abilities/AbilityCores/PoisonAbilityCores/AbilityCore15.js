@@ -103,7 +103,7 @@ class AbilityCore15 extends AbilityCore {
       num_hits: numTargets,
       icon: "/Bouncy/assets/icons/icon_plain_drill.png",
       hit_effects: hit_effects,
-      charge: {"initial_charge":-1, "max_charge":4, "charge_type":"TURNS"}
+      charge: {"initial_charge":-1, "max_charge":4, "charge_type":AbilityDef.CHARGE_TYPES.TURNS}
     };
 
     if (this.hasPerk(perkPcts, 'shrapnel 4')) {

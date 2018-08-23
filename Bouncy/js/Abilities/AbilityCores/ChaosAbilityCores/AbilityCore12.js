@@ -27,7 +27,7 @@ class AbilityCore12 extends AbilityCore {
       ],
       num_bullets: 50,
       icon: "/Bouncy/assets/icons/icon_plain_rain.png",
-      charge: {"initial_charge":-1, "max_charge": 5, "charge_type":"TURNS"},
+      charge: {"initial_charge":-1, "max_charge": 5, "charge_type":AbilityDef.CHARGE_TYPES.TURNS},
     };
     return AbilityDef.createFromJSON(rawAbil);
   }

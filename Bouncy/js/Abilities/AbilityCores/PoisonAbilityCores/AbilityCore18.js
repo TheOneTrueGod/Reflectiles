@@ -205,7 +205,7 @@ class AbilityCore18 extends AbilityCore {
       return null;
     }
 
-    return {initial_charge: -1, max_charge: cooldown, charge_type: "TURNS"};
+    return {initial_charge: -1, max_charge: cooldown, charge_type: AbilityDef.CHARGE_TYPES.TURNS};
   }
 
   static GetPerkList() {

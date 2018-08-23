@@ -136,7 +136,7 @@ class AbilityCore0 extends AbilityCore {
       return null;
     }
 
-    return {initial_charge: -1, max_charge: cooldown, charge_type: "TURNS"};
+    return {initial_charge: -1, max_charge: cooldown, charge_type: AbilityDef.CHARGE_TYPES.TURNS};
   }
 
   static getIncendiaryEffect(incendiary_damage, fire_size_upgrades) {

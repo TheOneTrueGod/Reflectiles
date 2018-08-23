@@ -16,7 +16,7 @@ class AbilityCore1001 extends AbilityCore {
       max_angle: Math.PI / 6.0,
       wall_bounces: 1,
       icon: "/Bouncy/assets/icons/shotgun.png",
-      charge: {initial_charge: -1, max_charge: 2, charge_type: "TURNS"},
+      charge: {initial_charge: -1, max_charge: 2, charge_type: AbilityDef.CHARGE_TYPES.TURNS},
     };
 
     let cooldown = this.getCooldown();
@@ -37,7 +37,7 @@ class AbilityCore1001 extends AbilityCore {
   }
 
   static getCooldown(perkList, perkCounts) {
-    return {initial_charge: -1, max_charge: 2, charge_type: "TURNS"};
+    return {initial_charge: -1, max_charge: 2, charge_type: AbilityDef.CHARGE_TYPES.TURNS};
   }
 
   static GetCardDeckType() {

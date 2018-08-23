@@ -57,7 +57,7 @@ class AbilityCore9 extends AbilityCore {
         amount: weaknessAmount,
       }],
       icon: "/Bouncy/assets/icons/icon_plain_hearts.png",
-      charge: {"initial_charge":-1,"max_charge":3,"charge_type":"TURNS"}
+      charge: {"initial_charge":-1,"max_charge":3,"charge_type":AbilityDef.CHARGE_TYPES.TURNS}
     };
 
     if (this.hasPerk(perkPcts, 'spreading affliction')) {
