@@ -45,7 +45,7 @@ class ProjectileShapeTriShot extends ProjectileShape {
       dist = 250;
       dist -= circleSize;
       ProjectileAbilityDef.createProjectileTargetter(
-        lineGraphic, color, startPos, angle, 250,
+        lineGraphic, color, startPos, endPos, angle, 250,
         this.abilityDef.getOptionalParam('speed', 6),
         this.abilityDef.getOptionalParam('duration', 100),
         this.abilityDef.getOptionalParam('speed_decay', null),

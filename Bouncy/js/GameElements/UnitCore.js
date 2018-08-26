@@ -138,7 +138,7 @@ class UnitCore extends Unit {
         !this.moveAbility ||
         this.moveAbility.playerCollidesWithEnemies()
       ) {
-        if (this.checkForCollisions(boardState)) {
+        if (this.checkForCollisions(boardState, ang)) {
           moveOver = false;
         }
       }

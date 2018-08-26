@@ -168,23 +168,25 @@ class ProjectileAbilityDef extends AbilityDef {
       dist -= circleSize;
       let accuracyDecay = this.getOptionalParam('accuracy_decay', null);
       let finalPos = ProjectileAbilityDef.createProjectileTargetter(
-        lineGraphic, color, startPos, angle, Math.min(dist, 250),
+        lineGraphic, color, startPos, endPos, angle, Math.min(dist, 250),
         this.getOptionalParam('speed', 6),
         this.getOptionalParam('duration', 100),
         this.getOptionalParam('speed_decay', null),
         this.getOptionalParam('gravity', null),
+        this.getOptionalParam('curve_def', null),
       );
 
       if (accuracyDecay) {
         for (let i = -1; i <= 1; i+= 2) {
           ProjectileAbilityDef.createProjectileTargetter(
-            lineGraphic, color, startPos,
+            lineGraphic, color, startPos, endPos,
             angle + accuracyDecay * i,
             Math.min(dist, 250) * 0.75,
             this.getOptionalParam('speed', 6),
             this.getOptionalParam('duration', 100),
             this.getOptionalParam('speed_decay', null),
             this.getOptionalParam('gravity', null),
+            this.getOptionalParam('curve_def', null),
           );
         }
       }
@@ -215,10 +217,11 @@ class ProjectileAbilityDef extends AbilityDef {
 
 ProjectileAbilityDef.createProjectileTargetter = function (
   lineGraphic, color,
-  startPos, angle,
+  startPos, endPos, angle,
   maxDist,
   speed, duration,
   speedDecay, gravity,
+  curveDef,
 ) {
   duration = duration ? duration : 100;
   speed = speed ? speed : 6;
@@ -226,10 +229,24 @@ ProjectileAbilityDef.createProjectileTargetter = function (
   let dist = duration * speed;
   let currPos = Victor(startPos.x, startPos.y);
 
+  const aimAngle = Math.atan2(
+    endPos.y - startPos.y, endPos.x - startPos.x
+  );
+  let curveHandler = !curveDef ? null : ProjectileCurveHandler.getCurveHandler(curveDef, angle, aimAngle);
+
   lineGraphic.lineStyle(1, color)
     .moveTo(startPos.x, startPos.y);
   let currDist = 0;
+  let tempBullet = {
+    angle: angle,
+  };
   for (let i = 0; i < duration && currDist < maxDist; i++) {
+    if (curveHandler) {
+      tempBullet.angle = angle;
+      curveHandler.doCurveEffects(tempBullet, i);
+      angle = tempBullet.angle;
+    }
+
     speed = Victor(Math.cos(angle) * speed, Math.sin(angle) * speed);
 
     currDist += speed.length();

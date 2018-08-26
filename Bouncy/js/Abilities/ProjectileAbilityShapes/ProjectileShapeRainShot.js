@@ -93,7 +93,7 @@ class ProjectileShapeRainShot extends ProjectileShape {
     let angleRange = this.getAngleRange();
 
     ProjectileAbilityDef.createProjectileTargetter(
-      lineGraphic, color, startPos, angleRange[0], 250,
+      lineGraphic, color, startPos, endPos, angleRange[0], 250,
       this.abilityDef.getOptionalParam('speed', 6),
       this.abilityDef.getOptionalParam('duration', 100),
       this.abilityDef.getOptionalParam('speed_decay', null),
@@ -101,7 +101,7 @@ class ProjectileShapeRainShot extends ProjectileShape {
     );
 
     ProjectileAbilityDef.createProjectileTargetter(
-      lineGraphic, color, startPos, angleRange[1], 250,
+      lineGraphic, color, startPos, endPos, angleRange[1], 250,
       this.abilityDef.getOptionalParam('speed', 6),
       this.abilityDef.getOptionalParam('duration', 100),
       this.abilityDef.getOptionalParam('speed_decay', null),

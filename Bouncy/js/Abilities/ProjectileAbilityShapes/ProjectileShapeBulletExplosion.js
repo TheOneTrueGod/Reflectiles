@@ -89,7 +89,7 @@ class ProjectileShapeBulletExplosion extends ProjectileShape {
       let dist = this.abilityDef.getOptionalParam('duration', 100) *
         this.abilityDef.getOptionalParam('speed', 6);
       ProjectileAbilityDef.createProjectileTargetter(
-        lineGraphic, color, startPos, angle, 250,
+        lineGraphic, color, startPos, endPos, angle, 250,
         this.abilityDef.getOptionalParam('speed', 6),
         this.abilityDef.getOptionalParam('duration', 100),
         this.abilityDef.getOptionalParam('speed_decay', null),
