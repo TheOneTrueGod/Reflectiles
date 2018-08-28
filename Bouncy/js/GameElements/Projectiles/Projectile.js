@@ -120,7 +120,8 @@ class Projectile {
     let damageDealt = 0;
     if (this.eventListeners[event] !== undefined) {
       for (let listener of this.eventListeners[event]) {
-        damageDealt += listener(boardState, unit, intersection, this);
+        let damage = listener(boardState, unit, intersection, this);
+        damage && (damageDealt += damage);
       }
     }
     return damageDealt;

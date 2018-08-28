@@ -56,17 +56,19 @@ class Turret extends ZoneEffect {
       }
 
       let aimTarget = this.getAimTarget(boardState);
-      this.setAimTargetGraphic(aimTarget);
-      var angle = Math.atan2(aimTarget.y - this.y, aimTarget.x - this.x);
-      var angX = Math.cos(angle) * 19;
-      var angY = Math.sin(angle) * 19;
-      var castPoint = new Victor(
-        this.x + angX,
-        this.y + angY
-      );
+      if (aimTarget) {
+        this.setAimTargetGraphic(aimTarget);
+        var angle = aimTarget ? Math.atan2(aimTarget.y - this.y, aimTarget.x - this.x) : Math.PI / 2;
+        var angX = Math.cos(angle) * 19;
+        var angY = Math.sin(angle) * 19;
+        var castPoint = new Victor(
+          this.x + angX,
+          this.y + angY
+        );
 
-      abilList[i].initializedAbilDef.doActionOnTick(this.owningPlayerID, 0, boardState, castPoint, aimTarget);
-      this.abilitiesLastUse[abil.index] = boardState.turn;
+        abilList[i].initializedAbilDef.doActionOnTick(this.owningPlayerID, 0, boardState, castPoint, aimTarget);
+        this.abilitiesLastUse[abil.index] = boardState.turn;
+      }
     }
   }
 
@@ -141,7 +143,11 @@ class Turret extends ZoneEffect {
   }
 
   setAimTargetGraphic(targetPoint) {
-    var angle = Math.atan2(targetPoint.y - this.y, targetPoint.x - this.x);
+    var angle = Math.PI / 2;
+    if (targetPoint) {
+      angle = Math.atan2(targetPoint.y - this.y, targetPoint.x - this.x);
+    }
+
     this.turretSprite.rotation = angle + Math.PI / 2;
   }
 

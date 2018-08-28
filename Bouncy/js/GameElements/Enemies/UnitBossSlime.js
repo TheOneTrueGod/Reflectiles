@@ -20,7 +20,7 @@ class UnitBossSlime extends UnitBasic {
       NumbersBalancer.UNIT_ABILITIES.BOSS_SLIME_SPLIT_THRESHOLD
     );
     let startHealth = this.health.current;
-    super.dealDamage(boardState, amount, source, damageType);
+    let damageDealt = super.dealDamage(boardState, amount, source, damageType);
     let endHealth = this.health.current;
     let unitsToSpawn = Math.floor(startHealth / spawnThreshold) - Math.floor(endHealth / spawnThreshold);
     for (var i = 0; i < unitsToSpawn; i++) {
@@ -33,6 +33,7 @@ class UnitBossSlime extends UnitBasic {
         newUnit.playSpawnEffect(boardState, {x: this.x, y: this.y}, 20);
       }
     }
+    return damageDealt;
   }
 
   findSpawnPointForUnit(boardState, newUnit) {
