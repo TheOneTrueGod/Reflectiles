@@ -2,14 +2,10 @@
  * 7/20/2018 todo list;
  * Player movement in ability
  * Ability with player movement
-    - Dash, then spear stab
     - Run and gun (move and shoot while moving)
     - Teleport
- * Allow users to select "Next Level" in the post-level screen
- * Adjust targetting indicators to be more accurate by using invisible tracers
  * Add chests to levels
  * Unlock abilities from chests
- * Tweak level up system
  * Figure out what to do with the UI for post-level system (show level ups?), and the deck editor
  * ********************
  * Progression thoughts;
@@ -22,25 +18,15 @@
  * ALTERNATIVE;
  * quest-based level up system.  In order to level up a card, you must complete a quest.
  * TODO;
-    You can still change your selected ability after the round has ended
     split freeze into two status ailments -- stun and immobilize
-    Poison explosion does ERROR damage
-    It's not auto-going
-
-    stand in center of rage, try and rain
-    shot broke through shield.
 
  ******
  * New enemies
- * After taking X damage in a turn, it doesn't take any more damage for the rest of the turn.
  * Causes all nearby basic enemies to turn into weak bombers
  * All players target this enemy
  ***************************
- * Actions should be able to move you
  * Attribute bonus damage back the buff creator
- * Needs more player interaction
  * Add google ads to the sides
- * Invulnerable enemies that deal no damage as a wall
  * New enemy type -- infected.  When it dies, it explodes into a bunch of smaller minions.
  * Have the knight throw up his shield to the left and right if the front is full.
  * Add a back button
