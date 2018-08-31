@@ -7,6 +7,10 @@ class CustomAnimatedSprite extends PIXI.extras.AnimatedSprite {
     this.loop = false;
   }
 
+  setAnimationSpeed(speed) {
+    this.animationSpeed = speed;
+  }
+
   addToStage(stage) {
     stage.addChild(this);
 

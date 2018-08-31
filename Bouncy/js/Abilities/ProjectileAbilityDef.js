@@ -167,6 +167,7 @@ class ProjectileAbilityDef extends AbilityDef {
       };
       dist -= circleSize;
       let accuracyDecay = this.getOptionalParam('accuracy_decay', null);
+      let barrelWidth = this.getOptionalParam('barrel_width', 0);
       let finalPos = ProjectileAbilityDef.createProjectileTargetter(
         lineGraphic, color, startPos, endPos, angle, Math.min(dist, 250),
         this.getOptionalParam('speed', 6),
@@ -176,10 +177,11 @@ class ProjectileAbilityDef extends AbilityDef {
         this.getOptionalParam('curve_def', null),
       );
 
-      if (accuracyDecay) {
+      if (accuracyDecay || barrelWidth) {
         for (let i = -1; i <= 1; i+= 2) {
+          // do something with barrelWidth
           ProjectileAbilityDef.createProjectileTargetter(
-            lineGraphic, color, startPos, endPos,
+            lineGraphic, color, barrelPos, endPos,
             angle + accuracyDecay * i,
             Math.min(dist, 250) * 0.75,
             this.getOptionalParam('speed', 6),

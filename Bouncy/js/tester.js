@@ -43,9 +43,9 @@ class Tester extends MainGameHandler {
     this.abilitiesToUse = [
       //[TestAbils[3].index, {x: -100, y: -50}],
       //[this.buildAbility(AbilityCore7, ['shield width 1']).index, {x: 0, y: -100}],
-      null,
       //[this.buildAbility(AbilityCore1003, []).index, {x: 0, y: -1000}],
-      [this.buildAbility(AbilityCore2008, []).index, {x: 0, y: -1000}],
+      [this.buildAbility(AbilityCore1005, []).index, {x: 0, y: -1000}],
+      [this.buildAbility(AbilityCore1005, []).index, {x: 0, y: -100}],
       //[this.buildAbility(AbilityCore13).index, {x: 0, y: -100}],
       //[this.buildAbility(AbilityCore5,
         /*["pass through 1", "pass through 1", "pass through 1", "damage 1", "damage 1",
@@ -128,9 +128,9 @@ class Tester extends MainGameHandler {
           false
         );
       }
+      this.playerCommands[$('#gameContainer').attr('playerID')].updateValidTargetChecks();
     }
 
-    this.playerCommands[$('#gameContainer').attr('playerID')].updateValidTargetChecks();
     this.playOutTurn();
   }
 

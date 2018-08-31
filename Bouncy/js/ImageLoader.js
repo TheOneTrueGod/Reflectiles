@@ -38,6 +38,7 @@ class ImageLoader {
         .add("core", "/Bouncy/assets/enemies/core.png")
         .add("sprite_explosion",  "/Bouncy/assets/sprites/explosion.png")
         .add("sprite_lightning_explosion",  "/Bouncy/assets/sprites/lightning_explosion.png")
+        .add("purple_explosion",  "/Bouncy/assets/sprites/purple_explosion.png")
         .add("impact_hit",  "/Bouncy/assets/sprites/impact_hit.png")
         .add("bullet_sheet",  "/Bouncy/assets/sprites/bullet_sheet.png")
         .add("poison_sheet",  "/Bouncy/assets/sprites/poison_sheet.png")

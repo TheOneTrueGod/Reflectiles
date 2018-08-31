@@ -4,7 +4,9 @@ class GrenadeProjectile extends Projectile {
     this.hitEnemy = false;
 
     var targetVec = Victor(targetPoint.x - startPoint.x, targetPoint.y - startPoint.y);
-    this.maxDuration = abilityDef.getOptionalParam('duration', Math.max(targetVec.length(), 100) / this.speed);
+    this.maxDuration = abilityDef.getOptionalParam('duration', 40);
+    this.height = abilityDef.getOptionalParam('height', 150);
+    this.speed = Math.max(targetVec.length(), 100) / this.maxDuration;
     this.duration = this.maxDuration;
   }
 
@@ -24,6 +26,6 @@ class GrenadeProjectile extends Projectile {
 
   runTick(boardState, boardWidth, boardHeight) {
     super.runTick(boardState, boardWidth, boardHeight);
-    this.gameSprite.y = this.y - this.getZPct() * 150;
+    this.gameSprite.y = this.y - this.getZPct() * this.height;
   }
 }
