@@ -382,7 +382,7 @@ class UIListeners {
           )
         );
         for (let abilityIndex in gameStats.playerDamage[player.user_id]) {
-          let damage = gameStats.playerDamage[player.user_id][abilityIndex].damage;
+          let damage = Math.floor(gameStats.playerDamage[player.user_id][abilityIndex].damage);
           let numUses = gameStats.playerDamage[player.user_id][abilityIndex].uses;
           damageSum += damage;
           let abilDef = AbilityDef.abilityDefList[abilityIndex];
