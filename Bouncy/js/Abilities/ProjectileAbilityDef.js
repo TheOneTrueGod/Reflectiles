@@ -179,6 +179,7 @@ class ProjectileAbilityDef extends AbilityDef {
 
       if (accuracyDecay || barrelWidth) {
         for (let i = -1; i <= 1; i+= 2) {
+          let barrelPos = startPos;
           // do something with barrelWidth
           ProjectileAbilityDef.createProjectileTargetter(
             lineGraphic, color, barrelPos, endPos,
