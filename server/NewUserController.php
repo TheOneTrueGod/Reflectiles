@@ -44,6 +44,22 @@ class NewUserController {
     die();
   }
 
+  function renderStarRating($text, $starValue) {
+    ?>
+      <div>
+        <div class="starTextContainer">
+          <? echo $text; ?>
+        </div>
+        <div class="starContainer">
+          <div class="star <? echo ($starValue >= 1 ? 'active' : ''); ?>" ></div>
+          <div class="star <? echo ($starValue >= 2 ? 'active' : ''); ?>" ></div>
+          <div class="star <? echo ($starValue >= 3 ? 'active' : ''); ?>" ></div>
+          <div class="star <? echo ($starValue >= 4 ? 'active' : ''); ?>" ></div>
+        </div>
+      </div>
+    <?
+  }
+
   function getResponse($request) {
     $user = LoginController::getUser($request);
     $bouncy_user = BouncyUser::getFromID($user->id);
@@ -68,6 +84,11 @@ class NewUserController {
             <div class="deckDescription">
               The weapon deck uses a variety of guns that deal average damage in a very controllable manner.
             </div>
+            <div class="deckStarRatings">
+              <? $this->renderStarRating("Damage", 3); ?>
+              <? $this->renderStarRating("Accuracy", 4); ?>
+              <? $this->renderStarRating("Control", 0); ?>
+            </div>
             <div class="selectDeckButton">
               <input class="btn btn-lg btn-primary btn-block" name="deckWeapons" type="submit" value="Choose Me">
             </div>
@@ -76,6 +97,11 @@ class NewUserController {
             Defender
             <div class="deckDescription">
               The defender focuses around debuffing your opponents and attacking at close range.
+            </div>
+            <div class="deckStarRatings">
+              <? $this->renderStarRating("Damage", 1); ?>
+              <? $this->renderStarRating("Accuracy", 3); ?>
+              <? $this->renderStarRating("Control", 4); ?>
             </div>
             <div class="selectDeckButton">
               <input class="btn btn-lg btn-primary btn-block" name="deckDefender" type="submit" value="Choose Me">
@@ -86,6 +112,11 @@ class NewUserController {
             <div class="deckDescription">
               The magic user has a variety of effects and deals high damage, but is quite unwieldy.
             </div>
+            <div class="deckStarRatings">
+              <? $this->renderStarRating("Damage", 4); ?>
+              <? $this->renderStarRating("Accuracy", 1); ?>
+              <? $this->renderStarRating("Control", 1); ?>
+            </div>
             <div class="selectDeckButton">
               <input class="btn btn-lg btn-primary btn-block" name="deckMagic" type="submit" value="Choose Me">
             </div>
@@ -94,6 +125,11 @@ class NewUserController {
             Engineer
             <div class="deckDescription">
               The engineer deals its damage over time and sets traps.  It also has ways to bypass armor or shields.
+            </div>
+            <div class="deckStarRatings">
+              <? $this->renderStarRating("Damage", 2); ?>
+              <? $this->renderStarRating("Accuracy", 2); ?>
+              <? $this->renderStarRating("Control", 3); ?>
             </div>
             <div class="selectDeckButton">
               <input class="btn btn-lg btn-primary btn-block" name="deckEngineer" type="submit" value="Choose Me">
