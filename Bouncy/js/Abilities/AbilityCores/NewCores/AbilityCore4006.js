@@ -14,7 +14,7 @@ class AbilityCore4006 extends AbilityCore {
       name: 'Cannon Turret',
       description: 'Create a cannon turret.<br>' +
         'It shoots every other turn, dealing [[unit_abilities[0].abil_def.hit_effects[0].base_damage]] damage in a small area.<br>' +
-        'The turret lasts for [[duration]] turns, or until an enemy touches it or shoots it.' +
+        'The turret lasts for [[duration]] turns, or until an enemy touches it.' +
         '<br>Limited range.',
       card_text_description: '[[unit_abilities[0].abil_def.hit_effects[0].base_damage]] / 2 turn',
       zone_tooltip_name: 'Cannon Turret',
