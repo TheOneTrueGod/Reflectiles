@@ -1,7 +1,7 @@
 class AbilityCore1000 extends AbilityCore {
   static BuildAbilityChild(level) {
     let base_damage = Math.round(NumbersBalancer.getAbilityDamage(level, 1) / 4);
-    let explosionRadius = 40;
+    let explosionRadius = Math.floor(Unit.UNIT_SIZE * 1.5);
     const rawAbil = {
       name: 'Explosion',
       description: 'Fire a rocket that deals [[hit_effects[0].base_damage]] ' +

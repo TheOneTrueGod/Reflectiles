@@ -1,5 +1,4 @@
 // TODO:
-// [] Change the icon
 // [] Change the cooldown
 // [] Change the style
 // [] Change the rawAbil
@@ -7,12 +6,12 @@ class AbilityCore3006 extends AbilityCore {
   static BuildAbilityChild(level) {
     let numShots = 20;
     let explosionRadius = Math.floor(Unit.UNIT_SIZE / 4);
-    let hitDamage = Math.floor(NumbersBalancer.getAbilityDamage(level, 0.8) / numShots);
+    let hitDamage = Math.floor(NumbersBalancer.getAbilityDamage(level, 1) / numShots);
     const rawAbil = {
-      name: 'Mortar',
-      description: 'Launch a series of <<' + numShots + '>> grendades that deal <<' + hitDamage + '>> damage in a <<' + explosionRadius + '>> radius.',
+      name: 'Arcane Barrage',
+      description: 'Fire a volley of <<' + numShots + '>> magic missiles that deal <<' + hitDamage + '>> damage in a <<' + explosionRadius + '>> radius.',
       ability_type: AbilityDef.AbilityTypes.MULTIPART,
-      icon: "/Bouncy/assets/icons/mortar.png",
+      icon: "/Bouncy/assets/icons/arcanebarrage.png",
       destroy_on_wall: true,
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.CHAIN_SHOT,

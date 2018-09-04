@@ -8,6 +8,8 @@ class AbilityCore4006 extends AbilityCore {
     let duration = 6;
     let shotCooldown = 1;
     let hitDamage = Math.floor(NumbersBalancer.getAbilityDamage(level, 0.6)) / duration * shotCooldown;
+    let explosionRadius = Math.floor(Unit.UNIT_SIZE);
+
     const rawAbil = {
       name: 'Cannon Turret',
       description: 'Create a cannon turret.<br>' +
@@ -22,7 +24,7 @@ class AbilityCore4006 extends AbilityCore {
       ability_type: AbilityDef.AbilityTypes.CREATE_UNIT,
       duration,
       turret_image: 4,
-      projectile_interaction: {enemy_projectiles: {destroy: true}},
+      projectile_interaction: {},
       unit_abilities: [{
         abil_def: {
           ability_type: AbilityDef.AbilityTypes.PROJECTILE,
@@ -30,9 +32,14 @@ class AbilityCore4006 extends AbilityCore {
           projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
           destroy_on_wall: [BorderWallLine.TOP],
           speed: 8,
-          hit_effects:[{effect: ProjectileShape.HitEffects.DAMAGE, base_damage: hitDamage, aoe_type:"BOX"}],
+          hit_effects:[{
+            effect: ProjectileShape.HitEffects.DAMAGE,
+            base_damage: hitDamage,
+            aoe_type: ProjectileShape.AOE_TYPES.CIRCLE,
+            aoe_size: explosionRadius,
+          }],
           charge: {initial_charge: -1, max_charge: shotCooldown, charge_type: AbilityDef.CHARGE_TYPES.TURNS},
-          style: this.createAbilityStyle().build(),
+          style: this.createAbilityStyle(explosionRadius).build(),
         }
       }],
       max_range: {top: 2, bottom: -1, left: 2, right: 2},
@@ -48,12 +55,12 @@ class AbilityCore4006 extends AbilityCore {
     return AbilityDef.createFromJSON(rawAbil);
   }
 
-  static createAbilityStyle() {
+  static createAbilityStyle(explosionRadius) {
     return (new AbilitySheetSpriteAbilityStyleBuilder())
       .setSheet('weapons_sheet')
       .setCoordNums(2, 1, 24, 23)
       .setExplosion(AbilityStyle.getExplosionPrefab(
-        AbilityStyle.EXPLOSION_PREFABS.WHITE
+        AbilityStyle.EXPLOSION_PREFABS.WHITE, explosionRadius
       ));
   }
 

@@ -16,7 +16,7 @@ class AbilityCore4005 extends AbilityCore {
       ability_type: AbilityDef.AbilityTypes.CREATE_UNIT,
       duration,
       turret_image: 3,
-      projectile_interaction: {enemy_projectiles: {destroy: true}},
+      projectile_interaction: {},
       unit_abilities: [{
         abil_def: {
           ability_type: AbilityDef.AbilityTypes.PROJECTILE,
