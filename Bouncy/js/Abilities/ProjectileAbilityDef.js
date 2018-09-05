@@ -154,10 +154,12 @@ class ProjectileAbilityDef extends AbilityDef {
       const innerCircleSize = 3;
       var angle = Math.atan2(endPos.y - startPos.y, endPos.x - startPos.x);
       var dist = ((endPos.x - startPos.x) ** 2 + (endPos.y - startPos.y) ** 2) ** 0.5;
+      let maxDist = 250;
+
       if (this.accuracy.isAccuracyDefined()) {
-        const maxDist = this.accuracy.maxDist;
+        maxDist = this.accuracy.maxDist;
         const minDist = this.accuracy.minDist;
-        dist = Math.min(dist, maxDist);
+        dist = Math.max(Math.min(dist, maxDist), minDist);
         circleSize = this.accuracy.getCircleRadius(dist);
       }
 
@@ -165,13 +167,21 @@ class ProjectileAbilityDef extends AbilityDef {
         x: startPos.x + Math.cos(angle) * dist,
         y: startPos.y + Math.sin(angle) * dist
       };
-      dist -= circleSize;
+      //dist -= circleSize;
       let accuracyDecay = this.getOptionalParam('accuracy_decay', null);
       let barrelWidth = this.getOptionalParam('barrel_width', 0);
+
+      let duration = this.getOptionalParam('duration', 100);
+      let speed = this.getOptionalParam('speed', 6);
+      if (this.getOptionalParam('projectile_type', null) === ProjectileShape.ProjectileTypes.GRENADE) {
+        duration = this.getOptionalParam('duration', 40);
+        speed = Math.max(dist, 100) / duration;
+      }
+
       let finalPos = ProjectileAbilityDef.createProjectileTargetter(
-        lineGraphic, color, startPos, endPos, angle, Math.min(dist, 250),
-        this.getOptionalParam('speed', 6),
-        this.getOptionalParam('duration', 100),
+        lineGraphic, color, startPos, endPos, angle, Math.min(dist, maxDist),
+        speed,
+        duration,
         this.getOptionalParam('speed_decay', null),
         this.getOptionalParam('gravity', null),
         this.getOptionalParam('curve_def', null),
@@ -184,9 +194,9 @@ class ProjectileAbilityDef extends AbilityDef {
           ProjectileAbilityDef.createProjectileTargetter(
             lineGraphic, color, barrelPos, endPos,
             angle + accuracyDecay * i,
-            Math.min(dist, 250) * 0.75,
-            this.getOptionalParam('speed', 6),
-            this.getOptionalParam('duration', 100),
+            Math.min(dist, maxDist) * 0.75,
+            speed,
+            duration,
             this.getOptionalParam('speed_decay', null),
             this.getOptionalParam('gravity', null),
             this.getOptionalParam('curve_def', null),

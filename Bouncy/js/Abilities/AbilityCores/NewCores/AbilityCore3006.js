@@ -4,7 +4,7 @@
 // [] Change the rawAbil
 class AbilityCore3006 extends AbilityCore {
   static BuildAbilityChild(level) {
-    let numShots = 20;
+    let numShots = 40;
     let explosionRadius = Math.floor(Unit.UNIT_SIZE / 4);
     let hitDamage = Math.floor(NumbersBalancer.getAbilityDamage(level, 1) / numShots);
     const rawAbil = {
@@ -23,7 +23,7 @@ class AbilityCore3006 extends AbilityCore {
         min_radius: 50,
         max_radius: 100,
         min_dist: 100,
-        max_dist: 500,
+        max_dist: 300,
       },
       projectile_type: ProjectileShape.ProjectileTypes.GRENADE,
       timeout_effects: [

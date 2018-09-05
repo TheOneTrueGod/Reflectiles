@@ -73,7 +73,7 @@ class NewUserController {
       $this->initializeWithCards($bouncy_user, "Engineer", [4000, 4001, 4002, 4003, 4004]);
     }
     ob_start(); ?>
-      <link rel="stylesheet" type="text/css" href="newUser.css">
+      <link rel="stylesheet" type="text/css" href="/newUser.css">
       <div class="pageBorder">
         <div class="titleArea">
           <h2> Choose Your Deck </h2>
