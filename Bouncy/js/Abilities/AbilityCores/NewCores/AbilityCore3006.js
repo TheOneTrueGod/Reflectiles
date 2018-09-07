@@ -4,12 +4,13 @@
 // [] Change the rawAbil
 class AbilityCore3006 extends AbilityCore {
   static BuildAbilityChild(level) {
-    let numShots = 40;
+    let numShots = 10;
+    let shots_per_wave = 4;
     let explosionRadius = Math.floor(Unit.UNIT_SIZE / 4);
-    let hitDamage = Math.floor(NumbersBalancer.getAbilityDamage(level, 1) / numShots);
+    let hitDamage = Math.floor(NumbersBalancer.getAbilityDamage(level, 1.2) / (numShots * shots_per_wave));
     const rawAbil = {
       name: 'Arcane Barrage',
-      description: 'Fire a volley of <<' + numShots + '>> magic missiles that deal <<' + hitDamage + '>> damage in a <<' + explosionRadius + '>> radius.',
+      description: 'Fire a volley of <<' + numShots * shots_per_wave + '>> magic missiles that deal <<' + hitDamage + '>> damage in a <<' + explosionRadius + '>> radius.',
       ability_type: AbilityDef.AbilityTypes.MULTIPART,
       icon: "/Bouncy/assets/icons/arcanebarrage.png",
       destroy_on_wall: true,
@@ -17,6 +18,7 @@ class AbilityCore3006 extends AbilityCore {
       shape: ProjectileAbilityDef.Shapes.CHAIN_SHOT,
       duration: 40,
       height: 50,
+      shots_per_wave,
       num_bullets: numShots,
       bullet_wave_delay: 1,
       accuracy: {
@@ -54,7 +56,7 @@ class AbilityCore3006 extends AbilityCore {
   static createAbilityStyle(explosionRadius) {
     return (new AbilitySheetSpriteAbilityStyleBuilder())
       .setSheet('weapons_sheet')
-      .setCoordIndex(5, 0, 26, 25, 2)
+      .setCoordIndex(6, 0, 26, 25)
       .setExplosion(AbilityStyle.getExplosionPrefab(
         AbilityStyle.EXPLOSION_PREFABS.PURPLE_EXPLOSION, explosionRadius
       ));
