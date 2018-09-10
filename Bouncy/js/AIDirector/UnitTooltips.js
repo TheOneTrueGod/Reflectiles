@@ -339,10 +339,10 @@ class UnitTooltips {
           'Also creates a bone wall with ' + boneWallHealth + ' health around itself.';
       case 'UnitBossKing':
         numTurns = NumbersBalancer.getUnitAbilityNumber(unit, NumbersBalancer.UNIT_ABILITIES.KING_REVIVE_TURNS);
-        return 'All enemy units are unable to move as long as The King is around.  If an enemy unit dies, it is reinforced after ' + numTurns + ' turns.';
+        return 'All enemy units are unable to move as long as The King is around.  If an enemy unit dies, it is reinforced after ' + numTurns + ' turns.  Don\'t get too close!';
       case 'UnitBossGrandWizard':
         let numAbils = unit.getAbilitiesToUse();
-        return 'The grand wizard casts ' + numAbils + ' random spells each turn.';
+        return 'The grand wizard casts ' + numAbils + ' random spells each turn.  Don\'t get too close!';
       case 'UnitCastleWall':
         numTurns = NumbersBalancer.getUnitAbilityNumber(unit, NumbersBalancer.UNIT_ABILITIES.CASTLE_WALL_REVIVE_TURNS);
         return 'If the wall is destroyed, it is rebuilt after ' + numTurns + ' turns.';

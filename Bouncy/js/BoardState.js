@@ -327,6 +327,10 @@ class BoardState {
     return toReturn;
   }
 
+  getAllPlayerUnits() {
+    return this.playerCastPoints;
+  }
+
   getPlayerUnit(playerID) {
     if (playerID in this.playerCastPoints) {
       return this.playerCastPoints[playerID];

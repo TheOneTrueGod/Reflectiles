@@ -21,6 +21,12 @@ class UnitBossGrandWizard extends UnitBasic {
       this,
       NumbersBalancer.getUnitAbilityNumber(this, NumbersBalancer.UNIT_ABILITIES.WIZARD_PROJECTILE_DAMAGE)
     ));
+    
+    this.personalSpaceAbility = new EnemyAbilityPersonalSpace(
+      this,
+      NumbersBalancer.getUnitAbilityNumber(this, NumbersBalancer.UNIT_ABILITIES.WIZARD_PROJECTILE_DAMAGE),
+      4,
+    );
   }
 
   getUnitSize() {
@@ -103,6 +109,9 @@ class UnitBossGrandWizard extends UnitBasic {
   runTick(boardState, phase) {
     super.runTick(boardState, phase);
     if (this.canUseAbilities() && phase === TurnPhasesEnum.ENEMY_ACTION) {
+      if (boardState.tick === 0) {
+        this.personalSpaceAbility.doEffects(boardState);
+      }
       if (boardState.tick / this.animationFrames < this.getAbilitiesToUse()) {
         if (boardState.tick % this.animationFrames < this.animationFrames / 2) {
           this.setSpriteVisible('enemy_boss_wizard_2');

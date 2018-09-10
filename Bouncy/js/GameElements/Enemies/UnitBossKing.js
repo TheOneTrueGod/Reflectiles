@@ -2,6 +2,12 @@ class UnitBossKing extends UnitBasic {
   constructor(x, y, owner, id) {
     super(x, y, owner, id);
     this.traits[Unit.UNIT_TRAITS.FROST_IMMUNE] = true;
+
+    this.personalSpaceAbility = new EnemyAbilityPersonalSpace(
+      this,
+      NumbersBalancer.getUnitAbilityNumber(this, NumbersBalancer.UNIT_ABILITIES.WIZARD_PROJECTILE_DAMAGE),
+      7,
+    );
   }
 
   getUnitSize() {
@@ -56,6 +62,8 @@ class UnitBossKing extends UnitBasic {
     boardState.callOnAllUnits((unit) => {
       unit.addStatusEffect(new ImmobilizeStatusEffect(1, null));
     });
+
+    this.personalSpaceAbility.doEffects(boardState);
   }
 
   onUnitDying(boardState, dyingUnit) {

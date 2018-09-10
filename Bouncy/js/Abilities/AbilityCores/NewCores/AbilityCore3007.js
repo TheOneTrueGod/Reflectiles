@@ -1,8 +1,3 @@
-// TODO:
-// [] Change the icon
-// [] Change the cooldown
-// [] Change the style
-// [] Change the rawAbil
 class AbilityCore3007 extends AbilityCore {
   static BuildAbilityChild(level) {
     let num_bounces = 4;
@@ -47,7 +42,7 @@ class AbilityCore3007 extends AbilityCore {
   }
 
   static getCooldown() {
-    return {initial_charge: -1, max_charge: 1, charge_type: AbilityDef.CHARGE_TYPES.TURNS};
+    return {initial_charge: -1, max_charge: 3, charge_type: AbilityDef.CHARGE_TYPES.TURNS};
   }
 
   static GetCardDeckType() {
