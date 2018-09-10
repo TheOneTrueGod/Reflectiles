@@ -11,6 +11,12 @@ class UnitBossWarlock extends UnitBasic {
       this,
       NumbersBalancer.UNIT_ABILITIES.WARLOCK_RANGE
     );
+
+    this.personalSpaceAbility = new EnemyAbilityPersonalSpace(
+      this,
+      NumbersBalancer.getUnitAbilityNumber(this, NumbersBalancer.UNIT_ABILITIES.WIZARD_PROJECTILE_DAMAGE),
+      5,
+    );
   }
 
   createCollisionBox() {
@@ -71,10 +77,13 @@ class UnitBossWarlock extends UnitBasic {
 
   startOfPhase(boardState, phase) {
     super.startOfPhase(boardState, phase);
+    if (this.canUseAbilities() && phase === TurnPhasesEnum.ENEMY_ACTION) {
+      this.personalSpaceAbility.doEffects(boardState);
+    }
     if (phase == TurnPhasesEnum.NEXT_TURN || phase == TurnPhasesEnum.START_TURN) {
       this.unitsReincarnated = 0;
     }
-    if (phase == TurnPhasesEnum.END_OF_TURN) {
+    if (this.canUseAbilities() && phase == TurnPhasesEnum.END_OF_TURN) {
       this.useAbility(boardState);
     }
   }

@@ -1,6 +1,6 @@
 class AbilityCore3003 extends AbilityCore {
   static BuildAbilityChild(level) {
-    let numShards = 30;
+    let numShards = 50;
     let hitDamage = Math.floor(NumbersBalancer.getAbilityDamage(level, 1.5) / numShards);
     const rawAbil = {
       name: 'Chaos Orb',
@@ -20,7 +20,7 @@ class AbilityCore3003 extends AbilityCore {
       num_bullets: numShards,
       destroy_on_wall: [],
       collision_behaviours: [],
-      shot_gap: 4,
+      shot_gap: 2,
       gravity: {
         x: 0,
         y: 0,

@@ -154,7 +154,7 @@ class ProjectileAbilityDef extends AbilityDef {
       const innerCircleSize = 3;
       var angle = Math.atan2(endPos.y - startPos.y, endPos.x - startPos.x);
       var dist = ((endPos.x - startPos.x) ** 2 + (endPos.y - startPos.y) ** 2) ** 0.5;
-      let maxDist = 250;
+      let maxDist = 1000;
 
       if (this.accuracy.isAccuracyDefined()) {
         maxDist = this.accuracy.maxDist;
