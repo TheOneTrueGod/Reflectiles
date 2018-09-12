@@ -118,7 +118,7 @@ class NewUserController {
               <? $this->renderStarRating("Damage", 4); ?>
               <? $this->renderStarRating("Accuracy", 1); ?>
               <? $this->renderStarRating("Control", 1); ?>
-              <? $this->renderStarRating("Difficulty", 3); ?>
+              <? $this->renderStarRating("Difficulty", 2); ?>
             </div>
             <div class="selectDeckButton">
               <input class="btn btn-lg btn-primary btn-block" name="deckMagic" type="submit" value="Choose Me">
@@ -133,7 +133,7 @@ class NewUserController {
               <? $this->renderStarRating("Damage", 2); ?>
               <? $this->renderStarRating("Accuracy", 2); ?>
               <? $this->renderStarRating("Control", 3); ?>
-              <? $this->renderStarRating("Difficulty", 2); ?>
+              <? $this->renderStarRating("Difficulty", 3); ?>
             </div>
             <div class="selectDeckButton">
               <input class="btn btn-lg btn-primary btn-block" name="deckEngineer" type="submit" value="Choose Me">
