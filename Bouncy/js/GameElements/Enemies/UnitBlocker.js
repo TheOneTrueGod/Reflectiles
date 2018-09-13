@@ -97,7 +97,7 @@ class UnitBlocker extends UnitBasic {
         let targetPoint = {x: x, y: thisCoord.y};
         let playerUnits = boardState.getPlayerUnitsAtPosition(targetPoint);
         for (var j = 0; j < playerUnits.length; j++) {
-          playerUnits[j].knockback();
+          playerUnits[j].knockback(boardState);
         }
         UnitBlocker.abilityDef.doActionOnTick(
           'enemy',

@@ -129,7 +129,7 @@ class UnitBossWarlock extends UnitBasic {
 
         let playerUnits = boardState.getPlayerUnitsAtPosition(targetPoint);
         for (var j = 0; j < playerUnits.length; j++) {
-          playerUnits[j].knockback();
+          playerUnits[j].knockback(boardState);
         }
         UnitBossWarlock.abilityDef.doActionOnTick('enemy', 0, boardState, castPoint, targetPoint);
       }
