@@ -1,6 +1,6 @@
 class AbilityCore4007 extends AbilityCore {
   static BuildAbilityChild(level) {
-    let hitDamage = Math.floor(NumbersBalancer.getAbilityDamage(level, 0.1));
+    let hitDamage = Math.floor(NumbersBalancer.getAbilityDamage(level, 0.075));
     const rawAbil = {
       name: 'Landmines',
       description: 'Creates [[unit_count]] landmines<br>' +
@@ -20,7 +20,7 @@ class AbilityCore4007 extends AbilityCore {
         abil_def: {
           ability_type: AbilityDef.AbilityTypes.POSITION,
           projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
-          hit_effects:[{effect: ProjectileShape.HitEffects.DAMAGE, base_damage: hitDamage, aoe_type: "BOX"}],
+          hit_effects:[{effect: ProjectileShape.HitEffects.DAMAGE, base_damage: hitDamage, aoe_type: ProjectileShape.AOE_TYPES.BOX}],
         }
       }],
       max_range: {top: 4, bottom: -1, left: 3, right: 3},
