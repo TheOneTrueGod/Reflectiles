@@ -1,10 +1,11 @@
 class AbilityCore2001 extends AbilityCore {
   static BuildAbilityChild(level) {
     let health = 6;
+    let duration = 3;
     const rawAbil = {
       name: 'Shield',
-      description: 'Puts up a shield with [[duration]] health.<br>' +
-        'It loses one health per turn, or when it defends.<br>',
+      description: 'Puts up a shield with [[health]] health that lasts [[duration]] turns.<br>' +
+        'It loses one health whenever it defends.<br>',
       card_text_description: '[[duration]]',
       zone_tooltip_name: 'Shield',
       zone_tooltip_description: 'Protects from bullets and prevents units from entering.',
@@ -13,7 +14,8 @@ class AbilityCore2001 extends AbilityCore {
         prevent_unit_entry: true,
       },
       projectile_interaction: {enemy_projectiles: {destroy: true}},
-      duration: health,
+      duration,
+      health,
       zone_size: {
         left: 1, right: 1,
         top: 0, bottom: 0, y_range: 0

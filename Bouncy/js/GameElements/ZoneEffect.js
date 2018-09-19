@@ -2,6 +2,7 @@ class ZoneEffect extends Unit {
   constructor(x, y, owner, id, creatorAbilityID, owningPlayerID) {
     super(x, y, owner, id);
     this.timeLeft = {current: 3, max: 3}; // Placeholder.  Will replace in a bit.
+    this.health = {current: 3, max: 3};
     this.DELETION_PHASE = TurnPhasesEnum.ENEMY_SPAWN;
     this.SPRITE = null;
     this.zone_icon_sprite = null;
@@ -13,8 +14,10 @@ class ZoneEffect extends Unit {
       this.health.current = this.health.max;
       this.armour.current = this.armour.max;
       this.shield.current = this.shield.max;
-      var duration = this.creatorAbility.getOptionalParam('duration', 3);
+      var duration = this.creatorAbility.getOptionalParam('duration', 2);
+      var health = this.creatorAbility.getOptionalParam('health', 3);
       this.timeLeft = {current: duration, max: duration};
+      this.health = {current: health, max: health};
     }
 
     this.createCollisionBox();
@@ -103,7 +106,7 @@ class ZoneEffect extends Unit {
       this.createHealthBarSprite(this.gameSprite);
       projectile.readyToDel = true;
       if (!this.creatorAbility.getOptionalParam('invulnerable', false)) {
-        this.decreaseTime(boardState, 1);
+        this.decreaseHealth(boardState, 1);
       }
     }
 
@@ -120,15 +123,19 @@ class ZoneEffect extends Unit {
       }
     }
 
-    if (interaction.ability && interaction.ability.initializedAbilDef) {
-      interaction.ability.initializedAbilDef.doActionOnTick(
-        this.owningPlayerID,
-        0,
-        boardState,
-        {x: this.x, y: this.y},
-        {x: this.x, y: this.y - Unit.UNIT_SIZE},
-        this
-      );
+    if (interaction.ability) {
+      for (let i = 0; i < interaction.ability.length; i++) {
+         if (interaction.ability[i].initializedAbilDef) {
+           interaction.ability[i].initializedAbilDef.doActionOnTick(
+             this.owningPlayerID,
+             0,
+             boardState,
+             {x: this.x, y: this.y},
+             {x: this.x, y: this.y - Unit.UNIT_SIZE},
+             this
+           );
+         }
+      }
     }
   }
 
@@ -184,7 +191,9 @@ class ZoneEffect extends Unit {
     this.createCollisionBox();
 
     var duration = this.creatorAbility.getOptionalParam('duration', 3);
+    var health = this.creatorAbility.getOptionalParam('health', 3);
     this.timeLeft.max = duration;
+    this.health.max = health;
   }
 
   endOfPhase(boardState, phase) {
@@ -201,6 +210,14 @@ class ZoneEffect extends Unit {
     if (this.timeLeft.current <= 0) {
       this.readyToDel = true;
       this.onTimeOut(boardState);
+    }
+    this.createHealthBarSprite(this.gameSprite);
+  }
+
+  decreaseHealth(boardState, amount) {
+    this.health.current -= amount;
+    if (this.health.current <= 0) {
+      this.readyToDel = true;
     }
     this.createHealthBarSprite(this.gameSprite);
   }
@@ -328,6 +345,7 @@ class ZoneEffect extends Unit {
   serializeData() {
     return {
       'duration': this.timeLeft,
+      'health': this.health,
       'creator_id': this.creatorAbility.index,
       'owning_player_id': this.owningPlayerID,
     };
@@ -335,6 +353,7 @@ class ZoneEffect extends Unit {
 
   loadSerializedData(data) {
     this.timeLeft = data.duration;
+    this.health = data.health;
     this.setCreatorAbility(data.creator_id);
     this.owningPlayerID = data.owning_player_id;
   }

@@ -109,6 +109,11 @@ class ProjectileShapeTriShot extends ProjectileShape {
               curve_time: this.curve_time,
               curve_delay: this.curve_delay,
               curve_amount: curveAmount,
+              curve_handler: ProjectileCurveHandler.getCurveHandler(
+                this.abilityDef.getOptionalParam('curve_def', null),
+                angle,
+                aimAngle,
+              ),
             }
           ).addUnitHitCallback(this.unitHitCallback.bind(this))
           .addTimeoutHitCallback(this.timeoutHitCallback.bind(this))

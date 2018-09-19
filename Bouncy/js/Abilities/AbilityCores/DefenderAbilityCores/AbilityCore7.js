@@ -4,6 +4,7 @@
 //
 class AbilityCore7 extends AbilityCore {
   static BuildAbilityChild(perkList, perkPcts, perkCounts) {
+    let duration = 3;
     let health = 6;
     health += Math.floor(idx(perkPcts, 'health 1', 0) * 4);
     health += Math.floor(idx(perkPcts, 'health 2', 0) * 4);
@@ -41,7 +42,8 @@ class AbilityCore7 extends AbilityCore {
         prevent_unit_entry: true,
       },
       projectile_interaction: {enemy_projectiles: {destroy: true}},
-      duration: health,
+      duration: duration,
+      health: health,
       zone_size: {
         left: 0 + width_bonus, right: 0 + width_bonus,
         top: 0, bottom: 0, y_range: 0

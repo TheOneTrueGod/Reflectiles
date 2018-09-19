@@ -130,7 +130,7 @@ class ZoneAbilityDef extends AbilityDef {
       }
     })
     if (!this.canUnitPassThrough(unit)) {
-      zone.decreaseTime(boardState, 1);
+      zone.decreaseHealth(boardState, 1);
     }
   }
 
