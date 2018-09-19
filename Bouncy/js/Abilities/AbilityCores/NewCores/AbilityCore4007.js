@@ -1,6 +1,6 @@
 class AbilityCore4007 extends AbilityCore {
   static BuildAbilityChild(level) {
-    let hitDamage = Math.floor(NumbersBalancer.getAbilityDamage(level, 0.075));
+    let hitDamage = Math.floor(NumbersBalancer.getAbilityDamage(level, 0.15));
     const rawAbil = {
       name: 'Landmines',
       description: 'Creates [[unit_count]] landmines<br>' +
@@ -12,8 +12,8 @@ class AbilityCore4007 extends AbilityCore {
         '[[unit_abilities[0].abil_def.hit_effects[0].base_damage]] damage in a 3x3 box.<br>',
       ability_type: AbilityDef.AbilityTypes.CREATE_UNIT,
       area_type: SummonUnitAbilityDef.AREA_TYPES.LINE,
-      unit_count: 5,
-      duration: 5,
+      unit_count: 3,
+      duration: 4,
       unit: SummonUnitAbilityDef.UNITS.LANDMINE,
       sprite: {texture: 'deployables', index: 5},
       unit_abilities: [{
@@ -23,7 +23,7 @@ class AbilityCore4007 extends AbilityCore {
           hit_effects:[{effect: ProjectileShape.HitEffects.DAMAGE, base_damage: hitDamage, aoe_type: ProjectileShape.AOE_TYPES.BOX}],
         }
       }],
-      max_range: {top: 4, bottom: -1, left: 3, right: 3},
+      max_range: {top: 3, bottom: 3, left: 2, right: 2},
       icon: "/Bouncy/assets/icons/landmine.png",
     };
 
