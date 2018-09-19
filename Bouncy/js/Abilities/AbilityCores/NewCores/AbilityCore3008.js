@@ -11,7 +11,7 @@ class AbilityCore3008 extends AbilityCore {
     let duration = 1;
     const rawAbil = {
       name: 'Counterspell',
-      description: 'Puts up a 3x1 arcane barrier that blocks all units and projectiles for the turn.  ' +
+      description: 'Puts up a 3x1 arcane barrier that blocks up to [[health]] projectiles for the turn.  ' +
         'For each projectile blocked, the shield shoots three arcane blasts dealing <<' + hitDamage + '>> damage.',
       card_text_description: '3x1',
       zone_tooltip_name: 'Counterspell',
