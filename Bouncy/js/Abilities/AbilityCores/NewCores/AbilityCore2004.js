@@ -1,6 +1,7 @@
 class AbilityCore2004 extends AbilityCore {
   static BuildAbilityChild(level) {
     let damage = Math.round(NumbersBalancer.getAbilityDamage(level, 0.15));
+    let armorDamage = Math.round(NumbersBalancer.getAbilityDamage(level, 0.25));
     const rawAbil = {
       name: 'Hammer',
       description: 'Swing your hammer in a wide arc, hitting all units in front of you for <<' + damage + '>> anti-armor damage, and <<' + damage + '>> damage.',
@@ -12,7 +13,7 @@ class AbilityCore2004 extends AbilityCore {
       hit_effects: [
         {
           effect: ProjectileShape.HitEffects.DAMAGE,
-          base_damage: damage,
+          base_damage: armorDamage,
           damage_type: Unit.DAMAGE_TYPE.ANTI_ARMOR,
           aoe_type: ProjectileShape.AOE_TYPES.BOX,
           aoe_size: {x:[-1, 1], y:[-1, 0]}

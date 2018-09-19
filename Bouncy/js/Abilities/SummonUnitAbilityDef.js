@@ -10,6 +10,7 @@ class SummonUnitAbilityDef extends AbilityDef {
     this.MAX_SUMMON = this.getOptionalParam('max_summon', 0);
     this.MAX_RANGE = this.getOptionalParam('max_range', {left: 0, right: 0, top: 0, bottom: 0});
     this.AREA_TYPE = this.getOptionalParam('area_type', SummonUnitAbilityDef.AREA_TYPES.SINGLE);
+    this.CAN_PLAYERS_DAMAGE = this.getOptionalParam('can_players_damage', null);
   }
 
   getValidTarget(target, playerID) {
@@ -37,7 +38,12 @@ class SummonUnitAbilityDef extends AbilityDef {
     var target = {x: targX, y: targY};
     target = this.nudgeTargetAroundOtherUnits(target, castPoint)
     if (!target) { return null; }
+
     return MainGame.boardState.sectors.getPositionFromGrid(target);
+  }
+
+  isZoneDamageableByPlayers() {
+    return this.CAN_PLAYERS_DAMAGE;
   }
 
   nudgeTargetAroundOtherUnits(target, castPoint) {
