@@ -14,13 +14,6 @@ class SpriteAbilityStyle extends AbilityStyle {
     return newSprite;
   }
 
-  createProjectileTrail(boardState, projectile) {
-    if (this.trail === null) { return; }
-    if (!projectile.trail_data) {
-      projectile.trail_data = [];
-    }
-  }
-
   createProjectileSprite(projectile) {
     var container = new PIXI.Container();
     container.position.set(projectile.x, projectile.y);

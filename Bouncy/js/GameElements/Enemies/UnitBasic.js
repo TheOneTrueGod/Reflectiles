@@ -128,9 +128,7 @@ class UnitBasic extends Unit {
   }
 
   createSpriteFromResource(resource, hideHealthBar) {
-    var sprite = new PIXI.Sprite(
-      PIXI.loader.resources[resource].texture
-    );
+    var sprite = new PIXI.Sprite(ImageLoader.getEnemyTexture(resource));
     if (!hideHealthBar) {
       this.createHealthBarSprite(sprite);
     }
@@ -151,7 +149,7 @@ class UnitBasic extends Unit {
     let onFirst = true;
     for (let res of resources) {
       this.sprites[res] = new PIXI.Sprite(
-        PIXI.loader.resources[res].texture
+        ImageLoader.getEnemyTexture(res)
       );
       this.sprites[res].anchor.set(0.5);
       if (!onFirst) {

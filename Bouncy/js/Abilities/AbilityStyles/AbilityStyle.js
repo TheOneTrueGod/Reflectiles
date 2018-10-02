@@ -11,6 +11,7 @@ class AbilityStyle {
         this.explosionStyleList.push(style);
       }
     }
+    this.trailDef = new ProjectileTrailDef(idx(defJSON, 'trail_def', null));
   }
 
   createProjectileSprite(projectile) {
@@ -22,11 +23,7 @@ class AbilityStyle {
   }
 
   createProjectileTrail(boardState, projectile) {
-    if (boardState.tick % 1 == 0) {
-      boardState.addProjectile(
-        new ProjectileTrailEffect(projectile, projectile.trailLength)
-      );
-    }
+    this.trailDef.createProjectileTrail(boardState, projectile);
   }
 
   createExplosion(boardState, targetPos, projectile) {

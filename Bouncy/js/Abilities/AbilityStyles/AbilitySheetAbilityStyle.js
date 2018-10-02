@@ -71,6 +71,7 @@ class AbilitySheetSpriteAbilityStyleBuilder extends SpriteAbilityStyleBuilder {
     this.explosion = null;
     this.fix_rotation = false;
     this.scale = 1;
+    this.trailDef = null;
   }
 
   setImageIndex(image_index) {
@@ -92,6 +93,7 @@ class AbilitySheetSpriteAbilityStyleBuilder extends SpriteAbilityStyleBuilder {
     };
     return this;
   }
+  setTrailDef(trailDef) { this.trailDef = trailDef; return this; }
   setScale(scale) { this.scale = scale; return this;}
   setRotation(rotation) { this.rotation = rotation; return this; }
   setExplosion(explosion) { this.explosion = explosion; return this; }
@@ -111,6 +113,7 @@ class AbilitySheetSpriteAbilityStyleBuilder extends SpriteAbilityStyleBuilder {
       explosion: this.explosion,
       fix_rotation: this.fix_rotation,
       scale: this.scale,
+      trail_def: this.trailDef,
     };
   }
 }

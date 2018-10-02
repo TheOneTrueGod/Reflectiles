@@ -240,7 +240,7 @@ class ZoneEffect extends Unit {
         sprite.anchor.set(0.5);
       } else {
         sprite = new PIXI.Sprite(
-          PIXI.loader.resources[this.SPRITE].texture
+          ImageLoader.getEnemyTexture(this.SPRITE)
         );
         sprite.anchor.set(0.5);
       }
@@ -307,6 +307,7 @@ class ZoneEffect extends Unit {
   }
 
   createHealthBarSprite(sprite) {
+    return;
     // TODO:  If you're seeing some slowdown, there's probably a better way of doing this.
     if (this.healthBarSprites.textSprite) {
       this.gameSprite.removeChild(this.healthBarSprites.textSprite);
