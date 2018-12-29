@@ -3,6 +3,8 @@ class Projectile {
     this.playerID = playerID;
     this.x = startPoint.x;
     this.y = startPoint.y;
+    this.lastX = this.x;
+    this.lastY = this.y;
     this.angle = angle;
     this.speed = idx(projectileOptions, 'speed', 8);
     this.gravity = idx(projectileOptions, 'gravity', null);
@@ -224,8 +226,6 @@ class Projectile {
       this.speed = Math.max(this.speed - this.speedDecay, 0);
     }
 
-    this.createTrail(boardState);
-
     var reflectionResult = Physics.doLineReflections(
       this.x, this.y, this.angle, this.speed * MainGame.DEBUG_SPEED,
       this.findCollisionBoxesForLine.bind(this, boardState),
@@ -248,13 +248,24 @@ class Projectile {
       if (intersection.line instanceof BorderWallLine) {
         self.hitWall(boardState, intersection);
       }
+      this.lastX = this.x;
+      this.lastY = this.y;
+
+      this.x = intersection.x;
+      this.y = intersection.y;
+      this.createTrail(boardState);
     }
 
     var endPoint = reflectionResult.reflection_lines[
       reflectionResult.reflection_lines.length - 1
     ];
-    this.x = endPoint.x2;
-    this.y = endPoint.y2;
+    if (!this.readyToDelete()) {
+      this.lastX = this.x;
+      this.lastY = this.y;
+      this.x = endPoint.x2;
+      this.y = endPoint.y2;
+      this.createTrail(boardState);
+    }
     this.angle = endPoint.getVector().horizontalAngle();
 
 

@@ -13,6 +13,7 @@ class AbilityCore1002 extends AbilityCore {
       projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
       destroy_on_wall: [],
       num_bullets,
+      speed: 10,
       bullet_wave_delay: 3,
       accuracy_decay: Math.PI / 5.12,
       wall_bounces: 1,
@@ -35,9 +36,10 @@ class AbilityCore1002 extends AbilityCore {
   static createAbilityStyle() {
     return (new AbilitySheetSpriteAbilityStyleBuilder())
       .setSheet('bullet_sheet')
-      .setCoordNums(36, 139, 44, 147)
+      .setCoordNums(0, 0, 1, 1)
       .setRotation(0)
-      .fixRotation(true);
+      .fixRotation(true)
+      .setTrailDef({ type: ProjectileTrailDef.TRAIL_TYPES.LINE, duration: 4, color: 0x888888, options: { width: 4 } });
   }
 
   static getCooldown() {

@@ -74,7 +74,7 @@ class ProjectileShapeSprayShot extends ProjectileShape {
           targetPoint.y - castPoint.y, targetPoint.x - castPoint.x
         ) + spread * (rand * 2 - 1);
         rand = boardState.getRandom();
-        var speed = lerp(6, 8, i / this.num_bullets);
+        var speed = lerp(idx(this.abilityDef.rawDef, 'minSpeed', 6), idx(this.abilityDef.rawDef, 'maxSpeed', 8), i / this.num_bullets);
         boardState.addProjectile(
           Projectile.createProjectile(
             playerID,

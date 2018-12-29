@@ -12,6 +12,8 @@ class AbilityCore1001 extends AbilityCore {
       projectile_type: ProjectileShape.ProjectileTypes.PENETRATE,
       hit_effects: [{base_damage: damage, effect: ProjectileShape.HitEffects.DAMAGE}],
       num_bullets: num_bullets,
+      minSpeed: 10,
+      maxSpeed: 12,
       min_angle: Math.PI / 10.0,
       max_angle: Math.PI / 6.0,
       wall_bounces: 1,
@@ -31,9 +33,10 @@ class AbilityCore1001 extends AbilityCore {
   static createAbilityStyle() {
     return (new AbilitySheetSpriteAbilityStyleBuilder())
       .setSheet('bullet_sheet')
-      .setCoordNums(36, 139, 44, 147)
+      .setCoordNums(0, 0, 1, 1)
       .setRotation(0)
-      .fixRotation(true);
+      .fixRotation(true)
+      .setTrailDef({ type: ProjectileTrailDef.TRAIL_TYPES.LINE, duration: 7, color: 0x888888, options: { width: 4 } });
   }
 
   static getCooldown(perkList, perkCounts) {

@@ -38,7 +38,8 @@ class AbilityCore3007 extends AbilityCore {
   static createAbilityStyle() {
     return (new AbilitySheetSpriteAbilityStyleBuilder())
       .setSheet('weapons_sheet')
-      .setCoordIndex(7, 0, 26, 25);
+      .setCoordIndex(7, 0, 26, 25)
+      .setTrailDef({ type: ProjectileTrailDef.TRAIL_TYPES.LINE, duration: 7, color: 0x888888, options: { width: 4 } });
   }
 
   static getCooldown() {
