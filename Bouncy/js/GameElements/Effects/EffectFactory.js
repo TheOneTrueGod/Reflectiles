@@ -84,7 +84,6 @@ EffectFactory.createDamageEffect = function(boardState, intersection) {
     boardState.addProjectile(
       new LineEffect(intersection.line, color)
     );
-
   }
 }
 
