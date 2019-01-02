@@ -5,7 +5,7 @@ class AbilityCore1010 extends AbilityCore {
     let hitDamage = Math.floor(NumbersBalancer.getAbilityDamage(level, 0.1));
     const rawAbil = {
       name: 'Pistol',
-      description: `Fire a quick shot dealing ${hitDamage} damage`,
+      description: `Fire a quick shot dealing <<${hitDamage}>> damage`,
       card_text_description: `${hitDamage}`,
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,

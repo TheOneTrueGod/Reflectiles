@@ -94,6 +94,7 @@
 <script src="/Bouncy/js/GameElements/Enemies/StatusEffects/ImmobilizeStatusEffect.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/StatusEffects/WeaknessStatusEffect.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/StatusEffects/DisableShieldStatusEffect.js"></script>
+<script src="/Bouncy/js/GameElements/Enemies/StatusEffects/SpecialStatusEffect.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/StatusEffects/ShieldStatusEffect.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/StatusEffects/PlayerDamageStatusEffect.js"></script>
 <script src="/Bouncy/js/Abilities/HitEffects/PoisonHitEffect.js"></script>
@@ -101,6 +102,7 @@
 <script src="/Bouncy/js/Abilities/HitEffects/FreezeHitEffect.js"></script>
 <script src="/Bouncy/js/Abilities/HitEffects/WeaknessHitEffect.js"></script>
 <script src="/Bouncy/js/Abilities/HitEffects/DisableShieldHitEffect.js"></script>
+<script src="/Bouncy/js/Abilities/HitEffects/SpecialStatusHitEffect.js"></script>
 <script src="/Bouncy/js/Abilities/HitEffects/DamageHitEffect.js"></script>
 <script src="/Bouncy/js/Abilities/HitEffects/BulletSplitHitEffect.js"></script>
 <script src="/Bouncy/js/Abilities/HitEffects/CooldownReductionHitEffect.js"></script>

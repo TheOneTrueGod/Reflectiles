@@ -19,11 +19,14 @@ class PoisonStatusEffect extends StatusEffect {
 
   turnStart(boardState, unit) {
     let damageMult = this.getDamageMultiplier();
+    const hasDeadlyPoison = unit.hasStatusEffectByName(SpecialStatusEffect.SPECIAL_EFFECTS.DEADLY_POISON);
     if (damageMult != 0) {
       for (var abilityID in this.effectList) {
         let damage = this.effectList[abilityID].damage;
         unit.dealDamage(boardState, damage / damageMult, this.effectList[abilityID], Unit.DAMAGE_TYPE.POISON);
-        this.effectList[abilityID].damage = Math.ceil(this.effectList[abilityID].damage / 2);
+        if (!hasDeadlyPoison) {
+          this.effectList[abilityID].damage = Math.ceil(this.effectList[abilityID].damage / 2);
+        }
       }
     }
     this.duration -= 1;

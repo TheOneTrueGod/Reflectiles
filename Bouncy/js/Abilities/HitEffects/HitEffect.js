@@ -122,6 +122,8 @@ HitEffect.getHitEffectFromType = function(hitEffectDef, abilityDef, projectileSh
       return new WeaknessHitEffect(hitEffectDef, abilityDef);
     case ProjectileShape.HitEffects.DISABLE_SHIELD:
       return new DisableShieldHitEffect(hitEffectDef, abilityDef);
+    case ProjectileShape.HitEffects.SPECIAL_STATUS:
+      return new SpecialStatusHitEffect(hitEffectDef, abilityDef);
     case ProjectileShape.HitEffects.USE_ABILITY:
       return new UseAbilityEffect(hitEffectDef, abilityDef, projectileShape);
     case ProjectileShape.HitEffects.SHOOTER_BUFF:

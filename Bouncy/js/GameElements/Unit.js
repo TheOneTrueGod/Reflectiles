@@ -91,6 +91,10 @@ class Unit {
     return effect.getEffectType() in this.statusEffects;
   }
 
+  hasStatusEffectByName(effectName) {
+    return effectName in this.statusEffects;
+  }
+
   hasNegativeCondition() {
     for (let key in this.statusEffects) {
       if (this.statusEffects[key].isNegative()) {
