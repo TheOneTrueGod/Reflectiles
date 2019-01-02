@@ -72,6 +72,14 @@ class AbilitySheetSpriteAbilityStyleBuilder extends SpriteAbilityStyleBuilder {
     this.fix_rotation = false;
     this.scale = 1;
     this.trailDef = null;
+    this.hitEffect = null;
+  }
+
+  addHitEffect(hitEffect) {
+    if (this.hitEffect === null) {
+      this.hitEffect = [];
+    }
+    this.hitEffects.push(hitEffect);
   }
 
   setImageIndex(image_index) {
@@ -114,6 +122,7 @@ class AbilitySheetSpriteAbilityStyleBuilder extends SpriteAbilityStyleBuilder {
       fix_rotation: this.fix_rotation,
       scale: this.scale,
       trail_def: this.trailDef,
+      hit_effect: this.hitEffect,
     };
   }
 }

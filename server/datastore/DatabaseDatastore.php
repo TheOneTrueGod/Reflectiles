@@ -1,8 +1,8 @@
 <?php
 class DatabaseDatastore extends Datastore {
   $servername = "localhost";
-  $username = "username";
-  $password = "password";
+  $username = "Reflectiles";
+  $password = "reflect_me";
   function loadGameObjectJSON($game_id) {
     // Create connection
     $conn = mysqli_connect($servername, $username, $password);

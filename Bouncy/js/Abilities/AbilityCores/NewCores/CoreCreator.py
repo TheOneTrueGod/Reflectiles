@@ -5,9 +5,9 @@ from shutil import copyfile
 from pathlib import Path
 
 parser = argparse.ArgumentParser(description='Make a bunch of ability cores.')
-parser.add_argument('coreNum', metavar='N', type=int,
+parser.add_argument('coreNum', metavar='ID', type=int,
                    help='the Core Number to create')
-parser.add_argument('coreClass', metavar='T', type=str,
+parser.add_argument('coreClass', metavar='Type', type=str,
                    help='the class of the core.  One of [WEAPON, DEFENDER, CHAOS, POISON, ENGINEER, NEUTRAL]')
 
 args = parser.parse_args()

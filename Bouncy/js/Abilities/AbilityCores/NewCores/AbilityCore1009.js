@@ -8,8 +8,8 @@ class AbilityCore1009 extends AbilityCore {
     let hitDamage = Math.floor(NumbersBalancer.getAbilityDamage(level, 0.6));
     const rawAbil = {
       name: 'Snipe',
-      description: '',
-      card_text_description: '',
+      description: `Shoot a powerful round at a single target dealing ${hitDamage} damage`,
+      card_text_description: `${hitDamage}`,
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
       projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
@@ -22,7 +22,7 @@ class AbilityCore1009 extends AbilityCore {
           effect: ProjectileShape.HitEffects.DAMAGE,
         }
       ],
-      icon: "/Bouncy/assets/icons/help.png"
+      icon: "/Bouncy/assets/icons/headshot.png"
     };
 
     let cooldown = this.getCooldown();

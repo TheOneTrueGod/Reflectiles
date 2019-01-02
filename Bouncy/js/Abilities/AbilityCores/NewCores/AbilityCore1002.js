@@ -36,10 +36,9 @@ class AbilityCore1002 extends AbilityCore {
   static createAbilityStyle() {
     return (new AbilitySheetSpriteAbilityStyleBuilder())
       .setSheet('bullet_sheet')
-      .setCoordNums(0, 0, 1, 1)
+      .setCoordNums(36, 139, 44, 147)
       .setRotation(0)
-      .fixRotation(true)
-      .setTrailDef({ type: ProjectileTrailDef.TRAIL_TYPES.LINE, duration: 4, color: 0x888888, options: { width: 4 } });
+      .fixRotation(true);
   }
 
   static getCooldown() {
