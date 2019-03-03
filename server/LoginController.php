@@ -14,6 +14,7 @@ class LoginController {
           <label for="inputPassword" class="sr-only">Password</label>
           <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
           <button class="btn btn-lg btn-primary btn-block signInButton" type="submit">Sign in</button>
+          <a href="/create-account" class="btn btn-lg btn-primary btn-block">Create Account</a>
         </div>
         <script>UserManagement.CheckForTokenOnLoginPage();</script>
       </div>
@@ -26,24 +27,21 @@ class LoginController {
   }
 
   public static function getUser($request) {
-    if ($request->param("userToken")) {
-      $user = User::getFromToken($request->param("userToken"));
-      if ($user) { return $user; }
-    }
-    if ($request->param("username") && $request->param("username")) {
+    if ($request->param("username") && $request->param("password")) {
       $user = User::getFromUsernamePassword(
         $request->param("username"),
         $request->param("password")
       );
       if ($user) {
         $_SESSION['user_token'] = $user->getToken();
+        $_SESSION['user_id'] = $user->getID();
         return $user;
       }
     }
 
-    if ($_SESSION['user_token']) {
-      $user = User::getFromToken($_SESSION['user_token']);
-      if ($user) { return $user; }
+    if ($_SESSION['user_token'] && $_SESSION['user_id']) {
+      $user = User::getFromID($_SESSION['user_id']);
+      if ($user && $user->getToken() == $_SESSION['user_token']) { return $user; }
     }
     return null;
   }

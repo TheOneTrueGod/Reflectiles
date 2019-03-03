@@ -123,20 +123,50 @@ class FlatFileDatastore extends Datastore {
 
   /* Users */
 
-  private function getUserSavePath($user) {
+  static function doesUserExist($user_id) {
+    $path = "saves";
+    if (!file_exists($path)) { return false; }
+    $path .= "/users";
+
+    if (!file_exists($path)) { return false; }
+    $path .= "/" . $user_id;
+
+    return file_exists($path);
+  }
+
+  private function createNewUserPath($user_id) {
+    if (self::doesUserExist($user_id)) {
+      throw new Exception("User already exists");
+    }
+    if (!$user_id) {
+      throw new Exception("Can't create user with empty user id");
+    }
+
     $path = "saves";
     if (!file_exists($path)) { mkdir($path); }
     $path .= "/users";
 
     if (!file_exists($path)) { mkdir($path); }
-    $path .= "/" . $user->id;
+    $path .= "/" . $user_id;
 
     if (!file_exists($path)) { mkdir($path); }
     return $path;
   }
 
-  static function getUserDataFileName($user) {
-    $path = self::getUserSavePath($user);
+  private function getUserSavePath($user_id) {
+    $path = "saves";
+    if (!file_exists($path)) { mkdir($path); }
+    $path .= "/users";
+
+    if (!file_exists($path)) { mkdir($path); }
+    $path .= "/" . $user_id;
+
+    if (!file_exists($path)) { mkdir($path); }
+    return $path;
+  }
+
+  static function getUserDataFileName($user_id) {
+    $path = self::getUserSavePath($user_id);
     $path .= "/userData.sav";
 
     return $path;
@@ -144,15 +174,91 @@ class FlatFileDatastore extends Datastore {
 
   static function saveUserData($user, $serialized_user_data) {
     file_put_contents(
-      self::getUserDataFileName($user),
+      self::getUserDataFileName($user->id),
       json_encode($serialized_user_data)
     );
   }
 
   static function loadUserData($user) {
-    $path = self::getUserDataFileName($user);
+    $path = self::getUserDataFileName($user->id);
     if (!file_exists($path)) { return null; }
     $json = file_get_contents($path);
     return $json;
+  }
+
+  private static function throwIfNotAllowedToCreateUser($user_id) {
+    if (self::doesUserExist($user_id)) {
+      throw new Exception("User already exists");
+    }
+    if (!$user_id) {
+      throw new Exception("Can't create user with empty user id");
+    }
+
+    $path = "saves";
+    if (!file_exists($path)) { mkdir($path); }
+    $path .= "/users";
+
+    $total_users = count( glob($path . "/*", GLOB_ONLYDIR) );
+
+    if ($total_users >= 1000) {
+      throw new Exception("Too Many Users");
+    }
+  }
+
+  static function createUser($user_id, $password_raw) {
+    self::throwIfNotAllowedToCreateUser($user_id);
+
+    self::createNewUserPath($user_id);
+    $path = self::getUserSavePath($user_id);
+    $path .= "/userMeta.json";
+
+    $token_length = 15;
+    $user_token = substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($token_length/strlen($x)) )),1,$token_length);
+
+    file_put_contents(
+      $path,
+      json_encode([
+        "user_id" => $user_id,
+        "user_name" => $user_id,
+        "password_hash" => password_hash($password_raw, PASSWORD_DEFAULT),
+        "user_token" => $user_token,
+      ])
+    );
+  }
+
+  static function loadUserMetaJSON($user_id) {
+    if (!self::doesUserExist($user_id)) {
+      return null;
+    }
+
+    $path = self::getUserSavePath($user_id);
+    $path .= "/userMeta.json";
+
+    if (!file_exists($path)) { return null; }
+    $json = file_get_contents($path);
+
+    return json_decode($json);
+  }
+
+  static function getUserToken($user_id) {
+    $user_data = self::loadUserMetaJSON($user_id);
+    if (!$user_data) {
+      return null;
+    }
+
+    return $user_data['user_token'];
+  }
+
+  static function doesUserIDPasswordMatch($user_id, $password_raw) {
+    $user_data = self::loadUserMetaJSON($user_id);
+
+    if (!$user_data) {
+      return false;
+    }
+
+    if ($user_data->user_id === $user_id && password_verify($password_raw, $user_data->password_hash)) {
+      return true;
+    }
+    return false;
   }
 }

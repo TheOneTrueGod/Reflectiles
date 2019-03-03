@@ -7,3 +7,7 @@
 .signInButton {
   margin-top: 12px;
 }
+
+a.btn {
+  font-family: sans-serif;
+}
