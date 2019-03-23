@@ -1,4 +1,5 @@
 <?php
+//Chip was here
 require_once __DIR__ . '/vendor/autoload.php';
 require_once('server/GameSelectController.php');
 require_once('server/NewGameController.php');
