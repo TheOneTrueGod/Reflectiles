@@ -30,7 +30,6 @@ class SpecialStatusEffect extends StatusEffect {
 
 // When adding to this;  Modify isPositive or isNegative.
 SpecialStatusEffect.SPECIAL_EFFECTS = {
-  DISABLE_SHIELD: 'DISABLE_SHIELD',
   DEADLY_POISON: 'DEADLY_POISON',
 }
 

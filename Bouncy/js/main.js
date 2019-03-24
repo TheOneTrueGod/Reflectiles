@@ -1,6 +1,5 @@
 /*
  * 7/20/2018 todo list;
- * Player movement in ability
  * Ability with player movement
     - Run and gun (move and shoot while moving)
     - Teleport
@@ -22,14 +21,14 @@
 
  ******
  * New enemies
+ * Elite enemies -- they sit at the top of the screen like bosses and use abilities each turn.
  * Causes all nearby basic enemies to turn into weak bombers
  * All players target this enemy
+ * Infected.  When it dies, it explodes into a bunch of smaller minions.
  ***************************
  * Attribute bonus damage back the buff creator
  * Add google ads to the sides
- * New enemy type -- infected.  When it dies, it explodes into a bunch of smaller minions.
  * Have the knight throw up his shield to the left and right if the front is full.
- * Add a back button
  * Background of a person in a square
  * Make freeze spread across all shields.  They take double damage
  */

@@ -15,10 +15,11 @@ class SpriteLerpProjectile extends Projectile {
   createSprite() {
     var container = new PIXI.Container();
     container.position.set(this.x, this.y);
-
-    var newSprite = new PIXI.Sprite(
-      PIXI.loader.resources[this.spriteName].texture
-    );
+    let projectileTexture = ImageLoader.getEnemyTexture(this.spriteName);
+    if (!projectileTexture) {
+      projectileTexture = PIXI.loader.resources[this.spriteName].texture;
+    }
+    var newSprite = new PIXI.Sprite(projectileTexture);
     newSprite.anchor.set(0.5);
 
     return newSprite;
