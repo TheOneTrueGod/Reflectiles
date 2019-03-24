@@ -2,7 +2,8 @@
 require_once('server/datastore/Datastore.php');
 require_once('server/exceptions/GameDoesntExistException.php');
 class FlatFileDatastore extends Datastore {
-  static function getNewGameID() {
+  private static $FILE_ID_REGEX = '(bouncy_|fmj_|cardsnmagic_)(\d+)';
+  static function getNewGameID($gameType) {
     $path = self::getSavePath();
     $files = glob($path.'/*');
     if (count($files) > 10) {
@@ -10,14 +11,15 @@ class FlatFileDatastore extends Datastore {
     }
     natsort($files);
     $files = array_filter($files, function($file) {
-      if (!preg_match('!(\d+)!', $file, $matches)) {
+      echo $file;
+      if (!preg_match('!' . self::$FILE_ID_REGEX . '!', $file, $matches)) {
         return false;
       }
       return true;
     });
-    preg_match('!(\d+)!', end($files), $matches);
-    $game_id = $matches[1] + 1;
-    return $game_id;
+    preg_match('!' . self::$FILE_ID_REGEX . '!', end($files), $matches);
+    $game_id = $matches[2] + 1;
+    return $gameType . "_" . $game_id;
   }
 
   static function getGameObjectMetadata($game_id) {
@@ -71,13 +73,13 @@ class FlatFileDatastore extends Datastore {
     $files = glob($path.'/*');
     natsort($files);
     $file_list = array_map(function($file) {
-      preg_match('!(\d+)!', $file, $matches);
+      preg_match('!' . self::$FILE_ID_REGEX . '!', $file, $matches);
       if (!$matches) {
         return null;
       }
       return array(
-        'game_json' => self::getGameObjectJSON($matches[1]),
-        'metadata' => self::getGameObjectMetadata($matches[1])
+        'game_json' => self::getGameObjectJSON($matches[0]),
+        'metadata' => self::getGameObjectMetadata($matches[0])
       );
     }, $files);
 
