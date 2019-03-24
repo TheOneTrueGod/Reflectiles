@@ -14,6 +14,7 @@ require_once('Bouncy/server/Users/BouncyUserController.php');
 require_once('server/DebugController.php');
 require_once('server/KleinUtils.php');
 require_once('server/TestController.php');
+require_once('server/SignupController.php');
 require_once('./testing_utils/TestingUtils.php');
 
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
@@ -36,9 +37,13 @@ KleinUtils::addHTMLResponder($klein, 'LoginController', 'BouncyUserController', 
 KleinUtils::addLogicResponder($klein, 'LoginController', 'BouncyUserController', 'POST');
 KleinUtils::addHTMLResponder($klein, 'LoginController', 'DebugController', 'GET');
 KleinUtils::addHTMLResponder($klein, 'LoginController', 'DebugController', 'POST');
+// Signup
+KleinUtils::addHTMLResponder($klein, 'SignupController', 'SignupController', 'GET');
+KleinUtils::addHTMLResponder($klein, 'SignupController', 'SignupController', 'POST');
 
 $klein->respond('GET', '/logout', function($request, $response) {
   $_SESSION['user_token'] = null;
+  $_SESSION['user_id'] = null;
   $response->redirect("/");
 });
 

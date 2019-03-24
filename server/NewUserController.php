@@ -6,16 +6,6 @@ class NewUserController {
     return $bouncy_user->decks === null || $bouncy_user->decks === [];
   }
 
-  public static function getFromToken($token) {
-    for ($i = 0; $i < count(User::$all_users); $i++) {
-      $user = User::$all_users[$i];
-      if ($user[3] == $token) {
-        return new static($user[0], $user[1], $user[2], $user[3]);
-      }
-    }
-    return null;
-  }
-
   function findCardIndex($cards, $cardID) {
     foreach ($cards as $card) {
       if ($card->card_id === $cardID) {
@@ -151,10 +141,6 @@ class NewUserController {
   }
 
   public static function getUser($request) {
-    if ($request->param("userToken")) {
-      $user = User::getFromToken($request->param("userToken"));
-      if ($user) { return $user; }
-    }
     if ($request->param("username") && $request->param("username")) {
       $user = User::getFromUsernamePassword(
         $request->param("username"),
@@ -162,13 +148,14 @@ class NewUserController {
       );
       if ($user) {
         $_SESSION['user_token'] = $user->getToken();
+        $_SESSION['user_id'] = $user->getID();
         return $user;
       }
     }
 
-    if ($_SESSION['user_token']) {
-      $user = User::getFromToken($_SESSION['user_token']);
-      if ($user) { return $user; }
+    if ($_SESSION['user_token'] && $_SESSION['user_id']) {
+      $user = User::getFromID($_SESSION['user_id']);
+      if ($user && $user->getToken() == $_SESSION['user_token']) { return $user; }
     }
     return null;
   }

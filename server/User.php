@@ -1,4 +1,5 @@
 <?php
+require_once('./server/datastore/DatastoreFactory.php');
 class User {
   public static $all_users;
   public function __construct($id, $username, $password, $token) {
@@ -37,37 +38,18 @@ class User {
     return false;
   }
 
-  public static function getFromToken($token) {
-    for ($i = 0; $i < count(User::$all_users); $i++) {
-      $user = User::$all_users[$i];
-      if ($user[3] == $token) {
-        return new static($user[0], $user[1], $user[2], $user[3]);
-      }
-    }
-    return null;
-  }
-
   public static function getFromUsernamePassword($username, $password) {
-    for ($i = 0; $i < count(User::$all_users); $i++) {
-      $user = User::$all_users[$i];
-      if (
-        ($user[0] == $username || $user[1] == $username) &&
-        $user[2] == $password
-      ) {
-        return new static($user[0], $user[1], $user[2], $user[3]);
-      }
+    if (!DatastoreFactory::getDatastore()->doesUserIDPasswordMatch($username, $password)) {
+      return null;
     }
-    return null;
+
+    return self::getFromID($username);
   }
 
   public static function getFromID($id) {
-    for ($i = 0; $i < count(User::$all_users); $i++) {
-      $user = User::$all_users[$i];
-      if ($user[0] == $id) {
-        return new static($user[0], $user[1], $user[2], $user[3]);
-      }
-    }
-    return null;
+    $user_json = DatastoreFactory::getDatastore()->loadUserMetaJSON($id);
+    if (!$user_json) { return null; }
+    return new static($user_json->user_id, $user_json->user_name, $user_json->password_hash, $user_json->user_token);
   }
 }
 

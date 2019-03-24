@@ -35,8 +35,8 @@ class SummonUnitAbilityDef extends AbilityDef {
       castPointCoord.y + this.MAX_RANGE.bottom
     );
 
-    var target = {x: targX, y: targY};
-    target = this.nudgeTargetAroundOtherUnits(target, castPoint)
+    target = {x: targX, y: targY};
+    target = this.nudgeTargetAroundOtherUnits(target, castPoint);
     if (!target) { return null; }
 
     return MainGame.boardState.sectors.getPositionFromGrid(target);
