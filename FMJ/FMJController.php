@@ -80,7 +80,7 @@ class FMJController {
     }
     ?>
     <?php require_once('Bouncy/js_includes.php'); ?>
-    <script src="../Bouncy/js/gameLauncher.js"></script>
+    <script src="../FMJ/js/gameLauncher.js"></script>
     <?php
     return ob_get_clean();
   }
