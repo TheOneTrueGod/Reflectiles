@@ -231,28 +231,11 @@ class MainGameHandler {
 
   checkForAutoEndTurn() {
     if (!this.gameStarted || this.turnController.isPlayingOutTurn() || !this.isHost || this.isFinalizing || this.isFinalized) { return; }
-    var allPlayersDone = true;
-    for (var key in this.players) {
-      var isDone = false;
-      if (this.playerCommands[this.players[key].getUserID()]) {
-        isDone = this.playerCommands[this.players[key].getUserID()].isDoneTurn();
-        /*var pc = this.playerCommands[this.players[key].getUserID()].getCommands();
-        let hasMinor = false;
-        let hasMajor = false;
-        for (var i = 0; i < pc.length; i++) {
-          if (pc[i].isMajorAction()) { hasMajor = true; }
-          if (pc[i].isMinorAction()) { hasMinor = true; }
-        }
-        if ((true || hasMinor) && hasMajor) {
-          playerHasCommand = true;
-        }*/
-      }
-      if (!isDone) {
-        allPlayersDone = false;
-      }
-    }
 
-    if (allPlayersDone && this.players.length > 0) {
+    if (
+      this.players.length > 0 &&
+      this.turnController.readyForTurnEnd(this.players, this.playerCommands)
+    ) {
       TurnControls.setPlayState(false);
       this.finalizeTurn();
     }

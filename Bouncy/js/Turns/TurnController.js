@@ -83,6 +83,20 @@ class TurnController {
         }
     }
 
+    readyForTurnEnd(players, playerCommands) {
+		var allPlayersDone = true;
+		players.forEach((player) => {
+			if (
+				!playerCommands[player.getUserID()] ||
+				!playerCommands[player.getUserID()].isDoneTurn()
+			) {
+				allPlayersDone = false;
+			}
+		});
+
+		return allPlayersDone;
+    }
+
     finalizedTurnOver() {
         $('#gameContainer').removeClass("turnPlaying");
         if (!this.boardState.isGameOver(AIDirector)) {
