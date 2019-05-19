@@ -54,6 +54,7 @@
 <script src="/Bouncy/js/GameElements/Projectiles/ProjectileBuffs/ProjectileDamageBuff.js"></script>
 <script src="/Bouncy/js/GameElements/Projectiles/ProjectileBuffs/ProjectileWeakenBuff.js"></script>
 <script src="/Bouncy/js/Errors/Errors.js"></script>
+<script src="/Bouncy/js/Turns/TurnController.js"></script>
 
 <!-- Extends the above -->
 <script src="/Bouncy/js/GameElements/Enemies/UnitBasic.js"></script>

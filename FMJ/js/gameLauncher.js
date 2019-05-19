@@ -1,5 +1,5 @@
 function launchGame() {
-    MainGame = new MainGameHandler();
+    MainGame = new MainGameHandler(TurnController);
     MainGame.redraw();
     MainGame.start();
 }

@@ -36,7 +36,7 @@ const DEBUG_IMAGES = false;
 const DEBUG_DISABLE_LEVELING = true;
 
 class MainGameHandler {
-  constructor() {
+  constructor(turnControllerClass) {
     this.ticksPerTurn = 20;
     this.gameID = $('#gameBoard').attr('data-gameID');
     this.missionProgramCanvas = $('#missionProgramDisplay');
@@ -44,7 +44,7 @@ class MainGameHandler {
     this.isHost = $('#gameContainer').attr('host') === 'true';
     this.playerID = $('#gameContainer').attr('playerID');
     this.isFinalized = false;
-    this.playingOutTurn = false;
+    this.turnController = new turnControllerClass(this);
 
     this.aimPreviews = {};// <-- adding this
     this.gameStarted = false;
@@ -67,7 +67,6 @@ class MainGameHandler {
     this.playerCommands = [];
     this.players = {};
 
-    this.TICK_DELAY = 20;
     this.DEBUG_SPEED = 1;
 
     UIListeners.setupPlayerInitListeners();
@@ -119,7 +118,7 @@ class MainGameHandler {
     var self = this;
 
     GameInitializer.setHostNewGameCallback(() => {
-      self.boardState = new BoardState(this.boardSize, self.stage);
+      self.updateBoardState(null, this.boardSize, self.stage);
       self.boardState.addInitialPlayers(self.players);
       AIDirector.createInitialUnits(self.boardState);
       self.players.forEach((player) => {
@@ -144,7 +143,7 @@ class MainGameHandler {
   // Step 3 -- deserialize the board state from the server
   deserializeGameData(gameData) {
     var serverBoardData = JSON.parse(gameData.board_state);
-
+    
     let serverBoardState = new BoardState(
       this.boardSize,
       this.stage,
@@ -164,7 +163,7 @@ class MainGameHandler {
       this.boardState.resetStage();
     }
 
-    this.boardState = serverBoardState;
+    this.updateBoardState(serverBoardState);
     this.isFinalized = gameData.finalized;
 
     this.boardState.loadUnits(serverBoardData.units);
@@ -231,7 +230,7 @@ class MainGameHandler {
   }
 
   checkForAutoEndTurn() {
-    if (!this.gameStarted || this.playingOutTurn || !this.isHost || this.isFinalizing || this.isFinalized) { return; }
+    if (!this.gameStarted || this.turnController.isPlayingOutTurn() || !this.isHost || this.isFinalizing || this.isFinalized) { return; }
     var allPlayersDone = true;
     for (var key in this.players) {
       var isDone = false;
@@ -311,7 +310,7 @@ class MainGameHandler {
     this.renderer.render(this.stage);
     this.gameStarted = true;
     if (this.isFinalized) {
-      this.playOutTurn();
+      this.turnController.playOutTurn();
     } else {
       this.getTurnStatus();
       this.checkForAutoEndTurn();
@@ -333,7 +332,7 @@ class MainGameHandler {
   recieveTurnStatus(response) {
     var turnData = JSON.parse(response);
 
-    if (this.playingOutTurn) { return; }
+    if (this.turnController.isPlayingOutTurn()) { return; }
     if (this.boardState.turn > turnData.current_turn) {
       window.setTimeout(this.getTurnStatus.bind(this), 1000);
       return;
@@ -347,8 +346,8 @@ class MainGameHandler {
       this.boardState.turn <= turnData.current_turn &&
       !this.isHost
     ) {
-      this.playOutTurn();
-    } else if (!this.playingOutTurn) {
+      this.turnController.playOutTurn();
+    } else if (!this.turnController.isPlayingOutTurn()) {
       window.setTimeout(this.getTurnStatus.bind(this), 1000);
     }
   }
@@ -370,64 +369,7 @@ class MainGameHandler {
     );
     PlayerInput.setSelectedAbility(null);
     // phases
-    this.playOutTurn();
-  }
-
-  playOutTurn(currPhase) {
-    if (this.playingOutTurn && !currPhase) { return; }
-    if (!currPhase) {
-      $('#gameContainer').addClass("turnPlaying");
-      this.removeAllPlayerCommands();
-      for (let pid in this.playerCommands) {
-        for (let command of this.playerCommands[pid].getCommands()) {
-          if (command instanceof PlayerCommandUseAbility) {
-            this.boardState.gameStats.addAbilityUseCount(pid, command.abilityID);
-          }
-        }
-      }
-    }
-
-    this.playingOutTurn = true;
-    this.updateActionHint();
-    if (currPhase) {
-      this.boardState.endOfPhase(this.players, currPhase);
-    }
-    var phase = !!currPhase ?
-      TurnPhasesEnum.getNextPhase(currPhase) :
-      TurnPhasesEnum.START_TURN;
-
-    this.startOfPhase(phase);
-
-    if (phase == TurnPhasesEnum.NEXT_TURN) {
-      this.finalizedTurnOver();
-    } else {
-      this.loopTicksForPhase(phase);
-    }
-  }
-
-  startOfPhase(phase) {
-    if (phase == TurnPhasesEnum.ENEMY_MOVE) {
-      AIDirector.giveUnitsOrders(this.boardState);
-    }
-    if (phase == TurnPhasesEnum.ENEMY_MOVE) {
-      AIDirector.spawnForTurn(this.boardState);
-    }
-
-    if (phase == TurnPhasesEnum.ENEMY_ACTION) {
-      this.boardState.doUnitActions(this.boardState);
-    }
-
-    this.boardState.startOfPhase(phase);
-  }
-
-  loopTicksForPhase(phase) {
-    var result = this.doTick(phase);
-    if (result) {
-      this.boardState.endPhase();
-      this.playOutTurn.call(this, phase);
-    } else {
-      this.tickLoopTimeout = window.setTimeout(this.loopTicksForPhase.bind(this, phase), this.TICK_DELAY);
-    }
+    this.turnController.playOutTurn();
   }
 
   doTick(phase) {
@@ -630,7 +572,7 @@ class MainGameHandler {
   updateActionHint() {
     if (this.boardState.isGameOver(AIDirector)) {
       UIListeners.updateActionHint("");
-    } else if (this.playingOutTurn) {
+    } else if (this.turnController.isPlayingOutTurn()) {
       UIListeners.updateActionHint("");
     } else {
       UIListeners.updateActionHint(this.getActionHint());
@@ -704,7 +646,7 @@ class MainGameHandler {
     this.playerCommands = [];
     this.isFinalized = false;
     this.isFinalizing = false;
-    this.playingOutTurn = false;
+    this.turnController.setPlayingOutTurn(false);
 
     UIListeners.updatePlayerCommands(this.playerCommands, this.players);
     this.getTurnStatus();
@@ -713,12 +655,24 @@ class MainGameHandler {
   }
 
   debugSpeed() {
-    this.TICK_DELAY = 40;
+    this.turnController.debugSpeed();
     this.DEBUG_SPEED = 2;
   }
 
+  updateBoardState(boardState, boardSize, stage, boardData) {
+    if (boardState) {
+      this.boardState = boardState;
+    } else {
+      this.boardState = new BoardState(boardSize, stage, boardData);
+    }
+
+    this.turnController.setBoardState(this.boardState);
+
+    return this.boardState;
+  }
+
   runRandomTester() {
-    var boardState = new BoardState(this.boardSize);
+    var boardState = this.updateBoardState();
     var buckets = {};
     var wl = [
       {value: 1, weight: 5},

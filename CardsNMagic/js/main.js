@@ -176,7 +176,7 @@ class MainGameHandler {
 }
 
 let MainGame = null;
-MainGame = new MainGameHandler();
+MainGame = new MainGameHandler(TurnController);
 MainGame.redraw();
 
 MainGame.loadImages(MainGame.start.bind(MainGame));

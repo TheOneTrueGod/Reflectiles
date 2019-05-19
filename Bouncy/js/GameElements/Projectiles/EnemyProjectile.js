@@ -41,8 +41,8 @@ class EnemyProjectile extends Projectile {
         hitSomething = true;
       }
     }
-
-    if (this.y > boardState.boardSize.height) {
+    
+    if (this.y >= boardState.boardSize.height) {
       hitSomething = true;
       this.delete();
       boardState.dealDamage(this.DAMAGE);

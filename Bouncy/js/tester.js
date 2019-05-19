@@ -78,7 +78,6 @@ class Tester extends MainGameHandler {
     this.boardState.sectors = new UnitSectors(9, 5, width, height);
 
     this.players[0] = new Player({user_name: 'totg', user_id: 'totg'}, 'totg');
-    //this.TICK_DELAY = 10;
     this.abilityTestReset();
 
     AIDirector.spawnForTurn = function() {} ;
