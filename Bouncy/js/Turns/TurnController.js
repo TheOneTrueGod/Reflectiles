@@ -16,14 +16,26 @@ class TurnController {
     }
 
     setPlayingOutTurn(value) {
-        this.playingOutTurn = value;
-    }
+		this.playingOutTurn = value;
+		this.updateTurnPlayingOutDisplay();
+	}
+	
+	updateTurnPlayingOutDisplay() {
+		if (this.playingOutTurn) {
+			$('#gameContainer').addClass("turnPlaying");
+		} else {
+			$('#gameContainer').removeClass("turnPlaying");
+		}
+	}
 
     isPlayingOutTurn() {
         return this.playingOutTurn;
     }
 
     playOutTurn(currPhase) {
+		if (!this.boardState) { throw new Error("You must call setBoardState before claling playOutTurn"); }
+		if (!this.mainGameHandler) { throw new Error("Cannot playOutTurn without mainGameHandler set"); }
+
         if (this.playingOutTurn && !currPhase) { return; }
         if (!currPhase) {
             $('#gameContainer').addClass("turnPlaying");
@@ -83,20 +95,6 @@ class TurnController {
         }
     }
 
-    readyForTurnEnd(players, playerCommands) {
-		var allPlayersDone = true;
-		players.forEach((player) => {
-			if (
-				!playerCommands[player.getUserID()] ||
-				!playerCommands[player.getUserID()].isDoneTurn()
-			) {
-				allPlayersDone = false;
-			}
-		});
-
-		return allPlayersDone;
-    }
-
     finalizedTurnOver() {
         $('#gameContainer').removeClass("turnPlaying");
         if (!this.boardState.isGameOver(AIDirector)) {
@@ -141,5 +139,25 @@ class TurnController {
         this.mainGameHandler.getTurnStatus();
         UIListeners.resetHintBox();
         this.mainGameHandler.updateActionHint();
-      }
+	}
+	
+	// TODO: Move this to a new, injected object.
+	readyForTurnEnd(players, playerCommands) {
+		var allPlayersDone = true;
+		players.forEach((player) => {
+			if (
+				!playerCommands[player.getUserID()] ||
+				!playerCommands[player.getUserID()].isDoneTurn()
+			) {
+				allPlayersDone = false;
+			}
+		});
+
+		return allPlayersDone;
+	}
+	
+	canUnitActThisTurn(unit) {
+		console.log(unit.getOwner());
+		return true;
+	}
 }

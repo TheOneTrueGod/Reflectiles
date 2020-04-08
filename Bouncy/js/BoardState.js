@@ -457,12 +457,12 @@ class BoardState {
     this.doDeleteChecks();
   }
 
-  runTick(players, playerCommands, phase) {
+  runTick(players, playerCommands, phase, turnController) {
     this.runUnitTicks(phase);
 
     this.runProjectileTicks();
 
-    this.doPlayerActions(players, playerCommands, phase);
+    this.doPlayerActions(players, playerCommands, phase, turnController);
 
     this.tick += 1;
     this.noActionKillLimit += 1;
@@ -567,20 +567,14 @@ class BoardState {
     return playerTurnOrder;
   }
 
-  doPlayerActions(players, playerCommands, phase) {
+  doPlayerActions(players, playerCommands, phase, turnController) {
     var commands = this.getPlayerActionsInPhase(players, playerCommands, phase);
-
-    if (commands) {
-      for (var i = 0; i < commands.length; i++) {
-        var command = commands[i];
-        if (command) {
-          command.doActionOnTick(
-            this.getOffsetTickForPlayer(phase, commands, commands[i].playerID, players),
-            this
-          );
-        }
-      }
-    }
+    commands && commands.forEach((command) => {
+      command && command.doActionOnTick(
+        this.getOffsetTickForPlayer(phase, commands, command.playerID, players),
+        this
+      );
+    });
   }
 
   addProjectile(projectile) {

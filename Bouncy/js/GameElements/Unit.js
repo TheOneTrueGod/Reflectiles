@@ -22,7 +22,7 @@ class Unit {
     var health = NumbersBalancer.getUnitHealth(this);
     this.health = {current: health, max: health};
     if (isNaN(this.health.current) || isNaN(this.health.max)) {
-      debugger;
+      throw new Error(`Couldn't find health value for unit [${this.constructor.name}].`);
     }
     var armour = NumbersBalancer.getUnitArmour(this);
     this.armour = {current: armour, max: armour};
@@ -45,6 +45,10 @@ class Unit {
     this.createCollisionBox();
 
     this.sortIndex = 100;
+  }
+
+  getOwner() {
+    return this.owner;
   }
 
   isRealUnit() {

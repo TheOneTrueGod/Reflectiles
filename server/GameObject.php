@@ -49,6 +49,8 @@ abstract class GameObject {
   public static function loadFromJSON($json, $metadata) {
     $decoded = json_decode($json);
     $game_type = $decoded->game_type_id;
+    echo "in - B - A";
+    echo $game_type;
     switch ($game_type) {
       case CardsNMagicGameObject::getGameTypeID();
         $go = new CardsNMagicGameObject(
@@ -93,6 +95,7 @@ abstract class GameObject {
     $metadata = DatastoreFactory::getDatastore()->getGameObjectMetadata(
       $game_id
     );
+    echo "in - A";
     return self::loadFromJSON($json, $metadata);
   }
 
