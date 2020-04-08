@@ -44,6 +44,9 @@ class Tester extends MainGameHandler {
       //[this.buildAbility(AbilityCore7, ['shield width 1']).index, {x: 0, y: -100}],
       //[this.buildAbility(AbilityCore1003, []).index, {x: 0, y: -1000}],
       [this.buildAbility(AbilityCore4010, []).index, {x: 0, y: -1000}],
+      [this.buildAbility(AbilityCore4010, []).index, {x: 500, y: -1000}],
+      [this.buildAbility(AbilityCore4010, []).index, {x: -500, y: -1000}],
+      [this.buildAbility(AbilityCore4010, []).index, {x: 0, y: -1000}],
       //[this.buildAbility(AbilityCore3007, []).index, {x: 0, y: -100}],
       //[this.buildAbility(AbilityCore13).index, {x: 0, y: -100}],
       //[this.buildAbility(AbilityCore5,
@@ -75,9 +78,10 @@ class Tester extends MainGameHandler {
     var width = Unit.UNIT_SIZE * 5; var height = Unit.UNIT_SIZE * 9;
     let boardSize = {width: width, height: height};
     this.boardState = new BoardState(boardSize, this.stage);
+    this.turnController.setBoardState(this.boardState);
     this.boardState.sectors = new UnitSectors(9, 5, width, height);
 
-    this.players[0] = new Player({user_name: 'totg', user_id: 'totg'}, 'totg');
+    this.players[0] = new Player({user_name: Tester.USER_ID, user_id: Tester.USER_ID}, Tester.USER_ID);
     this.abilityTestReset();
 
     AIDirector.spawnForTurn = function() {} ;
@@ -85,7 +89,7 @@ class Tester extends MainGameHandler {
     var self = this;
     this.turnsPlayed = 0;
     self.boardState.saveState();
-    this.finalizedTurnOver = function() {
+    /*this.turnController.finalizedTurnOver = function() {
       window.setTimeout(function() {
         self.playingOutTurn = false;
         self.turnsPlayed += 1;
@@ -98,7 +102,7 @@ class Tester extends MainGameHandler {
         }
         self.abilityTestRunCommands();
       }, 500);
-    }
+    }*/
     this.abilityTestRunCommands();
   }
 
@@ -121,15 +125,15 @@ class Tester extends MainGameHandler {
             (this.boardState.boardSize.width / 2) + target.x,
             (this.boardState.boardSize.height - 25) + target.y,
             abilIndex[0],
-            $('#gameContainer').attr('playerID')
+            Tester.USER_ID
           ),
           false
         );
       }
-      this.playerCommands[$('#gameContainer').attr('playerID')].updateValidTargetChecks();
+      this.playerCommands[Tester.USER_ID].updateValidTargetChecks();
     }
 
-    this.playOutTurn();
+    this.turnController.playOutTurn();
   }
 
   abilityTestReset() {
@@ -154,25 +158,28 @@ class Tester extends MainGameHandler {
     var newCore = new UnitCore(
       this.boardState.boardSize.width / 2,
       this.boardState.boardSize.height - Unit.UNIT_SIZE / 2,
-      'totg'
+      Tester.USER_ID
     );
     this.boardState.addUnit(newCore);
   }
 
-  loopTicksForPhase(phase) {
-    super.loopTicksForPhase(phase);
+  doTick(phase) {
+    const tickResult = super.doTick(phase);
     let totalDamage = 0;
-    for (let key in this.boardState.gameStats.playerDamage.totg) {
-      let damageStat = this.boardState.gameStats.playerDamage.totg[key];
+    for (let key in this.boardState.gameStats.playerDamage[Tester.USER_ID]) {
+      let damageStat = this.boardState.gameStats.playerDamage[Tester.USER_ID][key];
       totalDamage += damageStat.damage;
     }
     $(".damageDealt").html("Damage Dealt<br>" + totalDamage);
     let damageTaken = this.boardState.teamHealth[1] - this.boardState.teamHealth[0];
     $(".damageTaken").html("Damage Taken<br>" + damageTaken);
+    return tickResult;
   }
 }
 
-MainGame = new Tester();
+Tester.USER_ID = 'totg';
+
+MainGame = new Tester(TestTurnController);
 MainGame.redraw();
 
 MainGame.start();

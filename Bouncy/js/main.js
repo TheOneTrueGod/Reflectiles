@@ -356,7 +356,8 @@ class MainGameHandler {
   }
 
   doTick(phase) {
-    this.boardState.runTick(this.players, this.playerCommands, phase);
+    console.log(this.turnController);
+    this.boardState.runTick(this.players, this.playerCommands, phase, this.turnController);
     return this.boardState.atEndOfPhase(this.players, this.playerCommands, phase);
   }
 
@@ -507,7 +508,7 @@ class MainGameHandler {
     }
     this.playerCommands[pID].addCommand(playerCommand);
 
-    if (!$('#gameContainer').hasClass("turnPlaying")) {
+    if (!this.turnController.playingOutTurn) {
       this.playerCommands[pID].getCommands().forEach((command) => {
         let aimPreview = this.aimPreviews[command.getCommandPhase()];
         let newAimPreview = null;
@@ -586,55 +587,9 @@ class MainGameHandler {
     ServerCalls.LoadInitialBoard((serializedGameData) => {
       var gameData = JSON.parse(serializedGameData);
       if (this.deserializeGameData(gameData)) {
-        $('#gameContainer').removeClass("turnPlaying");
+        this.turnController.updateTurnPlayingOutDisplay();
       }
     }, this);
-  }
-
-  finalizedTurnOver() {
-    $('#gameContainer').removeClass("turnPlaying");
-    if (!this.boardState.isGameOver(AIDirector)) {
-      $('#missionEndTurnButton').prop("disabled", false).removeClass("flashing");
-    } else {
-      UIListeners.showGameOverScreen(this.boardState.didPlayersWin(AIDirector), this.boardState.gameStats);
-    }
-
-    this.players.forEach((player) => {
-      let discardedCards = 0;
-      if (player.user_id in this.playerCommands) {
-        this.playerCommands[player.user_id].getCommands().forEach((command) => {
-          if (command instanceof PlayerCommandUseAbility) {
-            if (player.discardCard(command.abilityID)) {
-              discardedCards += 1;
-            }
-          }
-        });
-      }
-      player.endOfTurn();
-      player.refillHand(this.boardState);
-    });
-
-    UIListeners.createAbilityDisplay(this.players);
-
-    this.boardState.incrementTurn(this.players);
-    this.boardState.saveState();
-    if (this.isHost) {
-      let experienceGained = this.boardState.gameStats.getExperienceEarned();
-      ServerCalls.SetBoardStateAtStartOfTurn(this.boardState, this, AIDirector, experienceGained);
-    } else {
-      $('#gameContainer').addClass("turnPlaying");
-      this.resyncAtTurnEnd();
-    }
-    this.removeAllPlayerCommands();
-    this.playerCommands = [];
-    this.isFinalized = false;
-    this.isFinalizing = false;
-    this.turnController.setPlayingOutTurn(false);
-
-    UIListeners.updatePlayerCommands(this.playerCommands, this.players);
-    this.getTurnStatus();
-    UIListeners.resetHintBox();
-    this.updateActionHint();
   }
 
   debugSpeed() {

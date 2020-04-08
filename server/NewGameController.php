@@ -86,18 +86,27 @@ class NewGameController {
 
   function getResponse($request, $user) {
     $linkedFrom = $request->param('linkedFrom');
+    echo $linkedFrom;
     if ($linkedFrom) {
+      echo "B";
       $linkedGame = GameObject::loadFromFile($linkedFrom);
+      echo $linkedGame;
       if (!$linkedGame) {
+        echo "No Link";
         throw new Exception("Couldn't find game [". $linkedFrom . "]");
       }
+      echo "A Link";
       $gameObj = $this->loadLinkedGame($request, $user, $linkedGame);
+      echo $gameObj;
       if (!$gameObj) {
         $gameObj = $this->createNewGame($request, $user);
         if (!$gameObj) {
           throw new Exception("Failed to create a new game");
         }
         $isNextGame = $request->param('nextLevel');
+        echo "Next Game";
+        echo $isNextGame;
+        die();
         if ($isNextGame === "true") {
           $linkedGame->getMetadata()->setNextGame($gameObj->getID());
           $gameObj->getMetadata()->setLevel(
