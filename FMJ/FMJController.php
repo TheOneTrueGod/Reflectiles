@@ -10,7 +10,7 @@ const FMJ_SERVER_ACTIONS = [
   'UPDATE_PRE_GAME_STATE' => 'update_pre_game_state'
 ];
 
-const SLOT_ACTIONS = [
+const FMJ_SLOT_ACTIONS = [
   'JOIN' => 'join',
   'QUIT' => 'quit',
   'KICK' => 'kick',
@@ -178,33 +178,33 @@ class FMJController {
 
   private function updatePreGameState() {
     switch ($this->request->param('slot_action')) {
-      case SLOT_ACTIONS['START']:
+      case FMJ_SLOT_ACTIONS['START']:
         if ($this->gameObject->isUserHost($this->user)) {
           $this->gameObject->startGame();
           return $this->getGameMetaData();
         }
         throw new Exception("Only the host can start the game");
-      case SLOT_ACTIONS['QUIT']:
+      case FMJ_SLOT_ACTIONS['QUIT']:
         $this->gameObject->removePlayer($this->getPlayerSlotFromRequest(), $this->user);
         return $this->getGameMetaData();
-      case SLOT_ACTIONS['JOIN']:
+      case FMJ_SLOT_ACTIONS['JOIN']:
         $this->gameObject->addPlayer($this->getPlayerSlotFromRequest(), $this->user);
         return $this->getGameMetaData();
-      case SLOT_ACTIONS['CHANGE_DECK']:
+      case FMJ_SLOT_ACTIONS['CHANGE_DECK']:
         $this->gameObject->changeDeck(
           $this->getPlayerSlotFromRequest(),
           $this->request->param('deck_id'),
           $this->user
         );
         return $this->getGameMetaData();
-      case SLOT_ACTIONS['SET_LEVEL']:
+      case FMJ_SLOT_ACTIONS['SET_LEVEL']:
         if ($this->gameObject->isUserHost($this->user)) {
           $this->gameObject->getMetadata()->setLevel($this->request->param('level'));
           $this->gameObject->saveMetadata();
           return $this->getGameMetaData();
         }
         throw new Exception("Only the host can change the level");
-      case SLOT_ACTIONS['SET_DIFFICULTY']:
+      case FMJ_SLOT_ACTIONS['SET_DIFFICULTY']:
         if ($this->gameObject->isUserHost($this->user)) {
           $this->gameObject->getMetadata()->setDifficulty($this->request->param('difficulty'));
           $this->gameObject->saveMetadata();

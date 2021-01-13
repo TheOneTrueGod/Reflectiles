@@ -89,7 +89,7 @@ class FlatFileDatastore extends Datastore {
     return $file_list;
   }
 
-  private function getSavePath($game_id = -1, $create = true) {
+  private static function getSavePath($game_id = -1, $create = true) {
     if ($game_id === null) {
       throw new Exception("Can't create a null game ID");
     }
@@ -106,7 +106,7 @@ class FlatFileDatastore extends Datastore {
     return $path;
   }
 
-  private function getGameFileName($game_id, $turn_id, $create = true, $extension = ".sav") {
+  private static function getGameFileName($game_id, $turn_id, $create = true, $extension = ".sav") {
     $filename = $turn_id . $extension;
     $path = self::getSavePath($game_id, $create);
     return $path . "/" . $filename;
@@ -136,7 +136,7 @@ class FlatFileDatastore extends Datastore {
     return file_exists($path);
   }
 
-  private function createNewUserPath($user_id) {
+  private static function createNewUserPath($user_id) {
     if (self::doesUserExist($user_id)) {
       throw new Exception("User already exists");
     }
@@ -155,7 +155,7 @@ class FlatFileDatastore extends Datastore {
     return $path;
   }
 
-  private function getUserSavePath($user_id) {
+  private static function getUserSavePath($user_id) {
     $path = "saves";
     if (!file_exists($path)) { mkdir($path); }
     $path .= "/users";

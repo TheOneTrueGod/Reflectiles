@@ -119,7 +119,7 @@ class BouncyUser extends User {
       },
       $user_data->decks
     );
-    if (array_key_exists('cards', $user_data)) {
+    if (isset($user_data->cards)) {
       $this->cards = [];
       foreach ($user_data->cards as $card_data) {
         $player_card = new PlayerCard($card_data->card_index, $card_data);

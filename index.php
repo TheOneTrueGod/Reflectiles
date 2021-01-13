@@ -1,5 +1,9 @@
+<?php 
+session_start();
+error_reporting(E_ERROR);
+?>
 <?php
-//Chip was here
+
 require_once __DIR__ . '/vendor/autoload.php';
 require_once('server/GameSelectController.php');
 require_once('server/NewGameController.php');
@@ -17,9 +21,6 @@ require_once('server/TestController.php');
 require_once('server/SignupController.php');
 require_once('./testing_utils/TestingUtils.php');
 
-error_reporting(E_ERROR | E_WARNING | E_PARSE);
-
-session_start();
 $klein = new \Klein\Klein();
 
 KleinUtils::addHTMLResponder($klein, 'LoginController', 'GameSelectController', 'GET', '/');
