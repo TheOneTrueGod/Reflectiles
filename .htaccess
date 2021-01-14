@@ -1,1 +1,3 @@
-AccessFileName index.php
+<Directory "/">
+    AccessFileName index.php
+</Directory>
