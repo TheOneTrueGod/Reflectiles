@@ -5,7 +5,7 @@
 // [] Change the rawAbil
 class AbilityCore3009 extends AbilityCore {
   static BuildAbilityChild(level) {
-    let hitDamage = Math.floor(NumbersBalancer.getAbilityDamage(level, 1));
+    let hitDamage = Math.floor(NumbersBalancer.getAbilityDamage(level, 1) / 10);
     const rawAbil = {
       name: 'Ability 3009',
       description: `Deal ${hitDamage} damage`,
