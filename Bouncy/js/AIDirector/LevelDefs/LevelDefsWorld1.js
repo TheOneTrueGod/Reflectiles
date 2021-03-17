@@ -19,8 +19,17 @@ class LevelDefsWorld1 {
           [A, A, A, A, _, _, _, _, _, _, _, A, A, A, A],
         ],
         'waves':[
+          { 
+            'type': WAVE_TYPES.ADVANCED_WAVE,
+            'count': 8,
+            'advanced': [null, null]
+          },
+          { 
+            'type': WAVE_TYPES.BASIC_WAVE, 
+            'count': 17
+          },
           { 'type': WAVE_TYPES.UNIT_LIST,
-            'units':[{'unit': UnitBasicSquare, 'count': 2}, {'unit': UnitBasicDiamond, 'count': 2}]
+            'units':[{'unit': UnitBasicSquare, 'count': 20}, {'unit': UnitBasicDiamond, 'count': 2}]
           },
           {
             'type': WAVE_TYPES.SKIP,
