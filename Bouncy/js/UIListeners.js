@@ -466,16 +466,16 @@ class UIListeners {
   }
 
   updateSpawnPreview(boardState) {
+    console.log("Updating Spawn Preview");
+
     const { spawnLocation, formation } = AIDirector.getFormationAndSpawnPointForTurn(boardState);
-    console.log(spawnLocation, formation)
-    if (!formation) {
-      $('#missionNextWavePreview').children().text('-');
+    if (!formation || formation instanceof SkipSpawnFormation) {
+      $('#missionNextWavePreview').children().text(!formation ? '' : '-');
       return;
     }
     const spawnList = formation.getSpawnList();
     for (let x = 0; x < boardState.sectors.columns; x++) {
       let spawnCount = 0;
-      console.log(x, spawnLocation.x);
       if (x >= spawnLocation.x) {
         const spawnX = x - spawnLocation.x;
         for (let y = 0; y < spawnList.length; y++) {

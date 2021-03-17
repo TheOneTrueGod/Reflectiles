@@ -19,9 +19,20 @@ class LevelDefsWorld1 {
           [A, A, A, A, _, _, _, _, _, _, _, A, A, A, A],
         ],
         'waves':[
-          {'type': WAVE_TYPES.FORMATION, units: [
+          { 'type': WAVE_TYPES.UNIT_LIST,
+            'units':[{'unit': UnitBasicSquare, 'count': 2}, {'unit': UnitBasicDiamond, 'count': 2}]
+          },
+          {
+            'type': WAVE_TYPES.SKIP,
+          },
+          {
+          'type': WAVE_TYPES.FORMATION, units: [
+            [_, S, S, S, _, _, _, _, _, _, _, S, S, S, _],
+            [_, _, B, S, _, _, _, _, _, _, _, S, B, _, _]
+          /*{'type': WAVE_TYPES.FORMATION, units: [
             [_, _, _, _, _, _, S, _, S, _, _, _, _, _, _]
-          ]},
+          ]},*/
+          ]}
         ]
       });
     } else if (stage == 2) {

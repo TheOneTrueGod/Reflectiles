@@ -4,12 +4,18 @@ class SpawnFormation {
     this.totalWaves = totalWaves;
   }
 
-  isValidSpawnSpot(spawnPosition) {
-    return true;
-  }
-
-  spawn(spawnPosition) {
-
+  spawn() {
+    const unitList = this.getSpawnList();
+    for (var y = 0; y < unitList.length; y++) {
+      for (var x = 0; x < unitList[y].length; x++) {
+        if (unitList[y][x] !== null) {
+          this.spawnUnitAtCoord(
+            unitList[y][x],
+            {x, y}
+          );
+        }
+      }
+    }
   }
 
   getSpawnList() {
@@ -57,38 +63,30 @@ class UnitListSpawnFormation extends SpawnFormation {
       this.unitsToSpawn += unitData.count;
     });
     this.isValidSpawn = null;
-    this.validSpawnSpots = [];
   }
 
-  isValidSpawnSpot(spawnPosition) {
-    if (spawnPosition.x !== 0) { return false; }
-    if (this.isValidSpawn !== null) { return this.isValidSpawn; }
-    var y = 0;
-    for (var x = 0; x < this.boardState.sectors.columns; x++) {
-      var spot = Victor(x, y);
-      if (this.boardState.sectors.canUnitEnter(
-        this.boardState, null,
-        this.boardState.sectors.getPositionFromGrid(spot)
-      )) {
-        this.validSpawnSpots.push(spot);
-      }
-    }
-    this.isValidSpawn = this.validSpawnSpots.length >= this.unitsToSpawn;
-    return this.isValidSpawn;
-  }
-
-  spawn(spawnPosition) {
+  getSpawnList() {
+    let spawnList = [];
+    let validSpawnSpots = [];
     this.unitList.forEach((unitData) => {
       for (var i = 0; i < unitData.count; i++) {
-        var spawnPos = this.getRandomSpawnLocation();
-        this.spawnUnitAtLocation(unitData.unit, spawnPos);
+        if (validSpawnSpots.length === 0) {
+          spawnList.unshift([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]);
+          validSpawnSpots = validSpawnSpots.concat([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]);
+        }
+
+        var spawnPosIndex = Math.floor(this.boardState.getRandom() * validSpawnSpots.length);
+
+        spawnList[0][validSpawnSpots.splice(spawnPosIndex, 1)[0]] = unitData.unit;
       }
     });
+    console.log(spawnList);
+    return spawnList;
   }
 
-  getRandomSpawnLocation() {
-    var spawnPosIndex = Math.floor(this.boardState.getRandom() * this.validSpawnSpots.length);
-    var spawnGridPos = this.validSpawnSpots.splice(spawnPosIndex, 1)[0];
+  getRandomSpawnLocation(validSpawnSpots) {
+    var spawnPosIndex = Math.floor(this.boardState.getRandom() * validSpawnSpots.length);
+    var spawnGridPos = validSpawnSpots.splice(spawnPosIndex, 1)[0];
     var spawnPos = this.boardState.sectors.getPositionFromGrid(
       spawnGridPos
     );
@@ -116,27 +114,10 @@ class BasicUnitWaveSpawnFormation extends SpawnFormation {
         ;
     }
 
-    this.validSpawnSpots = [];
     this.isValidSpawn = null;
   }
 
-  isValidSpawnSpot(spawnPosition) {
-    if (this.isValidSpawn !== null) { return this.isValidSpawn; }
-    var y = 0;
-    for (var x = 0; x < this.boardState.sectors.columns; x++) {
-      var spot = Victor(x, y);
-      if (this.boardState.sectors.canUnitEnter(
-        this.boardState, null,
-        this.boardState.sectors.getPositionFromGrid(spot)
-      )) {
-        this.validSpawnSpots.push(spot);
-      }
-    }
-    this.isValidSpawn = this.validSpawnSpots.length >= this.unitsToSpawn;
-    return this.isValidSpawn;
-  }
-
-  spawn(spawnPosition) {
+  spawn() {
     for (var i = 0; i < this.unitsToSpawn; i++) {
       var spawnPos = this.getRandomSpawnLocation();
 
@@ -147,10 +128,8 @@ class BasicUnitWaveSpawnFormation extends SpawnFormation {
   }
 
   getRandomSpawnLocation() {
-    var spawnPosIndex = Math.floor(this.boardState.getRandom() * this.validSpawnSpots.length);
-    var spawnGridPos = this.validSpawnSpots.splice(spawnPosIndex, 1)[0];
     var spawnPos = this.boardState.sectors.getPositionFromGrid(
-      spawnGridPos
+      { x: 0, y: 0 }
     );
 
     return spawnPos;
@@ -198,10 +177,10 @@ class AdvancedUnitWaveSpawnFormation extends BasicUnitWaveSpawnFormation {
     }
   }
 
-  spawn(spawnPosition) {
+  spawn() {
     const ADVANCED_UNITS_TO_SPAWN = this.calculateNumSpecialsToSpawn();
     this.unitsToSpawn -= ADVANCED_UNITS_TO_SPAWN;
-    super.spawn(spawnPosition);
+    super.spawn();
     this.unitsToSpawn += ADVANCED_UNITS_TO_SPAWN;
 
     let i = 0;
@@ -236,33 +215,8 @@ class UnitFormationSpawnFormation extends SpawnFormation {
     });
   }
 
-  isValidSpawnSpot(spawnPosition) {
-    
-    let topLeft = {x: spawnPosition.x, y: 0};
-    let bottomRight = {x: spawnPosition.x + this.spawnWidth, y: this.spawnHeight};
-
-    if (this.forceSpawn) {
-      return !SpawnFormationUtils.isSpawnOutOfRange(this.boardState, topLeft, bottomRight);
-    }
-
-    return SpawnFormationUtils.isBoxClearForSpawn(
-      this.boardState,
-      topLeft,
-      bottomRight,
-    );
-  }
-
-  spawn(spawnPosition) {
-    for (var y = 0; y < this.unitList.length; y++) {
-      for (var x = 0; x < this.unitList[y].length; x++) {
-        if (this.unitList[y][x] !== null) {
-          this.spawnUnitAtCoord(
-            this.unitList[y][x],
-            {x: spawnPosition.x + x, y: spawnPosition.y + y}
-          );
-        }
-      }
-    }
+  getSpawnList() {
+    return this.unitList;
   }
 
   getSpawnDelay() {
@@ -279,35 +233,24 @@ class KnightAndShooterSpawnFormation extends SpawnFormation {
     }
   }
 
-  isValidSpawnSpot(spawnPosition) {
-    if (!(spawnPosition.x > 3 && spawnPosition.x < this.boardState.sectors.columns - 3)) {
-      return false;
-    }
-    return SpawnFormationUtils.isBoxClearForSpawn(
-      this.boardState,
-      {x: spawnPosition.x - this.spawnWidth, y: 0},
-      {x: spawnPosition.x + this.spawnWidth, y: 1},
-    );
-  }
-
-  spawn(spawnPosition) {
+  spawn() {
     for (var x = -this.spawnWidth; x <= this.spawnWidth; x++) {
       var spawnPos = this.boardState.sectors.getPositionFromGrid(
-        {x: spawnPosition.x + x, y: spawnPosition.y}
+        {x, y}
       );
       if (this.spawnWidth == 2 && x == 0) {
-        this.spawnUnitAtCoord(UnitProtector, {x: spawnPosition.x + x, y: spawnPosition.y});
+        this.spawnUnitAtCoord(UnitProtector, {x, y});
       } else {
-        this.spawnUnitAtCoord(UnitShooter, {x: spawnPosition.x + x, y: spawnPosition.y});
+        this.spawnUnitAtCoord(UnitShooter, {x, y});
       }
       spawnPos.y += Unit.UNIT_SIZE;
-      this.spawnUnitAtCoord(UnitKnight, {x: spawnPosition.x + x, y: spawnPosition.y + 1});
+      this.spawnUnitAtCoord(UnitKnight, {x, y: 1});
     }
 
-    this.spawnUnitAtCoord(UnitHeavy, {x: spawnPosition.x - (this.spawnWidth + 1), y: spawnPosition.y});
-    this.spawnUnitAtCoord(UnitHeavy, {x: spawnPosition.x + (this.spawnWidth + 1), y: spawnPosition.y});
-    this.spawnUnitAtCoord(UnitHeavy, {x: spawnPosition.x - (this.spawnWidth + 1), y: spawnPosition.y + 1});
-    this.spawnUnitAtCoord(UnitHeavy, {x: spawnPosition.x + (this.spawnWidth + 1), y: spawnPosition.y + 1});
+    this.spawnUnitAtCoord(UnitHeavy, {x:  - (this.spawnWidth + 1), y});
+    this.spawnUnitAtCoord(UnitHeavy, {x: (this.spawnWidth + 1), y});
+    this.spawnUnitAtCoord(UnitHeavy, {x: - (this.spawnWidth + 1), y: 1});
+    this.spawnUnitAtCoord(UnitHeavy, {x: (this.spawnWidth + 1), y: 1});
 
   }
 

@@ -403,6 +403,10 @@ class BoardState {
       }
     }
 
+    if (phase === TurnPhasesEnum.END_OF_TURN) {
+      UIListeners.updateSpawnPreview(this);
+    }
+
     return true;
   }
 
@@ -661,9 +665,11 @@ class BoardState {
 
   addWavesSpawned(waves) {
     this.wavesSpawned += waves;
+    console.log(`Increasing waves spawned by ${waves}`);
   }
 
   incrementWavesSpawned(aiDirector) {
+    console.log("Increasing waves spawned by 1");
     this.wavesSpawned += 1;
     this.lastSpawnTurn = this.turn;
     this.updateWavesSpawnedUI(aiDirector);

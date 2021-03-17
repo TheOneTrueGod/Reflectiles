@@ -47,30 +47,13 @@ class AIDirector {
   }
 
   getFormationAndSpawnPointForTurn(boardState) {
+    console.log("Getting formation and spawn point");
     var formation = this.getFormationForTurn(boardState);
-    if (formation === null) { return { spawnLocation: {x: 0, y: 0 }, formation: null}; }
-    if (formation instanceof SkipSpawnFormation) {
-      return { spawnLocation: { x: 0, y: 0 }, formation };
-    }
-    if (boardState.turn < boardState.lastSpawnTurn + formation.getSpawnDelay()) {
-      return { spawnLocation: { x: 0, y: 0 }, formation: null };
+    if (formation === null) {
+      return { spawnLocation: {x: 0, y: 0 }, formation: null };
     }
 
-    var validSpawnSpots = [];
-    for (var x = 0; x < boardState.sectors.columns; x++) {
-      var targ = new Victor(x, 0);
-      if (formation.isValidSpawnSpot(targ)) {
-        validSpawnSpots.push(targ);
-      }
-    }
-
-    if (validSpawnSpots.length <= 0) {
-      return { spawnLocation: { x: 0, y: 0 }, formation: null };
-    }
-
-    var index = Math.floor(boardState.getRandom() * validSpawnSpots.length);
-    var spawnLocation = validSpawnSpots[index];
-    return { spawnLocation, formation };
+    return { spawnLocation: { x: 0, y: 0}, formation };
   }
 
   spawnForTurn(boardState) {
@@ -80,6 +63,10 @@ class AIDirector {
     const { spawnLocation, formation } = this.getFormationAndSpawnPointForTurn(boardState);
 
     if (formation === null) {
+      return;
+    }
+
+    if (boardState.turn < boardState.lastSpawnTurn + formation.getSpawnDelay()) {
       return;
     }
 
