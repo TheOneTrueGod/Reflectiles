@@ -46,19 +46,14 @@ class AIDirector {
     return new BasicUnitWaveSpawnFormation(boardState, this.getWavesToSpawn());
   }
 
-  spawnForTurn(boardState) {
-    if (boardState.wavesSpawned >= this.getWavesToSpawn()) {
-      return;
-    }
-
+  getFormationAndSpawnPointForTurn(boardState) {
     var formation = this.getFormationForTurn(boardState);
-    if (formation === null) { return; }
+    if (formation === null) { return { spawnLocation: {x: 0, y: 0 }, formation: null}; }
     if (formation instanceof SkipSpawnFormation) {
-      boardState.incrementWavesSpawned(this);
-      return;
+      return { spawnLocation: { x: 0, y: 0 }, formation };
     }
     if (boardState.turn < boardState.lastSpawnTurn + formation.getSpawnDelay()) {
-      return;
+      return { spawnLocation: { x: 0, y: 0 }, formation: null };
     }
 
     var validSpawnSpots = [];
@@ -70,10 +65,28 @@ class AIDirector {
     }
 
     if (validSpawnSpots.length <= 0) {
-      return;
+      return { spawnLocation: { x: 0, y: 0 }, formation: null };
     }
+
     var index = Math.floor(boardState.getRandom() * validSpawnSpots.length);
     var spawnLocation = validSpawnSpots[index];
+    return { spawnLocation, formation };
+  }
+
+  spawnForTurn(boardState) {
+    if (boardState.wavesSpawned >= this.getWavesToSpawn()) {
+      return;
+    }
+    const { spawnLocation, formation } = this.getFormationAndSpawnPointForTurn(boardState);
+
+    if (formation === null) {
+      return;
+    }
+
+    if (formation instanceof SkipSpawnFormation) {
+      boardState.incrementWavesSpawned(this);
+      return;
+    }
 
     formation.spawn(spawnLocation);
     boardState.incrementWavesSpawned(this);

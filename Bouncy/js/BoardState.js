@@ -412,6 +412,13 @@ class BoardState {
       this.units[unit].startOfPhase(this, phase);
     }
     this.currPhase = phase;
+    if (phase === TurnPhasesEnum.ENEMY_SPAWN) {
+      UIListeners.hideSpawnPreview();
+    }
+    if (phase === TurnPhasesEnum.END_OF_TURN) {
+      UIListeners.showSpawnPreview();
+      UIListeners.updateSpawnPreview(this);
+    }
     this.doDeleteChecks();
   }
 

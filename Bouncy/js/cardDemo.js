@@ -1,6 +1,7 @@
+import MainGameHandler from './main.js';
 class CardDemo extends MainGameHandler {
   constructor() {
-    super();
+    super(TurnController);
     this.MAX_TURNS_TO_PLAY = 1;
     this.abilitiesToUse = [];
   }

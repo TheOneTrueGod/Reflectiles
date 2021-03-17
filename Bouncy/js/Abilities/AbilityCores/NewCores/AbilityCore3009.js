@@ -1,3 +1,4 @@
+// Arcane Nova -- Targets yourself or any ally.  Deals damage in a circle around them
 // TODO:
 // [] Change the icon
 // [] Change the cooldown

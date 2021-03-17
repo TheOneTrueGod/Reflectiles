@@ -449,6 +449,45 @@ class UIListeners {
     $('.timeline_progress').css('width', pct + '%');
   }
 
+  resetSpawnPreview(boardState) {
+    $('#missionNextWavePreview').empty();
+    for (let col = 0; col < boardState.sectors.columns; col++) {
+      $('#missionNextWavePreview').append($('<div/>', { class: 'previewColumn', text: col, width: Unit.UNIT_SIZE }));
+    }
+    this.updateSpawnPreview(boardState);
+  }
+
+  hideSpawnPreview() {
+    //$('#missionNextWavePreview')
+  }
+
+  showSpawnPreview() {
+
+  }
+
+  updateSpawnPreview(boardState) {
+    const { spawnLocation, formation } = AIDirector.getFormationAndSpawnPointForTurn(boardState);
+    console.log(spawnLocation, formation)
+    if (!formation) {
+      $('#missionNextWavePreview').children().text('-');
+      return;
+    }
+    const spawnList = formation.getSpawnList();
+    for (let x = 0; x < boardState.sectors.columns; x++) {
+      let spawnCount = 0;
+      console.log(x, spawnLocation.x);
+      if (x >= spawnLocation.x) {
+        const spawnX = x - spawnLocation.x;
+        for (let y = 0; y < spawnList.length; y++) {
+          if (spawnX < spawnList[y].length && spawnList[y][spawnX] !== null) {
+            spawnCount += 1;
+          }
+        }
+      }
+      $('#missionNextWavePreview').children(':nth-child(' + (x + 1) + ')').text(spawnCount);
+    }
+  }
+
   updateGameSetupScreen(players, difficulty, level) {
     var loggedInPlayerID = $('#gameContainer').attr('playerID');
     this.showCurrentScreen();

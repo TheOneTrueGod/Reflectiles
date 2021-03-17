@@ -11,6 +11,7 @@
 <script src="/client/GameInitializer.js"></script>
 <script src="/Bouncy/js/Enums/TurnPhases.js"></script>
 <script src="/Bouncy/js/ImageLoader.js"></script>
+<script src="/Bouncy/js/globalConstants.js"></script>
 
 <!-- Order of these doesn't matter.  They're all classes -->
 <script src="/Bouncy/js/GameElements/Unit.js"></script>
@@ -191,4 +192,4 @@
 <script src="/Bouncy/js/Players/PlayerCommandController.js"></script>
 
 <!-- MUST GO LAST -->
-<script src="/Bouncy/js/main.js"></script>
+<script type="module" src="/Bouncy/js/main.js"></script>

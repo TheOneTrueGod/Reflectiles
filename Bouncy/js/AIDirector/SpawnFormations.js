@@ -12,6 +12,13 @@ class SpawnFormation {
 
   }
 
+  getSpawnList() {
+    return [
+      [UnitBasicDiamond, UnitShooter, UnitBasicSquare],
+      [null, UnitKnight, null],
+    ];
+  }
+
   getBasicUnitSpawnWeights() {
     var wavesSpawned = this.boardState.getWavesSpawned();
     var pctDone = wavesSpawned / this.totalWaves;
@@ -54,6 +61,7 @@ class UnitListSpawnFormation extends SpawnFormation {
   }
 
   isValidSpawnSpot(spawnPosition) {
+    if (spawnPosition.x !== 0) { return false; }
     if (this.isValidSpawn !== null) { return this.isValidSpawn; }
     var y = 0;
     for (var x = 0; x < this.boardState.sectors.columns; x++) {

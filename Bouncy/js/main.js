@@ -32,10 +32,9 @@
  * Background of a person in a square
  * Make freeze spread across all shields.  They take double damage
  */
-const DEBUG_IMAGES = false;
-const DEBUG_DISABLE_LEVELING = true;
+import { ROUND_PREVIEW_HEIGHT } from './constants.js';
 
-class MainGameHandler {
+export default class MainGameHandler {
   constructor(turnControllerClass) {
     this.ticksPerTurn = 20;
     this.gameID = $('#gameBoard').attr('data-gameID');
@@ -55,17 +54,17 @@ class MainGameHandler {
     var mad = $('#missionActionDisplay');
 
     let canvasWidth = Math.floor(mad.width() / Unit.UNIT_SIZE) * Unit.UNIT_SIZE;
-    let canvasHeight = Math.floor(mad.height() / Unit.UNIT_SIZE) * Unit.UNIT_SIZE;
+    let canvasHeight = Math.floor((mad.height()) / Unit.UNIT_SIZE) * Unit.UNIT_SIZE;
 
     this.boardSize = {width: canvasWidth, height: canvasHeight};
     this.renderer = PIXI.autoDetectRenderer(canvasWidth, canvasHeight);
     this.stage = new PIXI.Container();
-
+    
     //Add the canvas to the HTML document
     mad.append(this.renderer.view);
 
     this.playerCommands = [];
-    this.players = {};
+    this.players = [];
 
     this.DEBUG_SPEED = 1;
 
@@ -650,6 +649,7 @@ class MainGameHandler {
     }
 
     this.turnController.setBoardState(this.boardState);
+    UIListeners.resetSpawnPreview(this.boardState);
 
     return this.boardState;
   }
@@ -677,5 +677,3 @@ class MainGameHandler {
     }
   }
 }
-
-let MainGame = null;

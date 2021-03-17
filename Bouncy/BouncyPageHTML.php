@@ -56,31 +56,34 @@
     >
       <div id="inMissionScreen">
         <div id="missionControlsActionBox">
-          <div id="missionActionDisplay">
-            <div id="errorBox"></div>
-            <div id="hintBox"></div>
-            <div id="warningMessageBox" class="noselect" style="display: none;"></div>
-            <div id="gameOverBox" class="noselect" style="display: none;">
-              <div id="title"></div>
-              <div id="stats"></div>
-              <div id="controls">
-                <a href="<?php
-                  echo NewGameController::getURLPath(
-                    NewGameController::$GAME_TYPE_BOUNCY,
-                    $game_id,
-                    false
-                  );
-                ?>" class="retryButton button green small">Retry</a>
-                <a href="<?php
-                  echo NewGameController::getURLPath(
-                    NewGameController::$GAME_TYPE_BOUNCY,
-                    $game_id,
-                    true
-                  );
-                ?>" class="nextLevelButton button green small">Next Level</a>
+          <div id="missionDisplay">
+            <div id="missionNextWavePreview"></div>
+            <div id="missionActionDisplay">
+              <div id="errorBox"></div>
+              <div id="hintBox"></div>
+              <div id="warningMessageBox" class="noselect" style="display: none;"></div>
+              <div id="gameOverBox" class="noselect" style="display: none;">
+                <div id="title"></div>
+                <div id="stats"></div>
+                <div id="controls">
+                  <a href="<?php
+                    echo NewGameController::getURLPath(
+                      NewGameController::$GAME_TYPE_BOUNCY,
+                      $game_id,
+                      false
+                    );
+                  ?>" class="retryButton button green small">Retry</a>
+                  <a href="<?php
+                    echo NewGameController::getURLPath(
+                      NewGameController::$GAME_TYPE_BOUNCY,
+                      $game_id,
+                      true
+                    );
+                  ?>" class="nextLevelButton button green small">Next Level</a>
+                </div>
               </div>
+              <div class="overlay"></div>
             </div>
-            <div class="overlay"></div>
           </div>
           <div id="missionControlsDisplay">
             <div class="playerStatusContainer"></div>

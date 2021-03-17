@@ -76,12 +76,27 @@
 
 #missionControlsActionBox {
   width: 100%;
-  height: 440px;
+  height: 460px;
+  display: flex;
+  flex-direction: row;
 }
 
 #missionActionCanvas {
   width: 100%;
   height: 100%;
+}
+
+#missionDisplay {
+  display: flex;
+  flex-direction: column;
+}
+
+#missionNextWavePreview {
+  height: 20px;
+  background: black;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
 }
 
 #missionActionDisplay {
@@ -1012,4 +1027,9 @@
 
 #gameBoard {
   position: relative;
+}
+
+.previewColumn {
+  text-align: center;
+  color: red;
 }

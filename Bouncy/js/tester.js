@@ -1,4 +1,10 @@
+import MainGameHandler from './main.js';
+
 class Tester extends MainGameHandler {
+  constructor() {
+    super(TurnController);
+  }
+
   start() {
     NumbersBalancer.setNumPlayers(4);
     NumbersBalancer.setDifficulty(NumbersBalancer.DIFFICULTIES.NIGHTMARE);
@@ -77,7 +83,9 @@ class Tester extends MainGameHandler {
     this.boardState = new BoardState(boardSize, this.stage);
     this.boardState.sectors = new UnitSectors(9, 5, width, height);
 
-    this.players[0] = new Player({user_name: 'totg', user_id: 'totg'}, 'totg');
+    this.updateBoardState(this.boardState, boardSize, this.stage);
+
+    this.players[0] = new Player({user_name: 'TheOneTrueGod', user_id: 'TheOneTrueGod'}, 'TheOneTrueGod');
     this.abilityTestReset();
 
     AIDirector.spawnForTurn = function() {} ;
@@ -129,7 +137,7 @@ class Tester extends MainGameHandler {
       this.playerCommands[$('#gameContainer').attr('playerID')].updateValidTargetChecks();
     }
 
-    this.playOutTurn();
+    this.turnController.playOutTurn();
   }
 
   abilityTestReset() {
@@ -154,16 +162,17 @@ class Tester extends MainGameHandler {
     var newCore = new UnitCore(
       this.boardState.boardSize.width / 2,
       this.boardState.boardSize.height - Unit.UNIT_SIZE / 2,
-      'totg'
+      $('#gameContainer').attr('playerID')
     );
     this.boardState.addUnit(newCore);
   }
 
   loopTicksForPhase(phase) {
+    const playerId = $('#gameContainer').attr('playerID');
     super.loopTicksForPhase(phase);
     let totalDamage = 0;
-    for (let key in this.boardState.gameStats.playerDamage.totg) {
-      let damageStat = this.boardState.gameStats.playerDamage.totg[key];
+    for (let key in this.boardState.gameStats.playerDamage[playerId]) {
+      let damageStat = this.boardState.gameStats.playerDamage[playerId][key];
       totalDamage += damageStat.damage;
     }
     $(".damageDealt").html("Damage Dealt<br>" + totalDamage);

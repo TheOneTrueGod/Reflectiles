@@ -1,4 +1,5 @@
 //MainGame.loadImages(MainGame.testAbility.bind(MainGame));
+import MainGameHandler from './main.js';
 
 //MainGame.runLineTester();
 function launchGame() {

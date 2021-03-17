@@ -112,7 +112,7 @@
 ?>
 <script src="/Bouncy/js/deckManager.js"></script>
 <script src="/Bouncy/js/cardManager.js"></script>
-<script src="/Bouncy/js/cardDemo.js"></script>
+<script type="module" src="/Bouncy/js/cardDemo.js"></script>
 <script>
 let deckManager = new DeckManager(
   "<?php echo $serialized_decks; ?>",
