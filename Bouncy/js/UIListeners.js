@@ -8,6 +8,7 @@ class UIListeners {
     this.inactionTimer = null;
     this.inactionTimerFadingIn = false;
     this.currScreen = null;
+    this.setupFinished = false;
   }
 
   createPlayerStatus(players) {
@@ -211,7 +212,7 @@ class UIListeners {
     $('#hintBox').text(newText);
   }
 
-  setupUIListeners() {
+  setupUIListeners(boardState) {
     $('#missionEndTurnButton').on('click', function() {
       MainGame.setPlayerCommand(
         new PlayerCommandSpecial(
@@ -263,6 +264,9 @@ class UIListeners {
     };
 
     $(window).on('mousemove', windowMoveCallback);
+    this.setupFinished = true;
+    
+    this.resetSpawnPreview(boardState);
   }
 
   resetHintBox() {
@@ -450,6 +454,7 @@ class UIListeners {
   }
 
   resetSpawnPreview(boardState) {
+    if (!this.setupFinished) { return; }
     $('#missionNextWavePreview').empty();
     for (let col = 0; col < boardState.sectors.columns; col++) {
       $('#missionNextWavePreview').append($('<div/>', { class: 'previewColumn', text: col, width: Unit.UNIT_SIZE }));
@@ -466,8 +471,7 @@ class UIListeners {
   }
 
   updateSpawnPreview(boardState) {
-    console.log("Updating Spawn Preview");
-
+    boardState.storeRandomSeeds();
     const { spawnLocation, formation } = AIDirector.getFormationAndSpawnPointForTurn(boardState);
     if (!formation || formation instanceof SkipSpawnFormation) {
       $('#missionNextWavePreview').children().text(!formation ? '' : '-');
@@ -486,6 +490,7 @@ class UIListeners {
       }
       $('#missionNextWavePreview').children(':nth-child(' + (x + 1) + ')').text(spawnCount);
     }
+    boardState.recoverRandomSeeds();
   }
 
   updateGameSetupScreen(players, difficulty, level) {

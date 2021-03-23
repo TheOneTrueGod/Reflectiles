@@ -40,11 +40,23 @@ class BoardState {
     this.runEffectTicks();
   }
 
-  getRandom() {
+  storeRandomSeeds() {
+    this.storedRandomSeeds = { ...this.randomSeeds };
+  }
+
+  recoverRandomSeeds() {
+    if (!this.storedRandomSeeds) { throw new Error("Trying to recover random seeds when they weren't saved."); }
+    this.randomSeeds = { ...this.storedRandomSeeds };
+  }
+
+  getRandom(seedType = BoardState.RNG_TYPES.DEFAULT) {
+    if (this.randomSeeds[seedType] === undefined) {
+      throw new Error(`Trying to get invalid random seed: ${seedType}`);
+    }
     var max_value = 6781335567;
     var large_prime = 18485345523457;
-    var toRet = (this.randomSeed + large_prime) % max_value;
-    this.randomSeed += toRet;
+    var toRet = (this.randomSeeds[seedType] + large_prime) % max_value;
+    this.randomSeeds[seedType] += toRet;
     return toRet / max_value;
   }
 
@@ -62,7 +74,7 @@ class BoardState {
     this.teamHealth = [health, health];
     this.wavesSpawned = 0;
     this.enemyUnitCount = 0;
-    this.resetRandomSeed();
+    this.resetRandomSeeds();
     this.resetNoActionKillSwitch();
   }
 
@@ -95,8 +107,11 @@ class BoardState {
     }
   }
 
-  resetRandomSeed() {
-    this.randomSeed = Math.floor(Math.random() * 4432561237);
+  resetRandomSeeds() {
+    this.randomSeeds = {
+      [BoardState.RNG_TYPES.DEFAULT]: Math.floor(Math.random() * 4432561237),
+      [BoardState.RNG_TYPES.SPAWN]: Math.floor(Math.random() * 4432561237),
+    };
   }
 
   deserialize(boardState) {
@@ -111,10 +126,10 @@ class BoardState {
       this.unitsToSpawn = UnitsToSpawn.deserialize(boardState.units_to_spawn);
     }
     if (boardState.last_spawn_turn) { this.lastSpawnTurn = boardState.last_spawn_turn; }
-    if (boardState.random_seed) {
-      this.randomSeed = boardState.random_seed;
+    if (boardState.random_seeds) {
+      this.randomSeeds = boardState.random_seeds;
     } else {
-      this.resetRandomSeed();
+      this.resetRandomSeeds();
     }
     if (boardState.player_data) {
       this.deserializePlayerData(boardState.player_data);
@@ -190,7 +205,7 @@ class BoardState {
       'units': this.units.map(function (unit) { return unit.serialize() }),
       'turn': this.turn,
       'tick': this.tick,
-      'random_seed': this.randomSeed,
+      'random_seeds': this.randomSeeds,
       'unit_id_index': this.UNIT_ID_INDEX,
       'team_health': this.teamHealth,
       'waves_spawned': this.wavesSpawned,
@@ -665,11 +680,9 @@ class BoardState {
 
   addWavesSpawned(waves) {
     this.wavesSpawned += waves;
-    console.log(`Increasing waves spawned by ${waves}`);
   }
 
   incrementWavesSpawned(aiDirector) {
-    console.log("Increasing waves spawned by 1");
     this.wavesSpawned += 1;
     this.lastSpawnTurn = this.turn;
     this.updateWavesSpawnedUI(aiDirector);
@@ -680,10 +693,17 @@ class BoardState {
   }
 
   checkForDesync(otherBoardState) {
-    if (otherBoardState.randomSeed !== this.randomSeed) {
-      console.warn("Desync due to random seed mismatch.  Server: [" + this.randomSeed + "] Client: [" + otherBoardState.randomSeed + "]");
-      return "Random Seed Mismatch";
-    }
+    let rngTypes = Object.keys(BoardState.RNG_TYPES);
+    for (let i = 0; i < rngTypes.length; i++) {
+      const rngType = BoardState.RNG_TYPES[rngTypes[i]];
+      if (
+        otherBoardState.randomSeeds[BoardState.RNG_TYPES[rngType]] !== 
+        this.randomSeeds[BoardState.RNG_TYPES[rngType]]
+      ) {
+        console.warn("Desync due to random seed mismatch.  Server: [" + this.randomSeeds + "] Client: [" + otherBoardState.randomSeeds + "]");
+        return "Random Seed Mismatch";
+      }
+    };
 
     if (otherBoardState.units.length != this.units.length) {
       console.warn("Desync due to different unit count.  Server: [" + this.units.length + "] Client: [" + otherBoardState.units.length + "]");
@@ -712,3 +732,8 @@ class BoardState {
     return false;
   }
 }
+
+BoardState.RNG_TYPES = {
+  DEFAULT: 'default',
+  SPAWN: 'spawn',
+};

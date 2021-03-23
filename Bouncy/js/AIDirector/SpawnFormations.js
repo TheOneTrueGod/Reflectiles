@@ -75,7 +75,7 @@ class UnitListSpawnFormation extends SpawnFormation {
           validSpawnSpots = validSpawnSpots.concat([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]);
         }
 
-        var spawnPosIndex = Math.floor(this.boardState.getRandom() * validSpawnSpots.length);
+        var spawnPosIndex = Math.floor(this.boardState.getRandom(BoardState.RNG_TYPES.SPAWN) * validSpawnSpots.length);
 
         spawnList[0][validSpawnSpots.splice(spawnPosIndex, 1)[0]] = unitData.unit;
       }
@@ -98,7 +98,7 @@ class BasicUnitWaveSpawnFormation extends SpawnFormation {
       var pctDone = this.boardState.getWavesSpawned() / this.totalWaves;
       this.unitsToSpawn = this.boardState.sectors.columns
         - Math.floor((1 - pctDone) * 3) // 0-2
-        - Math.floor(this.boardState.getRandom() * 3) // 0-2
+        - Math.floor(this.boardState.getRandom(BoardState.RNG_TYPES.SPAWN) * 3) // 0-2
         - 1
         ;
     }
@@ -115,7 +115,7 @@ class BasicUnitWaveSpawnFormation extends SpawnFormation {
         validSpawnSpots = validSpawnSpots.concat([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]);
       }
 
-      var spawnPosIndex = Math.floor(this.boardState.getRandom() * validSpawnSpots.length);
+      var spawnPosIndex = Math.floor(this.boardState.getRandom(BoardState.RNG_TYPES.SPAWN) * validSpawnSpots.length);
 
       const unitClass = this.getRandomUnitToSpawn();
 
@@ -126,7 +126,7 @@ class BasicUnitWaveSpawnFormation extends SpawnFormation {
 
   getRandomUnitToSpawn() {
     var spawnWeights = this.getBasicUnitSpawnWeights();
-    return getRandomFromWeightedList(this.boardState.getRandom(), spawnWeights);
+    return getRandomFromWeightedList(this.boardState.getRandom(BoardState.RNG_TYPES.SPAWN), spawnWeights);
   }
 
   getSpawnDelay() {
@@ -166,10 +166,9 @@ class AdvancedUnitWaveSpawnFormation extends BasicUnitWaveSpawnFormation {
   refillSpawnBucket() {
     const advancedUnitsToSpawn = Math.min(this.calculateNumSpecialsToSpawn(), this.unitsToSpawn);
     const regularUnitsToSpawn = this.unitsToSpawn - advancedUnitsToSpawn;
-    console.log(`getting ${advancedUnitsToSpawn} advanced units, and ${regularUnitsToSpawn} regular units to spawn`)
     for (let i = 0; i < advancedUnitsToSpawn; i++) {
       var spawnWeights = this.getAdvancedUnitSpawnWeights(i);
-      var unitClass = getRandomFromWeightedList(this.boardState.getRandom(), spawnWeights);
+      var unitClass = getRandomFromWeightedList(this.boardState.getRandom(BoardState.RNG_TYPES.SPAWN), spawnWeights);
       this.unitSpawnBucket.push(unitClass);
     }
 
@@ -183,7 +182,7 @@ class AdvancedUnitWaveSpawnFormation extends BasicUnitWaveSpawnFormation {
         unitClass = this.advancedUnitsToSpawn[i]
       } else {
         var spawnWeights = this.getBasicUnitSpawnWeights(advancedUnitsToSpawn - i);
-        const rn = this.boardState.getRandom();
+        const rn = this.boardState.getRandom(BoardState.RNG_TYPES.SPAWN);
         unitClass = getRandomFromWeightedList(rn, spawnWeights);
       }
       this.unitSpawnBucket.push(unitClass);
@@ -194,7 +193,7 @@ class AdvancedUnitWaveSpawnFormation extends BasicUnitWaveSpawnFormation {
     if (this.unitSpawnBucket.length === 0) {
       this.refillSpawnBucket();
     }
-    var unitIndex = Math.floor(this.boardState.getRandom() * this.unitSpawnBucket.length);
+    var unitIndex = Math.floor(this.boardState.getRandom(BoardState.RNG_TYPES.SPAWN) * this.unitSpawnBucket.length);
     return this.unitSpawnBucket.splice(unitIndex, 1)[0];
   }
 

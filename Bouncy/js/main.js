@@ -288,7 +288,7 @@ export default class MainGameHandler {
     this.boardState.saveState();
     this.boardState.updateWavesSpawnedUI(AIDirector);
 
-    UIListeners.setupUIListeners();
+    UIListeners.setupUIListeners(this.boardState);
     this.renderer.render(this.stage);
     this.gameStarted = true;
     if (this.isFinalized) {

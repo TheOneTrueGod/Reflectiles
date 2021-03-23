@@ -61,7 +61,6 @@ class LevelDef {
 
   getWaveSpawnFormation(boardState) {
     let wavesSpawned = boardState.getWavesSpawned();
-    console.log(`Getting spawn details for wave ${wavesSpawned} out of ${this.waves.length}`);
     if (wavesSpawned >= this.waves.length) {
       return null;
     }

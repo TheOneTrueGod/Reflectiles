@@ -47,7 +47,6 @@ class AIDirector {
   }
 
   getFormationAndSpawnPointForTurn(boardState) {
-    console.log("Getting formation and spawn point");
     var formation = this.getFormationForTurn(boardState);
     if (formation === null) {
       return { spawnLocation: {x: 0, y: 0 }, formation: null };
