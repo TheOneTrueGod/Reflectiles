@@ -53,6 +53,9 @@ class BoardState {
     if (this.randomSeeds[seedType] === undefined) {
       throw new Error(`Trying to get invalid random seed: ${seedType}`);
     }
+    if (seedType === BoardState.RNG_TYPES.SPAWN) {
+      //console.log(`Getting random number of type ${seedType}.  Seed: ${this.randomSeeds[seedType]}`);
+    }
     var max_value = 6781335567;
     var large_prime = 18485345523457;
     var toRet = (this.randomSeeds[seedType] + large_prime) % max_value;
@@ -127,7 +130,7 @@ class BoardState {
     }
     if (boardState.last_spawn_turn) { this.lastSpawnTurn = boardState.last_spawn_turn; }
     if (boardState.random_seeds) {
-      this.randomSeeds = boardState.random_seeds;
+      this.randomSeeds = { ...boardState.random_seeds };
     } else {
       this.resetRandomSeeds();
     }
@@ -205,7 +208,7 @@ class BoardState {
       'units': this.units.map(function (unit) { return unit.serialize() }),
       'turn': this.turn,
       'tick': this.tick,
-      'random_seeds': this.randomSeeds,
+      'random_seeds': { ...this.randomSeeds },
       'unit_id_index': this.UNIT_ID_INDEX,
       'team_health': this.teamHealth,
       'waves_spawned': this.wavesSpawned,
