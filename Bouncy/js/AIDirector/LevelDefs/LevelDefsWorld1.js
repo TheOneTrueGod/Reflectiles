@@ -19,6 +19,26 @@ class LevelDefsWorld1 {
           [A, A, A, A, _, _, _, _, _, _, _, A, A, A, A],
         ],
         'waves':[
+          /*{ 
+            'type': WAVE_TYPES.BASIC_WAVE, 
+            'count': 19
+          },
+          { 
+            'type': WAVE_TYPES.BASIC_WAVE, 
+            'count': 19
+          },
+          { 
+            'type': WAVE_TYPES.BASIC_WAVE, 
+            'count': 19
+          },
+          { 
+            'type': WAVE_TYPES.BASIC_WAVE, 
+            'count': 19
+          },
+          { 
+            'type': WAVE_TYPES.BASIC_WAVE, 
+            'count': 19
+          },
           { 
             'type': WAVE_TYPES.ADVANCED_WAVE,
             'count': 8,
@@ -37,10 +57,9 @@ class LevelDefsWorld1 {
           {
           'type': WAVE_TYPES.FORMATION, units: [
             [_, S, S, S, _, _, _, _, _, _, _, S, S, S, _],
-            [_, _, B, S, _, _, _, _, _, _, _, S, B, _, _]
-          /*{'type': WAVE_TYPES.FORMATION, units: [
+            [_, _, B, S, _, _, _, _, _, _, _, S, B, _, _]*/
+          {'type': WAVE_TYPES.FORMATION, units: [
             [_, _, _, _, _, _, S, _, S, _, _, _, _, _, _]
-          ]},*/
           ]}
         ]
       });

@@ -9,10 +9,7 @@ class SpawnFormation {
     for (var y = 0; y < unitList.length; y++) {
       for (var x = 0; x < unitList[y].length; x++) {
         if (unitList[y][x] !== null) {
-          this.spawnUnitAtCoord(
-            unitList[y][x],
-            {x, y}
-          );
+          this.spawnUnitInColumn(unitList[y][x], x);
         }
       }
     }
@@ -49,6 +46,13 @@ class SpawnFormation {
     this.boardState.addUnit(newUnit);
   }
 
+  spawnUnitInColumn(unitClass, column) {
+    this.boardState.forceShoveUnitFromSquare({ x: column, y: 0}, { x: 0, y: 1 });
+    this.spawnUnitAtLocation(unitClass,
+      this.boardState.sectors.getPositionFromGrid({ x: column, y: 0})
+    );
+  }
+
   getSpawnDelay() {
     return 1;
   }
@@ -71,13 +75,13 @@ class UnitListSpawnFormation extends SpawnFormation {
     this.unitList.forEach((unitData) => {
       for (var i = 0; i < unitData.count; i++) {
         if (validSpawnSpots.length === 0) {
-          spawnList.unshift([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]);
-          validSpawnSpots = validSpawnSpots.concat([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]);
+          spawnList.push([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]);
+          validSpawnSpots = validSpawnSpots.concat([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]);
         }
 
         var spawnPosIndex = Math.floor(this.boardState.getRandom(BoardState.RNG_TYPES.SPAWN) * validSpawnSpots.length);
 
-        spawnList[0][validSpawnSpots.splice(spawnPosIndex, 1)[0]] = unitData.unit;
+        spawnList[spawnList.length - 1][validSpawnSpots.splice(spawnPosIndex, 1)[0]] = unitData.unit;
       }
     });
     return spawnList;
@@ -111,15 +115,14 @@ class BasicUnitWaveSpawnFormation extends SpawnFormation {
     let validSpawnSpots = [];
     for (var i = 0; i < this.unitsToSpawn; i++) {
       if (validSpawnSpots.length === 0) {
-        spawnList.unshift([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]);
-        validSpawnSpots = validSpawnSpots.concat([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]);
+        spawnList.push([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]);
+        validSpawnSpots = validSpawnSpots.concat([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]);
       }
-
       var spawnPosIndex = Math.floor(this.boardState.getRandom(BoardState.RNG_TYPES.SPAWN) * validSpawnSpots.length);
 
       const unitClass = this.getRandomUnitToSpawn();
 
-      spawnList[0][validSpawnSpots.splice(spawnPosIndex, 1)[0]] = unitClass;
+      spawnList[spawnList.length - 1][validSpawnSpots.splice(spawnPosIndex, 1)[0]] = unitClass;
     }
     return spawnList;
   }

@@ -486,6 +486,44 @@ class BoardState {
     this.doDeleteChecks();
   }
 
+  // startSquare: { x, y }
+  // direction: { x, y }.  Must be unit vectors.
+  forceShoveUnitFromSquare(startSquare, direction) {
+    if (
+      direction.x !== 1 && direction.x !== -1 && 
+      direction.y !== 1 && direction.y !== -1 &&
+      Math.abs(direction.x) + Math.abs(direction.y) !== 1
+    ) {
+      throw new Error(`Can't shove in a non unit-direction.  direction: ${direction}`);
+    }
+    const shoveList = [];
+    let exitCondition = false;
+    let i = 0;
+    while (!exitCondition) {
+      const currentSquare = { x: startSquare.x + direction.x * i, y: startSquare.y + direction.y * i };
+      let unitsInSquare = this.sectors.getUnitsAtGridSquare(currentSquare.x, currentSquare.y);
+      if (!unitsInSquare.length) {
+        exitCondition = true;
+      }
+      shoveList.push(unitsInSquare.map((unitId) => this.findUnit(unitId)));
+
+      if (i >= 30) {
+        throw new Error("{i} just keeps on going...");
+        exitCondition = true;
+      }
+      i += 1;
+    }
+    
+    for (let i = shoveList.length - 1; i >= 0; i--) {
+      shoveList[i].forEach((unit) => {
+        var currPos = unit.getCurrentPosition();
+        var targetPos = { x: currPos.x, y: currPos.y + Unit.UNIT_SIZE };
+        unit.moveToPosition(this, targetPos);
+      })
+    }
+  }
+
+
   runTick(players, playerCommands, phase) {
     this.runUnitTicks(phase);
 

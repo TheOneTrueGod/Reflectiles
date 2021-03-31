@@ -190,6 +190,12 @@ class UnitBasic extends Unit {
     return !this.hasStatusEffect(FreezeStatusEffect);
   }
 
+  moveToPosition(boardState, targetPos) {
+    boardState.sectors.removeUnit(this);
+    this.setMoveTarget(targetPos.x, targetPos.y);
+    boardState.sectors.addUnit(this);
+  }
+
   moveForward(boardState) {
     while (this.movementCredits >= 1) {
       let squares = [0];
@@ -211,9 +217,7 @@ class UnitBasic extends Unit {
           boardState.unitLeaving(this, currPos);
 
         if (canEnter) {
-          boardState.sectors.removeUnit(this);
-          this.setMoveTarget(targetPos.x, targetPos.y);
-          boardState.sectors.addUnit(this);
+          this.moveToPosition(boardState, targetPos);
           this.movementCredits -= 1;
           enteredSquare = true;
           break;
