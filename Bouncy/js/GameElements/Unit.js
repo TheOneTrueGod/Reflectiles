@@ -625,6 +625,10 @@ class Unit {
     return true;
   }
 
+  canBeShoved() {
+    return !this.isBoss();
+  }
+
   onDelete(boardState) {
     for (var key in this.statusEffects) {
       this.statusEffects[key].onUnitDeleting(boardState, this);
@@ -641,10 +645,6 @@ class Unit {
 
   otherUnitLeaving(boardState, unit) {
     return true;
-  }
-
-  canBeShoved() {
-    return !this.isBoss();
   }
 
   isBoss() {

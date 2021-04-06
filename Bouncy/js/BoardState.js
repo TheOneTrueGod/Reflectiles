@@ -280,14 +280,9 @@ class BoardState {
     return null;
   }
 
-  isUnshovableInSquare(column, row) {
-    var unitsInSector = this.sectors.getUnitsAtGridSquare(column, row).map(unitIndex => this.findUnit(unitIndex));
-    return unitsInSector.reduce((prevValue, unit) => prevValue || !unit.canBeShoved(), false);
-  }
-
-  isUnshovableAtPosition(x, y) {
-    var unitsInSector = this.sectors.getUnitsAtPosition(x, y).map(unitIndex => this.findUnit(unitIndex));
-    return unitsInSector.reduce((prevValue, unit) => prevValue || !unit.canBeShoved(), false);
+  canUnitsSpawnAtCoord(spawningUnits, column, row) {
+    var existingUnits = this.sectors.getUnitsAtGridSquare(column, row).map(unitIndex => this.findUnit(unitIndex));
+    return !this.doUnitsBlockEachOther(spawningUnits, existingUnits);
   }
 
   unitEntering(unit, target) {
@@ -498,7 +493,7 @@ class BoardState {
 
   // startSquare: { x, y }
   // direction: { x, y }.  Must be unit vectors.
-  forceShoveUnitFromSquare(startSquare, direction) {
+  forceShoveUnitFromSquare(enteringUnitList, startSquare, direction) {
     if (
       direction.x !== 1 && direction.x !== -1 && 
       direction.y !== 1 && direction.y !== -1 &&
@@ -506,10 +501,16 @@ class BoardState {
     ) {
       throw new Error(`Can't shove in a non unit-direction.  direction: ${direction}`);
     }
+    let enteringUnits = [...enteringUnitList];
+
     const shoveList = [];
     let exitCondition = false;
     let i = 0;
     while (!exitCondition) {
+      if (shoveList.length) {
+        enteringUnits = shoveList[shoveList.length - 1].unitsInSquare;
+      }
+
       const currentSquare = { 
         x: startSquare.x + direction.x * i,
         y: startSquare.y + direction.y * i
@@ -517,13 +518,23 @@ class BoardState {
       let unitsInSquare = this.sectors.getUnitsAtGridSquare(currentSquare.x, currentSquare.y).map((unitId) => this.findUnit(unitId));
       if (!unitsInSquare.length) {
         exitCondition = 'empty';
-      } else if (unitsInSquare.some(unit => !unit.canBeShoved())) {
-        // do nothing.  The unit can't be shoved.
-        if (shoveList.length) {
-          shoveList[shoveList.length - 1].shoveBy += 1;
+      } else if (this.doUnitsBlockEachOther(enteringUnits, unitsInSquare)) {
+        // The units in this square either can't be shoved, or they block movement.
+        // Let's figure out which one
+        if (unitsInSquare.some(unit => !unit.canBeShoved())) {
+          // There's a unit that can't be shoved.
+          // Slide the previously moving units past it.
+          if (shoveList.length) {
+            shoveList[shoveList.length - 1].shoveBy += 1;
+          }
+        } else {
+          // None of these units can't be shoved.  Shove them.
+          shoveList.push({ unitsInSquare, shoveBy: 1 });
         }
+        // the previously entering units need to move their target down a bit.
       } else {
-        shoveList.push({ unitsInSquare, shoveBy: 1 });
+        // The units in the square don't block the existing units.
+        exitCondition = 'empty';
       }
 
       if (i >= 30) {
@@ -545,6 +556,23 @@ class BoardState {
       })
     }
     return true;
+  }
+
+  doUnitsBlockEachOther(movingUnits, existingUnits) {
+    for (let j = 0; j < existingUnits.length; j++) {
+      if (existingUnits[j].canBeShoved()) {
+        // It can be shoved, so it doesn't block
+      }
+      for (let i = 0; i < movingUnits.length; i++) {
+        if (
+          existingUnits[j].preventsUnitEntry(movingUnits[i]) &&
+          movingUnits[i].preventsUnitEntry(existingUnits[j])
+        ) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
 

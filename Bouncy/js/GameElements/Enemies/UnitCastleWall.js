@@ -37,6 +37,10 @@ class UnitCastleWall extends UnitBasic {
   preventsUnitEntry(unit) {
     return (unit instanceof UnitCore);
   }
+  
+  canBeShoved() {
+    return false;
+  }
 
   addToBackOfStage() {
     return true;

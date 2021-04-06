@@ -35,8 +35,9 @@ class SpawnFormation {
   }
 
   spawnUnitAtCoord(unitClass, targetCoord) {
+    var spawningUnit = new unitClass(0, 0, 0);
     let spawnCoord = { x: targetCoord.x, y: targetCoord.y };
-    while (this.boardState.isUnshovableInSquare(spawnCoord.x, spawnCoord.y)) {
+    while (!this.boardState.canUnitsSpawnAtCoord([spawningUnit], spawnCoord.x, spawnCoord.y)) {
       spawnCoord.y += 1;
     }
 
@@ -60,7 +61,9 @@ class SpawnFormation {
     let unableToShove = false;
     for (let xOffset = -newUnitSize.left; xOffset <= newUnitSize.right; xOffset ++) {
       for (let shoveTimes = 0; shoveTimes < newUnitSize.top + newUnitSize.bottom + 1; shoveTimes += 1) {
-        if (!this.boardState.forceShoveUnitFromSquare({ x: spawnCoord.x + xOffset, y: spawnCoord.y + shoveTimes}, { x: 0, y: 1 })) {
+        if (
+          !this.boardState.forceShoveUnitFromSquare([newUnit], { x: spawnCoord.x + xOffset, y: spawnCoord.y + shoveTimes}, { x: 0, y: 1 })
+        ) {
           unableToShove = true;
         }
       }

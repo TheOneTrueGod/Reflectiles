@@ -8,6 +8,7 @@ class LevelDefsWorld1 {
     let S = UnitShooter;
     let K = UnitKnight;
     let O = UnitBomber;
+    stage = 'test';
     if (stage == 1) {
       // Nothing hard here at all.  Bunch of basic units, with one knight in the middle
       return new LevelDef({
@@ -96,16 +97,27 @@ class LevelDefsWorld1 {
         ]
       });
     } else if (stage === 'test') {
+      let W = UnitIceWall;
       return new LevelDef({
         'initialSpawn':[
-          [_, _, _, _, A, A, A, A, A, A, A, _, _, _, _],
+          [W, W, W, W, W, W, W, W, W, W, W, W, W, W, W],
           [_, _, _, A, B, B, A, _, A, B, B, A, _, _, _],
           [_, _, A, B, B, A, _, _, _, A, B, B, A, _, _],
           [_, A, B, B, A, _, _, _, _, _, A, B, B, A, _],
           [A, A, A, A, _, _, _, _, _, _, _, A, A, A, A],
         ],
         'waves':[
-          {'type': WAVE_TYPES.FORMATION, units: [[_, _, _, _, _, _, _, UnitBossHealer]]
+          {'type': WAVE_TYPES.FORMATION, units: [[A, A, A, A, A, A, A, A]]
+          },
+          {'type': WAVE_TYPES.FORMATION, units: [[A, A, A, A, A, A, A, A]]
+          },
+          {'type': WAVE_TYPES.FORMATION, units: [[A, A, A, A, A, A, A, A]]
+          },
+          {'type': WAVE_TYPES.FORMATION, units: [[A, A, A, A, A, A, A, A]]
+          },
+          {'type': WAVE_TYPES.FORMATION, units: [[A, A, A, A, A, A, A, A]]
+          },
+          {'type': WAVE_TYPES.FORMATION, units: [[A, A, A, A, A, A, A, A]]
           },
           {'type': WAVE_TYPES.FORMATION, units: [
             [A, _, _, _, _, _, _, A],

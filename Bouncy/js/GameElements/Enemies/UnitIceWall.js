@@ -38,6 +38,10 @@ class UnitIceWall extends UnitBasic {
     return (unit instanceof UnitCore);
   }
 
+  canBeShoved() {
+    return false;
+  }
+
   addToBackOfStage() {
     return true;
   }
