@@ -382,6 +382,12 @@ class Unit {
     this.moveAbility = ability;
   }
 
+  moveToPosition(boardState, targetPos) {
+    boardState.sectors.removeUnit(this);
+    this.setMoveTarget(targetPos.x, targetPos.y);
+    boardState.sectors.addUnit(this);
+  }
+
   canSelect() {
     return false;
   }

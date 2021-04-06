@@ -9,7 +9,7 @@ class SpawnFormation {
     for (var y = 0; y < unitList.length; y++) {
       for (var x = 0; x < unitList[y].length; x++) {
         if (unitList[y][x] !== null) {
-          this.spawnUnitInColumn(unitList[y][x], x);
+          this.spawnUnitAtCoord(unitList[y][x], { x, y });
         }
       }
     }
@@ -34,23 +34,25 @@ class SpawnFormation {
     ];
   }
 
-  spawnUnitAtCoord(unitClass, spawnCoord) {
-    this.spawnUnitAtLocation(unitClass,
-      this.boardState.sectors.getPositionFromGrid(spawnCoord)
-    );
-  }
-
-  spawnUnitAtLocation(unitClass, spawnPos) {
-    var newUnit = new unitClass(spawnPos.x, spawnPos.y - Unit.UNIT_SIZE, 0);
-    newUnit.setMoveTarget(spawnPos.x, spawnPos.y);
-    this.boardState.addUnit(newUnit);
-  }
-
-  spawnUnitInColumn(unitClass, column) {
-    let spawnCoord = { x: column, y: 0 };
+  spawnUnitAtCoord(unitClass, targetCoord) {
+    let spawnCoord = { x: targetCoord.x, y: targetCoord.y };
     while (this.boardState.isUnshovableInSquare(spawnCoord.x, spawnCoord.y)) {
       spawnCoord.y += 1;
     }
+
+    if (!this.tryToShoveUnitsOutOfWay(unitClass, spawnCoord)) {
+      throw new Error("failed spawning!");
+    }
+
+    let spawnPos = this.boardState.sectors.getPositionFromGrid(spawnCoord);
+
+    var newUnit = new unitClass(spawnPos.x, targetCoord.y - Unit.UNIT_SIZE, 0);
+    const newUnitSize = newUnit.getSize();
+    newUnit.setMoveTarget(spawnPos.x, spawnPos.y + newUnitSize.top * Unit.UNIT_SIZE);
+    this.boardState.addUnit(newUnit);
+  }
+
+  tryToShoveUnitsOutOfWay(unitClass, spawnCoord) {
     const spawnPos = this.boardState.sectors.getPositionFromGrid(spawnCoord);
     const newUnit = new unitClass(spawnPos.x, - Unit.UNIT_SIZE, 0);
     const newUnitSize = newUnit.getSize();
@@ -66,12 +68,8 @@ class SpawnFormation {
     // Should only happen if two bosses try to spawn on top of each other
     if (unableToShove) {
       console.log("WARNING: TRYING TO SPAWN TWO BOSSES ON TOP OF EACH OTHER");
-      return;
     }
-    
-    let moveTarget = { x: spawnPos.x, y: spawnPos.y + newUnitSize.top * Unit.UNIT_SIZE };
-    newUnit.setMoveTarget(moveTarget.x, moveTarget.y);
-    this.boardState.addUnit(newUnit);
+    return !unableToShove;
   }
 
   getSpawnDelay() {

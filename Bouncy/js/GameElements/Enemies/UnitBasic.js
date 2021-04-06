@@ -190,12 +190,6 @@ class UnitBasic extends Unit {
     return !this.hasStatusEffect(FreezeStatusEffect);
   }
 
-  moveToPosition(boardState, targetPos) {
-    boardState.sectors.removeUnit(this);
-    this.setMoveTarget(targetPos.x, targetPos.y);
-    boardState.sectors.addUnit(this);
-  }
-
   moveForward(boardState) {
     while (this.movementCredits >= 1) {
       let squares = [0];
