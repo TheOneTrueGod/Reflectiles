@@ -280,6 +280,16 @@ class BoardState {
     return null;
   }
 
+  isUnshovableInSquare(column, row) {
+    var unitsInSector = this.sectors.getUnitsAtGridSquare(column, row).map(unitIndex => this.findUnit(unitIndex));
+    return unitsInSector.reduce((prevValue, unit) => prevValue || !unit.canBeShoved(), false);
+  }
+
+  isUnshovableAtPosition(x, y) {
+    var unitsInSector = this.sectors.getUnitsAtPosition(x, y).map(unitIndex => this.findUnit(unitIndex));
+    return unitsInSector.reduce((prevValue, unit) => prevValue || !unit.canBeShoved(), false);
+  }
+
   unitEntering(unit, target) {
     var unitsInSector = this.sectors.getUnitsAtPosition(target.x, target.y);
     var allowUnitThrough = true;
@@ -500,27 +510,41 @@ class BoardState {
     let exitCondition = false;
     let i = 0;
     while (!exitCondition) {
-      const currentSquare = { x: startSquare.x + direction.x * i, y: startSquare.y + direction.y * i };
-      let unitsInSquare = this.sectors.getUnitsAtGridSquare(currentSquare.x, currentSquare.y);
+      const currentSquare = { 
+        x: startSquare.x + direction.x * i,
+        y: startSquare.y + direction.y * i
+      };
+      let unitsInSquare = this.sectors.getUnitsAtGridSquare(currentSquare.x, currentSquare.y).map((unitId) => this.findUnit(unitId));
       if (!unitsInSquare.length) {
-        exitCondition = true;
+        exitCondition = 'empty';
+      } else if (unitsInSquare.some(unit => !unit.canBeShoved())) {
+        // do nothing.  The unit can't be shoved.
+        if (shoveList.length) {
+          shoveList[shoveList.length - 1].shoveBy += 1;
+        }
+      } else {
+        shoveList.push({ unitsInSquare, shoveBy: 1 });
       }
-      shoveList.push(unitsInSquare.map((unitId) => this.findUnit(unitId)));
 
       if (i >= 30) {
         throw new Error("{i} just keeps on going...");
-        exitCondition = true;
+        exitCondition = 'error';
       }
       i += 1;
     }
     
     for (let i = shoveList.length - 1; i >= 0; i--) {
-      shoveList[i].forEach((unit) => {
+      shoveList[i].unitsInSquare.forEach((unit) => {
         var currPos = unit.getCurrentPosition();
-        var targetPos = { x: currPos.x, y: currPos.y + Unit.UNIT_SIZE };
+
+        var targetPos = { 
+          x: currPos.x + Unit.UNIT_SIZE * shoveList[i].shoveBy * direction.x,
+          y: currPos.y + Unit.UNIT_SIZE * shoveList[i].shoveBy * direction.y
+        };
         unit.moveToPosition(this, targetPos);
       })
     }
+    return true;
   }
 
 

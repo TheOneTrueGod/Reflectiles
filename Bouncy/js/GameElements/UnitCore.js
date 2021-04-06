@@ -83,6 +83,12 @@ class UnitCore extends Unit {
   checkForCollisions(boardState, moveAng) {
     let unitsAtPos = boardState.sectors.getUnitsAtPosition(this.x, this.y);
     let collided = false;
+    const gridCoord = boardState.sectors.getGridCoord({x: this.x, y: this.y});
+    if (gridCoord.y == boardState.sectors.rows - 1) {
+      // No collisions in the last row.  Enemy units aren't allowed there.
+      return;
+    }
+
     for (let i = 0; i < unitsAtPos.length; i++) {
       let unit = boardState.findUnit(unitsAtPos[i])
       if (boardState.isEnemyUnit(unit)) {

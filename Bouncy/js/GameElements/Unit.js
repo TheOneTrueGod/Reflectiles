@@ -637,6 +637,10 @@ class Unit {
     return true;
   }
 
+  canBeShoved() {
+    return !this.isBoss();
+  }
+
   isBoss() {
     return false;
   }

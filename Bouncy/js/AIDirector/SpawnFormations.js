@@ -47,10 +47,31 @@ class SpawnFormation {
   }
 
   spawnUnitInColumn(unitClass, column) {
-    this.boardState.forceShoveUnitFromSquare({ x: column, y: 0}, { x: 0, y: 1 });
-    this.spawnUnitAtLocation(unitClass,
-      this.boardState.sectors.getPositionFromGrid({ x: column, y: 0})
-    );
+    let spawnCoord = { x: column, y: 0 };
+    while (this.boardState.isUnshovableInSquare(spawnCoord.x, spawnCoord.y)) {
+      spawnCoord.y += 1;
+    }
+    const spawnPos = this.boardState.sectors.getPositionFromGrid(spawnCoord);
+    const newUnit = new unitClass(spawnPos.x, - Unit.UNIT_SIZE, 0);
+    const newUnitSize = newUnit.getSize();
+
+    let unableToShove = false;
+    for (let xOffset = -newUnitSize.left; xOffset <= newUnitSize.right; xOffset ++) {
+      for (let shoveTimes = 0; shoveTimes < newUnitSize.top + newUnitSize.bottom + 1; shoveTimes += 1) {
+        if (!this.boardState.forceShoveUnitFromSquare({ x: spawnCoord.x + xOffset, y: spawnCoord.y + shoveTimes}, { x: 0, y: 1 })) {
+          unableToShove = true;
+        }
+      }
+    }
+    // Should only happen if two bosses try to spawn on top of each other
+    if (unableToShove) {
+      console.log("WARNING: TRYING TO SPAWN TWO BOSSES ON TOP OF EACH OTHER");
+      return;
+    }
+    
+    let moveTarget = { x: spawnPos.x, y: spawnPos.y + newUnitSize.top * Unit.UNIT_SIZE };
+    newUnit.setMoveTarget(moveTarget.x, moveTarget.y);
+    this.boardState.addUnit(newUnit);
   }
 
   getSpawnDelay() {

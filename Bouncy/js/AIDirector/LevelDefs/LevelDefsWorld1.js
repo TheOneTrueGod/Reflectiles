@@ -19,47 +19,15 @@ class LevelDefsWorld1 {
           [A, A, A, A, _, _, _, _, _, _, _, A, A, A, A],
         ],
         'waves':[
-          /*{ 
-            'type': WAVE_TYPES.BASIC_WAVE, 
-            'count': 19
-          },
           { 
             'type': WAVE_TYPES.BASIC_WAVE, 
-            'count': 19
-          },
-          { 
-            'type': WAVE_TYPES.BASIC_WAVE, 
-            'count': 19
-          },
-          { 
-            'type': WAVE_TYPES.BASIC_WAVE, 
-            'count': 19
-          },
-          { 
-            'type': WAVE_TYPES.BASIC_WAVE, 
-            'count': 19
-          },
-          { 
-            'type': WAVE_TYPES.ADVANCED_WAVE,
-            'count': 8,
-            'advanced': [null, null]
-          },
-          { 
-            'type': WAVE_TYPES.BASIC_WAVE, 
-            'count': 17
-          },
-          { 'type': WAVE_TYPES.UNIT_LIST,
-            'units':[{'unit': UnitBasicSquare, 'count': 20}, {'unit': UnitBasicDiamond, 'count': 2}]
+            'count': 15
           },
           {
-            'type': WAVE_TYPES.SKIP,
-          },
-          {
-          'type': WAVE_TYPES.FORMATION, units: [
-            [_, S, S, S, _, _, _, _, _, _, _, S, S, S, _],
-            [_, _, B, S, _, _, _, _, _, _, _, S, B, _, _]*/
-          {'type': WAVE_TYPES.FORMATION, units: [
-            [_, _, _, _, _, _, S, _, S, _, _, _, _, _, _]
+            'type': WAVE_TYPES.FORMATION, 
+            'units': [
+              [_, _, _, _, A, _, S, _, S, _, A, _, _, _, _],
+              [_, _, _, _, A, A, A, A, A, A, A, _, _, _, _]
           ]}
         ]
       });
@@ -125,6 +93,88 @@ class LevelDefsWorld1 {
           {'type': WAVE_TYPES.GOTO, 'offset': -2, 'until': {'condition': WAVE_CONDITION.BOSS_HEALTH, 'health_percent': 0.3}},
           {'type': WAVE_TYPES.UNIT_LIST, 'units':[{'unit': UnitBasicSquare, 'count': 3}, {'unit': UnitHeavy, 'count': 2}, {'unit': UnitBomber, 'count': 1}]},
           {'type': WAVE_TYPES.GOTO, 'offset': -1, 'until': {'condition': WAVE_CONDITION.BOSS_HEALTH, 'health_percent': 0}},
+        ]
+      });
+    } else if (stage === 'test') {
+      return new LevelDef({
+        'initialSpawn':[
+          /*[_, _, _, _, A, A, A, A, A, A, A, _, _, _, _],
+          [_, _, _, A, B, B, A, _, A, B, B, A, _, _, _],
+          [_, _, A, B, B, A, _, _, _, A, B, B, A, _, _],
+          [_, A, B, B, A, _, _, _, _, _, A, B, B, A, _],
+          [A, A, A, A, _, _, _, _, _, _, _, A, A, A, A],*/
+        ],
+        'waves':[
+          {'type': WAVE_TYPES.FORMATION, units: [[_, _, _, _, _, _, _, UnitBossHealer]]
+          },
+          {'type': WAVE_TYPES.FORMATION, units: [
+            [_, _, _, _, _, _, _, A],
+            [_, _, _, _, _, _, _, A],
+            [_, _, _, _, _, _, _, A],
+            [_, _, _, _, _, _, _, A],
+            [_, _, _, _, _, _, _, A],
+            [_, _, _, _, _, _, _, A],
+            [_, _, _, _, _, _, _, A],
+            [_, _, _, _, _, _, _, A],
+          ]},
+          {'type': WAVE_TYPES.FORMATION, units: [
+            [_, _, _, _, _, _, _, A],
+            [_, _, _, _, _, _, _, A],
+            [_, _, _, _, _, _, _, A],
+            [_, _, _, _, _, _, _, A],
+            [_, _, _, _, _, _, _, A],
+          ]},
+          {'type': WAVE_TYPES.FORMATION, units: [
+            [_, _, _, _, _, _, _, A],
+            [_, _, _, _, _, _, _, A]
+          ]},
+          {'type': WAVE_TYPES.FORMATION, units: [
+            [_, _, _, _, _, _, _, A],
+            [_, _, _, _, _, _, _, A]
+          ]},
+          {'type': WAVE_TYPES.FORMATION, units: [
+            [_, _, _, _, _, _, _, A],
+            [_, _, _, _, _, _, _, A]
+          ]},
+          {'type': WAVE_TYPES.FORMATION, units: [
+            [_, _, _, _, _, _, _, A],
+            [_, _, _, _, _, _, _, A]
+          ]},
+          {'type': WAVE_TYPES.FORMATION, units: [
+            [_, _, _, _, _, _, _, A],
+            [_, _, _, _, _, _, _, A]
+          ]},
+          {'type': WAVE_TYPES.FORMATION, units: [
+            [_, _, _, _, _, _, _, A],
+            [_, _, _, _, _, _, _, A]
+          ]},
+          {'type': WAVE_TYPES.FORMATION, units: [
+            [_, _, _, _, _, _, _, A],
+            [_, _, _, _, _, _, _, A]
+          ]},
+          {'type': WAVE_TYPES.FORMATION, units: [
+            [_, _, _, _, _, _, _, A],
+            [_, _, _, _, _, _, _, A]
+          ]},
+          {'type': WAVE_TYPES.FORMATION, units: [
+            [_, _, _, _, _, _, _, A],
+            [_, _, _, _, _, _, _, A]
+          ]},
+          {'type': WAVE_TYPES.FORMATION, units: [
+            [_, _, _, _, _, _, _, A],
+            [_, _, _, _, _, _, _, A]
+          ]},
+          {'type': WAVE_TYPES.FORMATION, units: [
+            [_, _, _, _, _, _, _, A],
+            [_, _, _, _, _, _, _, A]
+          ]},
+          {'type': WAVE_TYPES.FORMATION, units: [
+            [_, _, _, _, _, _, _, A],
+            [_, _, _, _, _, _, _, A]
+          ]},
+          {'type': WAVE_TYPES.FORMATION, units: [
+            [_, _, _, _, _, _, S, _, S, _, _, _, _, _, _]
+          ]},
         ]
       });
     }
