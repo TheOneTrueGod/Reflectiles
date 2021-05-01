@@ -362,6 +362,8 @@ class ZoneEffect extends Unit {
   preventsUnitEntry(unit) {
     if (unit instanceof UnitCore) {
       return idx(this.creatorAbility.getOptionalParam('unit_interaction', {}), 'prevent_player_entry', false);
+    } else {
+      return idx(this.creatorAbility.getOptionalParam('unit_interaction', {}), 'prevent_unit_entry', false);
     }
     return false;
   }
@@ -369,6 +371,10 @@ class ZoneEffect extends Unit {
   otherUnitEntering(boardState, unit) {
     this.creatorAbility.unitEnteringZone(boardState, unit, this);
     return this.creatorAbility.canUnitPassThrough(unit);
+  }
+
+  canBeShoved() {
+    return false;
   }
 }
 

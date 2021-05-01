@@ -240,7 +240,7 @@ UnitBlocker.createAbilityDef = function() {
     "sprite": "zone_blocker_barrier",
     "deletion_phase": TurnPhasesEnum.ENEMY_ACTION,
     "unit_interaction": {
-      'prevent_unit_entry': true,
+      'prevent_player_entry': true,
     },
     /*projectile_interaction: {
       player_projectiles: {destroy: true},

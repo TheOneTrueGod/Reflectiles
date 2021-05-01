@@ -20,7 +20,7 @@ class AbilityCore3008 extends AbilityCore {
         '[[unit_interaction.unit_enter[0].abil_def.hit_effects[0].base_damage]] damage each.',
       ability_type: AbilityDef.AbilityTypes.ZONE,
       unit_interaction: {
-        prevent_unit_entry: true,
+        prevent_unit_entry: false,
       },
       projectile_interaction: {enemy_projectiles: {destroy: true, ability: [{
         effect: ZoneAbilityDef.UnitEffectTypes.ABILITY,

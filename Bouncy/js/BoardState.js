@@ -518,7 +518,7 @@ class BoardState {
       let unitsInSquare = this.sectors.getUnitsAtGridSquare(currentSquare.x, currentSquare.y).map((unitId) => this.findUnit(unitId));
       if (!unitsInSquare.length) {
         exitCondition = 'empty';
-      } else if (this.doUnitsBlockEachOther(enteringUnits, unitsInSquare)) {
+      } else if (this.doUnitsPreventEntry(enteringUnits, unitsInSquare)) {
         // The units in this square either can't be shoved, or they block movement.
         // Let's figure out which one
         if (unitsInSquare.some(unit => !unit.canBeShoved())) {
@@ -562,6 +562,7 @@ class BoardState {
     for (let j = 0; j < existingUnits.length; j++) {
       if (existingUnits[j].canBeShoved()) {
         // It can be shoved, so it doesn't block
+        continue;
       }
       for (let i = 0; i < movingUnits.length; i++) {
         if (
@@ -575,6 +576,19 @@ class BoardState {
     return false;
   }
 
+  doUnitsPreventEntry(movingUnits, existingUnits) {
+    for (let j = 0; j < existingUnits.length; j++) {
+      for (let i = 0; i < movingUnits.length; i++) {
+        if (
+          existingUnits[j].preventsUnitEntry(movingUnits[i]) &&
+          movingUnits[i].preventsUnitEntry(existingUnits[j])
+        ) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
 
   runTick(players, playerCommands, phase) {
     this.runUnitTicks(phase);

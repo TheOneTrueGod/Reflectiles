@@ -55,7 +55,6 @@ EnemyAbilityShieldWall.createAbilityDef = function() {
     sprite: 'zone_shield',
     deletion_phase: TurnPhasesEnum.ENEMY_ACTION,
     unit_interaction: {
-      prevent_unit_entry: true,
       prevent_player_entry: true,
     },
     can_players_damage: true,

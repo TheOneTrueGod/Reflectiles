@@ -100,7 +100,6 @@ class LevelDefsWorld1 {
       let W = UnitIceWall;
       return new LevelDef({
         'initialSpawn':[
-          [W, W, W, W, W, W, W, W, W, W, W, W, W, W, W],
           [_, _, _, A, B, B, A, _, A, B, B, A, _, _, _],
           [_, _, A, B, B, A, _, _, _, A, B, B, A, _, _],
           [_, A, B, B, A, _, _, _, _, _, A, B, B, A, _],
@@ -109,16 +108,14 @@ class LevelDefsWorld1 {
         'waves':[
           {'type': WAVE_TYPES.FORMATION, units: [[A, A, A, A, A, A, A, A]]
           },
+          {'type': WAVE_TYPES.FORMATION, units: [[B, B, B, B, B, B, B, B]]},
+          {'type': WAVE_TYPES.FORMATION, units: [[C, C, C, C, C, C, C, C]]},
+          {'type': WAVE_TYPES.FORMATION, units: [[D, D, D, D, D, D, D, D]]},
           {'type': WAVE_TYPES.FORMATION, units: [[A, A, A, A, A, A, A, A]]
           },
-          {'type': WAVE_TYPES.FORMATION, units: [[A, A, A, A, A, A, A, A]]
-          },
-          {'type': WAVE_TYPES.FORMATION, units: [[A, A, A, A, A, A, A, A]]
-          },
-          {'type': WAVE_TYPES.FORMATION, units: [[A, A, A, A, A, A, A, A]]
-          },
-          {'type': WAVE_TYPES.FORMATION, units: [[A, A, A, A, A, A, A, A]]
-          },
+          {'type': WAVE_TYPES.FORMATION, units: [[B, B, B, B, B, B, B, B]]},
+          {'type': WAVE_TYPES.FORMATION, units: [[C, C, C, C, C, C, C, C]]},
+          {'type': WAVE_TYPES.FORMATION, units: [[D, D, D, D, D, D, D, D]]},
           {'type': WAVE_TYPES.FORMATION, units: [
             [A, _, _, _, _, _, _, A],
             [A, A, A, A, A, A, A, A],

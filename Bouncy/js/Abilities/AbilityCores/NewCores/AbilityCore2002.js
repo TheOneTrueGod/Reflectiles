@@ -1,7 +1,7 @@
 class AbilityCore2002 extends AbilityCore {
   static BuildAbilityChild(level) {
     let coreDamage = Math.round(NumbersBalancer.getAbilityDamage(level, 0.1));
-    let freezeDuration = 2;
+    let freezeDuration = 3;
     const rawAbil = {
       name: 'Freeze',
       description: 'Freezes a single enemy for <<' + freezeDuration + '>> turns.  It deals <<' + coreDamage + '>> damage.',
