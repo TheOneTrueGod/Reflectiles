@@ -112,31 +112,31 @@ class LevelDefsWorld3 {
         ],
         'waves':[
           {'type': WAVE_TYPES.SKIP},
-          {'type': WAVE_TYPES.FORMATION, units: [
+          {'type': WAVE_TYPES.FORMATION, randomOffset: true, units: [
             [AA, SH, AA],
             [AA, NC, AA],
             [AA, AA, AA],
           ]},
           {'type': WAVE_TYPES.SKIP},
-          {'type': WAVE_TYPES.FORMATION, units: [
+          {'type': WAVE_TYPES.FORMATION, randomOffset: true, units: [
             [AA, AA, AA],
             [AA, NC, AA],
             [AA, AA, AA],
           ]},
           {'type': WAVE_TYPES.SKIP},
-          {'type': WAVE_TYPES.FORMATION, units: [
+          {'type': WAVE_TYPES.FORMATION, randomOffset: true, units: [
             [AA, SH, AA],
             [AA, NC, AA],
             [AA, AA, AA],
           ]},
           {'type': WAVE_TYPES.SKIP},
-          {'type': WAVE_TYPES.FORMATION, units: [
+          {'type': WAVE_TYPES.FORMATION, randomOffset: true, units: [
             [AA, SH, AA],
             [AA, NC, AA],
             [AA, AA, AA],
           ]},
           {'type': WAVE_TYPES.SKIP},
-          {'type': WAVE_TYPES.FORMATION, units: [
+          {'type': WAVE_TYPES.FORMATION, randomOffset: true, units: [
             [null, null, null],
             [null, null, null],
             [null, UnitBossWarlock, null],

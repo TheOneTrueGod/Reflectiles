@@ -232,6 +232,7 @@ class UnitFormationSpawnFormation extends SpawnFormation {
   constructor(boardState, waveDef) {
     super(boardState, 0, waveDef);
     this.unitList = waveDef.units;
+    this.useRandomOffset = idx(waveDef, 'randomOffset', false);
     this.spawnHeight = this.unitList.length;
     this.spawnWidth = 0;
     this.forceSpawn = waveDef.forceSpawn ? waveDef.forceSpawn : false;
@@ -241,7 +242,25 @@ class UnitFormationSpawnFormation extends SpawnFormation {
   }
 
   getSpawnList() {
-    return this.unitList;
+    if (!this.useRandomOffset || this.spawnWidth >= this.boardState.sectors.columns) {
+      return this.unitList;
+    }
+    
+    const offset = Math.floor(
+      this.boardState.getRandom(BoardState.RNG_TYPES.SPAWN) * (
+        this.boardState.sectors.columns - this.spawnWidth
+      )
+    );
+
+    const spawnList = [];
+    for (let i = 0; i < this.unitList.length; i++) {
+      spawnList.push([...this.unitList[i]]);
+      for (let j = 0; j < offset; j++) {
+        spawnList[i].unshift(null);
+      }
+    }
+
+    return spawnList;
   }
 
   getSpawnDelay() {
