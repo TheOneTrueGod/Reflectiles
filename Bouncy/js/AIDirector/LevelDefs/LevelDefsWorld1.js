@@ -8,7 +8,6 @@ class LevelDefsWorld1 {
     let S = UnitShooter;
     let K = UnitKnight;
     let O = UnitBomber;
-    stage = 'test';
     if (stage == 1) {
       // Nothing hard here at all.  Bunch of basic units, with one knight in the middle
       return new LevelDef({
