@@ -7,16 +7,10 @@ class Physics {
 Physics.reflect = function(angleIn, wallVector) {
   var vectorIn = Victor(Math.cos(angleIn), Math.sin(angleIn)).normalize();
   var normalizedWall = wallVector.clone().normalize();
-  //console.log("NormaliedWall: ", normalizedWall);
   normal = Victor(normalizedWall.y, -normalizedWall.x); // Also try y, -x;
-  //console.log(normal);
   var perpendicularComponent = normal.clone().multiplyScalar(vectorIn.clone().dot(normal));
-  //console.log("perpendicularComponent: ", perpendicularComponent);
   var parallelComponent = vectorIn.clone().subtract(perpendicularComponent);
-  //console.log("parallelComponent: ", parallelComponent);
   var vectorOut = parallelComponent.add(perpendicularComponent.multiplyScalar(-1));
-  //console.log("VectorIn: ", vectorIn);
-  //console.log("VectorOut: ", vectorOut);
   return vectorOut;
 }
 

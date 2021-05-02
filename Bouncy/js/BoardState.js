@@ -53,9 +53,6 @@ class BoardState {
     if (this.randomSeeds[seedType] === undefined) {
       throw new Error(`Trying to get invalid random seed: ${seedType}`);
     }
-    if (seedType === BoardState.RNG_TYPES.SPAWN) {
-      //console.log(`Getting random number of type ${seedType}.  Seed: ${this.randomSeeds[seedType]}`);
-    }
     var max_value = 6781335567;
     var large_prime = 18485345523457;
     var toRet = (this.randomSeeds[seedType] + large_prime) % max_value;
