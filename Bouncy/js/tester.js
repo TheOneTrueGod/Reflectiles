@@ -80,10 +80,10 @@ class Tester extends MainGameHandler {
     UIListeners.showGameBoard();
     var width = Unit.UNIT_SIZE * 5; var height = Unit.UNIT_SIZE * 9;
     let boardSize = {width: width, height: height};
-    this.boardState = new BoardState(boardSize, this.stage);
+    this.boardState = new BoardState(boardSize, this.renderContainers.boardState);
     this.boardState.sectors = new UnitSectors(9, 5, width, height);
 
-    this.updateBoardState(this.boardState, boardSize, this.stage);
+    this.updateBoardState(this.boardState, boardSize, this.renderContainers.boardState);
 
     this.players[0] = new Player({user_name: 'TheOneTrueGod', user_id: 'TheOneTrueGod'}, 'TheOneTrueGod');
     this.abilityTestReset();

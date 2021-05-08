@@ -1,6 +1,6 @@
 class BoardState {
-  constructor(stage, boardState) {
-    this.stage = stage;
+  constructor(renderContainer, boardState) {
+    this.renderContainer = renderContainer;
 
     this.boardStateAtStartOfTurn = null;
 
@@ -28,9 +28,9 @@ class BoardState {
 
   loadState() {
     this.reset();
-    while(this.stage.children.length > 0){
-      this.stage.removeChild(
-        this.stage.getChildAt(0)
+    while(this.renderContainer.children.length > 0){
+      this.renderContainer.removeChild(
+        this.renderContainer.getChildAt(0)
       );
     }
 
@@ -75,7 +75,7 @@ class BoardState {
   }
 
   addUnit(unit) {
-    unit.addToStage(this.stage);
+    unit.addToStage(this.renderContainer);
     this.units.push(unit);
   }
 

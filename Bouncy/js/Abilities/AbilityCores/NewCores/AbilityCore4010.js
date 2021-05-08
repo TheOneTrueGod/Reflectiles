@@ -1,8 +1,5 @@
 // TODO:
-// [] Change the icon
-// [] Change the cooldown
 // [] Change the style
-// [] Change the rawAbil
 class AbilityCore4010 extends AbilityCore {
   static BuildAbilityChild(level) {
     let hitDamage = Math.floor(NumbersBalancer.getAbilityDamage(level, 0.1));
@@ -10,7 +7,7 @@ class AbilityCore4010 extends AbilityCore {
 
     const rawAbil = {
       name: 'Deadly Poison',
-      description: `Infects three target units in a <<3>>x<<1>> area with ${hitDamage} poison damage, and afflicts them with Deadly Poison for ${duration} turns, preventing poison damage from being reduced.`,
+      description: `Infects units in a <<3>>x<<1>> area with <<${hitDamage}>> poison damage, and afflicts them with Deadly Poison for ${duration} turns, preventing poison damage from being reduced.`,
       card_text_description: `${hitDamage}`,
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
@@ -32,7 +29,7 @@ class AbilityCore4010 extends AbilityCore {
           aoe_size: { x:[-1, 1], y:[0, 0] },
         }
       ],
-      icon: "/Bouncy/assets/icons/help.png"
+      icon: "/Bouncy/assets/icons/molecule.png"
     };
 
     let cooldown = this.getCooldown();

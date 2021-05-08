@@ -5,10 +5,10 @@ const DO_TURNS_SIMULTANEOUSLY = true;
 const SIMULTANEOUS_DELAY = 50;
 
 class BoardState {
-  constructor(boardSize, stage, boardState) {
+  constructor(boardSize, renderContainers, boardState) {
     this.boardSize = boardSize;
 
-    this.stage = stage;
+    this.renderContainers = renderContainers;
 
     this.borderWalls = [
       new BorderWallLine(0, -this.boardSize.height, 0, this.boardSize.height * 2,  BorderWallLine.LEFT),
@@ -100,11 +100,13 @@ class BoardState {
   }
 
   resetStage() {
-    while(this.stage.children.length > 0){
-      this.stage.removeChild(
-        this.stage.getChildAt(0)
-      );
-    }
+    Object.keys(this.renderContainers).forEach((key) => {
+      while(this.renderContainers[key].children.length > 0){
+        this.renderContainers[key].removeChild(
+          this.renderContainers[key].getChildAt(0)
+        );
+      }
+    });
   }
 
   resetRandomSeeds() {
@@ -183,7 +185,7 @@ class BoardState {
     var i = 0;
     while (i < this.projectiles.length) {
       if (true) {
-        this.projectiles[i].removeFromStage(this.stage);
+        this.projectiles[i].removeFromStage(this.renderContainers.projectiles);
         this.projectiles.splice(i, 1);
       } else {
         i ++;
@@ -264,7 +266,7 @@ class BoardState {
     if (this.isEnemyUnit(unit) && unit.isRealUnit()) {
       this.enemyUnitCount += 1;
     }
-    unit.addToStage(this.stage);
+    unit.addToStage(this.renderContainers.units);
     this.units.push(unit);
   }
 
@@ -615,7 +617,7 @@ class BoardState {
     var i = 0;
     while (i < this.projectiles.length) {
       if (this.projectiles[i].readyToDelete()) {
-        this.projectiles[i].removeFromStage(this.stage);
+        this.projectiles[i].removeFromStage(this.renderContainers.projectiles);
         this.projectiles.splice(i, 1);
       } else {
         i ++;
@@ -633,7 +635,7 @@ class BoardState {
     var i = 0;
     while (i < this.effects.length) {
       if (this.effects[i].readyToDelete()) {
-        this.effects[i].removeFromStage(this.stage);
+        this.effects[i].removeFromStage(this.renderContainers.effects);
         this.effects.splice(i, 1);
       } else {
         i ++;
@@ -714,7 +716,7 @@ class BoardState {
   }
 
   addProjectile(projectile) {
-    projectile.addToStage(this.stage);
+    projectile.addToStage(this.renderContainers.projectiles);
     this.projectiles.push(projectile);
     if (!(projectile instanceof Effect)) {
       let unitsAtPos =
@@ -729,7 +731,7 @@ class BoardState {
   }
 
   addEffect(effect) {
-    effect.addToStage(this.stage);
+    effect.addToStage(this.renderContainers.effects);
   }
 
   getGameWalls() {

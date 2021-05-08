@@ -1,8 +1,3 @@
-// TODO:
-// [] Change the icon
-// [] Change the cooldown
-// [] Change the style
-// [] Change the rawAbil
 class AbilityCore4009 extends AbilityCore {
   static BuildAbilityChild(level) {
     let duration = 2;

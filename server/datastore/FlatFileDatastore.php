@@ -6,7 +6,7 @@ class FlatFileDatastore extends Datastore {
   static function getNewGameID($gameType) {
     $path = self::getSavePath();
     $files = glob($path.'/*');
-    if (count($files) > 10) {
+    if (count($files) > 20) {
       return null;
     }
     natsort($files);

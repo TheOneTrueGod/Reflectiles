@@ -32,8 +32,6 @@
  * Background of a person in a square
  * Make freeze spread across all shields.  They take double damage
  */
-import { ROUND_PREVIEW_HEIGHT } from './constants.js';
-
 export default class MainGameHandler {
   constructor(turnControllerClass) {
     this.ticksPerTurn = 20;
@@ -59,6 +57,24 @@ export default class MainGameHandler {
     this.boardSize = {width: canvasWidth, height: canvasHeight};
     this.renderer = PIXI.autoDetectRenderer(canvasWidth, canvasHeight);
     this.stage = new PIXI.Container();
+    this.renderContainers = {
+      terrain: new PIXI.Container(),
+      
+      boardState: {
+        units: new PIXI.Container(),
+        projectiles: new PIXI.Container(),
+        effects: new PIXI.Container(),
+      },
+
+      aimIndicators: new PIXI.Container(),
+      debug: new PIXI.Container(),
+    }
+    this.stage.addChild(this.renderContainers.terrain);
+    this.stage.addChild(this.renderContainers.boardState.units);
+    this.stage.addChild(this.renderContainers.boardState.projectiles);
+    this.stage.addChild(this.renderContainers.boardState.effects);
+    this.stage.addChild(this.renderContainers.aimIndicators);
+    this.stage.addChild(this.renderContainers.debug);
     
     //Add the canvas to the HTML document
     mad.append(this.renderer.view);
@@ -74,7 +90,7 @@ export default class MainGameHandler {
   addLine(line, color) {
     // Create a new Graphics object and add it to the scene
     var lineGraphic = new PIXI.Graphics();
-    this.stage.addChild(lineGraphic);
+    this.renderContainers.debug.addChild(lineGraphic);
 
     // Move it to the beginning of the line
     lineGraphic.position.set(line.x1, line.y1);
@@ -117,7 +133,7 @@ export default class MainGameHandler {
     var self = this;
 
     GameInitializer.setHostNewGameCallback(() => {
-      self.updateBoardState(null, this.boardSize, self.stage);
+      self.updateBoardState(null, this.boardSize, self.renderContainers.boardState);
       self.boardState.addInitialPlayers(self.players);
       AIDirector.createInitialUnits(self.boardState);
       self.players.forEach((player) => {
@@ -145,7 +161,7 @@ export default class MainGameHandler {
     
     let serverBoardState = new BoardState(
       this.boardSize,
-      this.stage,
+      this.renderContainers.boardState,
       serverBoardData
     );
 
@@ -243,7 +259,7 @@ export default class MainGameHandler {
   removeAllPlayerCommands() {
     for (var key in this.playerCommands) {
       this.playerCommands[key].getCommands().forEach((command) => {
-        command.removeAimIndicator(this.stage);
+        command.removeAimIndicator(this.renderContainers.aimIndicators);
       })
     }
   }
@@ -388,19 +404,19 @@ export default class MainGameHandler {
   }
 
   redrawAimPreviews() {
-    if (this.majorAimPreviewCommand) { this.majorAimPreviewCommand.removeAimIndicator(this.stage); }
-    if (this.minorAimPreviewCommand) { this.minorAimPreviewCommand.removeAimIndicator(this.stage); }
+    if (this.majorAimPreviewCommand) { this.majorAimPreviewCommand.removeAimIndicator(this.renderContainers.aimIndicators); }
+    if (this.minorAimPreviewCommand) { this.minorAimPreviewCommand.removeAimIndicator(this.renderContainers.aimIndicators); }
 
     this.majorAimPreviewCommand = this.getMajorAimPreviewCommand();
     this.minorAimPreviewCommand = this.getMinorAimPreviewCommand();
     if (this.majorAimPreviewCommand) {
       this.majorAimPreviewCommand.updateValidTargetCheck();
-      this.majorAimPreviewCommand.addAimIndicator(this.boardState, this.stage, this.players);
+      this.majorAimPreviewCommand.addAimIndicator(this.boardState, this.renderContainers.aimIndicators, this.players);
     }
 
     if (this.minorAimPreviewCommand) {
       this.minorAimPreviewCommand.updateValidTargetCheck();
-      this.minorAimPreviewCommand.addAimIndicator(this.boardState, this.stage, this.players);
+      this.minorAimPreviewCommand.addAimIndicator(this.boardState, this.renderContainers.aimIndicators, this.players);
     }
   }
 
@@ -415,12 +431,12 @@ export default class MainGameHandler {
     let commandController = this.getPlayerCommandController(this.playerID);
     commandController.setPreviewCommand(this.aimPreviewCommand);
     if (command.isMajorAction() && commandController.hasMajor()) {
-      commandController.getMajorAction().removeAimIndicator(this.stage);
+      commandController.getMajorAction().removeAimIndicator(this.renderContainers.aimIndicators);
     } else if (command.isMinorAction() && commandController.hasMinor()) {
-      commandController.getMinorAction().removeAimIndicator(this.stage);
+      commandController.getMinorAction().removeAimIndicator(this.renderContainers.aimIndicators);
     }
     /*this.getPlayerCommandController(this.playerID).getCommands().forEach((command) => {
-      command.addAimIndicator(this.boardState, this.stage, this.players);
+      command.addAimIndicator(this.boardState, this.renderContainers.aimIndicators, this.players);
     });*/
     this.redrawAimPreviews();
   }
@@ -437,9 +453,9 @@ export default class MainGameHandler {
         ) {
           if (abilityIndex === null) {
             command.updateValidTargetCheck();
-            command.addAimIndicator(this.boardState, this.stage, this.players);
+            command.addAimIndicator(this.boardState, this.renderContainers.aimIndicators, this.players);
           } else {
-            command.removeAimIndicator(this.stage);
+            command.removeAimIndicator(this.renderContainers.aimIndicators);
           }
         }
       });
@@ -453,12 +469,12 @@ export default class MainGameHandler {
       if (validMove) {
         this.aimPreviews[commandTurn] = new PlayerCommandMove(validMove.x, validMove.y);
         this.aimPreviews[commandTurn].updateValidTargetCheck();
-        this.aimPreviews[commandTurn].addAimIndicator(this.boardState, this.stage, this.players);
+        this.aimPreviews[commandTurn].addAimIndicator(this.boardState, this.renderContainers.aimIndicators, this.players);
       }
     } else if (abilityIndex !== null) {
       this.aimPreviews[commandTurn] = new PlayerCommandUseAbility(x, y, abilityIndex, $('#gameContainer').attr('playerID'));
       this.aimPreviews[commandTurn].updateValidTargetCheck();
-      this.aimPreviews[commandTurn].addAimIndicator(this.boardState, this.stage, this.players);
+      this.aimPreviews[commandTurn].addAimIndicator(this.boardState, this.renderContainers.aimIndicators, this.players);
     } else {
       this.aimPreviews[commandTurn] = null;
     }
@@ -501,7 +517,7 @@ export default class MainGameHandler {
       this.playerCommands[pID] = new PlayerCommandController(pID);
     } else {
       this.playerCommands[pID].getCommands().forEach((command) => {
-        command.removeAimIndicator(this.stage);
+        command.removeAimIndicator(this.renderContainers.aimIndicators);
       });
     }
     this.playerCommands[pID].addCommand(playerCommand);
@@ -524,10 +540,10 @@ export default class MainGameHandler {
           // nothing;
         } else if (pID !== this.playerID || !aimPreview) {
           command.updateValidTargetCheck();
-          command.addAimIndicator(this.boardState, this.stage, this.players);
+          command.addAimIndicator(this.boardState, this.renderContainers.aimIndicators, this.players);
         } else if (pID == this.playerID && aimPreview) {
           aimPreview.updateValidTargetCheck();
-          aimPreview.addAimIndicator(this.boardState, this.stage, this.players);
+          aimPreview.addAimIndicator(this.boardState, this.renderContainers.aimIndicators, this.players);
         }
       });
     }

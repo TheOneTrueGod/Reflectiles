@@ -1,15 +1,12 @@
-// Arcane Nova -- Targets yourself or any ally.  Deals damage in a circle around them
 // TODO:
-// [] Change the icon
-// [] Change the cooldown
 // [] Change the style
 // [] Change the rawAbil
-class AbilityCore3009 extends AbilityCore {
+class AbilityCore4011 extends AbilityCore {
   static BuildAbilityChild(level) {
-    let hitDamage = Math.floor(NumbersBalancer.getAbilityDamage(level, 1) / 10);
+    let hitDamage = Math.floor(NumbersBalancer.getAbilityDamage(level, 1));
     const rawAbil = {
-      name: 'Teleport [Not Implemented]',
-      description: `Teleport yourself to a nearby location`,
+      name: 'Spread the Sickness',
+      description: `Remove half of the poison and freeze duration from one enemy, and apply it to 4 adjacent units`,
       card_text_description: `${hitDamage}`,
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
@@ -19,10 +16,10 @@ class AbilityCore3009 extends AbilityCore {
       hit_effects: [
         {
           base_damage: hitDamage,
-          effect: ProjectileShape.HitEffects.DAMAGE,
+          effect: ProjectileShape.HitEffects.SPREAD_DEBUFFS,
         }
       ],
-      icon: "/Bouncy/assets/icons/teleport.png"
+      icon: "/Bouncy/assets/icons/deathcap.png"
     };
 
     let cooldown = this.getCooldown();
@@ -45,8 +42,8 @@ class AbilityCore3009 extends AbilityCore {
   }
 
   static GetCardDeckType() {
-    return CardDeckTypes.CHAOS;
+    return CardDeckTypes.POISON;
   }
 }
 
-AbilityCore.coreList[3009] = AbilityCore3009;
+AbilityCore.coreList[4011] = AbilityCore4011;

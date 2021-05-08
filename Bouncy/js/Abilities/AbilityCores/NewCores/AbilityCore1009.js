@@ -8,7 +8,7 @@ class AbilityCore1009 extends AbilityCore {
     let hitDamage = Math.floor(NumbersBalancer.getAbilityDamage(level, 0.6));
     const rawAbil = {
       name: 'Snipe',
-      description: `Shoot a powerful round at a single target dealing ${hitDamage} damage`,
+      description: `Shoot a powerful round at a single target dealing <<${hitDamage}>> damage`,
       card_text_description: `${hitDamage}`,
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,

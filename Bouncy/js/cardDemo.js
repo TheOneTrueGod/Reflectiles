@@ -41,7 +41,7 @@ class CardDemo extends MainGameHandler {
     UIListeners.showGameBoard();
     var width = Unit.UNIT_SIZE * 7; var height = Unit.UNIT_SIZE * 9;
     let boardSize = {width: width, height: height};
-    this.boardState = new BoardState(boardSize, this.stage);
+    this.boardState = new BoardState(boardSize, this.renderContainers.boardState);
     this.boardState.sectors = new UnitSectors(9, 7, width, height);
 
     this.players[0] = new Player({user_name: 'totg', user_id: 'totg'}, 'totg');

@@ -134,6 +134,8 @@ HitEffect.getHitEffectFromType = function(hitEffectDef, abilityDef, projectileSh
       return new NegativeConditionModifierHitEffect(hitEffectDef, abilityDef, projectileShape);
     case ProjectileShape.HitEffects.APPLY_DOT_TICK:
       return new ApplyDamageOverTimeEffectHitEffect(hitEffectDef, abilityDef, projectileShape);
+    case ProjectileShape.HitEffects.SPREAD_DEBUFFS:
+      return new SpreadDebuffsHitEffect(hitEffectDef, abilityDef, projectileShape);
   }
   return new HitEffect(hitEffectDef, abilityDef);
 }
