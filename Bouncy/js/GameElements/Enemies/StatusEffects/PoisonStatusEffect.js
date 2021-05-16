@@ -67,8 +67,16 @@ class PoisonStatusEffect extends StatusEffect {
       'effect': this.effect,
       'player_id': this.playerID,
       'ability_id': this.abilityID,
-      'effect_data': this.effectList,
+      'effect_data': this.serializeEffectData(),
     };
+  }
+
+  serializeEffectData() {
+    const serialized = {};
+    Object.keys(this.effectList).forEach((key) => {
+      serialized[key] = { ...this.effectList[key] };
+    })
+    return serialized;
   }
 
   deserializeEffectData(serializedEffectData) {

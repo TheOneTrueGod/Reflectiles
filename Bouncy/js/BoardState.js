@@ -270,6 +270,10 @@ class BoardState {
     this.units.push(unit);
   }
 
+  getUnitById(unitID) {
+    return this.findUnit(unitID);
+  }
+
   findUnit(unitID) {
     for (var i = 0; i < this.units.length; i++) {
       if (this.units[i].id == unitID) {

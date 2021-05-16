@@ -94,7 +94,7 @@ class SummonUnitAbilityDef extends AbilityDef {
     var valid_targets = [];
     for (var x = gridPos.x - this.MAX_RANGE.left; x <= gridPos.x + this.MAX_RANGE.right; x++) {
       for (var y = gridPos.y - this.MAX_RANGE.top; y <= gridPos.y + this.MAX_RANGE.bottom; y++) {
-        var units = MainGame.boardState.sectors.getUnitsAtGridSquare(x, y);
+        //var units = MainGame.boardState.sectors.getUnitsAtGridSquare(x, y);
         var coord = {x, y};
         if (this.canSummonUnitAtGridPos(boardState, coord)) {
           valid_targets.push(coord);

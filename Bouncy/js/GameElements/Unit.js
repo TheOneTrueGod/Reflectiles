@@ -686,6 +686,27 @@ class Unit {
     this.gameSprite.x = this.x;
     this.gameSprite.y = this.y;
   }
+
+  getCoordsInRange(boardState, range) {
+    if (range < 0) { return []; }
+    let adjacentSpots = [];
+    let thisSize = this.getSize();
+    let thisCoord = boardState.sectors.getGridCoord(this);
+    for (let xOffset = thisSize.left - range; xOffset <= thisSize.right + range; xOffset++) {
+      for (let yOffset = thisSize.top - range; yOffset <= thisSize.bottom + range; yOffset++) {
+        if (!(xOffset < thisSize.left || yOffset < thisSize.top || xOffset > thisSize.right || yOffset > thisSize.bottom)) {
+          continue;
+        }
+        const newCoord = {x: thisCoord.x + xOffset, y: thisCoord.y + yOffset };
+        if (newCoord.x < 0 || newCoord.x >= boardState.sectors.columns || newCoord.y < 0 || newCoord.y >= boardState.sectors.rows) {
+          continue;
+        }
+
+        adjacentSpots.push(newCoord);
+      }
+    }
+    return adjacentSpots;
+  }
 }
 
 Unit.loadFromServerData = function(serverData) {

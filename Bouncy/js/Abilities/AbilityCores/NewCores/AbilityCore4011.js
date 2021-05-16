@@ -1,12 +1,11 @@
 // TODO:
 // [] Change the style
-// [] Change the rawAbil
 class AbilityCore4011 extends AbilityCore {
   static BuildAbilityChild(level) {
     let hitDamage = Math.floor(NumbersBalancer.getAbilityDamage(level, 1));
     const rawAbil = {
       name: 'Spread the Sickness',
-      description: `Remove half of the poison and freeze duration from one enemy, and apply it to 4 adjacent units`,
+      description: `Take half of the <<poison>> and <<freeze>> currently on an enemy, and apply them to the enemy units adjacent to it`,
       card_text_description: `${hitDamage}`,
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
@@ -17,7 +16,18 @@ class AbilityCore4011 extends AbilityCore {
         {
           base_damage: hitDamage,
           effect: ProjectileShape.HitEffects.SPREAD_DEBUFFS,
-        }
+          debuff_list: {
+            [PoisonStatusEffect.name]: 0.5,
+            [FreezeStatusEffect.name]: 0.5,
+          },
+        },
+        {
+          // To get the effect to show up
+          damage: 0,
+          effect: ProjectileShape.HitEffects.POISON,
+          aoe_type: "BOX",
+          aoe_size: { x:[-1, 1], y:[-1, 1] },
+        },
       ],
       icon: "/Bouncy/assets/icons/deathcap.png"
     };
@@ -32,9 +42,11 @@ class AbilityCore4011 extends AbilityCore {
   }
 
   static createAbilityStyle() {
-    return (new AbilitySheetSpriteAbilityStyleBuilder())
-      .setSheet('weapons_sheet')
-      .setCoordNums(2, 1, 24, 23);
+    return (new AbilitySheetSpriteAbilityStyleBuilder)
+      .setSheet('poison_sheet')
+      .setCoords({left: 53, top: 85, right: 72, bottom: 93})
+      .setExplosion(AbilityStyle.getExplosionPrefab(AbilityStyle.EXPLOSION_PREFABS.POISON))
+      .setRotation(-Math.PI);
   }
 
   static getCooldown() {

@@ -64,6 +64,10 @@ class StatusEffect {
       'duration_increased': this.durationIncreased,
     };
   }
+
+  clone() {
+    return this.constructor.fromServerData(this.serialize());
+  }
 }
 
 StatusEffect.getEffectType = function() {
