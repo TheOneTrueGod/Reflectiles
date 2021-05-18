@@ -8,7 +8,7 @@ parser = argparse.ArgumentParser(description='Make a bunch of ability cores.')
 parser.add_argument('coreNum', metavar='ID', type=int,
                    help='the Core Number to create')
 parser.add_argument('coreClass', metavar='Type', type=str,
-                   help='the class of the core.  One of [WEAPON, DEFENDER, CHAOS, POISON, ENGINEER, NEUTRAL]')
+                   help='the class of the core.  One of [WEAPON, DEFENDER, CHAOS, POISON, ENGINEER, EARTHMASTER, NEUTRAL]')
 
 args = parser.parse_args()
 
@@ -17,8 +17,8 @@ coreClass = args.coreClass.upper()
 try:
     if not coreNum:
         raise Exception("coreNum required.")
-    if coreClass not in ["WEAPON", "DEFENDER", "CHAOS", "POISON", "ENGINEER", "NEUTRAL"]:
-        raise Exception("coreClass must be one of [WEAPON, DEFENDER, CHAOS, POISON, ENGINEER, NEUTRAL]")
+    if coreClass not in ["WEAPON", "DEFENDER", "CHAOS", "POISON", "ENGINEER", "EARTHMASTER", "NEUTRAL"]:
+        raise Exception("coreClass must be one of [WEAPON, DEFENDER, CHAOS, POISON, ENGINEER, EARTHMASTER, NEUTRAL]")
 
     fileName = "AbilityCore" + str(coreNum) + ".js"
 

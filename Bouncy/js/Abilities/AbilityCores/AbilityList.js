@@ -10,6 +10,7 @@ class AbilityList {
       case CardDeckTypes.ENGINEER:
       case CardDeckTypes.DEFENDER:
       case CardDeckTypes.NEUTRAL:
+      case CardDeckTypes.EARTHMASTER:
       default:
         return [];
     }
