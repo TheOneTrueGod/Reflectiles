@@ -38,6 +38,10 @@ class UnitBasic extends Unit {
     var sprite = null;
     if (effect == FreezeStatusEffect.getEffectType()) {
       sprite = FreezeStatusEffect.addEffectSprite(this);
+    } else if (effect == DisarmStatusEffect.getEffectType()) {
+      sprite = DisarmStatusEffect.addEffectSprite(this);
+    } else if (effect == ImmobilizeStatusEffect.getEffectType()) {
+      sprite = ImmobilizeStatusEffect.addEffectSprite(this);
     } else if (effect == PoisonStatusEffect.getEffectType()) {
       sprite = PoisonStatusEffect.addEffectSprite(this);
     } else if (effect == InfectStatusEffect.getEffectType()) {
@@ -187,7 +191,7 @@ class UnitBasic extends Unit {
   }
 
   canUseAbilities() {
-    return !this.hasStatusEffect(FreezeStatusEffect);
+    return !this.hasStatusEffect(FreezeStatusEffect) && !this.hasStatusEffect(DisarmStatusEffect);
   }
 
   moveForward(boardState) {

@@ -1,4 +1,4 @@
-class ImmobilizeStatusEffect extends StatusEffect {
+class DisarmStatusEffect extends StatusEffect {
   constructor(duration, abilityID) {
     super(duration, abilityID);
   }
@@ -22,9 +22,14 @@ class ImmobilizeStatusEffect extends StatusEffect {
     let sprite = new PIXI.Graphics();
     sprite.position.set(-unit.physicsWidth / 2, -unit.physicsHeight / 2);
     sprite.lineStyle(3, 0x0000FF)
-       .moveTo(0, unit.physicsHeight)
-       .lineTo(unit.physicsWidth / 2, unit.physicsHeight / 2)
+       .moveTo(0, 0)
+       .lineTo(unit.physicsWidth, unit.physicsHeight)
+       .moveTo(unit.physicsWidth, 0)
+       .lineTo(0, unit.physicsHeight)
+       .moveTo(0, 0)
        .lineTo(unit.physicsWidth, 0)
+       .lineTo(unit.physicsWidth, unit.physicsHeight)
+       .lineTo(0, unit.physicsHeight)
        .lineTo(0, 0);
     if (unit.gameSprite.children.length > 0) {
       unit.gameSprite.addChildAt(sprite, unit.gameSprite.children.length - 1);
@@ -36,11 +41,11 @@ class ImmobilizeStatusEffect extends StatusEffect {
   }
 }
 
-ImmobilizeStatusEffect.loadFromServerData = function(server_data) {
-  return new ImmobilizeStatusEffect(
+DisarmStatusEffect.loadFromServerData = function(server_data) {
+  return new DisarmStatusEffect(
     server_data.duration,
     server_data.ability_id,
   );
 }
 
-ImmobilizeStatusEffect.AddToTypeMap();
+DisarmStatusEffect.AddToTypeMap();

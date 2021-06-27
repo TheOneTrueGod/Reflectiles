@@ -94,6 +94,7 @@
 <script src="/Bouncy/js/GameElements/Enemies/StatusEffects/InfectStatusEffect.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/StatusEffects/FreezeStatusEffect.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/StatusEffects/ImmobilizeStatusEffect.js"></script>
+<script src="/Bouncy/js/GameElements/Enemies/StatusEffects/DisarmStatusEffect.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/StatusEffects/WeaknessStatusEffect.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/StatusEffects/DisableShieldStatusEffect.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/StatusEffects/SpecialStatusEffect.js"></script>

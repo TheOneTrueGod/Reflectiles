@@ -9,6 +9,28 @@ class FreezeHitEffect extends HitEffect {
   }
 }
 
+class ImmobilizeHitEffect extends HitEffect {
+  doHitEffectOnUnit(boardState, unit, intersection, projectile) {
+    unit.addStatusEffect(
+      new FreezeStatusEffect(
+        idx(this.hitEffectDef, 'duration', 1),
+        projectile.abilityDef.index
+      )
+    );
+  }
+}
+
+class DisarmHitEffect extends HitEffect {
+  doHitEffectOnUnit(boardState, unit, intersection, projectile) {
+    unit.addStatusEffect(
+      new FreezeStatusEffect(
+        idx(this.hitEffectDef, 'duration', 1),
+        projectile.abilityDef.index
+      )
+    );
+  }
+}
+
 FreezeHitEffect.createJSON = function(
   duration,
   aoeEffect

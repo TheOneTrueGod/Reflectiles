@@ -1,6 +1,6 @@
 class AbilityCore4003 extends AbilityCore {
   static BuildAbilityChild(level) {
-    let num_bullets = 12;
+    let num_bullets = 15;
     let shotDamage = Math.floor(NumbersBalancer.getAbilityDamage(level, 1.5) / num_bullets);
     const rawAbil = { // 3000 damage max
       name: 'Infect',
@@ -14,7 +14,7 @@ class AbilityCore4003 extends AbilityCore {
       projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
       hit_effects: [{
         effect: ProjectileShape.HitEffects.INFECT,
-        duration: 2,
+        duration: 3,
         abil_def: {
           ability_type: AbilityDef.AbilityTypes.PROJECTILE,
           shape: ProjectileAbilityDef.Shapes.BULLET_EXPLOSION,
