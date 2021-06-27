@@ -41,7 +41,7 @@ class EnemyProjectile extends Projectile {
         hitSomething = true;
       }
     }
-    
+
     if (this.y >= boardState.boardSize.height) {
       hitSomething = true;
       this.delete();
@@ -52,6 +52,13 @@ class EnemyProjectile extends Projectile {
         this.y
       );
     }
+  }
+
+  hitWall(boardState, intersection) {
+    if (intersection.line && intersection.line instanceof BorderWallLine && intersection.line.side === BorderWallLine.BOTTOM) {
+      return;
+    }
+    super.hitWall(boardState, intersection);
   }
 
   hitUnit(boardState, unit, intersection) {
