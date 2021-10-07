@@ -62,6 +62,7 @@ export default class MainGameHandler {
       
       boardState: {
         units: new PIXI.Container(),
+        abilityForecasts: new PIXI.Container(),
         projectiles: new PIXI.Container(),
         effects: new PIXI.Container(),
       },
@@ -71,6 +72,7 @@ export default class MainGameHandler {
     }
     this.stage.addChild(this.renderContainers.terrain);
     this.stage.addChild(this.renderContainers.boardState.units);
+    this.stage.addChild(this.renderContainers.boardState.abilityForecasts);
     this.stage.addChild(this.renderContainers.boardState.projectiles);
     this.stage.addChild(this.renderContainers.boardState.effects);
     this.stage.addChild(this.renderContainers.aimIndicators);

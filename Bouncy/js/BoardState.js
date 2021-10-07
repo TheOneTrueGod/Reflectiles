@@ -267,6 +267,7 @@ class BoardState {
       this.enemyUnitCount += 1;
     }
     unit.addToStage(this.renderContainers.units);
+    unit.addAbilityForecastsToStage(this, this.renderContainers.abilityForecasts);
     this.units.push(unit);
   }
 
@@ -450,6 +451,12 @@ class BoardState {
       UIListeners.updateSpawnPreview(this);
     }
     this.doDeleteChecks();
+    
+    if (phase === TurnPhasesEnum.NEXT_TURN) {
+      this.renderContainers.abilityForecasts.visible = true;
+    } else if (phase === TurnPhasesEnum.START_TURN) {
+      this.renderContainers.abilityForecasts.visible = false;
+    }
   }
 
   endOfPhase(players, phase) {

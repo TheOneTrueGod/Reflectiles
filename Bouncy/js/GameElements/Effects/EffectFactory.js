@@ -27,7 +27,8 @@ EffectFactory.createUnitDyingEffect = function(boardState, unit) {
 
 EffectFactory.createDamagePlayersEffect = function(boardState, x, y) {
   for (var i = -2; i <= 2; i++) {
-    var angle = -Math.PI / 2.0 + Math.PI / 8.0 * i;
+    const randomFactor = Math.PI / 8.0
+    var angle = -Math.PI / 2.0 + Math.PI / 8.0 * i + Math.random() * randomFactor - randomFactor / 2;
     boardState.addProjectile(
       new LineEffect(new Line(
         x + Math.cos(angle) * 10,

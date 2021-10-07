@@ -4,11 +4,15 @@ class EnemyAbilityShootProjectile extends EnemyAbility {
     this.damage = damage;
   }
 
-  doEffects(boardState) {
+  doEffects(boardState, forecast) {
     if (!this.unit.canUseAbilities()) { return; }
+
+    const src = {x: this.unit.x, y: this.unit.y};
+    const target = forecast.getTargetPos(boardState);
+    
     var projectile = new EnemyProjectile(
-      {x: this.unit.x, y: this.unit.y}, {x: this.unit.x, y: this.unit.y + 50},
-      Math.PI / 2,
+      src, target,
+      Math.atan2(target.y - src.y, target.x - src.x),
       { 'damage_to_players': this.damage }
     );
     projectile.addUnitHitCallback(this.unitHitCallback);

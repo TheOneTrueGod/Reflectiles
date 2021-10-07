@@ -180,6 +180,7 @@
 <script src="/Bouncy/js/GameElements/Enemies/UnitSpawningPlaceholder.js"></script>
 
 <script src="/Bouncy/js/GameElements/Enemies/EnemyAbilities/EnemyAbility.js"></script>
+<script src="/Bouncy/js/GameElements/Enemies/EnemyAbilities/AbilityForecast.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/EnemyAbilities/EnemyAbilitySummonUnits.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/EnemyAbilities/EnemyAbilitySummonFireShards.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/EnemyAbilities/EnemyAbilitySummonIceWall.js"></script>

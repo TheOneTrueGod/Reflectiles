@@ -498,6 +498,8 @@ class Unit {
     }
   }
 
+  addAbilityForecastsToStage(boardState, forecastStage) { }
+
   addToBackOfStage() {
     return false;
   }

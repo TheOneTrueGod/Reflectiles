@@ -64,7 +64,7 @@ class UnitCore extends Unit {
       this.x,
       this.y
     );
-    this.knockback(boardState);
+    //this.knockback(boardState);
   }
 
   knockback(boardState) {
