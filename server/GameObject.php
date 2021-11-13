@@ -1,6 +1,5 @@
 <?php
 require_once('server/datastore/DatastoreFactory.php');
-require_once('CardsNMagic/CardsNMagicGameObject.php');
 require_once('Bouncy/BouncyGameObject.php');
 require_once('FMJ/FMJGameObject.php');
 require_once('server/exceptions/GameDoesntExistException.php');
@@ -50,14 +49,6 @@ abstract class GameObject {
     $decoded = json_decode($json);
     $game_type = $decoded->game_type_id;
     switch ($game_type) {
-      case CardsNMagicGameObject::getGameTypeID();
-        $go = new CardsNMagicGameObject(
-          $decoded->id,
-          $decoded->name,
-          $decoded->turn_id,
-          $decoded->game_data
-        );
-      break;
       case BouncyGameObject::getGameTypeID();
         $go = new BouncyGameObject(
           $decoded->id,

@@ -27,10 +27,6 @@ class GameSelectController {
 
         <?php
         if ($user->hasPermission("CREATE_NEW_GAME")) {
-          /*echo $this->getCreateGameRow(
-            "Create Cards 'n Magic Game'",
-            NewGameController::$GAME_TYPE_CARDS_N_MAGIC
-          );*/
           echo $this->getCreateGameRow(
             "Create Reflectiles Game",
             NewGameController::$GAME_TYPE_BOUNCY

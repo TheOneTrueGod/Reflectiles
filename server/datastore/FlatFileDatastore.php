@@ -2,7 +2,7 @@
 require_once('server/datastore/Datastore.php');
 require_once('server/exceptions/GameDoesntExistException.php');
 class FlatFileDatastore extends Datastore {
-  private static $FILE_ID_REGEX = '(bouncy_|fmj_|cardsnmagic_)(\d+)';
+  private static $FILE_ID_REGEX = '(bouncy_|fmj_)(\d+)';
   static function getNewGameID($gameType) {
     $path = self::getSavePath();
     $files = glob($path.'/*');
