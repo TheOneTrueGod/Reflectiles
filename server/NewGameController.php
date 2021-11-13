@@ -2,7 +2,6 @@
 require_once('server/GameObject.php');
 class NewGameController {
   public static $GAME_TYPE_BOUNCY = "bouncy";
-  public static $GAME_TYPE_FMJ = 'fmj';
   public static function getURLPath(
     $gameType = null,
     $prevGameID = null,
@@ -32,17 +31,9 @@ class NewGameController {
     if ($game_id == null || $gameType == null) { return null; }
     switch ($gameType) {
       case self::$GAME_TYPE_BOUNCY:
-        $game_id = $game_id;
-        $gameObj = new BouncyGameObject($game_id, "Created Reflectiles Game", 1, [], [], $user->getID());
-        break;
-      case self::$GAME_TYPE_FMJ:
-        $game_id = $game_id;
-        $gameObj = new FMJGameObject($game_id, "Created Full Metal Jacket Game", 1, [], [], $user->getID());
-        break;
-      case self::$GAME_TYPE_CARDS_N_MAGIC:
       default:
         $game_id = $game_id;
-        $gameObj = new BouncyGameObject($game_id, "Created Reflectiles Game", 1, [], []);
+        $gameObj = new BouncyGameObject($game_id, "Created Reflectiles Game", 1, [], [], $user->getID());
         break;
     }
 

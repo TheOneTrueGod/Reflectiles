@@ -31,10 +31,6 @@ class GameSelectController {
             "Create Reflectiles Game",
             NewGameController::$GAME_TYPE_BOUNCY
           );
-          /*echo $this->getCreateGameRow(
-            "Create Full Metal Jacket Game",
-            NewGameController::$GAME_TYPE_FMJ
-          );*/
         }
 
         foreach ($games as $game) {
