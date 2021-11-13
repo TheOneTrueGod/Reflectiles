@@ -1,10 +1,12 @@
+import { UIListeners } from "./UIListeners.js";
+
 const EMERGENCY_BREAK_TIME = 200;
 const EFFECT_TICK_DELAY = 20;
 
 const DO_TURNS_SIMULTANEOUSLY = true;
 const SIMULTANEOUS_DELAY = 50;
 
-class BoardState {
+export class BoardState {
   constructor(boardSize, renderContainers, boardState) {
     this.boardSize = boardSize;
 

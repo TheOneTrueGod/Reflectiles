@@ -1,4 +1,6 @@
-class UIListeners {
+import { PlayerInput } from "./PlayerInput.js";
+
+class UIListenersClass {
   contructor() {
     this.otherDecks = [];
     this.deliberatelyQuit = false;
@@ -708,4 +710,4 @@ class UIListeners {
   }
 }
 
-UIListeners = new UIListeners();
+export let UIListeners = new UIListenersClass();

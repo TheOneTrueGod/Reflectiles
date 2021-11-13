@@ -1,4 +1,6 @@
-class PlayerInput {
+import { UIListeners } from "./UIListeners.js";
+
+export class PlayerInput {
   constructor() {
     this.selectedAbility = null;
     this.selectedCommand = null;
@@ -100,11 +102,6 @@ class PlayerInput {
   handleMouseMotion(event) {
     let command = this.getCommandForEvent(event);
     if (command && command.hasAimPreview()) {
-      /*MainGame.setAimPreview(
-        event.offsetX, event.offsetY,
-        this.selectedAbility,
-        command.getCommandPhase()
-      );*/
       MainGame.setAimPreviewNEW(command);
     }
 

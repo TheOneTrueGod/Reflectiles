@@ -1,4 +1,6 @@
-class TurnController {
+import { UIListeners } from "../UIListeners.js";
+
+export class TurnController {
     constructor(mainGameHandler) {
         this.mainGameHandler = mainGameHandler;
         this.playingOutTurn = false;

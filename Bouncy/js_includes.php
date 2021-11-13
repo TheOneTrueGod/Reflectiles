@@ -19,7 +19,6 @@
 <script src="/Bouncy/js/GameElements/Projectiles/ProjectileTrailDef.js"></script>
 <script src="/Bouncy/js/GameElements/Projectiles/AbilitySource.js"></script>
 <script src="/Bouncy/js/GameElements/Projectiles/ProjectileCurveHandler.js"></script>
-<script src="/Bouncy/js/BoardState.js"></script>
 <script src="/Bouncy/js/GameStats.js"></script>
 <script src="/Bouncy/js/Board/UnitSectors.js"></script>
 <script src="/Bouncy/js/Abilities/AbilityFactory.js"></script>
@@ -32,8 +31,6 @@
 <script src="/Bouncy/js/Abilities/PositionBasedEffects/PositionBasedEffect.js"></script>
 <script src="/Bouncy/js/Abilities/AbilityCardBuilder.js"></script>
 <script src="/Bouncy/js/PlayerCommands/PlayerCommand.js"></script>
-<script src="/Bouncy/js/PlayerInput.js"></script>
-<script src="/Bouncy/js/UIListeners.js"></script>
 <script src="/Bouncy/js/TurnControls.js"></script>
 <script src="/Bouncy/js/AIDirector/AIDirector.js"></script>
 <script src="/Bouncy/js/AIDirector/SpawnFormations.js"></script>
@@ -55,7 +52,6 @@
 <script src="/Bouncy/js/GameElements/Projectiles/ProjectileBuffs/ProjectileDamageBuff.js"></script>
 <script src="/Bouncy/js/GameElements/Projectiles/ProjectileBuffs/ProjectileWeakenBuff.js"></script>
 <script src="/Bouncy/js/Errors/Errors.js"></script>
-<script src="/Bouncy/js/Turns/TurnController.js"></script>
 
 <!-- Extends the above -->
 <script src="/Bouncy/js/GameElements/Enemies/UnitBasic.js"></script>
