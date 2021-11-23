@@ -19,6 +19,15 @@ class EnemyAbilityShootProjectile extends EnemyAbility {
     boardState.addProjectile(projectile);
   }
 
+  createForecast(boardState, unit, abilityIndex) {
+    let player_ids = boardState.getPlayerIDs();
+
+    if (!player_ids) { return undefined; }
+
+    const target = player_ids[Math.floor(Math.random() * player_ids.length)];
+    return new AbilityForecast(unit, abilityIndex, AbilityForecast.TARGET_TYPES.PLAYER_ID, target);
+  }
+
   unitHitCallback(boardState, unit, intersection, projectile) {
 
   }

@@ -183,6 +183,7 @@
 <script src="/Bouncy/js/GameElements/Enemies/EnemyAbilities/EnemyAbilityShootProjectile.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/EnemyAbilities/EnemyAbilityShieldWall.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/EnemyAbilities/EnemyAbilityPersonalSpace.js"></script>
+<script src="/Bouncy/js/GameElements/Enemies/EnemyAbilities/EnemyAbilityExplode.js"></script>
 
 <script src="/Bouncy/js/GameElements/Enemies/UnitBossSlime.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/UnitMovementEffects.js"></script>

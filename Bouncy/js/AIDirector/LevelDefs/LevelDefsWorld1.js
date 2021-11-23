@@ -8,8 +8,18 @@ class LevelDefsWorld1 {
     let S = UnitShooter;
     let K = UnitKnight;
     let O = UnitBomber;
+
+    let F = UnitFireShard;
     if (stage == 1) {
       // Nothing hard here at all.  Bunch of basic units, with one knight in the middle
+      return new LevelDef({
+        'initialSpawn':[
+          [A, B, C, D, K, O, _, _, _, _, _, _, A, B, C],
+          [S, F, _, _, _, _, _, _, _, _, _, _, _, _, _],
+        ],
+        'waves': [],
+      });
+
       return new LevelDef({
         'initialSpawn':[
           [_, _, _, _, A, A, A, A, A, A, A, _, _, _, _],

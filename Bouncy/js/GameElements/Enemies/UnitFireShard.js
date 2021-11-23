@@ -3,6 +3,11 @@ class UnitFireShard extends UnitBasic {
     super(x, y, owner, id);
     this.FIRE_SHARD_SPRITES = 4;
     this.timeLeft = this.FIRE_SHARD_SPRITES;
+
+    this.addAbility(20, new EnemyAbilityExplode(
+      this,
+      NumbersBalancer.getUnitAbilityNumber(this, NumbersBalancer.UNIT_ABILITIES.FIRE_SHARD_TOTAL_DAMAGE)
+    ));
   }
 
   createCollisionBox() {
@@ -16,11 +21,15 @@ class UnitFireShard extends UnitBasic {
   }
 
   serializeData() {
-    return {timeLeft: this.timeLeft};
+    return { 
+      ...super.serializeData(),
+      timeLeft: this.timeLeft
+    };
   }
 
   loadSerializedData(data) {
     this.timeLeft = data.timeLeft;
+    super.loadSerializedData(data);
   }
 
   startOfPhase(boardState, phase) {
@@ -43,7 +52,17 @@ class UnitFireShard extends UnitBasic {
     }
   }
 
+  doAbilityForecasting(boardState) {
+    if (this.timeLeft === 1) {
+      super.doAbilityForecasting(boardState);
+    }
+  }
+
   explode(boardState) {
+    this.useForecastAbilities(boardState);
+  }
+
+  /*explode(boardState) {
     var num_projectiles = NumbersBalancer.getUnitAbilityNumber(this,
       NumbersBalancer.UNIT_ABILITIES.FIRE_SHARD_NUM_SHOTS
     );
@@ -64,7 +83,7 @@ class UnitFireShard extends UnitBasic {
         )
       );
     }
-  }
+  }*/
 
   doMovement(boardState) {}
 

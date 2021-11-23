@@ -7,6 +7,8 @@ class EnemyAbility {
     
   }
 
+  createForecast(boardState, unit, abilityIndex) {}
+
   createForecastGraphic(user, endPos, color) {
     const startPos = { x: user.x, y: user.y };
 

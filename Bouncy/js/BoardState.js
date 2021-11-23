@@ -387,6 +387,15 @@ export class BoardState {
     );
   }
 
+  getPlayerIDs() {
+    let player_ids = [];
+    for (var player_id in this.playerCastPoints) {
+      player_ids.push(player_id);
+    }
+
+    return player_ids;
+  }
+
   getSimultaneousDelay(phase) {
     if (phase == TurnPhasesEnum.PLAYER_MINOR) {
       return 20;

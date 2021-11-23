@@ -41,7 +41,9 @@ class UnitBasic extends Unit {
   }
 
   useForecastAbilities(boardState) {
-    this.abilityForecasts.forEach((forecast) => forecast.useAbility(boardState));
+    this.abilityForecasts.forEach((forecast) => {
+      forecast.useAbility(boardState)
+    });
   }
 
   doAbilityForecasting(boardState) {
@@ -51,15 +53,14 @@ class UnitBasic extends Unit {
     let abilIndex = this.pickRandomAbilityIndex(boardState);
     if (abilIndex === undefined) { return; }
 
-    let player_ids = [];
-    for (var player_id in boardState.playerCastPoints) {
-      player_ids.push(player_id);
-    }
+    const forecast = this.abilities[abilIndex].value.createForecast(boardState, this, abilIndex);
+    if (!forecast) { return; }
 
-    if (!player_ids) { return; }
+    this.abilityForecasts = [forecast];
+  }
 
+  getPlayerIDs() {
     const target = player_ids[Math.floor(Math.random() * player_ids.length)];
-    this.abilityForecasts = [new AbilityForecast(this, abilIndex, AbilityForecast.TARGET_TYPES.PLAYER_ID, target)];
   }
 
   /***********
@@ -220,6 +221,11 @@ class UnitBasic extends Unit {
     this.abilityForecasts.forEach((forecast) => {
       forecast.addToStage(boardState, forecastStage);
     })
+  }
+
+  onDelete(boardState) {
+    super.onDelete(boardState);
+    this.abilityForecasts.forEach((forecast) => forecast.removeFromStage());
   }
 
   /***************

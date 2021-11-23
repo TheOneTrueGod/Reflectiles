@@ -4,7 +4,7 @@ class UnitCore extends Unit {
   }
 
   getDefensePercent() {
-    return 1.5;
+    return 1;
   }
 
   createSprite(hideHealthBar) {

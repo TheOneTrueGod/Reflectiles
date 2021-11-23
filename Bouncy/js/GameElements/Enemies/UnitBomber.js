@@ -3,6 +3,11 @@ class UnitBomber extends UnitBasic {
     super(x, y, owner, id);
     this.timeLeft = NumbersBalancer.getUnitAbilityNumber(this, NumbersBalancer.UNIT_ABILITIES.BOMBER_DURATION);
     this.countdownSprite = null;
+
+    this.addAbility(20, new EnemyAbilityExplode(
+      this,
+      NumbersBalancer.getUnitAbilityNumber(this, NumbersBalancer.UNIT_ABILITIES.BOMBER_EXPLOSION_DAMAGE)
+    ));
   }
 
   createCollisionBox() {
@@ -22,11 +27,15 @@ class UnitBomber extends UnitBasic {
   }
 
   serializeData() {
-    return {timeLeft: this.timeLeft};
+    return { 
+      ...super.serializeData(),
+      timeLeft: this.timeLeft
+    };
   }
 
   loadSerializedData(data) {
     this.timeLeft = data.timeLeft;
+    super.loadSerializedData(data);
   }
 
   startOfPhase(boardState, phase) {
@@ -42,24 +51,14 @@ class UnitBomber extends UnitBasic {
     }
   }
 
-  explode(boardState) {
-    var num_projectiles = 5;
-    for (var i = -Math.floor(num_projectiles / 2); i <= Math.floor(num_projectiles / 2); i++) {
-      let angle = Math.PI / 2.0 + i / Math.floor(num_projectiles / 2) * Math.PI / 4.0;
-      boardState.addProjectile(
-        new EnemyProjectile(
-          {x: this.x, y: this.y},
-          {x: this.x + Math.cos(angle) * 10, y: this.y + Math.sin(angle) * 10},
-          angle,
-          {
-            //'friendly_fire': true,
-            'damage_to_players': NumbersBalancer.getUnitAbilityNumber(this,
-              NumbersBalancer.UNIT_ABILITIES.BOMBER_EXPLOSION_DAMAGE
-            ) / num_projectiles,
-          }
-        ).addUnitHitCallback(this.unitHitCallback.bind(this))
-      );
+  doAbilityForecasting(boardState) {
+    if (this.timeLeft === 1) {
+      super.doAbilityForecasting(boardState);
     }
+  }
+
+  explode(boardState) {
+    this.useForecastAbilities(boardState);
   }
 
   createSprite(hideHealthBar) {

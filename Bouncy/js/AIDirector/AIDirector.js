@@ -152,6 +152,7 @@ class AIDirector {
             y * squareHeight + squareHeight / 2,
             0
           );
+          newUnit.doAbilityForecasting(boardState);
           boardState.addUnit(newUnit);
         }
       }
