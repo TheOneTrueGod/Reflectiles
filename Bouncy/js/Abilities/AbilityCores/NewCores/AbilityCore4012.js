@@ -41,7 +41,7 @@ class AbilityCore4012 extends AbilityCore {
           duration: 1,
         }
       ],
-      icon: "/Bouncy/assets/icons/help.png"
+      icon: "/Bouncy/assets/icons/gooey-molecule.png"
     };
 
     let cooldown = this.getCooldown();

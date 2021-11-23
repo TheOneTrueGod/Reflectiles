@@ -1,62 +1,66 @@
 class AbilityForecast {
-    constructor(user, abilityIndex, targetType, target) {
+    constructor(user, abilityIndex, targetType, targets) {
         this.user = user;
         this.abilityIndex = abilityIndex;
         this.targetType = targetType;
-        this.target = target;
+        this.targets = targets;
+        this.forecastSprites = [];
     }
 
     serialize() {
-        let target = this.target;
+        let targets = this.targets;
         if (this.targetType === AbilityForecast.TARGET_TYPES.POSITION) {
-            target = { x: this.target.x, y: this.target.y };
+            targets = this.targets.map((target) => { return { x: target.x, y: target.y } });
         }
 
         return {
             abilityIndex: this.abilityIndex,
             targetType: this.targetType,
-            target
+            targets
         }
     }
 
     static deserialize(user, data) {
-        let target = data.target;
+        let targets = data.targets;
         if (data.targetType === AbilityForecast.TARGET_TYPES.POSITION) {
-            target = { x: data.target.x, y: data.target.y };
+            targets = data.targets.map((target) => { return { x: target.x, y: target.y } });
         }
         
-        return new AbilityForecast(user, data.abilityIndex, data.targetType, target);
+        return new AbilityForecast(user, data.abilityIndex, data.targetType, targets);
     }
 
     removeFromStage(stage) {
-        if (this.forecastSprite) {
-            this.forecastSprite.parent.removeChild(this.forecastSprite);
-        }
+        this.forecastSprites.forEach((forecastSprite) => {
+            forecastSprite.parent.removeChild(forecastSprite);
+        })
+        this.forecastSprites = [];
     }
 
     addToStage(boardState, forecastStage) {
-        if (this.forecastSprite) {
+        if (this.forecastSprites) {
             this.removeFromStage();
         }
 
         const color = 0x660000;
 
-        const targetPos = this.getTargetPos(boardState);
+        const targetPositions = this.getTargetPos(boardState);
         
         const ability = this.user.abilities[this.abilityIndex].value;
-
-        // createTargettingGraphic
-        this.forecastSprite = ability.createForecastGraphic(
-            this.user,
-            targetPos,
-            color
-        );
-        
-        if (this.forecastSprite) {
-            forecastStage.addChild(this.forecastSprite);
-        }
+        targetPositions.forEach((targetPos) => {
+            // createTargettingGraphic
+            const forecastSprite = ability.createForecastGraphic(
+                this.user,
+                targetPos,
+                color
+            );
+            
+            if (this.forecastSprites) {
+                this.forecastSprites.push(forecastSprite);
+                forecastStage.addChild(forecastSprite);
+            }
+        });
     
-        return this.forecastSprite;
+        return this.forecastSprites;
     }
 
     useAbility(boardState) {
@@ -68,12 +72,14 @@ class AbilityForecast {
         let targetPos = { x: 0, y: 0 };
         switch (this.targetType) {
             case AbilityForecast.TARGET_TYPES.PLAYER_ID:
-                const target = boardState.playerCastPoints[this.target];
-                targetPos = {x: target.x, y: target.y };
-                break;
+                return this.targets.map((target) => {
+                    const castPoint = boardState.playerCastPoints[target];
+                    return { x: castPoint.x, y: castPoint.y };
+                })
             case AbilityForecast.TARGET_TYPES.POSITION:
-                targetPos = { x: this.target.x, y: this.target.y };;
-                break;
+                return this.targets.map((target) => {
+                    return { x: target.x, y: target.y };
+                });
         }
         return targetPos;
     }

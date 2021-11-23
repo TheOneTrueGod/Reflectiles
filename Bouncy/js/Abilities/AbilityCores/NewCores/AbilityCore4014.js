@@ -26,7 +26,7 @@ class AbilityCore4014 extends AbilityCore {
         right: 0,
         top: 0, bottom: 0
       },
-      icon: "/Bouncy/assets/icons/foam.png",
+      icon: "/Bouncy/assets/icons/skills_poison/wave-crest.png",
     };
 
     let cooldown = this.getCooldown();

@@ -9,7 +9,7 @@ class AbilityCore1010 extends AbilityCore {
       card_text_description: `${hitDamage}`,
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
-      projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
+      projectile_type: ProjectileShape.ProjectileTypes.PENETRATE,
 
       speed: 40,
       destroy_on_wall: [],

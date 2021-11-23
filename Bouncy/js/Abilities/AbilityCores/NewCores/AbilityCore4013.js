@@ -32,7 +32,7 @@ class AbilityCore4013 extends AbilityCore {
       min_angle: Math.PI / 10.0,
       max_angle: Math.PI / 6.0,
       wall_bounces: 0,
-      icon: "/Bouncy/assets/icons/help.png"
+      icon: "/Bouncy/assets/icons/goo-skull.png"
     };
 
     let cooldown = this.getCooldown();

@@ -358,6 +358,7 @@ AbilityDef.AbilityTypes = {
   SPECIAL: 'SPECIAL',
   MOVE: 'MOVE',
   PLAYER_MOVE: 'PLAYER_MOVE',
+  BUFF: 'BUFF',
 };
 
 AbilityDef.SPECIAL_EFFECTS = {
@@ -380,6 +381,8 @@ AbilityDef.createFromJSON = function(defJSON, subAbility) {
   switch (defJSON['ability_type']) {
     case AbilityDef.AbilityTypes.PROJECTILE:
       return new ProjectileAbilityDef(defJSON, subAbility);
+    case AbilityDef.AbilityTypes.BUFF:
+      return new BuffAbilityDef(defJSON, subAbility);
     case AbilityDef.AbilityTypes.ZONE:
       return new ZoneAbilityDef(defJSON, subAbility);
     case AbilityDef.AbilityTypes.CREATE_UNIT:

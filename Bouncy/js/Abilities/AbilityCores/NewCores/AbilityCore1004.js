@@ -9,7 +9,7 @@ class AbilityCore1004 extends AbilityCore {
       card_text_description: '<<' + (num_bullets * shots_per_wave) + '>> X [[hit_effects[0].base_damage]]',
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.CHAIN_SHOT,
-      projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
+      projectile_type: ProjectileShape.ProjectileTypes.PENETRATE,
       destroy_on_wall: [],
       num_bullets,
       shots_per_wave,
