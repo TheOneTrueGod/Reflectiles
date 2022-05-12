@@ -1,10 +1,12 @@
+import { UIListeners } from "./UIListeners.js";
+
 const EMERGENCY_BREAK_TIME = 200;
 const EFFECT_TICK_DELAY = 20;
 
 const DO_TURNS_SIMULTANEOUSLY = true;
 const SIMULTANEOUS_DELAY = 50;
 
-class BoardState {
+export class BoardState {
   constructor(boardSize, renderContainers, boardState) {
     this.boardSize = boardSize;
 
@@ -267,6 +269,7 @@ class BoardState {
       this.enemyUnitCount += 1;
     }
     unit.addToStage(this.renderContainers.units);
+    unit.addAbilityForecastsToStage(this, this.renderContainers.abilityForecasts);
     this.units.push(unit);
   }
 
@@ -384,6 +387,15 @@ class BoardState {
     );
   }
 
+  getPlayerIDs() {
+    let player_ids = [];
+    for (var player_id in this.playerCastPoints) {
+      player_ids.push(player_id);
+    }
+
+    return player_ids;
+  }
+
   getSimultaneousDelay(phase) {
     if (phase == TurnPhasesEnum.PLAYER_MINOR) {
       return 20;
@@ -450,6 +462,12 @@ class BoardState {
       UIListeners.updateSpawnPreview(this);
     }
     this.doDeleteChecks();
+    
+    if (phase === TurnPhasesEnum.NEXT_TURN) {
+      this.renderContainers.abilityForecasts.visible = true;
+    } else if (phase === TurnPhasesEnum.START_TURN) {
+      this.renderContainers.abilityForecasts.visible = false;
+    }
   }
 
   endOfPhase(players, phase) {

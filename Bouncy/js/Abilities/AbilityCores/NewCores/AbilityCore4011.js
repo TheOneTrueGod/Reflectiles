@@ -5,7 +5,7 @@ class AbilityCore4011 extends AbilityCore {
     let hitDamage = Math.floor(NumbersBalancer.getAbilityDamage(level, 1));
     const rawAbil = {
       name: 'Spread the Sickness',
-      description: `Take half of the <<poison>> and <<freeze>> currently on an enemy, and apply them to the enemy units adjacent to it`,
+      description: `Take half of the <<poison>> and <<infect>> currently on an enemy, and applies it to the enemy units adjacent to it`,
       card_text_description: `${hitDamage}`,
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
@@ -18,7 +18,7 @@ class AbilityCore4011 extends AbilityCore {
           effect: ProjectileShape.HitEffects.SPREAD_DEBUFFS,
           debuff_list: {
             [PoisonStatusEffect.name]: 0.5,
-            [FreezeStatusEffect.name]: 0.5,
+            [InfectStatusEffect.name]: 0.5,
           },
         },
         {

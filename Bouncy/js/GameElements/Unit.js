@@ -498,6 +498,8 @@ class Unit {
     }
   }
 
+  addAbilityForecastsToStage(boardState, forecastStage) { }
+
   addToBackOfStage() {
     return false;
   }
@@ -528,8 +530,12 @@ class Unit {
 
   addStatusEffect(effect) {
     if (
-      effect instanceof FreezeStatusEffect &&
-      this.getTraitValue(Unit.UNIT_TRAITS.FROST_IMMUNE) === true
+      this.getTraitValue(Unit.UNIT_TRAITS.FROST_IMMUNE) === true &&
+      (
+        effect instanceof FreezeStatusEffect ||
+        effect instanceof ImmobilizeStatusEffect ||
+        effect instanceof DisarmStatusEffect
+      )
     ) {
       return;
     }

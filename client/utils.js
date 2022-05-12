@@ -1,4 +1,4 @@
-var getUrlParameter = function getUrlParameter(sParam) {
+function getUrlParameter(sParam) {
   var sPageURL = decodeURIComponent(window.location.search.substring(1)),
     sURLVariables = sPageURL.split('&'),
     sParameterName,
@@ -53,7 +53,7 @@ function triangle(a, b, c, pct) {
   return lerp(b, c, (pct - 0.5) / 0.5);
 }
 
-function getRandomFromWeightedList(randNum, weightedList) {
+function getRandomIndexFromWeightedList(randNum, weightedList) {
   var value = null;
   var totalWeight = 0;
   weightedList.forEach((weightedItem) => { totalWeight += weightedItem.weight; });
@@ -64,9 +64,13 @@ function getRandomFromWeightedList(randNum, weightedList) {
     r -= weightedList[i].weight;
     value = weightedList[i].value;
     if (r < 0) {
-      return value;
+      return i;
     }
   }
+}
+
+function getRandomFromWeightedList(randNum, weightedList) {
+  return weightedList[getRandomIndexFromWeightedList(randNum, weightedList)].value;
 }
 
 function remove_duplicates (a) {

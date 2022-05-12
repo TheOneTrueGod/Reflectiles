@@ -1,4 +1,7 @@
+import { BoardState } from './BoardState.js';
 import MainGameHandler from './main.js';
+import { TurnController } from './Turns/TurnController.js';
+import { UIListeners } from './UIListeners.js';
 
 class Tester extends MainGameHandler {
   constructor() {

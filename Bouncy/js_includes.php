@@ -19,7 +19,6 @@
 <script src="/Bouncy/js/GameElements/Projectiles/ProjectileTrailDef.js"></script>
 <script src="/Bouncy/js/GameElements/Projectiles/AbilitySource.js"></script>
 <script src="/Bouncy/js/GameElements/Projectiles/ProjectileCurveHandler.js"></script>
-<script src="/Bouncy/js/BoardState.js"></script>
 <script src="/Bouncy/js/GameStats.js"></script>
 <script src="/Bouncy/js/Board/UnitSectors.js"></script>
 <script src="/Bouncy/js/Abilities/AbilityFactory.js"></script>
@@ -32,8 +31,6 @@
 <script src="/Bouncy/js/Abilities/PositionBasedEffects/PositionBasedEffect.js"></script>
 <script src="/Bouncy/js/Abilities/AbilityCardBuilder.js"></script>
 <script src="/Bouncy/js/PlayerCommands/PlayerCommand.js"></script>
-<script src="/Bouncy/js/PlayerInput.js"></script>
-<script src="/Bouncy/js/UIListeners.js"></script>
 <script src="/Bouncy/js/TurnControls.js"></script>
 <script src="/Bouncy/js/AIDirector/AIDirector.js"></script>
 <script src="/Bouncy/js/AIDirector/SpawnFormations.js"></script>
@@ -55,7 +52,6 @@
 <script src="/Bouncy/js/GameElements/Projectiles/ProjectileBuffs/ProjectileDamageBuff.js"></script>
 <script src="/Bouncy/js/GameElements/Projectiles/ProjectileBuffs/ProjectileWeakenBuff.js"></script>
 <script src="/Bouncy/js/Errors/Errors.js"></script>
-<script src="/Bouncy/js/Turns/TurnController.js"></script>
 
 <!-- Extends the above -->
 <script src="/Bouncy/js/GameElements/Enemies/UnitBasic.js"></script>
@@ -94,6 +90,7 @@
 <script src="/Bouncy/js/GameElements/Enemies/StatusEffects/InfectStatusEffect.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/StatusEffects/FreezeStatusEffect.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/StatusEffects/ImmobilizeStatusEffect.js"></script>
+<script src="/Bouncy/js/GameElements/Enemies/StatusEffects/DisarmStatusEffect.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/StatusEffects/WeaknessStatusEffect.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/StatusEffects/DisableShieldStatusEffect.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/StatusEffects/SpecialStatusEffect.js"></script>
@@ -179,12 +176,14 @@
 <script src="/Bouncy/js/GameElements/Enemies/UnitSpawningPlaceholder.js"></script>
 
 <script src="/Bouncy/js/GameElements/Enemies/EnemyAbilities/EnemyAbility.js"></script>
+<script src="/Bouncy/js/GameElements/Enemies/EnemyAbilities/AbilityForecast.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/EnemyAbilities/EnemyAbilitySummonUnits.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/EnemyAbilities/EnemyAbilitySummonFireShards.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/EnemyAbilities/EnemyAbilitySummonIceWall.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/EnemyAbilities/EnemyAbilityShootProjectile.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/EnemyAbilities/EnemyAbilityShieldWall.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/EnemyAbilities/EnemyAbilityPersonalSpace.js"></script>
+<script src="/Bouncy/js/GameElements/Enemies/EnemyAbilities/EnemyAbilityExplode.js"></script>
 
 <script src="/Bouncy/js/GameElements/Enemies/UnitBossSlime.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/UnitMovementEffects.js"></script>

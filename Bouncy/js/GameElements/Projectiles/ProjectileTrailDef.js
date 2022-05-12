@@ -3,10 +3,13 @@ class ProjectileTrailDef {
     this.trailDef = trailDef;
   }
 
-  createProjectileTrail(boardState, projectile) {
+  createProjectileTrail(boardState, projectile, intersectionPoint) {
     if (!this.trailDef) {
       return;
     }
+
+    const trailTarget = intersectionPoint ? intersectionPoint : projectile;
+
     switch (this.trailDef.type) {
       case ProjectileTrailDef.TRAIL_TYPES.SPRITE_COPY:
         if (boardState.tick % 1 == 0) {
@@ -18,7 +21,7 @@ class ProjectileTrailDef {
       case ProjectileTrailDef.TRAIL_TYPES.LINE:
         boardState.addProjectile(
           new LineEffect(
-            {x1: projectile.x, y1: projectile.y, x2: projectile.lastX, y2: projectile.lastY},
+            {x1: trailTarget.x, y1: trailTarget.y, x2: projectile.lastX, y2: projectile.lastY},
             idx(this.trailDef, 'color', 0x888888),
             null,
             idx(this.trailDef, 'duration', 5),

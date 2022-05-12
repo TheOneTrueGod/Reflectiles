@@ -146,8 +146,8 @@ class Projectile {
     return walls;
   }
 
-  createTrail(boardState) {
-    this.getStyle().createProjectileTrail(boardState, this);
+  createTrail(boardState, intersectionPoint) {
+    this.getStyle().createProjectileTrail(boardState, this, intersectionPoint);
   }
 
   createExplosionEffect(boardState, targetPos) {
@@ -248,12 +248,12 @@ class Projectile {
       if (intersection.line instanceof BorderWallLine) {
         self.hitWall(boardState, intersection);
       }
-      this.lastX = this.x;
-      this.lastY = this.y;
+      //this.lastX = this.x;
+      //this.lastY = this.y;
 
-      this.x = intersection.x;
-      this.y = intersection.y;
-      this.createTrail(boardState);
+      //this.x = intersection.x;
+      //this.y = intersection.y;
+      this.createTrail(boardState, intersection);
     }
 
     var endPoint = reflectionResult.reflection_lines[
@@ -425,6 +425,7 @@ Projectile.createProjectile = function(
 
 CollisionBehaviour = {
   PASSTHROUGH: 'PASSTHROUGH',
+  PIERCE: 'PIERCE',
   BOUNCE: 'BOUNCE',
   TIMEOUT: 'TIMEOUT',
   NOTHING: 'NOTHING',

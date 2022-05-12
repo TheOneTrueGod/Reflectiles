@@ -10,7 +10,7 @@ class AbilityCore1006 extends AbilityCore {
       icon: "/Bouncy/assets/icons/uzi.png",
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.WAVE,
-      projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
+      projectile_type: ProjectileShape.ProjectileTypes.PENETRATE,
       destroy_on_wall: [],
       collision_behaviours: [],
       angle_spread: Math.PI / 3,

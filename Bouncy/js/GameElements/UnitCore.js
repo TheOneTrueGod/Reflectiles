@@ -4,7 +4,7 @@ class UnitCore extends Unit {
   }
 
   getDefensePercent() {
-    return 1.5;
+    return 1;
   }
 
   createSprite(hideHealthBar) {
@@ -64,7 +64,7 @@ class UnitCore extends Unit {
       this.x,
       this.y
     );
-    this.knockback(boardState);
+    //this.knockback(boardState);
   }
 
   knockback(boardState) {

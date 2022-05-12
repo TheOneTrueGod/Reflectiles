@@ -27,7 +27,7 @@ class UnitShooter extends UnitBasic {
 
   doUnitActions(boardState) {
     if (!this.canUseAbilities()) { return; }
-    this.useRandomAbility(boardState);
+    this.useForecastAbilities(boardState);
   }
 
   createSprite(hideHealthBar) {

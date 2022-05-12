@@ -1,5 +1,6 @@
 //MainGame.loadImages(MainGame.testAbility.bind(MainGame));
 import MainGameHandler from './main.js';
+import { TurnController } from './Turns/TurnController.js';
 
 //MainGame.runLineTester();
 function launchGame() {

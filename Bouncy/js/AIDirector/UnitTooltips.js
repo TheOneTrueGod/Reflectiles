@@ -389,6 +389,8 @@ class UnitTooltips {
         return '#db4dff';
       case 'ImmobilizeStatusEffect':
         return '#BB6600';
+      case 'DisarmStatusEffect':
+          return '#BB6600';
       case 'DisableShieldStatusEffect':
         return "#C119b9";
     }
@@ -412,6 +414,8 @@ class UnitTooltips {
         return 'Infect';
       case 'ImmobilizeStatusEffect':
         return 'Immobilized';
+      case 'DisarmStatusEffect':
+          return 'Disarmed';
       case 'DisableShieldStatusEffect':
         return 'Shields Down';
     }
@@ -440,6 +444,8 @@ class UnitTooltips {
         return 'If the unit dies within ' + statusEffect.duration + ' turns, it explodes';
       case 'ImmobilizeStatusEffect':
         return "The unit is immobilized and unable to move for the next " + statusEffect.duration + ".";
+      case 'DisarmedStatusEffect':
+        return "The unit is disarmed and unable to use abilities for the next " + statusEffect.duration + ".";
       case 'DisableShieldStatusEffect':
         return 'This unit\'s shields are disabled for the next ' + statusEffect.duration + ' turns.';
     }

@@ -1,7 +1,7 @@
 class AbilityCore4002 extends AbilityCore {
   static BuildAbilityChild(level) {
     let duration = 3;
-    let hitDamage = Math.floor(NumbersBalancer.getAbilityDamage(level, 0.1));
+    let hitDamage = Math.floor(NumbersBalancer.getAbilityDamage(level, 0.15));
     let damagePerTurn = Math.floor(hitDamage);
     const rawAbil = {
       name: 'Poison Explosion',

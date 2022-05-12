@@ -4,15 +4,29 @@ class EnemyAbilityShootProjectile extends EnemyAbility {
     this.damage = damage;
   }
 
-  doEffects(boardState) {
+  doEffects(boardState, forecast) {
     if (!this.unit.canUseAbilities()) { return; }
-    var projectile = new EnemyProjectile(
-      {x: this.unit.x, y: this.unit.y}, {x: this.unit.x, y: this.unit.y + 50},
-      Math.PI / 2,
-      { 'damage_to_players': this.damage }
-    );
-    projectile.addUnitHitCallback(this.unitHitCallback);
-    boardState.addProjectile(projectile);
+
+    const src = {x: this.unit.x, y: this.unit.y};
+    const targets = forecast.getTargetPos(boardState);
+    targets.forEach((target) => {
+      var projectile = new EnemyProjectile(
+        src, target,
+        Math.atan2(target.y - src.y, target.x - src.x),
+        { 'damage_to_players': this.damage }
+      );
+      projectile.addUnitHitCallback(this.unitHitCallback);
+      boardState.addProjectile(projectile);
+    });
+  }
+
+  createForecast(boardState, unit, abilityIndex) {
+    let player_ids = boardState.getPlayerIDs();
+
+    if (!player_ids) { return undefined; }
+
+    const target = player_ids[Math.floor(Math.random() * player_ids.length)];
+    return new AbilityForecast(unit, abilityIndex, AbilityForecast.TARGET_TYPES.PLAYER_ID, [target]);
   }
 
   unitHitCallback(boardState, unit, intersection, projectile) {

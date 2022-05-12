@@ -3,18 +3,17 @@
 // [] Change the cooldown
 // [] Change the style
 // [] Change the rawAbil
-class AbilityCore1009 extends AbilityCore {
+class AbilityCore2010 extends AbilityCore {
   static BuildAbilityChild(level) {
-    let hitDamage = Math.floor(NumbersBalancer.getAbilityDamage(level, 0.6));
+    let hitDamage = Math.floor(NumbersBalancer.getAbilityDamage(level, 1));
     const rawAbil = {
-      name: 'Snipe',
-      description: `Shoot a powerful penetrating round that deals <<${hitDamage}>> damage`,
+      name: 'Taunt',
+      description: `Deal ${hitDamage} damage`,
       card_text_description: `${hitDamage}`,
-      ability_type: AbilityDef.AbilityTypes.PROJECTILE,
+      ability_type: AbilityDef.AbilityTypes.BUFF,
       shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
-      projectile_type: ProjectileShape.ProjectileTypes.PENETRATE,
+      projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
       destroy_on_wall: [],
-      speed: 40,
       wall_bounces: 1,
       hit_effects: [
         {
@@ -22,7 +21,7 @@ class AbilityCore1009 extends AbilityCore {
           effect: ProjectileShape.HitEffects.DAMAGE,
         }
       ],
-      icon: "/Bouncy/assets/icons/headshot.png"
+      icon: "/Bouncy/assets/icons/skills_defender/taunt.png"
     };
 
     let cooldown = this.getCooldown();
@@ -37,8 +36,7 @@ class AbilityCore1009 extends AbilityCore {
   static createAbilityStyle() {
     return (new AbilitySheetSpriteAbilityStyleBuilder())
       .setSheet('weapons_sheet')
-      .setCoordNums(0, 0, 1, 1)
-      .setTrailDef({ type: ProjectileTrailDef.TRAIL_TYPES.LINE, duration: 20, color: 0x888888 });
+      .setCoordNums(2, 1, 24, 23);
   }
 
   static getCooldown() {
@@ -46,8 +44,8 @@ class AbilityCore1009 extends AbilityCore {
   }
 
   static GetCardDeckType() {
-    return CardDeckTypes.WEAPON;
+    return CardDeckTypes.DEFENDER;
   }
 }
 
-AbilityCore.coreList[1009] = AbilityCore1009;
+//AbilityCore.coreList[2010] = AbilityCore2010;

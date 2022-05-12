@@ -6,21 +6,66 @@ class UnitBasic extends Unit {
     this.movementSpeed = NumbersBalancer.getUnitSpeed(this);
     this.damage = NumbersBalancer.getUnitDamage(this);
     this.abilities = [];
+
+    this.abilityForecasts = [];
   }
+
+  /*************
+   * Abilities *
+   *************/
 
   addAbility(weight, ability) {
     this.abilities.push({'weight': weight, 'value': ability});
   }
 
-  useRandomAbility(boardState) {
-    if (this.abilities.length == 1) {
-      this.abilities[0].value.doEffects(boardState);
-      return;
+  pickRandomAbilityIndex(boardState) {
+    if (this.abilities.length === 0) {
+      return undefined;
     }
 
-    let abilToUse = getRandomFromWeightedList(boardState.getRandom(), this.abilities);
+    if (this.abilities.length === 1) {
+      return 0;
+    }
+
+    let abilIndex = getRandomIndexFromWeightedList(boardState.getRandom(), this.abilities);
+    return abilIndex;
+  }
+
+  useRandomAbility(boardState) {
+    let abilIndex = this.pickRandomAbilityIndex(boardState);
+    if (abilIndex === undefined) {
+      return;
+    }
+    const abilToUse = this.abilities[abilIndex].value;
     abilToUse.doEffects(boardState);
   }
+
+  useForecastAbilities(boardState) {
+    this.abilityForecasts.forEach((forecast) => {
+      forecast.useAbility(boardState)
+    });
+  }
+
+  doAbilityForecasting(boardState) {
+    if (!this.canUseAbilities()) { return; }
+    this.abilityForecasts.forEach((forecast) => forecast.removeFromStage());
+    this.abilityForecasts = [];
+    let abilIndex = this.pickRandomAbilityIndex(boardState);
+    if (abilIndex === undefined) { return; }
+
+    const forecast = this.abilities[abilIndex].value.createForecast(boardState, this, abilIndex);
+    if (!forecast) { return; }
+
+    this.abilityForecasts = [forecast];
+  }
+
+  getPlayerIDs() {
+    const target = player_ids[Math.floor(Math.random() * player_ids.length)];
+  }
+
+  /***********
+   * Physics *
+   ***********/
 
   createCollisionBox() {
     this.collisionBox = [
@@ -31,6 +76,10 @@ class UnitBasic extends Unit {
     ];
   }
 
+  /***********
+   * Sprites *
+   ***********/
+
   addEffectSprite(effect) {
     if (!this.gameSprite) {
       return;
@@ -38,6 +87,10 @@ class UnitBasic extends Unit {
     var sprite = null;
     if (effect == FreezeStatusEffect.getEffectType()) {
       sprite = FreezeStatusEffect.addEffectSprite(this);
+    } else if (effect == DisarmStatusEffect.getEffectType()) {
+      sprite = DisarmStatusEffect.addEffectSprite(this);
+    } else if (effect == ImmobilizeStatusEffect.getEffectType()) {
+      sprite = ImmobilizeStatusEffect.addEffectSprite(this);
     } else if (effect == PoisonStatusEffect.getEffectType()) {
       sprite = PoisonStatusEffect.addEffectSprite(this);
     } else if (effect == InfectStatusEffect.getEffectType()) {
@@ -52,24 +105,6 @@ class UnitBasic extends Unit {
       this.effectSprites[effect] = sprite;
       //this.healthBarSprites.textSprite.bringToFront();
     }
-  }
-
-  serializeData() {
-    return {
-      'movement_credits': this.movementCredits
-    };
-  }
-
-  loadSerializedData(data) {
-    this.movementCredits = data.movement_credits;
-  }
-
-  getX() {
-    return this.x;
-  }
-
-  getY() {
-    return this.y;
   }
 
   addPhysicsLines(sprite, color) {
@@ -182,12 +217,47 @@ class UnitBasic extends Unit {
     this.createSpriteFromResource('byte_diamond_red', hideHealthBar);
   }
 
+  addAbilityForecastsToStage(boardState, forecastStage) {
+    this.abilityForecasts.forEach((forecast) => {
+      forecast.addToStage(boardState, forecastStage);
+    })
+  }
+
+  onDelete(boardState) {
+    super.onDelete(boardState);
+    this.abilityForecasts.forEach((forecast) => forecast.removeFromStage());
+  }
+
+  /***************
+   * Server Data *
+   ***************/
+
+  serializeData() {
+    return {
+      'movement_credits': this.movementCredits,
+      'abilityForecasts': this.abilityForecasts.map((forecast) => forecast.serialize())
+    };
+  }
+
+  loadSerializedData(data) {
+    this.movementCredits = data.movement_credits;
+    this.abilityForecasts = data.abilityForecasts ? data.abilityForecasts.map((forecastData) => AbilityForecast.deserialize(this, forecastData)) : [];
+  }
+
+  getX() {
+    return this.x;
+  }
+
+  getY() {
+    return this.y;
+  }
+
   canMove() {
     return !this.hasStatusEffect(FreezeStatusEffect) && !this.hasStatusEffect(ImmobilizeStatusEffect);
   }
 
   canUseAbilities() {
-    return !this.hasStatusEffect(FreezeStatusEffect);
+    return !this.hasStatusEffect(FreezeStatusEffect) && !this.hasStatusEffect(DisarmStatusEffect);
   }
 
   moveForward(boardState) {
@@ -310,6 +380,14 @@ class UnitBasic extends Unit {
 
   isRealUnit() {
     return true;
+  }
+
+  endOfPhase(boardState, phase) {
+    super.endOfPhase(boardState, phase);
+    if (phase === TurnPhasesEnum.ENEMY_SPAWN) {
+      this.doAbilityForecasting(boardState);
+      this.addAbilityForecastsToStage(boardState, boardState.renderContainers.abilityForecasts);
+    }
   }
 }
 
