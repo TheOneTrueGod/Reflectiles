@@ -133,9 +133,10 @@ class UnitSectors {
   }
 
   isCoordInBounds(coord) {
-    return
+    return (
       (0 <= coord.x && coord.x < this.columns) &&
-      (0 <= coord.y && coord.y < this.rows);
+      (0 <= coord.y && coord.y < this.rows)
+      );
   }
 
   snapPositionToGrid(position) {

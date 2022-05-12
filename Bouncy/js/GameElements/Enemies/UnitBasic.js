@@ -16,6 +16,7 @@ class UnitBasic extends Unit {
 
   addAbility(weight, ability) {
     this.abilities.push({'weight': weight, 'value': ability});
+    return ability;
   }
 
   pickRandomAbilityIndex(boardState) {
@@ -40,23 +41,33 @@ class UnitBasic extends Unit {
     abilToUse.doEffects(boardState);
   }
 
-  useForecastAbilities(boardState) {
-    this.abilityForecasts.forEach((forecast) => {
-      forecast.useAbility(boardState)
-    });
+  useForecastAbilities(boardState, index = -1) {
+    if (index === -1) {
+      this.abilityForecasts.forEach((forecast) => {
+        forecast.useAbility(boardState)
+      });
+    } else if (index >= 0 && index < this.abilityForecasts.length) {
+      this.abilityForecasts[index].useAbility(boardState);
+    }
   }
 
   doAbilityForecasting(boardState) {
     if (!this.canUseAbilities()) { return; }
     this.abilityForecasts.forEach((forecast) => forecast.removeFromStage());
     this.abilityForecasts = [];
-    let abilIndex = this.pickRandomAbilityIndex(boardState);
-    if (abilIndex === undefined) { return; }
+    for (let i = 0; i < this.getNumAbilitiesToUse(); i++) {
+      let abilIndex = this.pickRandomAbilityIndex(boardState);
+      if (abilIndex === undefined) { return; }
 
-    const forecast = this.abilities[abilIndex].value.createForecast(boardState, this, abilIndex);
-    if (!forecast) { return; }
+      const forecast = this.abilities[abilIndex].value.createForecast(boardState, this, abilIndex);
+      if (!forecast) { continue; }
 
-    this.abilityForecasts = [forecast];
+      this.abilityForecasts.push(forecast); 
+    }
+  }
+
+  getNumAbilitiesToUse() {
+    return 1;
   }
 
   getPlayerIDs() {
@@ -218,8 +229,8 @@ class UnitBasic extends Unit {
   }
 
   addAbilityForecastsToStage(boardState, forecastStage) {
-    this.abilityForecasts.forEach((forecast) => {
-      forecast.addToStage(boardState, forecastStage);
+    this.abilityForecasts.forEach((forecast, forecastIndex) => {
+      forecast.addToStage(boardState, forecastStage, forecastIndex, this.abilityForecasts.length);
     })
   }
 

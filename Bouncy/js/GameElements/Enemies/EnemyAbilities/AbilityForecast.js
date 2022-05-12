@@ -36,7 +36,7 @@ class AbilityForecast {
         this.forecastSprites = [];
     }
 
-    addToStage(boardState, forecastStage) {
+    addToStage(boardState, forecastStage, forecastIndex, totalForecasts) {
         if (this.forecastSprites) {
             this.removeFromStage();
         }
@@ -46,12 +46,16 @@ class AbilityForecast {
         const targetPositions = this.getTargetPos(boardState);
         
         const ability = this.user.abilities[this.abilityIndex].value;
+        
         targetPositions.forEach((targetPos) => {
             // createTargettingGraphic
             const forecastSprite = ability.createForecastGraphic(
+                boardState,
                 this.user,
                 targetPos,
-                color
+                color,
+                forecastIndex,
+                totalForecasts,
             );
             
             if (this.forecastSprites) {
@@ -80,6 +84,12 @@ class AbilityForecast {
                 return this.targets.map((target) => {
                     return { x: target.x, y: target.y };
                 });
+            case AbilityForecast.TARGET_TYPES.AREA:
+                return this.targets.map((target) => {
+                    return { x: target.x, x2: target.x2, y: target.y, y2: target.y2 };
+                })
+            case AbilityForecast.TARGET_TYPES.SELF:
+                return [0];
         }
         return targetPos;
     }
@@ -88,4 +98,6 @@ class AbilityForecast {
 AbilityForecast.TARGET_TYPES = {
     'PLAYER_ID': 'PLAYER_ID',
     'POSITION': 'POSITION',
+    'AREA': 'AREA',
+    'SELF': 'SELF',
 };

@@ -9,7 +9,13 @@ class EnemyAbility {
 
   createForecast(boardState, unit, abilityIndex) {}
 
-  createForecastGraphic(user, endPos, color) {
+  /**
+   * @param {BoardState} boardState 
+   * @param {*} user 
+   * @param {*} target 
+   * @param {*} color 
+   */
+  createForecastGraphic(boardState, user, endPos, color, forecastIndex, totalForecasts) {
     const startPos = { x: user.x, y: user.y };
 
     // Create a new Graphics object and add it to the scene
@@ -30,5 +36,19 @@ class EnemyAbility {
     lineGraphic.drawCircle(endPos.x, endPos.y, circleSize);
 
     return lineGraphic;
+  }
+
+  getForecastIconPosition(user, forecastIndex, totalForecasts) {
+    let pct = forecastIndex / (totalForecasts) + 1 / ((totalForecasts) * 2);
+
+    let userSize = user.getSize();
+    
+    let left = Unit.UNIT_SIZE * (-userSize.left - 0.5);
+    let right = Unit.UNIT_SIZE * (userSize.right + 0.5);
+
+    let top = Unit.UNIT_SIZE * (-userSize.top - 0.5) / 4;
+    let yPct = Math.sin(pct * Math.PI);
+
+    return { x: user.x + lerp(left, right, pct), y: user.y + yPct * top };
   }
 }

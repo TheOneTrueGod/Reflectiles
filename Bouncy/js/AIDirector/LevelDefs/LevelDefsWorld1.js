@@ -25,7 +25,7 @@ class LevelDefsWorld1 {
           [_, _, _, _, A, A, A, A, A, A, A, _, _, _, _],
           [_, _, _, A, B, B, A, _, A, B, B, A, _, _, _],
           [_, _, A, B, B, A, _, _, _, A, B, B, A, _, _],
-          [_, A, B, B, A, _, _, _, _, _, A, B, B, A, _],
+          [_, A, B, B, A, _, _, UnitBossGrandWizard, _, _, A, B, B, A, _],
           [A, A, A, A, _, _, _, _, _, _, _, A, A, A, A],
         ],
         'waves':[

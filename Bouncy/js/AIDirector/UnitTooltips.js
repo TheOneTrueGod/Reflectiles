@@ -341,7 +341,7 @@ class UnitTooltips {
         numTurns = NumbersBalancer.getUnitAbilityNumber(unit, NumbersBalancer.UNIT_ABILITIES.KING_REVIVE_TURNS);
         return 'All enemy units are unable to move as long as The King is around.  If an enemy unit dies, it is reinforced after ' + numTurns + ' turns.  Don\'t get too close!';
       case 'UnitBossGrandWizard':
-        let numAbils = unit.getAbilitiesToUse();
+        let numAbils = unit.getNumAbilitiesToUse();
         return 'The grand wizard casts ' + numAbils + ' random spells each turn.  Don\'t get too close!';
       case 'UnitCastleWall':
         numTurns = NumbersBalancer.getUnitAbilityNumber(unit, NumbersBalancer.UNIT_ABILITIES.CASTLE_WALL_REVIVE_TURNS);
