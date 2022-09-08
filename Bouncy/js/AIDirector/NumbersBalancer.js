@@ -234,6 +234,8 @@ class NumbersBalancer {
         return 200 * playerMult * difficultyMult * powerLevelMultiplier;
       case this.UNIT_ABILITIES.SHOOTER_DAMAGE:
         return 2;
+      case this.UNIT_ABILITIES.BASIC_ENEMY_DAMAGE:
+        return 1;
       case this.UNIT_ABILITIES.BOMBER_EXPLOSION_DAMAGE:
         return 20;
       case this.UNIT_ABILITIES.BOMBER_DURATION:
@@ -288,6 +290,7 @@ NumbersBalancer.prototype.UNIT_ABILITIES = {
   PROTECTOR_SHIELD_RANGE: 'protector_shield_range',
   KNIGHT_SHIELD: 'knight_shield',
   SHOOTER_DAMAGE: 'shooter_damage',
+  BASIC_ENEMY_DAMAGE: 'BASIC_ENEMY_DAMAGE',
   BOMBER_EXPLOSION_DAMAGE: 'bomber_explosion_damage',
   BOMBER_DURATION: 'BOMBER_DURATION',
   UNIT_BOSS_HEALER_RANGE: 'UNIT_BOSS_HEALER_RANGE',

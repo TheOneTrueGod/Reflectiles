@@ -26,51 +26,56 @@ export class TurnController {
     }
 
     playOutTurn(currPhase) {
-        if (this.playingOutTurn && !currPhase) { return; }
-        if (!currPhase) {
-            $('#gameContainer').addClass("turnPlaying");
-            this.mainGameHandler.removeAllPlayerCommands();
-            for (let pid in this.mainGameHandler.playerCommands) {
-                for (let command of this.mainGameHandler.playerCommands[pid].getCommands()) {
-                    if (command instanceof PlayerCommandUseAbility) {
-                        this.boardState.gameStats.addAbilityUseCount(pid, command.abilityID);
-                    }
-                }
-            }
-        }
+      if (this.playingOutTurn && !currPhase) { return; }
+      if (!currPhase) {
+          $('#gameContainer').addClass("turnPlaying");
+          this.mainGameHandler.removeAllPlayerCommands();
+          for (let pid in this.mainGameHandler.playerCommands) {
+              for (let command of this.mainGameHandler.playerCommands[pid].getCommands()) {
+                  if (command instanceof PlayerCommandUseAbility) {
+                      this.boardState.gameStats.addAbilityUseCount(pid, command.abilityID);
+                  }
+              }
+          }
+      }
 
-        this.playingOutTurn = true;
-        this.mainGameHandler.updateActionHint();
-        if (currPhase) {
-            this.boardState.endOfPhase(this.mainGameHandler.players, currPhase);
-        }
-        var phase = !!currPhase ?
-            TurnPhasesEnum.getNextPhase(currPhase) :
-            TurnPhasesEnum.START_TURN;
+      this.playingOutTurn = true;
+      this.mainGameHandler.updateActionHint();
+      if (currPhase) {
+          this.boardState.endOfPhase(this.mainGameHandler.players, currPhase);
+          this.endOfPhase(currPhase);
+      }
+      var phase = !!currPhase ?
+          TurnPhasesEnum.getNextPhase(currPhase) :
+          TurnPhasesEnum.START_TURN;
 
-        this.startOfPhase(phase);
+      this.startOfPhase(phase);
 
-        if (phase == TurnPhasesEnum.NEXT_TURN) {
-            this.finalizedTurnOver();
-        } else {
-            this.loopTicksForPhase(phase);
-        }
+      if (phase == TurnPhasesEnum.NEXT_TURN) {
+          this.finalizedTurnOver();
+      } else {
+          this.loopTicksForPhase(phase);
+      }
     }
 
     startOfPhase(phase) {
-        if (phase == TurnPhasesEnum.ENEMY_MOVE) {
-          AIDirector.giveUnitsOrders(this.boardState);
-        }
-        if (phase == TurnPhasesEnum.ENEMY_MOVE) {
-          AIDirector.spawnForTurn(this.boardState);
-        }
-    
-        if (phase == TurnPhasesEnum.ENEMY_ACTION) {
-          this.boardState.doUnitActions(this.boardState);
-        }
-    
-        this.boardState.startOfPhase(phase);
+      if (phase === TurnPhasesEnum.ENEMY_MOVE) {
+        AIDirector.giveUnitsOrders(this.boardState);
       }
+      if (phase === TurnPhasesEnum.ENEMY_MOVE) {
+        AIDirector.spawnForTurn(this.boardState);
+      }
+  
+      if (phase === TurnPhasesEnum.ENEMY_ACTION) {
+        this.boardState.startOfEnemyActionPhase(this.boardState);
+      }
+  
+      this.boardState.startOfPhase(phase);
+    }
+
+    endOfPhase(phase) {
+      AIDirector.endOfPhase(phase, this.boardState)
+    }
     
     loopTicksForPhase(phase) {
         var result = this.mainGameHandler.doTick(phase);

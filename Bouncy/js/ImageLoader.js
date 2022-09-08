@@ -60,5 +60,6 @@ ImageLoader.spriteMap = {
   enemy_square: 0, enemy_shoot: 1, enemy_bomber: 3, enemy_knight: 4, zone_shield: 5, enemy_protector: 6, zone_energy_shield: 7,
   enemy_strong: 8, enemy_fast: 9, enemy_shover: 10, enemy_diamond: 11, enemy_necromancer: 14, enemy_bone_wall: 15,
   enemy_castle_wall: 16, enemy_warlock: 17, enemy_skeleton: 18, enemy_blocker: 20, enemy_blocker_active: 21, enemy_damage_limit: 22, enemy_damage_limit_2: 23,
-  zone_blocker_barrier: 24, enemy_slime: 25, fire_shard_0: 26, fire_shard_1: 27, fire_shard_2: 28, fire_shard_3: 29, enemy_ice_wall: 30
+  zone_blocker_barrier: 24, enemy_slime: 25, fire_shard_0: 26, fire_shard_1: 27, fire_shard_2: 28, fire_shard_3: 29, enemy_ice_wall: 30, enemy_square_attacking: 35,
+  enemy_diamond_attacking: 36
 };

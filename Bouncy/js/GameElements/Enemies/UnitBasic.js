@@ -56,14 +56,23 @@ class UnitBasic extends Unit {
     this.abilityForecasts.forEach((forecast) => forecast.removeFromStage());
     this.abilityForecasts = [];
     for (let i = 0; i < this.getNumAbilitiesToUse(); i++) {
-      let abilIndex = this.pickRandomAbilityIndex(boardState);
-      if (abilIndex === undefined) { return; }
-
-      const forecast = this.abilities[abilIndex].value.createForecast(boardState, this, abilIndex);
-      if (!forecast) { continue; }
-
-      this.abilityForecasts.push(forecast); 
+      this.forecastRandomAbility(boardState);
     }
+  }
+
+  forecastRandomAbility(boardState) {
+    this.forecastAbility(boardState, this.pickRandomAbilityIndex(boardState));
+  }
+
+  forecastAbility(boardState, abilIndex) {
+    if (this.abilities[abilIndex] === undefined) {
+      return;
+    }
+
+    const forecast = this.abilities[abilIndex].value.createForecast(boardState, this, abilIndex);
+    if (!forecast) { return; }
+
+    this.abilityForecasts.push(forecast); 
   }
 
   getNumAbilitiesToUse() {
@@ -137,7 +146,7 @@ class UnitBasic extends Unit {
     }
   }
 
-  createHealthBarSprite(sprite) {
+  createHealthBarSprite(container) {
     // TODO:  If you're seeing some slowdown, there's probably a better way of doing this.
     if (this.healthBarSprites.textSprite) {
       this.gameSprite.removeChild(this.healthBarSprites.textSprite);
@@ -152,7 +161,7 @@ class UnitBasic extends Unit {
       colour = 'darkgray';
     }
 
-    var fontSize = 10;
+    var fontSize = 8;
     var healthBarGraphic = new PIXI.Text(
       text,
       {
@@ -167,17 +176,19 @@ class UnitBasic extends Unit {
       }
     );
     healthBarGraphic.anchor.set(0.5);
-    healthBarGraphic.position.set(0, 20);
-    sprite.addChild(healthBarGraphic);
+    healthBarGraphic.position.set(0, 15);
+    container.addChild(healthBarGraphic);
 
     this.healthBarSprites.textSprite = healthBarGraphic;
   }
 
+  createSprite(resourceName) {
+
+  }
+
   createSpriteFromResource(resource, hideHealthBar) {
+    let container = new PIXI.Container();
     var sprite = new PIXI.Sprite(ImageLoader.getEnemyTexture(resource));
-    if (!hideHealthBar) {
-      this.createHealthBarSprite(sprite);
-    }
 
     sprite.anchor.set(0.5);
     /*for (var effect in this.statusEffects) {
@@ -186,7 +197,15 @@ class UnitBasic extends Unit {
 
     sprite.width = this.physicsWidth;
     sprite.height = this.physicsHeight;
-    return sprite;
+
+    this.sprites = { [resource]: sprite };
+    
+    container.addChild(sprite);
+    if (!hideHealthBar) {
+      this.createHealthBarSprite(container);
+    }
+
+    return container;
   }
 
   createSpriteListFromResourceList(resources, hideHealthBar) {
@@ -205,14 +224,14 @@ class UnitBasic extends Unit {
         onFirst = false;
       }
 
+      this.sprites[res].width = this.physicsWidth;
+      this.sprites[res].height = this.physicsHeight;
       container.addChild(this.sprites[res]);
     }
     if (!hideHealthBar) {
       this.createHealthBarSprite(container);
     }
-
-    container.width = this.physicsWidth;
-    container.height = this.physicsHeight;
+    
     return container;
   }
 
@@ -225,6 +244,7 @@ class UnitBasic extends Unit {
   }
 
   createSprite(hideHealthBar) {
+    throw new Error("createSprite must be overridden in a child class");
     this.createSpriteFromResource('byte_diamond_red', hideHealthBar);
   }
 
@@ -391,6 +411,10 @@ class UnitBasic extends Unit {
 
   isRealUnit() {
     return true;
+  }
+
+  canBasicAttack() {
+    return false;
   }
 
   endOfPhase(boardState, phase) {

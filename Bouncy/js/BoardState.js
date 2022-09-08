@@ -506,9 +506,9 @@ export class BoardState {
     }
   }
 
-  doUnitActions() {
+  startOfEnemyActionPhase() {
     for (var unit in this.units) {
-      this.units[unit].doUnitActions(this);
+      this.units[unit].startOfEnemyActionPhase(this);
     }
 
     this.doDeleteChecks();
