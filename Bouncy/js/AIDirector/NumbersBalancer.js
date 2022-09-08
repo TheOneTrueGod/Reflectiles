@@ -35,19 +35,24 @@ class NumbersBalancer {
   getPlayerStat(stat) {
     switch (stat) {
       case this.PLAYER_STATS.PLAYER_HEALTH:
-        return 100;
+        return 300;
     }
     throw new Error("getPlayerStat (" + stat + ") not implemented");
   }
 
   getUnitDamage(unit) {
-    var damage = 5;
+    var damage = 10;
+    switch (unit.constructor.name) {
+      case "UnitBossHealer":
+        damage = 150;
+      case "UnitBossSlime":
+        damage = 150;
+    }
+    
     if (this.difficulty == this.DIFFICULTIES.HARD) {
     } else if (this.difficulty === this.DIFFICULTIES.NIGHTMARE) {
       damage *= 2;
     }
-    if (unit.constructor.name == "UnitBossHealer") { damage = 50; }
-    if (unit.constructor.name == "UnitBossSlime") { damage = 50; }
 
     return damage;
   }
@@ -138,7 +143,7 @@ class NumbersBalancer {
         healthVal = 5000;
         break;
       case "UnitSlime":
-        healthVal = 80;
+        healthVal = 100;
         break;
       case "UnitBossSlime":
         healthVal = 5000;
@@ -233,11 +238,11 @@ class NumbersBalancer {
       case this.UNIT_ABILITIES.DEFENSIVE_MAX_DAMAGE:
         return 200 * playerMult * difficultyMult * powerLevelMultiplier;
       case this.UNIT_ABILITIES.SHOOTER_DAMAGE:
-        return 2;
+        return 5;
       case this.UNIT_ABILITIES.BASIC_ENEMY_DAMAGE:
         return 1;
       case this.UNIT_ABILITIES.BOMBER_EXPLOSION_DAMAGE:
-        return 20;
+        return 50;
       case this.UNIT_ABILITIES.BOMBER_DURATION:
         return 5;
       case this.UNIT_ABILITIES.UNIT_BOSS_HEALER_RANGE:
@@ -266,7 +271,7 @@ class NumbersBalancer {
       case this.UNIT_ABILITIES.CASTLE_WALL_REVIVE_TURNS:
         return 4;
       case this.UNIT_ABILITIES.FIRE_SHARD_TOTAL_DAMAGE:
-        return 9;
+        return 21;
       case this.UNIT_ABILITIES.FIRE_SHARD_NUM_SHOTS:
         return 3;
       case this.UNIT_ABILITIES.WIZARD_NUM_WALLS:
@@ -274,7 +279,7 @@ class NumbersBalancer {
       case this.UNIT_ABILITIES.WIZARD_NUM_SHARDS:
         return 1;
       case this.UNIT_ABILITIES.WIZARD_PROJECTILE_DAMAGE:
-        return 2;
+        return 5;
     }
     throw new Error("Failure");
   }
