@@ -1,27 +1,19 @@
 // TODO:
-// [] Change the icon
-// [] Change the cooldown
 // [] Change the style
 // [] Change the rawAbil
 class AbilityCore2010 extends AbilityCore {
   static BuildAbilityChild(level) {
-    let hitDamage = Math.floor(NumbersBalancer.getAbilityDamage(level, 1));
     const rawAbil = {
       name: 'Taunt',
-      description: `Deal ${hitDamage} damage`,
-      card_text_description: `${hitDamage}`,
+      description: `Cause all enemies to target you`,
+      card_text_description: `TAUNT`,
       ability_type: AbilityDef.AbilityTypes.BUFF,
-      shape: ProjectileAbilityDef.Shapes.SINGLE_SHOT,
-      projectile_type: ProjectileShape.ProjectileTypes.STANDARD,
-      destroy_on_wall: [],
-      wall_bounces: 1,
-      hit_effects: [
-        {
-          base_damage: hitDamage,
-          effect: ProjectileShape.HitEffects.DAMAGE,
-        }
-      ],
-      icon: "/Bouncy/assets/icons/skills_defender/taunt.png"
+      hit_effects: [{
+        effect: ProjectileShape.HitEffects.TAUNT,
+        duration: 1,
+      }],
+      icon: "/Bouncy/assets/icons/skills_defender/taunt.png",
+      action_phase: TurnPhasesEnum.PLAYER_MINOR,
     };
 
     let cooldown = this.getCooldown();
@@ -48,4 +40,4 @@ class AbilityCore2010 extends AbilityCore {
   }
 }
 
-//AbilityCore.coreList[2010] = AbilityCore2010;
+AbilityCore.coreList[2010] = AbilityCore2010;

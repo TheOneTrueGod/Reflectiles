@@ -15,7 +15,7 @@ class UnitBasic extends Unit {
    *************/
 
   addAbility(weight, ability) {
-    this.abilities.push({'weight': weight, 'value': ability});
+    this.abilities.push({ weight: weight, value: ability });
   }
 
   pickRandomAbilityIndex(boardState) {
@@ -27,7 +27,10 @@ class UnitBasic extends Unit {
       return 0;
     }
 
-    let abilIndex = getRandomIndexFromWeightedList(boardState.getRandom(), this.abilities);
+    let abilIndex = getRandomIndexFromWeightedList(
+      boardState.getRandom(),
+      this.abilities
+    );
     return abilIndex;
   }
 
@@ -40,21 +43,46 @@ class UnitBasic extends Unit {
     abilToUse.doEffects(boardState);
   }
 
+  canBeTaunted(taunter) {
+    return this.abilityForecasts.some((forecast) =>
+      forecast.canBeTaunted(taunter)
+    );
+  }
+
+  applyTaunt(taunter) {
+    if (!this.canBeTaunted(taunter)) {
+      return;
+    }
+    this.abilityForecasts.forEach((forecast) => {
+      forecast.applyTaunt(taunter);
+    });
+  }
+
   useForecastAbilities(boardState) {
     this.abilityForecasts.forEach((forecast) => {
-      forecast.useAbility(boardState)
+      forecast.useAbility(boardState);
     });
   }
 
   doAbilityForecasting(boardState) {
-    if (!this.canUseAbilities()) { return; }
+    if (!this.canUseAbilities()) {
+      return;
+    }
     this.abilityForecasts.forEach((forecast) => forecast.removeFromStage());
     this.abilityForecasts = [];
     let abilIndex = this.pickRandomAbilityIndex(boardState);
-    if (abilIndex === undefined) { return; }
+    if (abilIndex === undefined) {
+      return;
+    }
 
-    const forecast = this.abilities[abilIndex].value.createForecast(boardState, this, abilIndex);
-    if (!forecast) { return; }
+    const forecast = this.abilities[abilIndex].value.createForecast(
+      boardState,
+      this,
+      abilIndex
+    );
+    if (!forecast) {
+      return;
+    }
 
     this.abilityForecasts = [forecast];
   }
@@ -101,7 +129,6 @@ class UnitBasic extends Unit {
       sprite = WeaknessStatusEffect.addEffectSprite(this);
     }
     if (sprite) {
-
       this.effectSprites[effect] = sprite;
       //this.healthBarSprites.textSprite.bringToFront();
     }
@@ -116,12 +143,13 @@ class UnitBasic extends Unit {
         line.x1 / sprite.scale.x,
         line.y1 / sprite.scale.y
       );
-      lineGraphic.lineStyle(3, color, 0.5)
-         .moveTo(0, 0)
-         .lineTo(
-           (line.x2 - line.x1) / sprite.scale.x,
-           (line.y2 - line.y1) / sprite.scale.y
-         );
+      lineGraphic
+        .lineStyle(3, color, 0.5)
+        .moveTo(0, 0)
+        .lineTo(
+          (line.x2 - line.x1) / sprite.scale.x,
+          (line.y2 - line.y1) / sprite.scale.y
+        );
       sprite.addChild(lineGraphic);
     }
   }
@@ -132,29 +160,30 @@ class UnitBasic extends Unit {
       this.gameSprite.removeChild(this.healthBarSprites.textSprite);
       this.healthBarSprites.textSprite = null;
     }
-    if (this.health.current <= 0) { return; }
-    var colour = 0xFFFFFF;
-    var text = Math.ceil(this.health.current + this.getShield().current + this.getArmour().current);
+    if (this.health.current <= 0) {
+      return;
+    }
+    var colour = 0xffffff;
+    var text = Math.ceil(
+      this.health.current + this.getShield().current + this.getArmour().current
+    );
     if (this.getShield().current > 0) {
       colour = 0xc119b9;
     } else if (this.getArmour().current > 0) {
-      colour = 'darkgray';
+      colour = "darkgray";
     }
 
     var fontSize = 10;
-    var healthBarGraphic = new PIXI.Text(
-      text,
-      {
-        fontWeight: 'bold',
-        fontSize: fontSize + 'px',
-        fontFamily: 'sans-serif',
-        fill : colour,
-        align : 'center',
+    var healthBarGraphic = new PIXI.Text(text, {
+      fontWeight: "bold",
+      fontSize: fontSize + "px",
+      fontFamily: "sans-serif",
+      fill: colour,
+      align: "center",
 
-        stroke: 0x000000,
-        strokeThickness: 4
-      }
-    );
+      stroke: 0x000000,
+      strokeThickness: 4,
+    });
     healthBarGraphic.anchor.set(0.5);
     healthBarGraphic.position.set(0, 20);
     sprite.addChild(healthBarGraphic);
@@ -183,9 +212,7 @@ class UnitBasic extends Unit {
     let container = new PIXI.Container();
     let onFirst = true;
     for (let res of resources) {
-      this.sprites[res] = new PIXI.Sprite(
-        ImageLoader.getEnemyTexture(res)
-      );
+      this.sprites[res] = new PIXI.Sprite(ImageLoader.getEnemyTexture(res));
       this.sprites[res].anchor.set(0.5);
       if (!onFirst) {
         this.sprites[res].visible = false;
@@ -214,13 +241,13 @@ class UnitBasic extends Unit {
   }
 
   createSprite(hideHealthBar) {
-    this.createSpriteFromResource('byte_diamond_red', hideHealthBar);
+    this.createSpriteFromResource("byte_diamond_red", hideHealthBar);
   }
 
   addAbilityForecastsToStage(boardState, forecastStage) {
     this.abilityForecasts.forEach((forecast) => {
       forecast.addToStage(boardState, forecastStage);
-    })
+    });
   }
 
   onDelete(boardState) {
@@ -234,14 +261,20 @@ class UnitBasic extends Unit {
 
   serializeData() {
     return {
-      'movement_credits': this.movementCredits,
-      'abilityForecasts': this.abilityForecasts.map((forecast) => forecast.serialize())
+      movement_credits: this.movementCredits,
+      abilityForecasts: this.abilityForecasts.map((forecast) =>
+        forecast.serialize()
+      ),
     };
   }
 
   loadSerializedData(data) {
     this.movementCredits = data.movement_credits;
-    this.abilityForecasts = data.abilityForecasts ? data.abilityForecasts.map((forecastData) => AbilityForecast.deserialize(this, forecastData)) : [];
+    this.abilityForecasts = data.abilityForecasts
+      ? data.abilityForecasts.map((forecastData) =>
+          AbilityForecast.deserialize(this, forecastData)
+        )
+      : [];
   }
 
   getX() {
@@ -253,11 +286,17 @@ class UnitBasic extends Unit {
   }
 
   canMove() {
-    return !this.hasStatusEffect(FreezeStatusEffect) && !this.hasStatusEffect(ImmobilizeStatusEffect);
+    return (
+      !this.hasStatusEffect(FreezeStatusEffect) &&
+      !this.hasStatusEffect(ImmobilizeStatusEffect)
+    );
   }
 
   canUseAbilities() {
-    return !this.hasStatusEffect(FreezeStatusEffect) && !this.hasStatusEffect(DisarmStatusEffect);
+    return (
+      !this.hasStatusEffect(FreezeStatusEffect) &&
+      !this.hasStatusEffect(DisarmStatusEffect)
+    );
   }
 
   moveForward(boardState) {
@@ -274,7 +313,10 @@ class UnitBasic extends Unit {
       for (let index in squares) {
         let dx = squares[index];
         var currPos = this.getCurrentPosition();
-        var targetPos = {x: currPos.x + dx * Unit.UNIT_SIZE, y: currPos.y + Unit.UNIT_SIZE};
+        var targetPos = {
+          x: currPos.x + dx * Unit.UNIT_SIZE,
+          y: currPos.y + Unit.UNIT_SIZE,
+        };
         var canEnter =
           boardState.sectors.canUnitEnter(boardState, this, targetPos) &&
           boardState.unitEntering(this, targetPos) &&
@@ -288,7 +330,10 @@ class UnitBasic extends Unit {
         }
       }
       if (!enteredSquare) {
-        this.movementCredits = Math.min(Math.max(0, 1 - this.movementSpeed), this.movementCredits);
+        this.movementCredits = Math.min(
+          Math.max(0, 1 - this.movementSpeed),
+          this.movementCredits
+        );
       }
     }
   }
@@ -296,13 +341,14 @@ class UnitBasic extends Unit {
   doHorizontalMovement(boardState) {
     var currPos = this.getCurrentPosition();
     let directions = [-1, 1];
-    let pctMoved = boardState.sectors.getGridCoord(this).x / boardState.getMaxColumn();
+    let pctMoved =
+      boardState.sectors.getGridCoord(this).x / boardState.getMaxColumn();
     if (boardState.getRandom() >= pctMoved) {
       directions = [1, -1];
     }
 
     for (let dx of directions) {
-      let targetPos = {x: currPos.x + dx * Unit.UNIT_SIZE, y: currPos.y};
+      let targetPos = { x: currPos.x + dx * Unit.UNIT_SIZE, y: currPos.y };
       let canEnter =
         boardState.sectors.canUnitEnter(boardState, this, targetPos) &&
         boardState.unitEntering(this, targetPos);
@@ -322,7 +368,9 @@ class UnitBasic extends Unit {
       return;
     }
     this.movementCredits += this.movementSpeed;
-    if (this.movementCredits < 1) { return; }
+    if (this.movementCredits < 1) {
+      return;
+    }
     this.moveForward(boardState);
   }
 
@@ -330,7 +378,9 @@ class UnitBasic extends Unit {
     return 2;
   }
 
-  getMoveTime() { return 20; }
+  getMoveTime() {
+    return 20;
+  }
 
   playMovement(pct) {
     this.x = lerp(this.startMovementPos.x, this.moveTarget.x, pct);
@@ -356,7 +406,10 @@ class UnitBasic extends Unit {
     this.gameSprite.x = this.x;
     this.gameSprite.y = this.y;
 
-    if (this.y + this.getSize().bottom * Unit.UNIT_SIZE >= boardState.getUnitThreshold()) {
+    if (
+      this.y + this.getSize().bottom * Unit.UNIT_SIZE >=
+      boardState.getUnitThreshold()
+    ) {
       this.readyToDel = true;
       boardState.dealDamage(this.damage);
       EffectFactory.createDamagePlayersEffect(
@@ -386,16 +439,19 @@ class UnitBasic extends Unit {
     super.endOfPhase(boardState, phase);
     if (phase === TurnPhasesEnum.ENEMY_SPAWN) {
       this.doAbilityForecasting(boardState);
-      this.addAbilityForecastsToStage(boardState, boardState.renderContainers.abilityForecasts);
+      this.addAbilityForecastsToStage(
+        boardState,
+        boardState.renderContainers.abilityForecasts
+      );
     }
   }
 }
 
-UnitBasic.loadFromServerData = function(serverData) {
+UnitBasic.loadFromServerData = function (serverData) {
   return Unit.loadFromServerData(serverData);
 };
 
-UnitBasic.createAbilityDefs = function() {
+UnitBasic.createAbilityDefs = function () {
   UnitBlocker.createAbilityDef();
   UnitProtector.createAbilityDef();
   UnitBossWarlock.createAbilityDef();

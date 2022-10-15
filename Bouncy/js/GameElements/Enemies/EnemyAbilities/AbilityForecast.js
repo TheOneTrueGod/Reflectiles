@@ -1,91 +1,114 @@
 class AbilityForecast {
-    constructor(user, abilityIndex, targetType, targets) {
-        this.user = user;
-        this.abilityIndex = abilityIndex;
-        this.targetType = targetType;
-        this.targets = targets;
-        this.forecastSprites = [];
+  constructor(user, abilityIndex, targetType, targets) {
+    this.user = user;
+    this.abilityIndex = abilityIndex;
+    this.targetType = targetType;
+    this.targets = targets;
+    this.forecastSprites = [];
+  }
+
+  serialize() {
+    let targets = this.targets;
+    if (this.targetType === AbilityForecast.TARGET_TYPES.POSITION) {
+      targets = this.targets.map((target) => {
+        return { x: target.x, y: target.y };
+      });
     }
 
-    serialize() {
-        let targets = this.targets;
-        if (this.targetType === AbilityForecast.TARGET_TYPES.POSITION) {
-            targets = this.targets.map((target) => { return { x: target.x, y: target.y } });
-        }
+    return {
+      abilityIndex: this.abilityIndex,
+      targetType: this.targetType,
+      targets,
+    };
+  }
 
-        return {
-            abilityIndex: this.abilityIndex,
-            targetType: this.targetType,
-            targets
-        }
+  canBeTaunted(taunter) {
+    if (this.targets.includes(taunter)) {
+      return false;
+    }
+    if (this.targets.length > 1) {
+      return false;
+    }
+    return true;
+  }
+
+  applyTaunt(taunter) {
+    this.targets[0] = taunter;
+  }
+
+  static deserialize(user, data) {
+    let targets = data.targets;
+    if (data.targetType === AbilityForecast.TARGET_TYPES.POSITION) {
+      targets = data.targets.map((target) => {
+        return { x: target.x, y: target.y };
+      });
     }
 
-    static deserialize(user, data) {
-        let targets = data.targets;
-        if (data.targetType === AbilityForecast.TARGET_TYPES.POSITION) {
-            targets = data.targets.map((target) => { return { x: target.x, y: target.y } });
-        }
-        
-        return new AbilityForecast(user, data.abilityIndex, data.targetType, targets);
+    return new AbilityForecast(
+      user,
+      data.abilityIndex,
+      data.targetType,
+      targets
+    );
+  }
+
+  removeFromStage(stage) {
+    this.forecastSprites.forEach((forecastSprite) => {
+      forecastSprite.parent.removeChild(forecastSprite);
+    });
+    this.forecastSprites = [];
+  }
+
+  addToStage(boardState, forecastStage) {
+    if (this.forecastSprites) {
+      this.removeFromStage();
     }
 
-    removeFromStage(stage) {
-        this.forecastSprites.forEach((forecastSprite) => {
-            forecastSprite.parent.removeChild(forecastSprite);
-        })
-        this.forecastSprites = [];
-    }
+    const color = 0x660000;
 
-    addToStage(boardState, forecastStage) {
-        if (this.forecastSprites) {
-            this.removeFromStage();
-        }
+    const targetPositions = this.getTargetPos(boardState);
 
-        const color = 0x660000;
+    const ability = this.user.abilities[this.abilityIndex].value;
+    targetPositions.forEach((targetPos) => {
+      // createTargettingGraphic
+      const forecastSprite = ability.createForecastGraphic(
+        this.user,
+        targetPos,
+        color
+      );
 
-        const targetPositions = this.getTargetPos(boardState);
-        
-        const ability = this.user.abilities[this.abilityIndex].value;
-        targetPositions.forEach((targetPos) => {
-            // createTargettingGraphic
-            const forecastSprite = ability.createForecastGraphic(
-                this.user,
-                targetPos,
-                color
-            );
-            
-            if (this.forecastSprites) {
-                this.forecastSprites.push(forecastSprite);
-                forecastStage.addChild(forecastSprite);
-            }
+      if (this.forecastSprites) {
+        this.forecastSprites.push(forecastSprite);
+        forecastStage.addChild(forecastSprite);
+      }
+    });
+
+    return this.forecastSprites;
+  }
+
+  useAbility(boardState) {
+    const abilToUse = this.user.abilities[this.abilityIndex].value;
+    abilToUse.doEffects(boardState, this);
+  }
+
+  getTargetPos(boardState) {
+    let targetPos = { x: 0, y: 0 };
+    switch (this.targetType) {
+      case AbilityForecast.TARGET_TYPES.PLAYER_ID:
+        return this.targets.map((target) => {
+          const castPoint = boardState.playerCastPoints[target];
+          return { x: castPoint.x, y: castPoint.y };
         });
-    
-        return this.forecastSprites;
+      case AbilityForecast.TARGET_TYPES.POSITION:
+        return this.targets.map((target) => {
+          return { x: target.x, y: target.y };
+        });
     }
-
-    useAbility(boardState) {
-        const abilToUse = this.user.abilities[this.abilityIndex].value;
-        abilToUse.doEffects(boardState, this);
-    }
-
-    getTargetPos(boardState) {
-        let targetPos = { x: 0, y: 0 };
-        switch (this.targetType) {
-            case AbilityForecast.TARGET_TYPES.PLAYER_ID:
-                return this.targets.map((target) => {
-                    const castPoint = boardState.playerCastPoints[target];
-                    return { x: castPoint.x, y: castPoint.y };
-                })
-            case AbilityForecast.TARGET_TYPES.POSITION:
-                return this.targets.map((target) => {
-                    return { x: target.x, y: target.y };
-                });
-        }
-        return targetPos;
-    }
+    return targetPos;
+  }
 }
 
 AbilityForecast.TARGET_TYPES = {
-    'PLAYER_ID': 'PLAYER_ID',
-    'POSITION': 'POSITION',
+  PLAYER_ID: "PLAYER_ID",
+  POSITION: "POSITION",
 };

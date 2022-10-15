@@ -124,6 +124,8 @@ HitEffect.getHitEffectFromType = function(hitEffectDef, abilityDef, projectileSh
       return new InfectHitEffect(hitEffectDef, abilityDef);
     case ProjectileShape.HitEffects.WEAKNESS:
       return new WeaknessHitEffect(hitEffectDef, abilityDef);
+    case ProjectileShape.HitEffects.TAUNT:
+      return new TauntHitEffect(hitEffectDef, abilityDef);
     case ProjectileShape.HitEffects.DISABLE_SHIELD:
       return new DisableShieldHitEffect(hitEffectDef, abilityDef);
     case ProjectileShape.HitEffects.SPECIAL_STATUS:
@@ -141,5 +143,7 @@ HitEffect.getHitEffectFromType = function(hitEffectDef, abilityDef, projectileSh
     case ProjectileShape.HitEffects.SPREAD_DEBUFFS:
       return new SpreadDebuffsHitEffect(hitEffectDef, abilityDef, projectileShape);
   }
+  alert("Undefined hit effect: " + hitEffectDef.effect);
+  throw new Error("undefined hit effect: " + hitEffectDef.effect);
   return new HitEffect(hitEffectDef, abilityDef);
 }

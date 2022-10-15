@@ -5,12 +5,15 @@ class GameInitializer {
     this.loadServerDataCallback = null;
     this.playerDataLoadedCallback = null;
     this.gameNotStartedCallback = null;
-    this.isHost = $('#gameContainer').attr('host') === 'true';
+    this.isHost = $("#gameContainer").attr("host") === "true";
     this.gameStartedOnServer = false;
   }
   // Step 1.  Load the current board state from the server
   start() {
-    ServerCalls.LoadGameMetaData(this.handleMetaDataLoaded.bind(this, true), this);
+    ServerCalls.LoadGameMetaData(
+      this.handleMetaDataLoaded.bind(this, true),
+      this
+    );
   }
 
   handleMetaDataLoaded(makeAnotherStartCall, metaData) {
@@ -50,10 +53,10 @@ class GameInitializer {
       if (!this.isHost) {
         // Server isn't ready yet.  We're not the host, so let's idle.
         var self = this;
-        window.setTimeout(function() {
+        window.setTimeout(function () {
           self.loadInitialBoard();
         }, 3000);
-        console.log("trying again");
+        console.warn("trying again");
       } else {
         // Server isn't ready yet.  We're the host, so let's
         // make it ready.

@@ -19,6 +19,7 @@ class ImageLoader {
         .add("deployables", "/Bouncy/assets/sprites/deployables.png")
         .add("zone_icon_shield", "/Bouncy/assets/sprites/zone_icon_shield.png")
         .add("enemy_sheet", "/Bouncy/assets/enemies/Enemies.png")
+        .add("targetters", "/Bouncy/assets/sprites/targetters.png")
         .load(callback);
   }
 
@@ -45,7 +46,6 @@ class ImageLoader {
   }
 
   static getSquareTexture(sprite, index) {
-
     var baseTexture = PIXI.loader.resources[sprite].texture;
     return new PIXI.Texture(baseTexture,
         new PIXI.Rectangle(

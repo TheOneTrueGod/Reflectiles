@@ -23,14 +23,14 @@ class PlayerCommandController {
       if (command.type === PlayerCommandSpecial.SPECIAL_COMMANDS.END_TURN) {
         this.passCommand = command;
       } else {
-        console.log(command);
+        console.error(command);
       }
     } else if (command.isMinorAction()) {
       this.minorAction = command;
     } else if (command.isMajorAction()) {
       this.majorAction = command;
     } else {
-      console.log(command);
+      console.error(command);
     }
   }
 
@@ -46,7 +46,7 @@ class PlayerCommandController {
   }
 
   getCastPoint(playerPos, currPhase, checkPhase, usePreviews) {
-    usePreviews = (usePreviews === undefined) ? false : usePreviews;
+    usePreviews = usePreviews === undefined ? false : usePreviews;
 
     if (checkPhase === TurnPhasesEnum.PLAYER_PRE_MINOR) {
       return playerPos;
@@ -61,9 +61,11 @@ class PlayerCommandController {
       if (
         usePreviews &&
         minorPreviewCommand &&
-        minorPreviewCommand.getCommandPhase() === TurnPhasesEnum.PLAYER_PRE_MINOR
+        minorPreviewCommand.getCommandPhase() ===
+          TurnPhasesEnum.PLAYER_PRE_MINOR
       ) {
-        castPoint = minorPreviewCommand.getPlayerCastPointAfterCommand(castPoint);
+        castPoint =
+          minorPreviewCommand.getPlayerCastPointAfterCommand(castPoint);
       } else if (
         !minorPreviewCommand &&
         this.minorAction &&
@@ -83,7 +85,8 @@ class PlayerCommandController {
     ) {
       let majorPreviewCommand = MainGame.getMajorAimPreviewCommand();
       if (usePreviews && majorPreviewCommand) {
-        castPoint = majorPreviewCommand.getPlayerCastPointAfterCommand(castPoint);
+        castPoint =
+          majorPreviewCommand.getPlayerCastPointAfterCommand(castPoint);
       } else if (this.majorAction) {
         castPoint = this.majorAction.getPlayerCastPointAfterCommand(castPoint);
       }
@@ -113,8 +116,9 @@ class PlayerCommandController {
   }
 
   serialize() {
-    let serializedCommands =
-      this.getCommands().map((command) => { return command.serialize(); });
+    let serializedCommands = this.getCommands().map((command) => {
+      return command.serialize();
+    });
 
     if (this.passCommand) {
       serializedCommands.push(this.passCommand.serialize());

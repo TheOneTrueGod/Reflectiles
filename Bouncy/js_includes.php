@@ -25,6 +25,7 @@
 <script src="/Bouncy/js/Abilities/AbilityPerkNode.js"></script>
 <script src="/Bouncy/js/Abilities/AbilityCores/AbilityCore.js"></script>
 <script src="/Bouncy/js/Abilities/AbilityDef.js"></script>
+<script src="/Bouncy/js/Abilities/BuffAbilityDef.js"></script>
 <script src="/Bouncy/js/Abilities/ProjectileAbilityShapes/ProjectileShape.js"></script>
 <script src="/Bouncy/js/Abilities/AbilityStyles/AbilityStyle.js"></script>
 <script src="/Bouncy/js/Abilities/HitEffects/HitEffect.js"></script>
@@ -100,6 +101,7 @@
 <script src="/Bouncy/js/Abilities/HitEffects/InfectHitEffect.js"></script>
 <script src="/Bouncy/js/Abilities/HitEffects/FreezeHitEffect.js"></script>
 <script src="/Bouncy/js/Abilities/HitEffects/WeaknessHitEffect.js"></script>
+<script src="/Bouncy/js/Abilities/HitEffects/TauntHitEffect.js"></script>
 <script src="/Bouncy/js/Abilities/HitEffects/DisableShieldHitEffect.js"></script>
 <script src="/Bouncy/js/Abilities/HitEffects/SpecialStatusHitEffect.js"></script>
 <script src="/Bouncy/js/Abilities/HitEffects/DamageHitEffect.js"></script>
