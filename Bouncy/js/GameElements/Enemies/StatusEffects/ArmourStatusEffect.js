@@ -1,4 +1,4 @@
-class ShieldStatusEffect extends StatusEffect {
+class ArmourStatusEffect extends StatusEffect {
   constructor(health) {
     super(1000);
     if (health.current && health.max) {
@@ -11,6 +11,7 @@ class ShieldStatusEffect extends StatusEffect {
   isPositive() {
     return true;
   }
+
   isNegative() {
     return false;
   }
@@ -49,20 +50,19 @@ class ShieldStatusEffect extends StatusEffect {
   }
 
   static addEffectSprite(unit) {
-    if (!UnitBasic.OUTLINE_FILTER_PURPLE) {
-      UnitBasic.OUTLINE_FILTER_PURPLE = new PIXI.filters.OutlineFilter(
+    if (!UnitBasic.OUTLINE_FILTER_GRAY) {
+      UnitBasic.OUTLINE_FILTER_GRAY = new PIXI.filters.OutlineFilter(
         2,
-        0xc119b9
+        0x5a5a5a
       );
     }
-    unit.gameSprite.filters = [UnitBasic.OUTLINE_FILTER_PURPLE];
+    unit.gameSprite.filters = [UnitBasic.OUTLINE_FILTER_GRAY];
     unit.createHealthBarSprite(unit.gameSprite);
-    return null;
   }
 }
 
-ShieldStatusEffect.loadFromServerData = function (server_data) {
-  return new ShieldStatusEffect(server_data.health);
+ArmourStatusEffect.loadFromServerData = function (server_data) {
+  return new ArmourStatusEffect(server_data.health);
 };
 
-ShieldStatusEffect.AddToTypeMap();
+ArmourStatusEffect.AddToTypeMap();

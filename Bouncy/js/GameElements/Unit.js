@@ -20,14 +20,14 @@ class Unit {
     this.physicsHeight = unitSize.y;
     this.collisionBox = [];
     var health = NumbersBalancer.getUnitHealth(this);
-    this.health = {current: health, max: health};
+    this.health = { current: health, max: health };
     if (isNaN(this.health.current) || isNaN(this.health.max)) {
       debugger;
     }
     var armour = NumbersBalancer.getUnitArmour(this);
-    this.armour = {current: armour, max: armour};
+    this.armour = { current: armour, max: armour };
     var shield = NumbersBalancer.getUnitShield(this);
-    this.shield = {current: shield, max: shield};
+    this.shield = { current: shield, max: shield };
     this.readyToDel = false;
 
     this.damage = 1;
@@ -37,7 +37,7 @@ class Unit {
 
     this.healthBarSprites = {
       textSprite: null,
-      bar: null
+      bar: null,
     };
     this.effectSprites = {};
     this.traits = {};
@@ -61,19 +61,19 @@ class Unit {
     return false;
   }
 
-  doSpawnEffect(boardState) {
-
-  }
+  doSpawnEffect(boardState) {}
 
   getTraitValue(trait) {
     return this.traits[trait] ? this.traits[trait] : 0;
   }
 
   getUnitSize() {
-    return {x: Unit.UNIT_SIZE, y: Unit.UNIT_SIZE};
+    return { x: Unit.UNIT_SIZE, y: Unit.UNIT_SIZE };
   }
 
-  canProjectileHit() { return true; }
+  canProjectileHit() {
+    return true;
+  }
 
   createCollisionBox() {}
 
@@ -125,32 +125,31 @@ class Unit {
   }
 
   heal(amount) {
-    this.setHealth(
-      Math.min(this.health.max, this.health.current + amount)
-    );
+    this.setHealth(Math.min(this.health.max, this.health.current + amount));
   }
 
   getTotalHealthPercent() {
     let maxHealth = this.health.max + this.armour.max + this.shield.max;
-    let currHealth = this.health.current + this.armour.current + this.shield.current;
+    let currHealth =
+      this.health.current + this.armour.current + this.shield.current;
     return currHealth / Math.max(maxHealth, 1);
   }
 
   setHealth(amount) {
     this.health.current = Math.max(amount, 0);
     if (
-      this.health.current <= 0 && (
-        this.health.max > 0 ||
-        (
-          this.armour.current <= 0 &&
-          this.shield.current <= 0
-        )
-      )
+      this.health.current <= 0 &&
+      (this.health.max > 0 ||
+        (this.armour.current <= 0 && this.shield.current <= 0))
     ) {
       this.readyToDel = true;
     }
 
-    if (isNaN(this.health.current) || isNaN(this.armour.current) || isNaN(this.shield.current)) {
+    if (
+      isNaN(this.health.current) ||
+      isNaN(this.armour.current) ||
+      isNaN(this.shield.current)
+    ) {
       this.readyToDel = true;
     }
 
@@ -170,14 +169,21 @@ class Unit {
   }
 
   getArmour() {
-    return this.armour;
+    var toRet = { ...this.armour };
+    if (this.hasStatusEffect(ArmourStatusEffect)) {
+      var buffCurrent = this.getStatusEffect(ArmourStatusEffect).health.current;
+      var buffMax = this.getStatusEffect(ArmourStatusEffect).health.max;
+      toRet.current += buffCurrent;
+      toRet.max += buffMax;
+    }
+    return toRet;
   }
 
   getShield() {
     if (this.hasStatusEffect(DisableShieldStatusEffect)) {
-      return {current: 0, max: 0};
+      return { current: 0, max: 0 };
     }
-    var toRet = {current: this.shield.current, max: this.shield.max};
+    var toRet = { current: this.shield.current, max: this.shield.max };
     if (this.hasStatusEffect(ShieldStatusEffect)) {
       var buffCurrent = this.getStatusEffect(ShieldStatusEffect).health.current;
       var buffMax = this.getStatusEffect(ShieldStatusEffect).health.max;
@@ -192,28 +198,52 @@ class Unit {
       case Unit.DAMAGE_TYPE.NORMAL:
         return 1;
       case Unit.DAMAGE_TYPE.POISON:
-        if (healthType == 'armor') { return 0; }
+        if (healthType == "armor") {
+          return 0;
+        }
         return 1;
       case Unit.DAMAGE_TYPE.CORROSIVE:
-        if (healthType == 'armor') { return 1.2; }
-        if (healthType == 'shield') { return 0.5; }
-        if (healthType == 'health') { return 0.5; }
+        if (healthType == "armor") {
+          return 1.2;
+        }
+        if (healthType == "shield") {
+          return 0.5;
+        }
+        if (healthType == "health") {
+          return 0.5;
+        }
         return 0;
       case Unit.DAMAGE_TYPE.FIRE:
-        if (healthType == 'armor') { return 0.5; }
-        if (healthType == 'shield') { return 0.5; }
-        if (healthType == 'health') { return 1.2; }
+        if (healthType == "armor") {
+          return 0.5;
+        }
+        if (healthType == "shield") {
+          return 0.5;
+        }
+        if (healthType == "health") {
+          return 1.2;
+        }
         return 0;
       case Unit.DAMAGE_TYPE.LIGHTNING:
-        if (healthType == 'armor') { return 0.5; }
-        if (healthType == 'shield') { return 1.2; }
-        if (healthType == 'health') { return 0.5; }
+        if (healthType == "armor") {
+          return 0.5;
+        }
+        if (healthType == "shield") {
+          return 1.2;
+        }
+        if (healthType == "health") {
+          return 0.5;
+        }
         return 0;
       case Unit.DAMAGE_TYPE.ANTI_ARMOR:
-        if (healthType == 'armor') { return 1; }
+        if (healthType == "armor") {
+          return 1;
+        }
         return 0;
       case Unit.DAMAGE_TYPE.ANTI_SHIELD:
-        if (healthType == 'shield') { return 1; }
+        if (healthType == "shield") {
+          return 1;
+        }
         return 0;
     }
     return 1;
@@ -241,10 +271,12 @@ class Unit {
     let damageDealt = 0;
     var damageMult = 1;
     for (var key in this.statusEffects) {
-      damageMult *= this.statusEffects[key].getDamageMultiplier()
+      damageMult *= this.statusEffects[key].getDamageMultiplier();
     }
     if (owningPlayer) {
-      let damageStatusEffect = owningPlayer.getStatusEffect(PlayerDamageStatusEffect);
+      let damageStatusEffect = owningPlayer.getStatusEffect(
+        PlayerDamageStatusEffect
+      );
       if (damageStatusEffect) {
         damageMult *= damageStatusEffect.amount;
       }
@@ -258,11 +290,17 @@ class Unit {
     }
 
     let shieldsDisabled = this.hasStatusEffect(DisableShieldStatusEffect);
-    let shieldDamageMod = this.getDamageTypeModifier(damageType, 'shield');
-    if (!shieldsDisabled && this.hasStatusEffect(ShieldStatusEffect) && shieldDamageMod > 0) {
+    let shieldDamageMod = this.getDamageTypeModifier(damageType, "shield");
+    if (
+      !shieldsDisabled &&
+      this.hasStatusEffect(ShieldStatusEffect) &&
+      shieldDamageMod > 0
+    ) {
       var shieldEffect = this.statusEffects[ShieldStatusEffect.getEffectType()];
       maxDamageDealt += shieldEffect.health.current;
-      let shieldDamage = shieldEffect.dealDamage(Math.floor(Math.max(damageToDeal * shieldDamageMod, 0)));
+      let shieldDamage = shieldEffect.dealDamage(
+        Math.floor(Math.max(damageToDeal * shieldDamageMod, 0))
+      );
       damageDealt += shieldDamage;
       damageToDeal -= shieldDamage / shieldDamageMod;
 
@@ -284,25 +322,44 @@ class Unit {
       }
     }
 
-    let armorDamageMod = this.getDamageTypeModifier(damageType, 'armor');
-    if (this.armour.current > 0 && armorDamageMod > 0) {
+    let armourDamageMod = this.getDamageTypeModifier(damageType, "armor");
+    if (armourDamageMod > 0 && this.hasStatusEffect(ArmourStatusEffect)) {
+      var armourEffect = this.statusEffects[ArmourStatusEffect.getEffectType()];
+      maxDamageDealt += armourEffect.health.current;
+      let armourDamage = armourEffect.dealDamage(
+        Math.floor(Math.max(damageToDeal * armourDamageMod, 0))
+      );
+      damageDealt += armourDamage;
+      damageToDeal -= armourDamage / armourDamageMod;
+
+      if (armourEffect.readyToDelete()) {
+        this.removeStatusEffect(armourEffect.getEffectType());
+      }
+    }
+    if (this.armour.current > 0 && armourDamageMod > 0) {
       maxDamageDealt += this.armour.current;
-      if (this.armour.current >= damageToDeal * armorDamageMod) {
-        damageDealt += damageToDeal * armorDamageMod;
-        this.armour.current -= damageToDeal * armorDamageMod;
+      if (this.armour.current >= damageToDeal * armourDamageMod) {
+        damageDealt += damageToDeal * armourDamageMod;
+        this.armour.current -= damageToDeal * armourDamageMod;
         damageToDeal = 0;
       } else {
         damageDealt += this.armour.current;
-        damageToDeal -= this.armour.current / armorDamageMod;
+        damageToDeal -= this.armour.current / armourDamageMod;
         this.armour.current = 0;
       }
     }
 
-    let healthDamageMod = this.getDamageTypeModifier(damageType, 'health');
+    let healthDamageMod = this.getDamageTypeModifier(damageType, "health");
     if (healthDamageMod > 0) {
       maxDamageDealt = maxDamageDealt / Math.max(damageMult, 0.00001);
-      damageDealt += Math.min(this.health.current, Math.floor(damageToDeal * healthDamageMod));
-      this.setHealth(this.health.current - Math.floor(Math.max(damageToDeal * healthDamageMod, 0)));
+      damageDealt += Math.min(
+        this.health.current,
+        Math.floor(damageToDeal * healthDamageMod)
+      );
+      this.setHealth(
+        this.health.current -
+          Math.floor(Math.max(damageToDeal * healthDamageMod, 0))
+      );
     }
 
     if (amount > 0) {
@@ -316,7 +373,7 @@ class Unit {
     if (playerID) {
       boardState.gameStats.addPlayerDamage(playerID, abilID, damageDealt);
     } else {
-      boardState.gameStats.addPlayerDamage('unknown', "?", damageDealt);
+      boardState.gameStats.addPlayerDamage("unknown", "?", damageDealt);
       console.warn("Unknown source: ", source);
     }
 
@@ -336,7 +393,9 @@ class Unit {
   }
 
   getCollisionBox() {
-    if (this.readyToDelete()) { return []; }
+    if (this.readyToDelete()) {
+      return [];
+    }
     if (!this.collisionBox || this.collisionBox.length === 0) {
       this.createCollisionBox();
     }
@@ -377,8 +436,8 @@ class Unit {
   setMoveTarget(x, y, ability, abilityMoveSpeed) {
     this.memoizedCollisionBox = null;
     this.abilityMoveSpeed = abilityMoveSpeed ? abilityMoveSpeed : null;
-    this.startMovementPos = {x: this.x, y: this.y};
-    this.moveTarget = {'x': x, 'y': y};
+    this.startMovementPos = { x: this.x, y: this.y };
+    this.moveTarget = { x: x, y: y };
     this.moveAbility = ability;
   }
 
@@ -404,22 +463,22 @@ class Unit {
       serialized_status_effects.push(this.statusEffects[key].serialize());
     }
     var serialized = {
-      'x': this.x,
-      'y': this.y,
-      'health': this.health,
-      'armour': this.armour,
-      'shield': this.shield,
-      'status_effects': serialized_status_effects,
-      'moveTarget': null,
-      'unitType': this.constructor.name,
-      'owner': this.owner,
-      'id': this.id,
-      'data': this.serializeData()
+      x: this.x,
+      y: this.y,
+      health: this.health,
+      armour: this.armour,
+      shield: this.shield,
+      status_effects: serialized_status_effects,
+      moveTarget: null,
+      unitType: this.constructor.name,
+      owner: this.owner,
+      id: this.id,
+      data: this.serializeData(),
     };
     if (this.moveTarget) {
       serialized.moveTarget = {
-        'x': this.moveTarget.x,
-        'y': this.moveTarget.y,
+        x: this.moveTarget.x,
+        y: this.moveTarget.y,
       };
     }
 
@@ -430,13 +489,11 @@ class Unit {
     return {};
   }
 
-  loadSerializedData(data) {
-
-  }
+  loadSerializedData(data) {}
 
   createSprite(hideHealthBar) {
     var sprite = new PIXI.Sprite(
-      PIXI.loader.resources['byte_diamond_red'].texture
+      PIXI.loader.resources["byte_diamond_red"].texture
     );
     sprite.anchor.set(0.5);
 
@@ -449,37 +506,38 @@ class Unit {
   getCurrentPosition() {
     var x = this.moveTarget ? this.moveTarget.x : this.x;
     var y = this.moveTarget ? this.moveTarget.y : this.y;
-    return {x: x, y: y};
+    return { x: x, y: y };
   }
 
   getTopLeft() {
     var x = this.moveTarget ? this.moveTarget.x : this.x;
     var y = this.moveTarget ? this.moveTarget.y : this.y;
-    return {x: x - this.physicsWidth / 2, y: y - this.physicsWidth / 2};
+    return { x: x - this.physicsWidth / 2, y: y - this.physicsWidth / 2 };
   }
 
   getBottomRight() {
     var x = this.moveTarget ? this.moveTarget.x : this.x;
     var y = this.moveTarget ? this.moveTarget.y : this.y;
-    return {x: x + this.physicsWidth / 2, y: y + this.physicsWidth / 2};
+    return { x: x + this.physicsWidth / 2, y: y + this.physicsWidth / 2 };
   }
 
   getTopLeftCoord() {
-    return {x: 0, y: 0};
+    return { x: 0, y: 0 };
   }
 
   getBottomRightCoord() {
-    return {x: 0, y: 0};
+    return { x: 0, y: 0 };
   }
 
-  chooseSpriteVisibility() {
-
-  }
+  chooseSpriteVisibility() {}
 
   addToStage(stage) {
     this.gameSprite = this.createSprite();
     this.chooseSpriteVisibility();
-    this.spriteScale = {x: this.gameSprite.scale.x, y: this.gameSprite.scale.y};
+    this.spriteScale = {
+      x: this.gameSprite.scale.x,
+      y: this.gameSprite.scale.y,
+    };
     for (var effect in this.statusEffects) {
       this.addEffectSprite(effect);
     }
@@ -498,7 +556,7 @@ class Unit {
     }
   }
 
-  addAbilityForecastsToStage(boardState, forecastStage) { }
+  addAbilityForecastsToStage(boardState, forecastStage) {}
 
   addToBackOfStage() {
     return false;
@@ -513,8 +571,7 @@ class Unit {
     return null;
   }
 
-  doMovement(boardState) {
-  }
+  doMovement(boardState) {}
 
   startOfPhase(boardState, phase) {
     for (var key in this.statusEffects) {
@@ -531,11 +588,9 @@ class Unit {
   addStatusEffect(effect) {
     if (
       this.getTraitValue(Unit.UNIT_TRAITS.FROST_IMMUNE) === true &&
-      (
-        effect instanceof FreezeStatusEffect ||
+      (effect instanceof FreezeStatusEffect ||
         effect instanceof ImmobilizeStatusEffect ||
-        effect instanceof DisarmStatusEffect
-      )
+        effect instanceof DisarmStatusEffect)
     ) {
       return;
     }
@@ -547,7 +602,8 @@ class Unit {
     }
     this.removeEffectSprite(effect.getEffectType());
     if (this.statusEffects[effect.getEffectType()]) {
-      this.statusEffects[effect.getEffectType()] = this.statusEffects[effect.getEffectType()].mergeWithOtherEffect(effect);
+      this.statusEffects[effect.getEffectType()] =
+        this.statusEffects[effect.getEffectType()].mergeWithOtherEffect(effect);
     } else {
       this.statusEffects[effect.getEffectType()] = effect;
     }
@@ -566,10 +622,12 @@ class Unit {
     if (this.gameSprite && effect == ShieldStatusEffect.getEffectType()) {
       this.gameSprite.filters = [];
     }
+    if (this.gameSprite && effect == ArmourStatusEffect.getEffectType()) {
+      this.gameSprite.filters = [];
+    }
   }
 
-  addEffectSprite(effect) {
-  }
+  addEffectSprite(effect) {}
 
   removeStatusEffect(effect) {
     if (effect in this.statusEffects) {
@@ -621,11 +679,16 @@ class Unit {
 
   getSize() {
     return {
-      left: 0, right: 0, top: 0, bottom: 0
+      left: 0,
+      right: 0,
+      top: 0,
+      bottom: 0,
     };
   }
 
-  getSelectionRadius() { return 20; }
+  getSelectionRadius() {
+    return 20;
+  }
 
   preventsUnitEntry(unit) {
     return true;
@@ -663,9 +726,9 @@ class Unit {
 
   playSpawnEffect(boardState, castPoint, time, spawnEffect) {
     this.spawnEffect = spawnEffect;
-    this.spawnEffectStart = {x: castPoint.x, y: castPoint.y};
-    this.spawnEffectTime = {current: 0, max: time};
-    this.moveTarget = {x: this.x, y: this.y};
+    this.spawnEffectStart = { x: castPoint.x, y: castPoint.y };
+    this.spawnEffectTime = { current: 0, max: time };
+    this.moveTarget = { x: this.x, y: this.y };
     this.playSpawnEffectAtPct(boardState, 0);
 
     this.gameSprite.x = this.x;
@@ -673,7 +736,9 @@ class Unit {
   }
 
   playSpawnEffectAtPct(boardState, pct) {
-    if (!this.spawnEffectStart) { return; }
+    if (!this.spawnEffectStart) {
+      return;
+    }
     switch (this.spawnEffect) {
       case Unit.SpawnEffects.REINFORCE:
         this.x = lerp(this.spawnEffectStart.x, this.moveTarget.x, pct);
@@ -681,7 +746,11 @@ class Unit {
         break;
       case Unit.SpawnEffects.DEFAULT:
       default:
-        if (!this.creatorAbility || this.creatorAbility.ZONE_TYPE !== ZoneAbilityDef.ZoneTypes.BLOCKER_BARRIER) {
+        if (
+          !this.creatorAbility ||
+          this.creatorAbility.ZONE_TYPE !==
+            ZoneAbilityDef.ZoneTypes.BLOCKER_BARRIER
+        ) {
           this.gameSprite.scale.x = lerp(0, this.spriteScale.x, pct);
         }
         this.gameSprite.scale.y = lerp(0, this.spriteScale.y, pct);
@@ -694,17 +763,39 @@ class Unit {
   }
 
   getCoordsInRange(boardState, range) {
-    if (range < 0) { return []; }
+    if (range < 0) {
+      return [];
+    }
     let adjacentSpots = [];
     let thisSize = this.getSize();
     let thisCoord = boardState.sectors.getGridCoord(this);
-    for (let xOffset = thisSize.left - range; xOffset <= thisSize.right + range; xOffset++) {
-      for (let yOffset = thisSize.top - range; yOffset <= thisSize.bottom + range; yOffset++) {
-        if (!(xOffset < thisSize.left || yOffset < thisSize.top || xOffset > thisSize.right || yOffset > thisSize.bottom)) {
+    for (
+      let xOffset = thisSize.left - range;
+      xOffset <= thisSize.right + range;
+      xOffset++
+    ) {
+      for (
+        let yOffset = thisSize.top - range;
+        yOffset <= thisSize.bottom + range;
+        yOffset++
+      ) {
+        if (
+          !(
+            xOffset < thisSize.left ||
+            yOffset < thisSize.top ||
+            xOffset > thisSize.right ||
+            yOffset > thisSize.bottom
+          )
+        ) {
           continue;
         }
-        const newCoord = {x: thisCoord.x + xOffset, y: thisCoord.y + yOffset };
-        if (newCoord.x < 0 || newCoord.x >= boardState.sectors.columns || newCoord.y < 0 || newCoord.y >= boardState.sectors.rows) {
+        const newCoord = { x: thisCoord.x + xOffset, y: thisCoord.y + yOffset };
+        if (
+          newCoord.x < 0 ||
+          newCoord.x >= boardState.sectors.columns ||
+          newCoord.y < 0 ||
+          newCoord.y >= boardState.sectors.rows
+        ) {
           continue;
         }
 
@@ -715,15 +806,21 @@ class Unit {
   }
 }
 
-Unit.loadFromServerData = function(serverData) {
+Unit.loadFromServerData = function (serverData) {
   var x = 0;
   var y = 0;
   var owner = 0;
   var UnitClass = Unit;
   var id = null;
-  if (serverData.x) { x = serverData.x; }
-  if (serverData.y) { y = serverData.y; }
-  if (serverData.owner) { owner = serverData.owner; }
+  if (serverData.x) {
+    x = serverData.x;
+  }
+  if (serverData.y) {
+    y = serverData.y;
+  }
+  if (serverData.owner) {
+    owner = serverData.owner;
+  }
   if (serverData.unitType) {
     if (!(serverData.unitType in Unit.UnitTypeMap)) {
       alert(serverData.unitType + " not in Unit.UnitTypeMap.");
@@ -731,11 +828,19 @@ Unit.loadFromServerData = function(serverData) {
       UnitClass = Unit.UnitTypeMap[serverData.unitType];
     }
   }
-  if (serverData.id) { id = serverData.id; }
+  if (serverData.id) {
+    id = serverData.id;
+  }
   var unit = new UnitClass(x, y, owner, id);
-  if (serverData.health !== undefined) { unit.health = serverData.health; }
-  if (serverData.armour !== undefined) { unit.armour = serverData.armour; }
-  if (serverData.shield !== undefined) { unit.shield = serverData.shield; }
+  if (serverData.health !== undefined) {
+    unit.health = serverData.health;
+  }
+  if (serverData.armour !== undefined) {
+    unit.armour = serverData.armour;
+  }
+  if (serverData.shield !== undefined) {
+    unit.shield = serverData.shield;
+  }
   if (serverData.moveTarget) {
     unit.setMoveTarget(serverData.moveTarget.x, serverData.moveTarget.y);
   }
@@ -749,25 +854,24 @@ Unit.loadFromServerData = function(serverData) {
     unit.loadSerializedData(serverData.data);
   }
   return unit;
-}
+};
 
 Unit.UNIT_SIZE = 40;
-Unit.UnitTypeMap = {
-};
+Unit.UnitTypeMap = {};
 Unit.SpawnEffects = {
-  DEFAULT: 'DEFAULT',
-  REINFORCE: 'REINFORCE',
-}
+  DEFAULT: "DEFAULT",
+  REINFORCE: "REINFORCE",
+};
 
-Unit.AddToTypeMap = function() {
+Unit.AddToTypeMap = function () {
   Unit.UnitTypeMap[this.name] = this;
-}
+};
 
 Unit.UNIT_TRAITS = {
-  FROST_IMMUNE: 'frost_immune',
-  POISON_IMMUNE: 'poison_immune',
-  RESILIANT: 'resiliant',
-}
+  FROST_IMMUNE: "frost_immune",
+  POISON_IMMUNE: "poison_immune",
+  RESILIANT: "resiliant",
+};
 
 Unit.DAMAGE_TYPE = {
   NORMAL: "NORMAL",

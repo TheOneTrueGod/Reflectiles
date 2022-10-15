@@ -143,6 +143,8 @@ class UnitBasic extends Unit {
       sprite = InfectStatusEffect.addEffectSprite(this);
     } else if (effect == ShieldStatusEffect.getEffectType()) {
       sprite = ShieldStatusEffect.addEffectSprite(this);
+    } else if (effect == ArmourStatusEffect.getEffectType()) {
+      sprite = ArmourStatusEffect.addEffectSprite(this);
     } else if (effect == WeaknessStatusEffect.getEffectType()) {
       sprite = WeaknessStatusEffect.addEffectSprite(this);
     }

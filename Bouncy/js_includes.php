@@ -96,6 +96,7 @@
 <script src="/Bouncy/js/GameElements/Enemies/StatusEffects/DisableShieldStatusEffect.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/StatusEffects/SpecialStatusEffect.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/StatusEffects/ShieldStatusEffect.js"></script>
+<script src="/Bouncy/js/GameElements/Enemies/StatusEffects/ArmourStatusEffect.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/StatusEffects/PlayerDamageStatusEffect.js"></script>
 <script src="/Bouncy/js/Abilities/HitEffects/PoisonHitEffect.js"></script>
 <script src="/Bouncy/js/Abilities/HitEffects/InfectHitEffect.js"></script>
