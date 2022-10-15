@@ -77,7 +77,7 @@ class Unit {
 
   createCollisionBox() {}
 
-  doUnitActions(boardState) {}
+  startOfEnemyActionPhase(boardState) {}
 
   createTooltip() {
     return UnitTooltips.createTooltip(this);

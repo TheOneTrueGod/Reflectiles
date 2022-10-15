@@ -154,6 +154,7 @@
 <script src="/Bouncy/js/GameElements/Deployables/Turret.js"></script>
 <script src="/Bouncy/js/GameElements/Deployables/Landmine.js"></script>
 <script src="/Bouncy/js/GameElements/Deployables/PushableExplosive.js"></script>
+<script src="/Bouncy/js/GameElements/Enemies/UnitBasicAttacker.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/UnitBasicSquare.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/UnitBomber.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/UnitKnight.js"></script>
@@ -183,6 +184,8 @@
 <script src="/Bouncy/js/GameElements/Enemies/EnemyAbilities/EnemyAbilitySummonFireShards.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/EnemyAbilities/EnemyAbilitySummonIceWall.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/EnemyAbilities/EnemyAbilityShootProjectile.js"></script>
+<script src="/Bouncy/js/GameElements/Enemies/EnemyAbilities/EnemyAbilityBasicEnemyAttack.js"></script>
+<script src="/Bouncy/js/GameElements/Enemies/EnemyAbilities/EnemyAbilityBossShootProjectile.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/EnemyAbilities/EnemyAbilityShieldWall.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/EnemyAbilities/EnemyAbilityPersonalSpace.js"></script>
 <script src="/Bouncy/js/GameElements/Enemies/EnemyAbilities/EnemyAbilityExplode.js"></script>

@@ -16,6 +16,7 @@ class UnitBasic extends Unit {
 
   addAbility(weight, ability) {
     this.abilities.push({ weight: weight, value: ability });
+    return ability;
   }
 
   pickRandomAbilityIndex(boardState) {
@@ -58,10 +59,14 @@ class UnitBasic extends Unit {
     });
   }
 
-  useForecastAbilities(boardState) {
-    this.abilityForecasts.forEach((forecast) => {
-      forecast.useAbility(boardState);
-    });
+  useForecastAbilities(boardState, index = -1) {
+    if (index === -1) {
+      this.abilityForecasts.forEach((forecast) => {
+        forecast.useAbility(boardState);
+      });
+    } else if (index >= 0 && index < this.abilityForecasts.length) {
+      this.abilityForecasts[index].useAbility(boardState);
+    }
   }
 
   doAbilityForecasting(boardState) {
@@ -70,8 +75,17 @@ class UnitBasic extends Unit {
     }
     this.abilityForecasts.forEach((forecast) => forecast.removeFromStage());
     this.abilityForecasts = [];
-    let abilIndex = this.pickRandomAbilityIndex(boardState);
-    if (abilIndex === undefined) {
+    for (let i = 0; i < this.getNumAbilitiesToUse(); i++) {
+      this.forecastRandomAbility(boardState);
+    }
+  }
+
+  forecastRandomAbility(boardState) {
+    this.forecastAbility(boardState, this.pickRandomAbilityIndex(boardState));
+  }
+
+  forecastAbility(boardState, abilIndex) {
+    if (this.abilities[abilIndex] === undefined) {
       return;
     }
 
@@ -84,7 +98,11 @@ class UnitBasic extends Unit {
       return;
     }
 
-    this.abilityForecasts = [forecast];
+    this.abilityForecasts.push(forecast);
+  }
+
+  getNumAbilitiesToUse() {
+    return 1;
   }
 
   getPlayerIDs() {
@@ -154,7 +172,7 @@ class UnitBasic extends Unit {
     }
   }
 
-  createHealthBarSprite(sprite) {
+  createHealthBarSprite(container) {
     // TODO:  If you're seeing some slowdown, there's probably a better way of doing this.
     if (this.healthBarSprites.textSprite) {
       this.gameSprite.removeChild(this.healthBarSprites.textSprite);
@@ -173,7 +191,7 @@ class UnitBasic extends Unit {
       colour = "darkgray";
     }
 
-    var fontSize = 10;
+    var fontSize = 8;
     var healthBarGraphic = new PIXI.Text(text, {
       fontWeight: "bold",
       fontSize: fontSize + "px",
@@ -185,17 +203,17 @@ class UnitBasic extends Unit {
       strokeThickness: 4,
     });
     healthBarGraphic.anchor.set(0.5);
-    healthBarGraphic.position.set(0, 20);
-    sprite.addChild(healthBarGraphic);
+    healthBarGraphic.position.set(0, 15);
+    container.addChild(healthBarGraphic);
 
     this.healthBarSprites.textSprite = healthBarGraphic;
   }
 
+  createSprite(resourceName) {}
+
   createSpriteFromResource(resource, hideHealthBar) {
+    let container = new PIXI.Container();
     var sprite = new PIXI.Sprite(ImageLoader.getEnemyTexture(resource));
-    if (!hideHealthBar) {
-      this.createHealthBarSprite(sprite);
-    }
 
     sprite.anchor.set(0.5);
     /*for (var effect in this.statusEffects) {
@@ -204,7 +222,15 @@ class UnitBasic extends Unit {
 
     sprite.width = this.physicsWidth;
     sprite.height = this.physicsHeight;
-    return sprite;
+
+    this.sprites = { [resource]: sprite };
+
+    container.addChild(sprite);
+    if (!hideHealthBar) {
+      this.createHealthBarSprite(container);
+    }
+
+    return container;
   }
 
   createSpriteListFromResourceList(resources, hideHealthBar) {
@@ -221,14 +247,14 @@ class UnitBasic extends Unit {
         onFirst = false;
       }
 
+      this.sprites[res].width = this.physicsWidth;
+      this.sprites[res].height = this.physicsHeight;
       container.addChild(this.sprites[res]);
     }
     if (!hideHealthBar) {
       this.createHealthBarSprite(container);
     }
 
-    container.width = this.physicsWidth;
-    container.height = this.physicsHeight;
     return container;
   }
 
@@ -241,12 +267,18 @@ class UnitBasic extends Unit {
   }
 
   createSprite(hideHealthBar) {
+    throw new Error("createSprite must be overridden in a child class");
     this.createSpriteFromResource("byte_diamond_red", hideHealthBar);
   }
 
   addAbilityForecastsToStage(boardState, forecastStage) {
-    this.abilityForecasts.forEach((forecast) => {
-      forecast.addToStage(boardState, forecastStage);
+    this.abilityForecasts.forEach((forecast, forecastIndex) => {
+      forecast.addToStage(
+        boardState,
+        forecastStage,
+        forecastIndex,
+        this.abilityForecasts.length
+      );
     });
   }
 
@@ -433,6 +465,10 @@ class UnitBasic extends Unit {
 
   isRealUnit() {
     return true;
+  }
+
+  canBasicAttack() {
+    return false;
   }
 
   endOfPhase(boardState, phase) {

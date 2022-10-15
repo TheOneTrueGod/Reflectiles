@@ -18,6 +18,38 @@ class EnemyAbilitySummonFireShards extends EnemyAbilitySummonUnits {
     return validCoords;
   }
 
+  createForecast(boardState, unit, abilityIndex) {
+    return new AbilityForecast(unit, abilityIndex, AbilityForecast.TARGET_TYPES.SELF, []);
+  }
+
+  /**
+   * @param {BoardState} boardState 
+   * @param {*} user 
+   * @param {*} target 
+   * @param {*} color 
+   */
+  createForecastGraphic(
+    boardState,
+    user,
+    target,
+    color,
+    forecastIndex,
+    totalForecasts,
+  ) {
+    const circleSize = 4;
+
+    var lineGraphic = new PIXI.Graphics();
+    const iconPos = this.getForecastIconPosition(user, forecastIndex, totalForecasts);
+
+    lineGraphic.lineStyle(1, 0xFFFFFF)
+      .beginFill(color)
+      .drawCircle(iconPos.x, iconPos.y + 4, circleSize)
+      .drawCircle(iconPos.x - 5, iconPos.y - 5, circleSize)
+      .drawCircle(iconPos.x + 5, iconPos.y - 5, circleSize);
+
+    return lineGraphic;
+  }
+
   createUnit(targetPos) {
     return new UnitFireShard(targetPos.x, targetPos.y, 0);
   }

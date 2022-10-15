@@ -9,6 +9,11 @@ class UnitBossGrandWizard extends UnitBasic {
     this.animationFrames = 20;
     this.traits[Unit.UNIT_TRAITS.FROST_IMMUNE] = true;
     // Ability Stuff.  Move to UnitBasic eventually.
+    this.personalSpaceAbility = this.addAbility(0, new EnemyAbilityPersonalSpace(
+      this,
+      NumbersBalancer.getUnitAbilityNumber(this, NumbersBalancer.UNIT_ABILITIES.WIZARD_PROJECTILE_DAMAGE),
+      4,
+    ));
     this.addAbility(40, new EnemyAbilitySummonFireShards(
       this,
       NumbersBalancer.getUnitAbilityNumber(this, NumbersBalancer.UNIT_ABILITIES.WIZARD_NUM_SHARDS)
@@ -17,16 +22,10 @@ class UnitBossGrandWizard extends UnitBasic {
       this,
       NumbersBalancer.getUnitAbilityNumber(this, NumbersBalancer.UNIT_ABILITIES.WIZARD_NUM_WALLS)
     ));
-    this.addAbility(20, new EnemyAbilityShootProjectile(
+    this.addAbility(20, new EnemyAbilityBossShootProjectile(
       this,
       NumbersBalancer.getUnitAbilityNumber(this, NumbersBalancer.UNIT_ABILITIES.WIZARD_PROJECTILE_DAMAGE)
     ));
-    
-    this.personalSpaceAbility = new EnemyAbilityPersonalSpace(
-      this,
-      NumbersBalancer.getUnitAbilityNumber(this, NumbersBalancer.UNIT_ABILITIES.WIZARD_PROJECTILE_DAMAGE),
-      4,
-    );
   }
 
   getUnitSize() {
@@ -46,7 +45,6 @@ class UnitBossGrandWizard extends UnitBasic {
     var r = this.physicsWidth / 2 - 10;
     var l = -this.physicsWidth / 2 + 10;
 
-    var offset = 0;
     this.collisionBox = [
        // Top Left
       new UnitLine(l, t, l + 10, t, this),
@@ -89,14 +87,14 @@ class UnitBossGrandWizard extends UnitBasic {
   isFinishedDoingAction(boardState, phase) {
     if (
       phase === TurnPhasesEnum.ENEMY_ACTION &&
-      boardState.tick / this.animationFrames < this.getAbilitiesToUse()
+      boardState.tick / this.animationFrames < this.getNumAbilitiesToUse()
     ) {
       return false;
     }
     return super.isFinishedDoingAction(boardState, phase);
   }
 
-  getAbilitiesToUse() {
+  getNumAbilitiesToUse() {
     let healthPercent = this.getTotalHealthPercent();
     if (healthPercent > 0.75) {
       return 2;
@@ -106,20 +104,29 @@ class UnitBossGrandWizard extends UnitBasic {
     return 4;
   }
 
+  doAbilityForecasting(boardState) {
+    super.doAbilityForecasting(boardState);
+    this.abilityForecasts.push(this.personalSpaceAbility.createForecast(boardState, this, 0))
+  }
+
   runTick(boardState, phase) {
     super.runTick(boardState, phase);
-    if (this.canUseAbilities() && phase === TurnPhasesEnum.ENEMY_ACTION) {
+    if (this.canUseAbilities() && this.abilityForecasts.length > 0 && phase === TurnPhasesEnum.ENEMY_ACTION) {
       if (boardState.tick === 0) {
-        this.personalSpaceAbility.doEffects(boardState);
+        this.abilityForecasts.forEach((forecast) => forecast.removeFromStage());
+        
+        const personalSpaceAbility = this.abilityForecasts.pop();
+        personalSpaceAbility.useAbility(boardState);
       }
-      if (boardState.tick / this.animationFrames < this.getAbilitiesToUse()) {
+      if (boardState.tick / this.animationFrames < this.getNumAbilitiesToUse()) {
         if (boardState.tick % this.animationFrames < this.animationFrames / 2) {
           this.setSpriteVisible('enemy_boss_wizard_2');
         } else {
           this.setSpriteVisible('enemy_boss_wizard');
         }
         if (boardState.tick % this.animationFrames == this.animationFrames / 2) {
-          this.useRandomAbility(boardState);
+          this.useForecastAbilities(boardState, 0);
+          this.abilityForecasts.unshift();
         }
       }
     }

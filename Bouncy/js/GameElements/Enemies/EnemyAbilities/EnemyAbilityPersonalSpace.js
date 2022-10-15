@@ -26,6 +26,42 @@ class EnemyAbilityPersonalSpace extends EnemyAbility {
     }
   }
 
+  createForecast(boardState, unit, abilityIndex) {
+    const target = { x: 0, y: 0, x2: boardState.columns, y2: this.minRow };
+    return new AbilityForecast(unit, abilityIndex, AbilityForecast.TARGET_TYPES.AREA, [target]);
+  }
+
+  /**
+   * @param {BoardState} boardState 
+   * @param {*} user 
+   * @param {*} target 
+   * @param {*} color 
+   */
+  createForecastGraphic(
+    boardState,
+    user,
+    target,
+    color,
+    forecastIndex,
+    totalForecasts,
+  ) {
+    var lineGraphic = new PIXI.Graphics();
+    const circleSize = 10;
+
+    const position = boardState.sectors.getPositionFromGrid({ x: boardState.sectors.columns, y: this.minRow })
+    lineGraphic.lineStyle(1, color)
+        .moveTo(0, position.y);
+    lineGraphic.lineTo(position.x, position.y);
+
+    const iconPos = this.getForecastIconPosition(user, forecastIndex, totalForecasts);
+
+    lineGraphic.lineStyle(1, 0xFFFFFF)
+      .beginFill(color)
+      .drawRect(iconPos.x - circleSize / 2, iconPos.y - circleSize / 4, circleSize, circleSize / 2);
+
+    return lineGraphic;
+  }
+
   unitHitCallback(boardState, unit, intersection, projectile) {
 
   }

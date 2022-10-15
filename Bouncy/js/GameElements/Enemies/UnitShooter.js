@@ -25,7 +25,7 @@ class UnitShooter extends UnitBasic {
     ];
   }
 
-  doUnitActions(boardState) {
+  startOfEnemyActionPhase(boardState) {
     if (!this.canUseAbilities()) { return; }
     this.useForecastAbilities(boardState);
   }

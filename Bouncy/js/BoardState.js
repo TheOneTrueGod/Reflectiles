@@ -28,6 +28,8 @@ export class BoardState {
 
     var columns = Math.floor(this.boardSize.width / Unit.UNIT_SIZE);
     var rows = Math.floor(this.boardSize.height / Unit.UNIT_SIZE);
+
+    /** @type {UnitSectors} */
     this.sectors = new UnitSectors(rows, columns, this.boardSize.width, this.boardSize.height);
 
     this.reset();
@@ -504,9 +506,9 @@ export class BoardState {
     }
   }
 
-  doUnitActions() {
+  startOfEnemyActionPhase() {
     for (var unit in this.units) {
-      this.units[unit].doUnitActions(this);
+      this.units[unit].startOfEnemyActionPhase(this);
     }
 
     this.doDeleteChecks();

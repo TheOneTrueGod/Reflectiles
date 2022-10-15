@@ -183,6 +183,27 @@ class AIDirector {
     });
   }
 
+  endOfPhase(phase, boardState) {
+    if (phase === TurnPhasesEnum.ENEMY_SPAWN) {
+      this.setupBasicAttacks(boardState);
+    }
+  }
+
+  setupBasicAttacks(boardState) {
+    const NUM_ENEMIES_ATTACKING = 5;
+    const basicAttackingEnemies = boardState.units.filter((unit) => 
+      unit.canBasicAttack && unit.canBasicAttack()
+    )
+
+    const numUnitsToOrder = Math.min(basicAttackingEnemies.length, NUM_ENEMIES_ATTACKING);
+    for (let i = 0; i < numUnitsToOrder; i++) {
+      const index = Math.floor(boardState.getRandom() * basicAttackingEnemies.length);
+      const orderedEnemy = basicAttackingEnemies.splice(index, 1);
+      orderedEnemy[0].forecastBasicAttackAbility(boardState);
+      orderedEnemy[0].addAbilityForecastsToStage(boardState, boardState.renderContainers.abilityForecasts);
+    }
+  }
+
   giveUnitsOrders(boardState) {
     boardState.sortUnitsByPosition();
     for (var i = 0; i < boardState.units.length; i++) {

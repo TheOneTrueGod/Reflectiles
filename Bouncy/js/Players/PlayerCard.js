@@ -95,5 +95,6 @@ const CardDeckTypes = {
   POISON: 'poison',
   ENGINEER: 'engineer',
   DEFENDER: 'defender',
+  EARTHMASTER: 'earthmaster',
   NEUTRAL: 'neutral',
 };
