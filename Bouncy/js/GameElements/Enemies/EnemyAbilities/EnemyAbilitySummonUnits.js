@@ -4,14 +4,19 @@ class EnemyAbilitySummonUnits extends EnemyAbility {
     this.numUnits = numUnits;
   }
 
-  doEffects(boardState) {
+  doEffects(boardState, forecast, skipAnimation = false) {
     let validCoords = this.getValidCoords(boardState);
     shuffle(validCoords);
 
     for (let i = 0; i < Math.min(this.numUnits, validCoords.length); i++) {
       let newUnit = this.createUnit(validCoords[i]);
       boardState.addUnit(newUnit);
-      newUnit.playSpawnEffect(boardState, this.unit, 15, Unit.SpawnEffects.DEFAULT);
+      newUnit.playSpawnEffect(
+        boardState,
+        this.unit,
+        15,
+        Unit.SpawnEffects.DEFAULT
+      );
     }
   }
 

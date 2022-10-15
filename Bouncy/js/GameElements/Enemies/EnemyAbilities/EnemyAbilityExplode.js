@@ -4,7 +4,7 @@ class EnemyAbilityExplode extends EnemyAbility {
     this.damage = damage;
   }
 
-  doEffects(boardState, forecast) {
+  doEffects(boardState, forecast, skipAnimation = false) {
     if (!this.unit.canUseAbilities()) {
       return;
     }

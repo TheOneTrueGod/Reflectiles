@@ -25,27 +25,32 @@ class UnitKnight extends UnitBasic {
   }
 
   createSprite(hideHealthBar) {
-    return this.createSpriteFromResource('enemy_knight', hideHealthBar);
+    return this.createSpriteFromResource("enemy_knight", hideHealthBar);
   }
 
   unitHitCallback(boardState, unit, intersection, projectile) {
-    var hitEffect = new DamageHitEffect({
-      'base_damage': this.health.max / 8
-    }, null);
+    var hitEffect = new DamageHitEffect(
+      {
+        base_damage: this.health.max / 8,
+      },
+      null
+    );
     hitEffect.doHitEffect(boardState, unit, intersection, projectile);
   }
 
   doSpawnEffect(boardState) {
-    this.useAbility(boardState);
+    this.useAbility(boardState, true);
   }
 
-  useAbility(boardState) {
-    this.useRandomAbility(boardState);
+  useAbility(boardState, skipAnimation = false) {
+    this.useRandomAbility(boardState, skipAnimation);
   }
 
   startOfPhase(boardState, phase) {
     super.startOfPhase(boardState, phase);
-    if (!this.canUseAbilities()) { return; }
+    if (!this.canUseAbilities()) {
+      return;
+    }
     if (phase == TurnPhasesEnum.END_OF_TURN) {
       this.useAbility(boardState);
     }

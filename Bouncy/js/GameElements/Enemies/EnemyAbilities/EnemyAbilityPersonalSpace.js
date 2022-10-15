@@ -20,7 +20,7 @@ class EnemyAbilityPersonalSpace extends EnemyAbility {
     boardState.addProjectile(projectile);
   }
 
-  doEffects(boardState) {
+  doEffects(boardState, forecast, skipAnimation = false) {
     if (!this.unit.canUseAbilities()) {
       return;
     }

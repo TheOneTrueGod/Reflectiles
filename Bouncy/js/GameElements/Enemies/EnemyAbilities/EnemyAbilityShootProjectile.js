@@ -5,7 +5,7 @@ class EnemyAbilityShootProjectile extends EnemyAbility {
     this.projectileStyle = projectileStyle;
   }
 
-  doEffects(boardState, forecast) {
+  doEffects(boardState, forecast, skipAnimation = false) {
     if (!this.unit.canUseAbilities()) {
       return;
     }

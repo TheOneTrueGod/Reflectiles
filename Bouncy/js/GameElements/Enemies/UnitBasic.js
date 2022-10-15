@@ -35,13 +35,13 @@ class UnitBasic extends Unit {
     return abilIndex;
   }
 
-  useRandomAbility(boardState) {
+  useRandomAbility(boardState, skipAnimation = false) {
     let abilIndex = this.pickRandomAbilityIndex(boardState);
     if (abilIndex === undefined) {
       return;
     }
     const abilToUse = this.abilities[abilIndex].value;
-    abilToUse.doEffects(boardState);
+    abilToUse.doEffects(boardState, undefined, skipAnimation);
   }
 
   canBeTaunted(taunter) {

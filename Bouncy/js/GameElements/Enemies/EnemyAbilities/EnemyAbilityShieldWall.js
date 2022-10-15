@@ -1,5 +1,5 @@
 class EnemyAbilityShieldWall extends EnemyAbility {
-  doEffects(boardState) {
+  doEffects(boardState, forecast, skipAnimation = false) {
     for (var i = -1; i <= 1; i++) {
       var castPoint = { x: this.unit.x, y: this.unit.y };
       var targetPoint = {
@@ -30,7 +30,7 @@ class EnemyAbilityShieldWall extends EnemyAbility {
                   ZoneAbilityDef.ZoneTypes.BLOCKER_BARRIER))
           ) {
             blockSpawn = true;
-            this.shieldTargetUnit(boardState, intersectUnit);
+            this.shieldTargetUnit(boardState, intersectUnit, skipAnimation);
           }
         }
         if (blockSpawn) {
@@ -52,7 +52,11 @@ class EnemyAbilityShieldWall extends EnemyAbility {
     }
   }
 
-  shieldTargetUnit(boardState, targetUnit) {
+  shieldTargetUnit(boardState, targetUnit, skipAnimation) {
+    if (skipAnimation) {
+      this.projectileAnimationOver(targetUnit);
+      return;
+    }
     boardState.addProjectile(
       new SpriteLerpProjectile(
         this.unit,
@@ -60,7 +64,7 @@ class EnemyAbilityShieldWall extends EnemyAbility {
         0.1,
         1,
         20,
-        "zone_energy_shield",
+        "zone_armour",
         this.projectileAnimationOver.bind(this, targetUnit)
       )
     );
