@@ -1,10 +1,17 @@
 class UnitShooter extends UnitBasic {
   constructor(x, y, owner, id) {
     super(x, y, owner, id);
-    this.addAbility(20, new EnemyAbilityShootProjectile(
-      this,
-      NumbersBalancer.getUnitAbilityNumber(this, NumbersBalancer.UNIT_ABILITIES.SHOOTER_DAMAGE)
-    ));
+    this.addAbility(
+      20,
+      new EnemyAbilityShootProjectile(
+        this,
+        NumbersBalancer.getUnitAbilityNumber(
+          this,
+          NumbersBalancer.UNIT_ABILITIES.SHOOTER_DAMAGE
+        ),
+        EnemyProjectileStyles.SmallShot
+      )
+    );
   }
 
   createCollisionBox() {
@@ -26,12 +33,14 @@ class UnitShooter extends UnitBasic {
   }
 
   startOfEnemyActionPhase(boardState) {
-    if (!this.canUseAbilities()) { return; }
+    if (!this.canUseAbilities()) {
+      return;
+    }
     this.useForecastAbilities(boardState);
   }
 
   createSprite(hideHealthBar) {
-    return this.createSpriteFromResource('enemy_shoot', hideHealthBar);
+    return this.createSpriteFromResource("enemy_shoot", hideHealthBar);
   }
 }
 

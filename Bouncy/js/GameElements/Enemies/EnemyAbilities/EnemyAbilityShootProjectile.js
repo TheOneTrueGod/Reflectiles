@@ -1,19 +1,24 @@
 class EnemyAbilityShootProjectile extends EnemyAbility {
-  constructor(unit, damage) {
+  constructor(unit, damage, projectileStyle) {
     super(unit);
     this.damage = damage;
+    this.projectileStyle = projectileStyle;
   }
 
   doEffects(boardState, forecast) {
-    if (!this.unit.canUseAbilities()) { return; }
+    if (!this.unit.canUseAbilities()) {
+      return;
+    }
 
-    const src = {x: this.unit.x, y: this.unit.y};
+    const src = { x: this.unit.x, y: this.unit.y };
     const targets = forecast.getTargetPos(boardState);
     targets.forEach((target) => {
       var projectile = new EnemyProjectile(
-        src, target,
+        src,
+        target,
         Math.atan2(target.y - src.y, target.x - src.x),
-        { 'damage_to_players': this.damage }
+        { damage_to_players: this.damage },
+        this.projectileStyle
       );
       projectile.addUnitHitCallback(this.unitHitCallback);
       boardState.addProjectile(projectile);
@@ -23,13 +28,18 @@ class EnemyAbilityShootProjectile extends EnemyAbility {
   createForecast(boardState, unit, abilityIndex) {
     let player_ids = boardState.getPlayerIDs();
 
-    if (!player_ids) { return undefined; }
+    if (!player_ids) {
+      return undefined;
+    }
 
     const target = player_ids[Math.floor(Math.random() * player_ids.length)];
-    return new AbilityForecast(unit, abilityIndex, AbilityForecast.TARGET_TYPES.PLAYER_ID, [target]);
+    return new AbilityForecast(
+      unit,
+      abilityIndex,
+      AbilityForecast.TARGET_TYPES.PLAYER_ID,
+      [target]
+    );
   }
 
-  unitHitCallback(boardState, unit, intersection, projectile) {
-
-  }
+  unitHitCallback(boardState, unit, intersection, projectile) {}
 }

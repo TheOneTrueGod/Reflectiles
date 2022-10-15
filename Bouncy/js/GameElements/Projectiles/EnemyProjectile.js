@@ -1,13 +1,46 @@
+const EnemyProjectileStyles = {
+  TinyShot: {
+    coords: { left: 317, top: 11, right: 321, bottom: 15 },
+    rotation: 0,
+    scale: 2,
+  },
+  SmallShot: {
+    coords: { left: 211, top: 10, right: 221, bottom: 17 },
+    rotation: 0,
+    scale: 2,
+  },
+  MediumShot: {
+    coords: { left: 228, top: 9, right: 242, bottom: 17 },
+    rotation: 0,
+    scale: 2,
+  },
+  LargeShot: {
+    coords: { left: 275, top: 8, right: 294, bottom: 17 },
+    rotation: 0,
+    scale: 2,
+  },
+};
+
 class EnemyProjectile extends Projectile {
-  constructor(startPoint, targetPoint, angle, projectileOptions) {
-    super('enemy', startPoint, targetPoint, angle, null, projectileOptions);
-    this.FRIENDLY_FIRE = idx(projectileOptions, 'friendly_fire', false);
-    this.DAMAGE = idx(projectileOptions, 'damage_to_players', 1);
-    this.abilityStyle = new AbilitySheetAbilityStyle({
-      coords: {left: 211, top: 10, right: 221, bottom: 17},
-      rotation: 0,
-      scale: 3,
-    });
+  /**
+   *
+   * @param {*} startPoint
+   * @param {*} targetPoint
+   * @param {*} angle
+   * @param {*} projectileOptions
+   * @param {{ coords: { left: number, top: number, right: number, bottom: number }, rotation: number, scale: number}} abilityStyle
+   */
+  constructor(startPoint, targetPoint, angle, projectileOptions, abilityStyle) {
+    super("enemy", startPoint, targetPoint, angle, null, projectileOptions);
+    this.FRIENDLY_FIRE = idx(projectileOptions, "friendly_fire", false);
+    this.DAMAGE = idx(projectileOptions, "damage_to_players", 1);
+    this.abilityStyle = new AbilitySheetAbilityStyle(
+      abilityStyle || {
+        coords: { left: 211, top: 10, right: 221, bottom: 17 },
+        rotation: 0,
+        scale: 2,
+      }
+    );
   }
 
   getStyle() {
@@ -46,16 +79,16 @@ class EnemyProjectile extends Projectile {
       hitSomething = true;
       this.delete();
       boardState.dealDamage(this.DAMAGE);
-      EffectFactory.createDamagePlayersEffect(
-        boardState,
-        this.x,
-        this.y
-      );
+      EffectFactory.createDamagePlayersEffect(boardState, this.x, this.y);
     }
   }
 
   hitWall(boardState, intersection) {
-    if (intersection.line && intersection.line instanceof BorderWallLine && intersection.line.side === BorderWallLine.BOTTOM) {
+    if (
+      intersection.line &&
+      intersection.line instanceof BorderWallLine &&
+      intersection.line.side === BorderWallLine.BOTTOM
+    ) {
       return;
     }
     super.hitWall(boardState, intersection);
@@ -66,18 +99,17 @@ class EnemyProjectile extends Projectile {
       return;
     }
     if (unit instanceof ZoneEffect) {
-      if (intersection && intersection.line.unit && intersection.line.unit.triggerHit) {
+      if (
+        intersection &&
+        intersection.line.unit &&
+        intersection.line.unit.triggerHit
+      ) {
         intersection.line.unit.triggerHit(boardState, unit, intersection, this);
       }
       return;
     }
     super.hitUnit(boardState, unit, intersection);
-    this.unitHitCallback(
-      boardState,
-      unit,
-      intersection,
-      this
-    );
+    this.unitHitCallback(boardState, unit, intersection, this);
     this.readyToDel = true;
     if (intersection.line && !unit.readyToDelete()) {
       EffectFactory.createDamageEffect(boardState, intersection);

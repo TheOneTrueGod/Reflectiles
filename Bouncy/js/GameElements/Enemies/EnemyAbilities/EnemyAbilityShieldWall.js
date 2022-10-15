@@ -55,7 +55,7 @@ class EnemyAbilityShieldWall extends EnemyAbility {
   shieldTargetUnit(boardState, targetUnit) {
     boardState.addProjectile(
       new SpriteLerpProjectile(
-        this,
+        this.unit,
         targetUnit,
         0.1,
         1,
