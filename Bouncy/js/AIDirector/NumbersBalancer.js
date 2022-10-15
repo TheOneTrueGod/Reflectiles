@@ -29,7 +29,11 @@ class NumbersBalancer {
   }
 
   getAbilityDamage(level, damageScaling) {
-    return 1000 * this.getPowerLevelMultiplier(Math.max(level - 1, 0)) * damageScaling;
+    return (
+      1000 *
+      this.getPowerLevelMultiplier(Math.max(level - 1, 0)) *
+      damageScaling
+    );
   }
 
   getPlayerStat(stat) {
@@ -48,7 +52,7 @@ class NumbersBalancer {
       case "UnitBossSlime":
         damage = 150;
     }
-    
+
     if (this.difficulty == this.DIFFICULTIES.HARD) {
     } else if (this.difficulty === this.DIFFICULTIES.NIGHTMARE) {
       damage *= 2;
@@ -59,9 +63,15 @@ class NumbersBalancer {
 
   getUnitSpeed(unit) {
     var speedVal = 1;
-    if (unit.constructor.name == "UnitBossHealer") { speedVal = 0.333333333; }
-    if (unit.constructor.name == "UnitBossSlime") { speedVal = 0.333333; }
-    if (unit.constructor.name == "UnitFast") { speedVal = 2; }
+    if (unit.constructor.name == "UnitBossHealer") {
+      speedVal = 0.333333333;
+    }
+    if (unit.constructor.name == "UnitBossSlime") {
+      speedVal = 0.333333;
+    }
+    if (unit.constructor.name == "UnitFast") {
+      speedVal = 2;
+    }
     return speedVal;
   }
 
@@ -94,7 +104,9 @@ class NumbersBalancer {
   }
 
   getUnitHealthStats(unit, stat) {
-    let powerLevelMultiplier = this.getPowerLevelMultiplier(this.powerLevelBase);
+    let powerLevelMultiplier = this.getPowerLevelMultiplier(
+      this.powerLevelBase
+    );
     var healthMultiplier =
       this.getDifficultyMultiplier() *
       this.getPlayerCountMultiplier() *
@@ -182,13 +194,15 @@ class NumbersBalancer {
     return {
       health: Math.floor(healthVal * healthMultiplier),
       armor: Math.floor(armorVal * healthMultiplier),
-      shield: Math.floor(shieldVal * healthMultiplier)
+      shield: Math.floor(shieldVal * healthMultiplier),
     };
   }
 
   getPowerLevel(world, stage) {
     let difficulty = this.getDifficulty();
-    if (stage === 'boss') { stage = 4; }
+    if (stage === "boss") {
+      stage = 4;
+    }
     world = Number.parseInt(world) - 1;
     stage = Number.parseInt(stage) - 1;
     let pctDone = (world * 4 + stage) / 20;
@@ -225,7 +239,9 @@ class NumbersBalancer {
   getUnitAbilityNumber(unit, ability) {
     var playerMult = this.getPlayerCountMultiplier();
     var difficultyMult = this.getDifficultyMultiplier();
-    let powerLevelMultiplier = this.getPowerLevelMultiplier(this.powerLevelBase);
+    let powerLevelMultiplier = this.getPowerLevelMultiplier(
+      this.powerLevelBase
+    );
     switch (ability) {
       case this.UNIT_ABILITIES.PROTECTOR_SHIELD:
         return 50 + 50 * playerMult * difficultyMult * powerLevelMultiplier;
@@ -257,7 +273,7 @@ class NumbersBalancer {
         let health = this.getUnitHealth(unit);
         return Math.ceil(health / 2);
       case this.UNIT_ABILITIES.NECROMANCER_MAX_SKELETONS_PER_TURN:
-        return 1;
+        return 2;
       case this.UNIT_ABILITIES.NECROMANCER_RANGE:
         return 3;
       case this.UNIT_ABILITIES.WARLOCK_MAX_SKELETONS_PER_TURN:
@@ -286,43 +302,43 @@ class NumbersBalancer {
 }
 
 NumbersBalancer.prototype.PLAYER_STATS = {
-  PLAYER_HEALTH: 'player_health'
+  PLAYER_HEALTH: "player_health",
 };
 
 NumbersBalancer.prototype.UNIT_ABILITIES = {
-  PROTECTOR_SHIELD: 'protector_shield',
-  PROTECTOR_SHIELD_NUM_TARGETS: 'protector_shield_num_targets',
-  PROTECTOR_SHIELD_RANGE: 'protector_shield_range',
-  KNIGHT_SHIELD: 'knight_shield',
-  SHOOTER_DAMAGE: 'shooter_damage',
-  BASIC_ENEMY_DAMAGE: 'BASIC_ENEMY_DAMAGE',
-  BOMBER_EXPLOSION_DAMAGE: 'bomber_explosion_damage',
-  BOMBER_DURATION: 'BOMBER_DURATION',
-  UNIT_BOSS_HEALER_RANGE: 'UNIT_BOSS_HEALER_RANGE',
-  UNIT_BOSS_HEALER_NUM_TARGETS: 'UNIT_BOSS_HEALER_NUM_TARGETS',
-  UNIT_BOSS_HEALER_AMOUNT: 'UNIT_BOSS_HEALER_AMOUNT',
-  BOSS_SLIME_SPLIT_THRESHOLD: 'BOSS_SLIME_SPLIT_THRESHOLD',
-  SKELETON_MAX_DAMAGE: 'SKELETON_MAX_DAMAGE',
-  DEFENSIVE_MAX_DAMAGE: 'DEFENSIVE_MAX_DAMAGE',
-  NECROMANCER_MAX_SKELETONS_PER_TURN: 'NECROMANCER_MAX_SKELETONS_PER_TURN',
-  NECROMANCER_RANGE: 'NECROMANCER_RANGE',
-  WARLOCK_MAX_SKELETONS_PER_TURN: 'WARLOCK_MAX_SKELETONS_PER_TURN',
-  WARLOCK_RANGE: 'WARLOCK_RANGE',
-  KING_REVIVE_TURNS: 'KING_REVIVE_TURNS',
-  CASTLE_WALL_REVIVE_TURNS: 'CASTLE_WALL_REVIVE_TURNS',
-  FIRE_SHARD_NUM_SHOTS: 'FIRE_SHARD_NUM_SHOTS',
-  FIRE_SHARD_TOTAL_DAMAGE: 'FIRE_SHARD_TOTAL_DAMAGE',
-  WIZARD_NUM_SHARDS: 'WIZARD_NUM_SHARDS',
-  WIZARD_NUM_WALLS: 'WIZARD_NUM_WALLS',
-  WIZARD_PROJECTILE_DAMAGE: 'WIZARD_PROJECTILE_DAMAGE',
+  PROTECTOR_SHIELD: "protector_shield",
+  PROTECTOR_SHIELD_NUM_TARGETS: "protector_shield_num_targets",
+  PROTECTOR_SHIELD_RANGE: "protector_shield_range",
+  KNIGHT_SHIELD: "knight_shield",
+  SHOOTER_DAMAGE: "shooter_damage",
+  BASIC_ENEMY_DAMAGE: "BASIC_ENEMY_DAMAGE",
+  BOMBER_EXPLOSION_DAMAGE: "bomber_explosion_damage",
+  BOMBER_DURATION: "BOMBER_DURATION",
+  UNIT_BOSS_HEALER_RANGE: "UNIT_BOSS_HEALER_RANGE",
+  UNIT_BOSS_HEALER_NUM_TARGETS: "UNIT_BOSS_HEALER_NUM_TARGETS",
+  UNIT_BOSS_HEALER_AMOUNT: "UNIT_BOSS_HEALER_AMOUNT",
+  BOSS_SLIME_SPLIT_THRESHOLD: "BOSS_SLIME_SPLIT_THRESHOLD",
+  SKELETON_MAX_DAMAGE: "SKELETON_MAX_DAMAGE",
+  DEFENSIVE_MAX_DAMAGE: "DEFENSIVE_MAX_DAMAGE",
+  NECROMANCER_MAX_SKELETONS_PER_TURN: "NECROMANCER_MAX_SKELETONS_PER_TURN",
+  NECROMANCER_RANGE: "NECROMANCER_RANGE",
+  WARLOCK_MAX_SKELETONS_PER_TURN: "WARLOCK_MAX_SKELETONS_PER_TURN",
+  WARLOCK_RANGE: "WARLOCK_RANGE",
+  KING_REVIVE_TURNS: "KING_REVIVE_TURNS",
+  CASTLE_WALL_REVIVE_TURNS: "CASTLE_WALL_REVIVE_TURNS",
+  FIRE_SHARD_NUM_SHOTS: "FIRE_SHARD_NUM_SHOTS",
+  FIRE_SHARD_TOTAL_DAMAGE: "FIRE_SHARD_TOTAL_DAMAGE",
+  WIZARD_NUM_SHARDS: "WIZARD_NUM_SHARDS",
+  WIZARD_NUM_WALLS: "WIZARD_NUM_WALLS",
+  WIZARD_PROJECTILE_DAMAGE: "WIZARD_PROJECTILE_DAMAGE",
 };
 
 NumbersBalancer.prototype.DIFFICULTIES = {
-  EASY: 'easy',
-  MEDIUM: 'medium',
-  HARD: 'hard',
-  NIGHTMARE: 'nightmare',
-  IMPOSSIBLE: 'impossible',
+  EASY: "easy",
+  MEDIUM: "medium",
+  HARD: "hard",
+  NIGHTMARE: "nightmare",
+  IMPOSSIBLE: "impossible",
 };
 
 NumbersBalancer = new NumbersBalancer();

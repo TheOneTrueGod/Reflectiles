@@ -680,7 +680,7 @@ class UnitTooltips {
       case Unit.UNIT_TRAITS.POISON_IMMUNE:
         return "This unit is immune to being poisoned";
       case Unit.UNIT_TRAITS.RESILIANT:
-        return "Can't take more than " + value + " damage per attack";
+        return "Can't take more than " + value + " damage per hit";
       default:
         return "[[DESCRIPTION GOES HERE]]";
     }

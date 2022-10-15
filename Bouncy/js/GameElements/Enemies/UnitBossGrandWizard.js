@@ -9,32 +9,59 @@ class UnitBossGrandWizard extends UnitBasic {
     this.animationFrames = 20;
     this.traits[Unit.UNIT_TRAITS.FROST_IMMUNE] = true;
     // Ability Stuff.  Move to UnitBasic eventually.
-    this.personalSpaceAbility = this.addAbility(0, new EnemyAbilityPersonalSpace(
-      this,
-      NumbersBalancer.getUnitAbilityNumber(this, NumbersBalancer.UNIT_ABILITIES.WIZARD_PROJECTILE_DAMAGE),
-      4,
-    ));
-    this.addAbility(40, new EnemyAbilitySummonFireShards(
-      this,
-      NumbersBalancer.getUnitAbilityNumber(this, NumbersBalancer.UNIT_ABILITIES.WIZARD_NUM_SHARDS)
-    ));
-    this.addAbility(40, new EnemyAbilitySummonIceWall(
-      this,
-      NumbersBalancer.getUnitAbilityNumber(this, NumbersBalancer.UNIT_ABILITIES.WIZARD_NUM_WALLS)
-    ));
-    this.addAbility(20, new EnemyAbilityBossShootProjectile(
-      this,
-      NumbersBalancer.getUnitAbilityNumber(this, NumbersBalancer.UNIT_ABILITIES.WIZARD_PROJECTILE_DAMAGE)
-    ));
+    this.personalSpaceAbility = this.addAbility(
+      0,
+      new EnemyAbilityPersonalSpace(
+        this,
+        NumbersBalancer.getUnitAbilityNumber(
+          this,
+          NumbersBalancer.UNIT_ABILITIES.WIZARD_PROJECTILE_DAMAGE
+        ),
+        4
+      )
+    );
+    this.addAbility(
+      40,
+      new EnemyAbilitySummonFireShards(
+        this,
+        NumbersBalancer.getUnitAbilityNumber(
+          this,
+          NumbersBalancer.UNIT_ABILITIES.WIZARD_NUM_SHARDS
+        )
+      )
+    );
+    this.addAbility(
+      40,
+      new EnemyAbilitySummonIceWall(
+        this,
+        NumbersBalancer.getUnitAbilityNumber(
+          this,
+          NumbersBalancer.UNIT_ABILITIES.WIZARD_NUM_WALLS
+        )
+      )
+    );
+    this.addAbility(
+      20,
+      new EnemyAbilityBossShootProjectile(
+        this,
+        NumbersBalancer.getUnitAbilityNumber(
+          this,
+          NumbersBalancer.UNIT_ABILITIES.WIZARD_PROJECTILE_DAMAGE
+        )
+      )
+    );
   }
 
   getUnitSize() {
-    return {x: Unit.UNIT_SIZE * 3, y: Unit.UNIT_SIZE * 3};
+    return { x: Unit.UNIT_SIZE * 3, y: Unit.UNIT_SIZE * 3 };
   }
 
   getSize() {
     return {
-      left: 1, right: 1, top: 1, bottom: 1
+      left: 1,
+      right: 1,
+      top: 1,
+      bottom: 1,
     };
   }
 
@@ -46,7 +73,7 @@ class UnitBossGrandWizard extends UnitBasic {
     var l = -this.physicsWidth / 2 + 10;
 
     this.collisionBox = [
-       // Top Left
+      // Top Left
       new UnitLine(l, t, l + 10, t, this),
       new UnitLine(l + 10, t, -10, hatTop, this),
       // Top Center
@@ -68,10 +95,10 @@ class UnitBossGrandWizard extends UnitBasic {
   }
 
   createSprite(hideHealthBar) {
-    return this.createSpriteListFromResourceList([
-      'enemy_boss_wizard',
-      'enemy_boss_wizard_2'
-    ], hideHealthBar);
+    return this.createSpriteListFromResourceList(
+      ["enemy_boss_wizard", "enemy_boss_wizard_2"],
+      hideHealthBar
+    );
   }
 
   doMovement(boardState) {
@@ -106,26 +133,41 @@ class UnitBossGrandWizard extends UnitBasic {
 
   doAbilityForecasting(boardState) {
     super.doAbilityForecasting(boardState);
-    this.abilityForecasts.push(this.personalSpaceAbility.createForecast(boardState, this, 0))
+    this.abilityForecasts.push(
+      this.personalSpaceAbility.createForecast(boardState, this, 0)
+    );
   }
 
   runTick(boardState, phase) {
     super.runTick(boardState, phase);
-    if (this.canUseAbilities() && this.abilityForecasts.length > 0 && phase === TurnPhasesEnum.ENEMY_ACTION) {
+    if (
+      this.canUseAbilities() &&
+      this.abilityForecasts.length > 0 &&
+      phase === TurnPhasesEnum.ENEMY_ACTION
+    ) {
       if (boardState.tick === 0) {
         this.abilityForecasts.forEach((forecast) => forecast.removeFromStage());
-        
+
         const personalSpaceAbility = this.abilityForecasts.pop();
         personalSpaceAbility.useAbility(boardState);
       }
-      if (boardState.tick / this.animationFrames < this.getNumAbilitiesToUse()) {
+      if (
+        boardState.tick / this.animationFrames <
+        this.getNumAbilitiesToUse()
+      ) {
         if (boardState.tick % this.animationFrames < this.animationFrames / 2) {
-          this.setSpriteVisible('enemy_boss_wizard_2');
+          this.setSpriteVisible("enemy_boss_wizard_2");
         } else {
-          this.setSpriteVisible('enemy_boss_wizard');
+          this.setSpriteVisible("enemy_boss_wizard");
         }
-        if (boardState.tick % this.animationFrames == this.animationFrames / 2) {
-          this.useForecastAbilities(boardState, 0);
+        if (
+          boardState.tick % this.animationFrames ==
+          this.animationFrames / 2
+        ) {
+          const abilityIndex = Math.floor(
+            boardState.tick / this.animationFrames
+          );
+          this.useForecastAbilities(boardState, abilityIndex);
           this.abilityForecasts.unshift();
         }
       }
