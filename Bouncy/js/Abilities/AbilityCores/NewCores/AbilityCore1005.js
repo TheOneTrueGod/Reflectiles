@@ -1,7 +1,7 @@
 class AbilityCore1005 extends AbilityCore {
   static BuildAbilityChild(level) {
     let grenadeRadius = Math.floor(Unit.UNIT_SIZE * 1.5);
-    let hitDamage = Math.floor(NumbersBalancer.getAbilityDamage(level, 0.15));
+    let hitDamage = Math.floor(NumbersBalancer.getAbilityDamage(level, 0.1));
     const rawAbil = {
       name: "Grenade",
       description:
@@ -12,6 +12,7 @@ class AbilityCore1005 extends AbilityCore {
         ">> radius.",
       ability_type: AbilityDef.AbilityTypes.MULTIPART,
       icon: "/Bouncy/assets/icons/grenade.png",
+      action_phase: TurnPhasesEnum.PLAYER_MINOR,
       destroy_on_wall: true,
       ability_type: AbilityDef.AbilityTypes.PROJECTILE,
       shape: ProjectileAbilityDef.Shapes.CHAIN_SHOT,

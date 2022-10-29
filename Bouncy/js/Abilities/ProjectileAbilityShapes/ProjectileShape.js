@@ -23,8 +23,17 @@ class ProjectileShape {
 
     var damageDealt = 0;
     for (var i = 0; i < hitEffects.length; i++) {
-      var hitEffect = HitEffect.getHitEffectFromType(hitEffects[i], this.abilityDef, this);
-      damageDealt += hitEffect.doHitEffect(boardState, unit, intersection, projectile);
+      var hitEffect = HitEffect.getHitEffectFromType(
+        hitEffects[i],
+        this.abilityDef,
+        this
+      );
+      damageDealt += hitEffect.doHitEffect(
+        boardState,
+        unit,
+        intersection,
+        projectile
+      );
     }
     return damageDealt;
   }
@@ -33,8 +42,17 @@ class ProjectileShape {
     let killEffects = this.abilityDef.getOnKillEffects();
     var damageDealt = 0;
     for (var i = 0; i < killEffects.length; i++) {
-      var hitEffect = HitEffect.getHitEffectFromType(killEffects[i], this.abilityDef, this);
-      damageDealt += hitEffect.doHitEffect(boardState, unit, intersection, projectile);
+      var hitEffect = HitEffect.getHitEffectFromType(
+        killEffects[i],
+        this.abilityDef,
+        this
+      );
+      damageDealt += hitEffect.doHitEffect(
+        boardState,
+        unit,
+        intersection,
+        projectile
+      );
     }
   }
 
@@ -42,8 +60,17 @@ class ProjectileShape {
     let collisionEffects = this.abilityDef.getCollisionEffects();
     var damageDealt = 0;
     for (var i = 0; i < collisionEffects.length; i++) {
-      var hitEffect = HitEffect.getHitEffectFromType(collisionEffects[i], this.abilityDef, this);
-      damageDealt += hitEffect.doHitEffect(boardState, unit, intersection, projectile);
+      var hitEffect = HitEffect.getHitEffectFromType(
+        collisionEffects[i],
+        this.abilityDef,
+        this
+      );
+      damageDealt += hitEffect.doHitEffect(
+        boardState,
+        unit,
+        intersection,
+        projectile
+      );
     }
   }
 
@@ -51,8 +78,17 @@ class ProjectileShape {
     let timeoutHitEffects = this.abilityDef.getTimeoutHitEffects();
     var damageDealt = 0;
     for (var i = 0; i < timeoutHitEffects.length; i++) {
-      var hitEffect = HitEffect.getHitEffectFromType(timeoutHitEffects[i], this.abilityDef, this);
-      damageDealt += hitEffect.doHitEffect(boardState, unit, intersection, projectile);
+      var hitEffect = HitEffect.getHitEffectFromType(
+        timeoutHitEffects[i],
+        this.abilityDef,
+        this
+      );
+      damageDealt += hitEffect.doHitEffect(
+        boardState,
+        unit,
+        intersection,
+        projectile
+      );
     }
   }
 
@@ -66,16 +102,19 @@ class ProjectileShape {
     }
 
     for (var i = 0; i < timeoutEffects.length; i++) {
-      let timeoutEffect = PositionBasedEffect.getEffectFromType(timeoutEffects[i], this.abilityDef, this);
+      let timeoutEffect = PositionBasedEffect.getEffectFromType(
+        timeoutEffects[i],
+        this.abilityDef,
+        this
+      );
       timeoutEffect.doEffect(boardState, projectile);
     }
   }
 
   appendTextDescHTML($container) {
-    var $textContainer =
-      $("<div>", {
-        "class": "textDescText noselect",
-      });
+    var $textContainer = $("<div>", {
+      class: "textDescText noselect",
+    });
     $textContainer.text(this.getTextDesc());
     $container.append($textContainer);
   }
@@ -84,18 +123,16 @@ class ProjectileShape {
     var hitEffects = this.abilityDef.getHitEffects();
     for (var i = 0; i < hitEffects.length; i++) {
       if (hitEffects[i].effect == ProjectileShape.HitEffects.POISON) {
-        var $textContainer =
-          $("<div>", {
-            "class": "textDescText noselect"
-          });
+        var $textContainer = $("<div>", {
+          class: "textDescText noselect",
+        });
         $textContainer.text("Poison");
         return $textContainer;
       }
       if (hitEffects[i].effect == ProjectileShape.HitEffects.FREEZE) {
-        var $textContainer =
-          $("<div>", {
-            "class": "textDescText noselect"
-          });
+        var $textContainer = $("<div>", {
+          class: "textDescText noselect",
+        });
         $textContainer.text("Freeze");
         return $textContainer;
       }
@@ -104,7 +141,7 @@ class ProjectileShape {
   }
 }
 
-ProjectileShape.getProjectileShape = function(shapeType, abilityDef) {
+ProjectileShape.getProjectileShape = function (shapeType, abilityDef) {
   switch (shapeType) {
     case ProjectileAbilityDef.Shapes.SINGLE_SHOT:
       return new ProjectileShapeSingleShot(abilityDef);
@@ -128,39 +165,39 @@ ProjectileShape.getProjectileShape = function(shapeType, abilityDef) {
   throw new Error("Undefined shape type: [" + shapeType + "]");
 };
 
-
 ProjectileShape.ProjectileTypes = {
-  STANDARD: 'STANDARD',
-  CURVING: 'CURVING',
-  PENETRATE: 'PENETRATE', // Carries on through until all of its damage is spent
-  TIMEOUT: 'TIMEOUT',
-  FROZEN_ORB: 'FROZEN_ORB',
-  GHOST: 'GHOST',
-  GRENADE: 'GRENADE',
+  STANDARD: "STANDARD",
+  CURVING: "CURVING",
+  PENETRATE: "PENETRATE", // Carries on through until all of its damage is spent
+  TIMEOUT: "TIMEOUT",
+  FROZEN_ORB: "FROZEN_ORB",
+  GHOST: "GHOST",
+  GRENADE: "GRENADE",
 };
 
 ProjectileShape.HitEffects = {
-  DAMAGE: 'DAMAGE',
-  POISON: 'POISON',
-  SPECIAL_STATUS: 'SPECIAL_STATUS',
-  DISABLE_SHIELD: 'DISABLE_SHIELD',
-  WEAKNESS: 'WEAKNESS',
-  FREEZE: 'FREEZE',
-  TAUNT: 'TAUNT',
-  DISARN: 'DISARM',
-  IMMOBILIZE: 'IMMOBILIZE',
-  BULLET_SPLIT: 'BULLET_SPLIT',
-  INFECT: 'INFECT',
-  USE_ABILITY: 'USE_ABILITY',
-  SHOOTER_BUFF: 'SHOOTER_BUFF',
-  COOLDOWN_REDUCTION: 'COOLDOWN_REDUCTION',
-  NEGATIVE_CONDITION_TIME_MODIFICATION: 'NEGATIVE_CONDITION_TIME_MODIFICATION',
-  APPLY_DOT_TICK: 'APPLY_DOT_TICK',
-  SPREAD_DEBUFFS: 'SPREAD_DEBUFFS',
+  DAMAGE: "DAMAGE",
+  POISON: "POISON",
+  SPECIAL_STATUS: "SPECIAL_STATUS",
+  DISABLE_SHIELD: "DISABLE_SHIELD",
+  WEAKNESS: "WEAKNESS",
+  FREEZE: "FREEZE",
+  TAUNT: "TAUNT",
+  PLAYER_ARMOUR: "PLAYER_ARMOUR",
+  DISARM: "DISARM",
+  IMMOBILIZE: "IMMOBILIZE",
+  BULLET_SPLIT: "BULLET_SPLIT",
+  INFECT: "INFECT",
+  USE_ABILITY: "USE_ABILITY",
+  SHOOTER_BUFF: "SHOOTER_BUFF",
+  COOLDOWN_REDUCTION: "COOLDOWN_REDUCTION",
+  NEGATIVE_CONDITION_TIME_MODIFICATION: "NEGATIVE_CONDITION_TIME_MODIFICATION",
+  APPLY_DOT_TICK: "APPLY_DOT_TICK",
+  SPREAD_DEBUFFS: "SPREAD_DEBUFFS",
 };
 
 ProjectileShape.AOE_TYPES = {
-  NONE: 'NONE',
-  BOX: 'BOX',
-  CIRCLE: 'CIRCLE',
+  NONE: "NONE",
+  BOX: "BOX",
+  CIRCLE: "CIRCLE",
 };

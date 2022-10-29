@@ -8,6 +8,9 @@ class BuffAbilityDef extends AbilityDef {
 
     this.radius = defJSON["radius"] ? defJSON["radius"] : 0;
     this.hitEffects = defJSON["hit_effects"] ? defJSON["hit_effects"] : [];
+    this.targetRestrictions = defJSON["target_restrictions"]
+      ? defJSON["target_restrictions"]
+      : undefined;
 
     if (defJSON.hit_effects) {
       for (var i = 0; i < defJSON.hit_effects.length; i++) {
@@ -50,9 +53,22 @@ class BuffAbilityDef extends AbilityDef {
   }
 
   getBuffTargets(boardState) {
-    return boardState.getAllUnitsByCondition((unit) => {
-      return true;
-    });
+    if (!this.targetRestrictions) {
+      return boardState.getAllUnitsByCondition(() => true);
+    }
+
+    let targets = [];
+    if (this.targetRestrictions.hits_enemy_units) {
+      targets = boardState.getAllUnitsByCondition(() => true);
+    }
+
+    if (this.targetRestrictions.hits_friendly_units) {
+      targets = [
+        ...targets,
+        ...boardState.getPlayerUnitsByCondition(() => true),
+      ];
+    }
+    return targets;
   }
 
   createTargetSprite() {

@@ -13,10 +13,34 @@ export class BoardState {
     this.renderContainers = renderContainers;
 
     this.borderWalls = [
-      new BorderWallLine(0, -this.boardSize.height, 0, this.boardSize.height * 2,  BorderWallLine.LEFT),
-      new BorderWallLine(-this.boardSize.width, 0, this.boardSize.width * 2, 0,  BorderWallLine.TOP),
-      new BorderWallLine(this.boardSize.width, this.boardSize.height * 2, this.boardSize.width, -this.boardSize.height,  BorderWallLine.RIGHT),
-      new BorderWallLine(-this.boardSize.width, this.boardSize.height, this.boardSize.width * 2, this.boardSize.height, BorderWallLine.BOTTOM),
+      new BorderWallLine(
+        0,
+        -this.boardSize.height,
+        0,
+        this.boardSize.height * 2,
+        BorderWallLine.LEFT
+      ),
+      new BorderWallLine(
+        -this.boardSize.width,
+        0,
+        this.boardSize.width * 2,
+        0,
+        BorderWallLine.TOP
+      ),
+      new BorderWallLine(
+        this.boardSize.width,
+        this.boardSize.height * 2,
+        this.boardSize.width,
+        -this.boardSize.height,
+        BorderWallLine.RIGHT
+      ),
+      new BorderWallLine(
+        -this.boardSize.width,
+        this.boardSize.height,
+        this.boardSize.width * 2,
+        this.boardSize.height,
+        BorderWallLine.BOTTOM
+      ),
     ];
     this.playerCastPoints = [];
     this.effects = [];
@@ -30,7 +54,12 @@ export class BoardState {
     var rows = Math.floor(this.boardSize.height / Unit.UNIT_SIZE);
 
     /** @type {UnitSectors} */
-    this.sectors = new UnitSectors(rows, columns, this.boardSize.width, this.boardSize.height);
+    this.sectors = new UnitSectors(
+      rows,
+      columns,
+      this.boardSize.width,
+      this.boardSize.height
+    );
 
     this.reset();
     this.deserialize(boardState);
@@ -49,7 +78,11 @@ export class BoardState {
   }
 
   recoverRandomSeeds() {
-    if (!this.storedRandomSeeds) { throw new Error("Trying to recover random seeds when they weren't saved."); }
+    if (!this.storedRandomSeeds) {
+      throw new Error(
+        "Trying to recover random seeds when they weren't saved."
+      );
+    }
     this.randomSeeds = { ...this.storedRandomSeeds };
   }
 
@@ -105,7 +138,7 @@ export class BoardState {
 
   resetStage() {
     Object.keys(this.renderContainers).forEach((key) => {
-      while(this.renderContainers[key].children.length > 0){
+      while (this.renderContainers[key].children.length > 0) {
         this.renderContainers[key].removeChild(
           this.renderContainers[key].getChildAt(0)
         );
@@ -121,17 +154,33 @@ export class BoardState {
   }
 
   deserialize(boardState) {
-    if (!boardState) { return; }
-    if (boardState.game_stats) { this.gameStats.load(boardState.game_stats); }
-    if (boardState.turn) { this.turn = boardState.turn; }
-    if (boardState.tick) { this.tick = boardState.tick; }
-    if (boardState.unit_id_index) { this.UNIT_ID_INDEX = boardState.unit_id_index; }
-    if (boardState.team_health) { this.teamHealth = boardState.team_health; }
-    if (boardState.waves_spawned) { this.wavesSpawned = boardState.waves_spawned; }
+    if (!boardState) {
+      return;
+    }
+    if (boardState.game_stats) {
+      this.gameStats.load(boardState.game_stats);
+    }
+    if (boardState.turn) {
+      this.turn = boardState.turn;
+    }
+    if (boardState.tick) {
+      this.tick = boardState.tick;
+    }
+    if (boardState.unit_id_index) {
+      this.UNIT_ID_INDEX = boardState.unit_id_index;
+    }
+    if (boardState.team_health) {
+      this.teamHealth = boardState.team_health;
+    }
+    if (boardState.waves_spawned) {
+      this.wavesSpawned = boardState.waves_spawned;
+    }
     if (boardState.units_to_spawn) {
       this.unitsToSpawn = UnitsToSpawn.deserialize(boardState.units_to_spawn);
     }
-    if (boardState.last_spawn_turn) { this.lastSpawnTurn = boardState.last_spawn_turn; }
+    if (boardState.last_spawn_turn) {
+      this.lastSpawnTurn = boardState.last_spawn_turn;
+    }
     if (boardState.random_seeds) {
       this.randomSeeds = { ...boardState.random_seeds };
     } else {
@@ -168,7 +217,9 @@ export class BoardState {
 
   addInitialPlayers(players) {
     var numPlayers = 0;
-    for (var key in players) { numPlayers += 1; }
+    for (var key in players) {
+      numPlayers += 1;
+    }
     var playerGap = this.boardSize.width / numPlayers;
     var playerOn = 0;
     for (var key in players) {
@@ -192,7 +243,7 @@ export class BoardState {
         this.projectiles[i].removeFromStage(this.renderContainers.projectiles);
         this.projectiles.splice(i, 1);
       } else {
-        i ++;
+        i++;
       }
     }
   }
@@ -208,17 +259,19 @@ export class BoardState {
 
   serializeBoardState() {
     return {
-      'units': this.units.map(function (unit) { return unit.serialize() }),
-      'turn': this.turn,
-      'tick': this.tick,
-      'random_seeds': { ...this.randomSeeds },
-      'unit_id_index': this.UNIT_ID_INDEX,
-      'team_health': this.teamHealth,
-      'waves_spawned': this.wavesSpawned,
-      'player_data': this.serializePlayerData(),
-      'units_to_spawn': this.unitsToSpawn.serializeData(),
-      'last_spawn_turn': this.lastSpawnTurn,
-      'game_stats': this.gameStats.serialize(),
+      units: this.units.map(function (unit) {
+        return unit.serialize();
+      }),
+      turn: this.turn,
+      tick: this.tick,
+      random_seeds: { ...this.randomSeeds },
+      unit_id_index: this.UNIT_ID_INDEX,
+      team_health: this.teamHealth,
+      waves_spawned: this.wavesSpawned,
+      player_data: this.serializePlayerData(),
+      units_to_spawn: this.unitsToSpawn.serializeData(),
+      last_spawn_turn: this.lastSpawnTurn,
+      game_stats: this.gameStats.serialize(),
     };
   }
 
@@ -254,7 +307,7 @@ export class BoardState {
       return false;
     }
 
-    if ((unit instanceof ZoneEffect) && unit.owningPlayerID !== 'enemy') {
+    if (unit instanceof ZoneEffect && unit.owningPlayerID !== "enemy") {
       return false;
     }
 
@@ -271,7 +324,10 @@ export class BoardState {
       this.enemyUnitCount += 1;
     }
     unit.addToStage(this.renderContainers.units);
-    unit.addAbilityForecastsToStage(this, this.renderContainers.abilityForecasts);
+    unit.addAbilityForecastsToStage(
+      this,
+      this.renderContainers.abilityForecasts
+    );
     this.units.push(unit);
   }
 
@@ -289,7 +345,9 @@ export class BoardState {
   }
 
   canUnitsSpawnAtCoord(spawningUnits, column, row) {
-    var existingUnits = this.sectors.getUnitsAtGridSquare(column, row).map(unitIndex => this.findUnit(unitIndex));
+    var existingUnits = this.sectors
+      .getUnitsAtGridSquare(column, row)
+      .map((unitIndex) => this.findUnit(unitIndex));
     return !this.doUnitsBlockEachOther(spawningUnits, existingUnits);
   }
 
@@ -299,14 +357,20 @@ export class BoardState {
     for (var i = 0; i < unitsInSector.length; i++) {
       if (unit.id !== unitsInSector[i]) {
         var occupyingUnit = this.findUnit(unitsInSector[i]);
-        allowUnitThrough = allowUnitThrough && occupyingUnit.otherUnitEntering(this, unit);
+        allowUnitThrough =
+          allowUnitThrough && occupyingUnit.otherUnitEntering(this, unit);
       }
     }
 
     for (var player_id in this.playerCastPoints) {
-      let castPointCoord = this.sectors.getGridCoord(this.playerCastPoints[player_id]);
+      let castPointCoord = this.sectors.getGridCoord(
+        this.playerCastPoints[player_id]
+      );
       let targetCoord = this.sectors.getGridCoord(target);
-      if (castPointCoord.x == targetCoord.x && castPointCoord.y == targetCoord.y) {
+      if (
+        castPointCoord.x == targetCoord.x &&
+        castPointCoord.y == targetCoord.y
+      ) {
         this.playerCastPoints[player_id].touchedByEnemy(this, unit);
       }
     }
@@ -320,7 +384,8 @@ export class BoardState {
     for (var i = 0; i < unitsInSector.length; i++) {
       if (unit.id !== unitsInSector[i]) {
         var occupyingUnit = this.findUnit(unitsInSector[i]);
-        allowUnitThrough = allowUnitThrough && occupyingUnit.otherUnitLeaving(this, unit);
+        allowUnitThrough =
+          allowUnitThrough && occupyingUnit.otherUnitLeaving(this, unit);
       }
     }
     return allowUnitThrough;
@@ -331,7 +396,20 @@ export class BoardState {
     let playerUnits = [];
     for (var key in this.playerCastPoints) {
       var playerCoord = this.sectors.getGridCoord(this.playerCastPoints[key]);
-      if (positionCoord.x == playerCoord.x && positionCoord.y == playerCoord.y) {
+      if (
+        positionCoord.x == playerCoord.x &&
+        positionCoord.y == playerCoord.y
+      ) {
+        playerUnits.push(this.playerCastPoints[key]);
+      }
+    }
+    return playerUnits;
+  }
+
+  getPlayerUnitsByCondition(conditionFunction) {
+    let playerUnits = [];
+    for (var key in this.playerCastPoints) {
+      if (conditionFunction(this.playerCastPoints[key])) {
         playerUnits.push(this.playerCastPoints[key]);
       }
     }
@@ -369,23 +447,32 @@ export class BoardState {
   }
 
   getPlayerCastPoint(playerID, turnPhase, usePreviews) {
-    usePreviews = (usePreviews === undefined) ? false : usePreviews;
+    usePreviews = usePreviews === undefined ? false : usePreviews;
     if (playerID in this.playerCastPoints) {
       let castPoint = {
         x: this.playerCastPoints[playerID].x,
-        y: this.playerCastPoints[playerID].y
+        y: this.playerCastPoints[playerID].y,
       };
 
       if (!MainGame.playerCommands[playerID]) {
         return castPoint;
       }
-      return MainGame.playerCommands[playerID].getCastPoint(castPoint, this.currPhase, turnPhase, usePreviews);
+      return MainGame.playerCommands[playerID].getCastPoint(
+        castPoint,
+        this.currPhase,
+        turnPhase,
+        usePreviews
+      );
     }
 
     throw new Error(
       "Trying to get a player Cast Point for a player that doesn't exist. " +
-      "Player ID: [" + playerID + "] " +
-      "Cast Points: [" + this.playerCastPoints + "]"
+        "Player ID: [" +
+        playerID +
+        "] " +
+        "Cast Points: [" +
+        this.playerCastPoints +
+        "]"
     );
   }
 
@@ -407,9 +494,11 @@ export class BoardState {
   }
 
   getOffsetTickForPlayer(phase, commands, playerID, players) {
-    var playerTurns = this.getTurnOrderByPlayerIDs(commands, playerID, players)
+    var playerTurns = this.getTurnOrderByPlayerIDs(commands, playerID, players);
     if (playerID in playerTurns) {
-      return this.tick - playerTurns[playerID] * this.getSimultaneousDelay(phase);
+      return (
+        this.tick - playerTurns[playerID] * this.getSimultaneousDelay(phase)
+      );
     }
     return this.tick;
   }
@@ -430,12 +519,24 @@ export class BoardState {
     }
 
     if (TurnPhasesEnum.isPlayerCommandPhase(phase)) {
-      var commands = this.getPlayerActionsInPhase(players, playerCommands, phase);
+      var commands = this.getPlayerActionsInPhase(
+        players,
+        playerCommands,
+        phase
+      );
 
       if (commands) {
         for (var i = 0; i < commands.length; i++) {
-          if (commands[i] && !commands[i].hasFinishedDoingEffect(
-            this.getOffsetTickForPlayer(phase, commands, commands[i].playerID, players))
+          if (
+            commands[i] &&
+            !commands[i].hasFinishedDoingEffect(
+              this.getOffsetTickForPlayer(
+                phase,
+                commands,
+                commands[i].playerID,
+                players
+              )
+            )
           ) {
             return false;
           }
@@ -464,7 +565,7 @@ export class BoardState {
       UIListeners.updateSpawnPreview(this);
     }
     this.doDeleteChecks();
-    
+
     if (phase === TurnPhasesEnum.NEXT_TURN) {
       this.renderContainers.abilityForecasts.visible = true;
     } else if (phase === TurnPhasesEnum.START_TURN) {
@@ -501,7 +602,7 @@ export class BoardState {
           }
         }
       } else {
-        i ++;
+        i++;
       }
     }
   }
@@ -518,11 +619,15 @@ export class BoardState {
   // direction: { x, y }.  Must be unit vectors.
   forceShoveUnitFromSquare(enteringUnitList, startSquare, direction) {
     if (
-      direction.x !== 1 && direction.x !== -1 && 
-      direction.y !== 1 && direction.y !== -1 &&
+      direction.x !== 1 &&
+      direction.x !== -1 &&
+      direction.y !== 1 &&
+      direction.y !== -1 &&
       Math.abs(direction.x) + Math.abs(direction.y) !== 1
     ) {
-      throw new Error(`Can't shove in a non unit-direction.  direction: ${direction}`);
+      throw new Error(
+        `Can't shove in a non unit-direction.  direction: ${direction}`
+      );
     }
     let enteringUnits = [...enteringUnitList];
 
@@ -534,17 +639,19 @@ export class BoardState {
         enteringUnits = shoveList[shoveList.length - 1].unitsInSquare;
       }
 
-      const currentSquare = { 
+      const currentSquare = {
         x: startSquare.x + direction.x * i,
-        y: startSquare.y + direction.y * i
+        y: startSquare.y + direction.y * i,
       };
-      let unitsInSquare = this.sectors.getUnitsAtGridSquare(currentSquare.x, currentSquare.y).map((unitId) => this.findUnit(unitId));
+      let unitsInSquare = this.sectors
+        .getUnitsAtGridSquare(currentSquare.x, currentSquare.y)
+        .map((unitId) => this.findUnit(unitId));
       if (!unitsInSquare.length) {
-        exitCondition = 'empty';
+        exitCondition = "empty";
       } else if (this.doUnitsPreventEntry(enteringUnits, unitsInSquare)) {
         // The units in this square either can't be shoved, or they block movement.
         // Let's figure out which one
-        if (unitsInSquare.some(unit => !unit.canBeShoved())) {
+        if (unitsInSquare.some((unit) => !unit.canBeShoved())) {
           // There's a unit that can't be shoved.
           // Slide the previously moving units past it.
           if (shoveList.length) {
@@ -557,26 +664,26 @@ export class BoardState {
         // the previously entering units need to move their target down a bit.
       } else {
         // The units in the square don't block the existing units.
-        exitCondition = 'empty';
+        exitCondition = "empty";
       }
 
       if (i >= 30) {
         throw new Error("{i} just keeps on going...");
-        exitCondition = 'error';
+        exitCondition = "error";
       }
       i += 1;
     }
-    
+
     for (let i = shoveList.length - 1; i >= 0; i--) {
       shoveList[i].unitsInSquare.forEach((unit) => {
         var currPos = unit.getCurrentPosition();
 
-        var targetPos = { 
+        var targetPos = {
           x: currPos.x + Unit.UNIT_SIZE * shoveList[i].shoveBy * direction.x,
-          y: currPos.y + Unit.UNIT_SIZE * shoveList[i].shoveBy * direction.y
+          y: currPos.y + Unit.UNIT_SIZE * shoveList[i].shoveBy * direction.y,
         };
         unit.moveToPosition(this, targetPos);
-      })
+      });
     }
     return true;
   }
@@ -635,7 +742,9 @@ export class BoardState {
   runProjectileTicks() {
     for (var projectile in this.projectiles) {
       this.projectiles[projectile].runTick(
-        this, this.boardSize.width, this.boardSize.height
+        this,
+        this.boardSize.width,
+        this.boardSize.height
       );
     }
     var i = 0;
@@ -644,7 +753,7 @@ export class BoardState {
         this.projectiles[i].removeFromStage(this.renderContainers.projectiles);
         this.projectiles.splice(i, 1);
       } else {
-        i ++;
+        i++;
       }
     }
   }
@@ -652,7 +761,9 @@ export class BoardState {
   runEffectTicks() {
     for (var effect in this.effects) {
       this.effects[effect].runTick(
-        this, this.boardSize.width, this.boardSize.height
+        this,
+        this.boardSize.width,
+        this.boardSize.height
       );
     }
 
@@ -662,7 +773,7 @@ export class BoardState {
         this.effects[i].removeFromStage(this.renderContainers.effects);
         this.effects.splice(i, 1);
       } else {
-        i ++;
+        i++;
       }
     }
     window.setTimeout(this.runEffectTicks.bind(this), EFFECT_TICK_DELAY);
@@ -671,7 +782,9 @@ export class BoardState {
   getTurnOrder(players) {
     var player_order = [];
     for (var i = 0; i < players.length; i++) {
-      player_order.push((parseInt(players[i].player_index) + this.turn - 1) % players.length);
+      player_order.push(
+        (parseInt(players[i].player_index) + this.turn - 1) % players.length
+      );
     }
     return player_order;
   }
@@ -713,7 +826,9 @@ export class BoardState {
     for (var i = 0; i < turnOrder.length; i++) {
       var currPlayer = players[turnOrder[i]];
       if (currPlayer) {
-        var commandByPlayer = playerCommands.find((command) => { return command.playerID === currPlayer.user_id});
+        var commandByPlayer = playerCommands.find((command) => {
+          return command.playerID === currPlayer.user_id;
+        });
         if (commandByPlayer) {
           playerTurnOrder[players[turnOrder[i]].getUserID()] = playersAssigned;
           playersAssigned += 1;
@@ -731,7 +846,12 @@ export class BoardState {
         var command = commands[i];
         if (command) {
           command.doActionOnTick(
-            this.getOffsetTickForPlayer(phase, commands, commands[i].playerID, players),
+            this.getOffsetTickForPlayer(
+              phase,
+              commands,
+              commands[i].playerID,
+              players
+            ),
             this
           );
         }
@@ -743,8 +863,10 @@ export class BoardState {
     projectile.addToStage(this.renderContainers.projectiles);
     this.projectiles.push(projectile);
     if (!(projectile instanceof Effect)) {
-      let unitsAtPos =
-        this.sectors.getUnitsAtPosition(projectile.x, projectile.y);
+      let unitsAtPos = this.sectors.getUnitsAtPosition(
+        projectile.x,
+        projectile.y
+      );
       unitsAtPos.forEach((unitID) => {
         let unit = this.findUnit(unitID);
         if (unit instanceof ZoneEffect) {
@@ -776,7 +898,8 @@ export class BoardState {
   }
 
   isGameOver(aiDirector) {
-    if (this.teamHealth[0] <= 0) { // Players Lost
+    if (this.teamHealth[0] <= 0) {
+      // Players Lost
       return true;
     }
 
@@ -827,35 +950,73 @@ export class BoardState {
     for (let i = 0; i < rngTypes.length; i++) {
       const rngType = BoardState.RNG_TYPES[rngTypes[i]];
       if (
-        otherBoardState.randomSeeds[BoardState.RNG_TYPES[rngType]] !== 
+        otherBoardState.randomSeeds[BoardState.RNG_TYPES[rngType]] !==
         this.randomSeeds[BoardState.RNG_TYPES[rngType]]
       ) {
-        console.warn("Desync due to random seed mismatch.  Server: [" + this.randomSeeds + "] Client: [" + otherBoardState.randomSeeds + "]");
+        console.warn(
+          "Desync due to random seed mismatch.  Server: [" +
+            this.randomSeeds +
+            "] Client: [" +
+            otherBoardState.randomSeeds +
+            "]"
+        );
         return "Random Seed Mismatch";
       }
-    };
+    }
 
     if (otherBoardState.units.length != this.units.length) {
-      console.warn("Desync due to different unit count.  Server: [" + this.units.length + "] Client: [" + otherBoardState.units.length + "]");
+      console.warn(
+        "Desync due to different unit count.  Server: [" +
+          this.units.length +
+          "] Client: [" +
+          otherBoardState.units.length +
+          "]"
+      );
       return "Different Unit Count";
     }
     for (var i = 0; i < this.units.length; i++) {
       var myUnit = this.units[i];
       var serverUnit = otherBoardState.units[i];
       if (serverUnit.constructor.name !== myUnit.constructor.name) {
-        console.warn("Desync due to different unit type.  Index: [" + i + "] Server: [" + serverUnit.constructor.name + "] Client: [" + myUnit.constructor.name + "]");
+        console.warn(
+          "Desync due to different unit type.  Index: [" +
+            i +
+            "] Server: [" +
+            serverUnit.constructor.name +
+            "] Client: [" +
+            myUnit.constructor.name +
+            "]"
+        );
         return "Different Unit Type";
       }
 
       if (serverUnit.health.current !== myUnit.health.current) {
-        console.warn("Desync due to different unit health.  Index: [" + i + "] Server: [" + serverUnit.health.current + "] Client: [" + myUnit.health.current + "]");
+        console.warn(
+          "Desync due to different unit health.  Index: [" +
+            i +
+            "] Server: [" +
+            serverUnit.health.current +
+            "] Client: [" +
+            myUnit.health.current +
+            "]"
+        );
         return "Different Unit Health";
       }
 
       if (serverUnit.x !== myUnit.x || serverUnit.y !== myUnit.y) {
-        console.warn("Desync due to different unit position.  Index: [" + i +
-          "] Server: [" + serverUnit.x + ", " + serverUnit.y +
-          "] Client: ["  + myUnit.x + ", " + myUnit.y + "]");
+        console.warn(
+          "Desync due to different unit position.  Index: [" +
+            i +
+            "] Server: [" +
+            serverUnit.x +
+            ", " +
+            serverUnit.y +
+            "] Client: [" +
+            myUnit.x +
+            ", " +
+            myUnit.y +
+            "]"
+        );
         return "Different Unit Position";
       }
     }
@@ -864,6 +1025,6 @@ export class BoardState {
 }
 
 BoardState.RNG_TYPES = {
-  DEFAULT: 'default',
-  SPAWN: 'spawn',
+  DEFAULT: "default",
+  SPAWN: "spawn",
 };

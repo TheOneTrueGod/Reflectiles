@@ -1,20 +1,28 @@
 // TODO:
+// [] Change the icon
+// [] Change the cooldown
 // [] Change the style
 // [] Change the rawAbil
-class AbilityCore2010 extends AbilityCore {
+class AbilityCore2011 extends AbilityCore {
   static BuildAbilityChild(level) {
+    let hitDamage = Math.floor(NumbersBalancer.getAbilityDamage(level, 1));
+    let armourAmount = 3;
     const rawAbil = {
-      name: "Taunt",
-      description: `Cause all enemies to target you`,
-      card_text_description: `TAUNT`,
+      name: "Armour Up",
+      description: `All players gain ${armourAmount} armour`,
+      card_text_description: `${armourAmount} Armour`,
       ability_type: AbilityDef.AbilityTypes.BUFF,
+      target_restrictions: {
+        hits_friendly_units: true,
+      },
       hit_effects: [
         {
-          effect: ProjectileShape.HitEffects.TAUNT,
+          effect: ProjectileShape.HitEffects.PLAYER_ARMOUR,
           duration: 1,
+          effect_base: armourAmount,
         },
       ],
-      icon: "/Bouncy/assets/icons/skills_defender/taunt.png",
+      icon: "/Bouncy/assets/icons/leather_armor.svg",
       action_phase: TurnPhasesEnum.PLAYER_MINOR,
     };
 
@@ -46,4 +54,4 @@ class AbilityCore2010 extends AbilityCore {
   }
 }
 
-AbilityCore.coreList[2010] = AbilityCore2010;
+AbilityCore.coreList[2011] = AbilityCore2011;
